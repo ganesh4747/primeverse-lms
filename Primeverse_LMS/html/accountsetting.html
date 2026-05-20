@@ -994,22 +994,32 @@
                                 </div>
                             </div>
 
-                            <!-- Row 3: Phone Number -->
-                            <div class="form-row-premium">
-                                <div class="form-row-label-block">
-                                    <div class="row-icon-wrapper">
-                                        <i data-lucide="phone"></i>
-                                    </div>
-                                    <div class="row-text-wrapper">
-                                        <span class="row-title">Phone Number</span>
-                                        <span class="row-subtitle">Your mobile number</span>
-                                    </div>
-                                </div>
-                                <div class="form-row-input-block">
-                                    <input type="tel" id="settingsPhone" required autocomplete="off">
-                                </div>
-                            </div>
+<!-- Row 3: Phone Number -->
+<div class="form-row-premium">
+    <div class="form-row-label-block">
+        <div class="row-icon-wrapper">
+            <i data-lucide="phone"></i>
+        </div>
+        <div class="row-text-wrapper">
+            <span class="row-title">Phone Number</span>
+            <span class="row-subtitle">Your mobile number</span>
+        </div>
+    </div>
 
+    <div class="form-row-input-block">
+        <input 
+            type="tel"
+            id="settingsPhone"
+            required
+            autocomplete="off"
+            maxlength="10"
+            pattern="[0-9]{10}"
+            inputmode="numeric"
+            placeholder="Enter 10-digit number"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10)"
+        >
+    </div>
+</div>
                             <!-- Row 4: Password -->
                             <div class="form-row-premium">
                                 <div class="form-row-label-block">
