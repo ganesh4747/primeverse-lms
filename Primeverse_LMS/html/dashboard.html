@@ -1912,7 +1912,7 @@
                     Settings</a>
             </div>
             <div class="nav-bottom">
-                <a href="../index.html" class="nav-item" style="color: var(--red);"><i data-lucide="log-out"></i>
+                <a href="javascript:void(0)" class="nav-item" style="color: var(--red);" id="logoutLink" onclick="window.performLogout();"><i data-lucide="log-out"></i>
                     Logout</a>
             </div>
         </nav>
@@ -3046,12 +3046,104 @@
     <script src="../js/supabase.js"></script>
 
     <script>
-        // Enforce Login & Course Enrollment/Selection to access Dashboard
+        // Enforce Login to access Dashboard
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
-        } else if (!localStorage.getItem('selectedCourse')) {
-            window.location.replace('../index.html');
         }
+        // Removed selectedCourse requirement - users can access dashboard and learn without formal course enrollment
+
+        // --- User Logout Function with Complete Data Clearance ---
+        window.performLogout = function () {
+            // Clear all user-specific data from localStorage
+            const userDataKeys = [
+                'isLoggedIn', 'userEmail', 'userName', 'userPhone', 
+                'lastLogin', 'enrollDate', 'selectedCourse',
+                'currentDay', 'programProgress', 'stageTitle',
+                'modulesCompleted', 'totalModules'
+            ];
+            
+            // Clear user progress markers for all days
+            for (let d = 0; d <= 18; d++) {
+                localStorage.removeItem(`completed_day_${d}`);
+                for (let p = 1; p <= 3; p++) {
+                    localStorage.removeItem(`completed_day_${d}_part_${p}`);
+                }
+            }
+            
+            // Remove all user data keys
+            userDataKeys.forEach(key => {
+                localStorage.removeItem(key);
+            });
+            
+            console.log("✅ User logout: All user data cleared from localStorage");
+            
+            // Redirect to login page
+            window.location.replace('../index.html?logout=true');
+        };
+
+        // --- User Data Verification & Isolation ---
+        window.verifyCurrentUser = function () {
+            const currentUserEmail = localStorage.getItem('userEmail');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (!isLoggedIn || !currentUserEmail) {
+                console.error("❌ User verification failed: Not logged in");
+                window.location.replace('../index.html?login=true');
+                return null;
+            }
+            
+            console.log(`✅ User verified: ${currentUserEmail}`);
+            return currentUserEmail;
+        };
+
+        // --- Initialize Dashboard with Current User Context ---
+        window.initializeDashboardForUser = async function () {
+            const currentUserEmail = window.verifyCurrentUser();
+            if (!currentUserEmail) return;
+            
+            console.log(`🔄 Initializing dashboard for user: ${currentUserEmail}`);
+            
+            // Fetch latest user data from Supabase to ensure isolation
+            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+            
+            if (supabase) {
+                try {
+                    const { data: userData, error } = await supabase
+                        .from('profiles')
+                        .select('*')
+                        .ilike('email', currentUserEmail.trim())
+                        .maybeSingle();
+                    
+                    if (error) {
+                        console.error("❌ Error fetching user data:", error);
+                    } else if (userData) {
+                        // Sync user data from Supabase to localStorage
+                        localStorage.setItem('userEmail', userData.email);
+                        localStorage.setItem('userName', userData.full_name || 'User');
+                        if (userData.phone) localStorage.setItem('userPhone', userData.phone);
+                        localStorage.setItem('selectedCourse', userData.selected_course || '');
+                        
+                        // Update progress metrics
+                        const cDay = userData.current_day || 1;
+                        const mComp = userData.modules_completed || 0;
+                        const tMod = userData.total_modules || 18;
+                        const pProg = userData.program_progress || 0;
+                        const sTitle = userData.stage_title || 'Financial Market Foundations';
+                        
+                        localStorage.setItem('currentDay', cDay);
+                        localStorage.setItem('programProgress', pProg);
+                        localStorage.setItem('stageTitle', sTitle);
+                        localStorage.setItem('modulesCompleted', mComp);
+                        localStorage.setItem('totalModules', tMod);
+                        localStorage.setItem('enrollDate', userData.enroll_date || new Date().toISOString());
+                        
+                        console.log(`✅ Dashboard initialized. User: ${userData.full_name}, Current Day: ${cDay}`);
+                    }
+                } catch (e) {
+                    console.error("❌ Exception during dashboard initialization:", e);
+                }
+            }
+        };
 
         // Global Premium Alert System Function
         window.showPremiumAlert = function (title, message, iconType = 'lock') {
@@ -3083,7 +3175,7 @@
             }
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // Close Premium Alert Modal Listener
             const alertModal = document.getElementById('premiumAlertModal');
             const alertBtn = document.getElementById('premiumAlertBtn');
@@ -3102,6 +3194,10 @@
                     }
                 });
             }
+
+            // Initialize dashboard with current user context
+            await window.initializeDashboardForUser();
+
             const introVideoSrc = 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY';
 
             const lessonsDatabase = {
@@ -3235,6 +3331,7 @@
 
                 // Update UI immediately
                 window.updateDashboardUI();
+                window.updateModuleStates(); // Update module lock states
 
                 // Save to Supabase
                 const userEmail = localStorage.getItem('userEmail');
@@ -3273,8 +3370,10 @@
                     todayClean.setHours(0, 0, 0, 0);
                     
                     const diffTime = todayClean - enrollDateClean;
-                    const daysSinceEnroll = Math.round(diffTime / (1000 * 60 * 60 * 24));
+                    const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                     const targetDay = Math.min(totalModules, Math.max(1, daysSinceEnroll + 1));
+                    
+                    console.log(`📅 Days since enrollment: ${daysSinceEnroll}, Target day: ${targetDay}, Current day: ${currentDay}`);
                     
                     if (targetDay > currentDay) {
                         window.triggerDayUnlock(targetDay);
@@ -3282,6 +3381,68 @@
                 } catch (e) {
                     console.error("Error checking and unlocking days:", e);
                 }
+            };
+
+            // Update module card states based on currentDay
+            window.updateModuleStates = function () {
+                const timelineItems = document.querySelectorAll('.mastery-timeline-item');
+                timelineItems.forEach((item, index) => {
+                    const isUnlocked = (index <= currentDay);
+                    const isCompleted = (index < currentDay);
+                    const node = item.querySelector('.mastery-timeline-node');
+                    const statusEl = item.querySelector('.mastery-timeline-status');
+                    
+                    if (isCompleted) {
+                        // Completed
+                        item.classList.remove('locked-item');
+                        item.style.opacity = '1';
+                        item.style.pointerEvents = 'auto';
+                        if (node) {
+                            node.className = 'mastery-timeline-node completed';
+                            node.innerHTML = '<i data-lucide="check" style="width: 12px; height: 12px;"></i>';
+                        }
+                        if (statusEl) {
+                            statusEl.className = 'mastery-timeline-status completed';
+                            statusEl.textContent = 'COMPLETED';
+                        }
+                    } else if (isUnlocked) {
+                        // Active (current day)
+                        item.classList.remove('locked-item');
+                        item.style.opacity = '1';
+                        item.style.pointerEvents = 'auto';
+                        if (node) {
+                            node.className = 'mastery-timeline-node active';
+                            node.innerHTML = '';
+                        }
+                        if (statusEl) {
+                            statusEl.className = 'mastery-timeline-status active';
+                            statusEl.textContent = 'ACTIVE';
+                        }
+                        item.classList.add('active-item');
+                    } else {
+                        // Locked
+                        item.classList.add('locked-item');
+                        item.style.opacity = '0.5';
+                        item.style.pointerEvents = 'none';
+                        if (node) {
+                            node.className = 'mastery-timeline-node locked';
+                            node.innerHTML = '<i data-lucide="lock" style="width: 10px; height: 10px;"></i>';
+                        }
+                        if (statusEl) {
+                            statusEl.className = 'mastery-timeline-status locked';
+                            statusEl.style.color = 'var(--gray)';
+                            statusEl.textContent = 'LOCKED';
+                        }
+                        item.classList.remove('active-item');
+                    }
+                });
+                
+                // Re-render lucide icons
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+                
+                console.log(`✅ Module states updated. Current day: ${currentDay}`);
             };
 
             // Compute local fallbacks if enrollDateStr is present and no cache exists before Supabase loads
@@ -3304,6 +3465,9 @@
             if (enrollDateStr) {
                 window.checkAndUnlockDays(enrollDateStr);
             }
+
+            // Update module states on page load
+            window.updateModuleStates();
 
             // --- Countdown Timer Logic (Counts down to midnight) ---
             const timerDisplay = document.querySelector('.unlock-timer');
@@ -3334,6 +3498,10 @@
                         const latestEnrollDate = localStorage.getItem('enrollDate');
                         if (latestEnrollDate && typeof window.checkAndUnlockDays === 'function') {
                             window.checkAndUnlockDays(latestEnrollDate);
+                        }
+                        // Refresh module states after date rollover
+                        if (typeof window.updateModuleStates === 'function') {
+                            window.updateModuleStates();
                         }
                     }
                 }
@@ -3466,7 +3634,7 @@
             // Unified Dynamic Dashboard Update & Gating Logic
             window.updateDashboardUI = function () {
                 // --- Mentorship Lock/Unlock Overlay Controller Logic ---
-                const isMentorshipEnrolled = localStorage.getItem('selectedCourse') === 'PrimeVerse Pro Mentorship';
+                const isMentorshipEnrolled = localStorage.getItem('selectedCourse') === 'PrimeVerse Pro Mentorship'; // Note: selectedPlan concept
                 const isMentorshipLocked = !isMentorshipEnrolled && (currentDay < 19);
                 const lockOverlay = document.getElementById('mentorshipLockOverlay');
                 const overlayBar = document.getElementById('mentorshipOverlayBar');
@@ -3571,7 +3739,7 @@
                 } else {
                     const lessonTitleEl = document.getElementById('lessonTitle');
                     if (lessonTitleEl) {
-                        lessonTitleEl.innerText = "Day 0" + currentDay + ": Lesson for " + (selectedCourse || "Program");
+                        lessonTitleEl.innerText = "Day 0" + currentDay + ": Lesson for " + (selectedPlan || "Program");
                     }
                 }
 

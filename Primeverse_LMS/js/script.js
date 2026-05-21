@@ -149,25 +149,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateAuthUI = () => {
         const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        const hasPurchased = localStorage.getItem('selectedCourse') ? true : false;
-        const selectedCourse = localStorage.getItem('selectedCourse');
+        const selectedPlan = localStorage.getItem('selectedCourse');
         const viewProgramBtn = document.getElementById('viewProgramBtn');
         const applyNowBtn = document.getElementById('applyNowBtn');
 
         if (loggedIn) {
             // Desk Nav
             if (loginBtnNav) {
-                if (hasPurchased) {
-                    if (selectedCourse === 'PrimeVerse Pro Mentorship') {
-                        loginBtnNav.innerText = 'PRO STATUS';
-                    } else {
-                        loginBtnNav.innerText = 'DASHBOARD';
-                    }
-                    loginBtnNav.style.display = 'inline-block';
-                    loginBtnNav.style.background = 'rgba(255, 255, 255, 0.05)';
+                if (selectedPlan === 'PrimeVerse Pro Mentorship') {
+                    loginBtnNav.innerText = 'PRO STATUS';
                 } else {
-                    loginBtnNav.style.display = 'none';
+                    loginBtnNav.innerText = 'DASHBOARD';
                 }
+                loginBtnNav.style.display = 'inline-block';
+                loginBtnNav.style.background = 'rgba(255, 255, 255, 0.05)';
             }
             if (signupBtnNav) {
                 signupBtnNav.innerText = 'SIGN OUT';
@@ -176,23 +171,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // Mobile Nav
             if (loginBtnNavMobile) {
-                if (hasPurchased) {
-                    if (selectedCourse === 'PrimeVerse Pro Mentorship') {
-                        loginBtnNavMobile.innerText = 'PRO STATUS';
-                    } else {
-                        loginBtnNavMobile.innerText = 'DASHBOARD';
-                    }
-                    loginBtnNavMobile.style.display = 'block';
+                if (selectedPlan === 'PrimeVerse Pro Mentorship') {
+                    loginBtnNavMobile.innerText = 'PRO STATUS';
                 } else {
-                    loginBtnNavMobile.style.display = 'none';
+                    loginBtnNavMobile.innerText = 'DASHBOARD';
                 }
+                loginBtnNavMobile.style.display = 'block';
             }
             if (signupBtnNavMobile) {
                 signupBtnNavMobile.innerText = 'SIGN OUT';
             }
             // Program Action Buttons Green Color
             if (viewProgramBtn) {
-                if (selectedCourse === 'PrimeVerse Mastery Program' || selectedCourse === 'PrimeVerse Pro Mentorship') {
+                if (selectedPlan === 'PrimeVerse Mastery Program' || selectedPlan === 'PrimeVerse Pro Mentorship') {
                     viewProgramBtn.innerText = 'ACTIVE';
                 } else {
                     viewProgramBtn.innerText = 'View Program';
@@ -203,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 viewProgramBtn.style.color = '#ffffff';
             }
             if (applyNowBtn) {
-                if (selectedCourse === 'PrimeVerse Pro Mentorship') {
+                if (selectedPlan === 'PrimeVerse Pro Mentorship') {
                     applyNowBtn.innerText = 'ACTIVE';
                 } else {
                     applyNowBtn.innerText = 'Apply Now';
@@ -320,6 +311,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
 
+                    // Set enrollment date to midnight of today (calendar-based day tracking)
+                    const enrollDateMidnight = new Date();
+                    enrollDateMidnight.setHours(0, 0, 0, 0);
+                    const enrollDateISO = enrollDateMidnight.toISOString();
+
                     // Insert the new user into profiles table
                     const { data, error } = await supabase
                         .from('profiles')
@@ -329,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 phone: phone,
                                 email: email,
                                 password: password,
-                                enroll_date: new Date().toISOString(),
+                                enroll_date: enrollDateISO,
                                 current_day: 1,
                                 modules_completed: 0,
                                 total_modules: 18,
@@ -349,7 +345,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('userName', fullName);
                         localStorage.setItem('userPhone', phone);
                         localStorage.setItem('lastLogin', new Date().toISOString());
-                        localStorage.setItem('enrollDate', new Date().toISOString());
+                        
+                        // Use the same enrollment date (midnight)
+                        localStorage.setItem('enrollDate', enrollDateISO);
                         localStorage.setItem('selectedCourse', '');
                         
                         // Seed local storage with default database-driven progression metrics for a new user
@@ -493,11 +491,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginBtnNav) {
         loginBtnNav.addEventListener('click', () => {
             if (localStorage.getItem('isLoggedIn') === 'true') {
-                const selectedCourse = localStorage.getItem('selectedCourse');
-                if (selectedCourse) {
-                    window.location.href = 'html/dashboard.html';
-                }
+                // User is logged in - navigate to dashboard regardless of course selection
+                window.location.href = 'html/dashboard.html';
             } else {
+                // User is not logged in - show login modal
                 setAuthState('login');
                 openModal();
             }
@@ -589,7 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
         }
 
-        // When closing the mentorship modal, update selectedCourse to PrimeVerse Pro Mentorship
+        // When closing the mentorship modal, update selectedPlan to PrimeVerse Pro Mentorship
         // so that they can access the dashboard, and store it in their profile table in Supabase
         localStorage.setItem('selectedCourse', 'PrimeVerse Pro Mentorship');
 
@@ -637,8 +634,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Deep link redirect parameters
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('login') === 'true') {
-        setAuthState('login');
-        openModal();
+        // Check if user is already logged in (e.g., after page refresh)
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const userEmail = localStorage.getItem('userEmail');
+        
+        if (isLoggedIn && userEmail) {
+            // User is already logged in, auto-redirect to dashboard
+            console.log('✅ User already logged in, redirecting to dashboard...');
+            setTimeout(() => {
+                window.location.href = 'html/dashboard.html';
+            }, 300);
+        } else {
+            // User is not logged in, show login modal
+            setAuthState('login');
+            openModal();
+        }
     }
     if (urlParams.get('mentorshipModal') === 'true' && localStorage.getItem('isLoggedIn') === 'true') {
         openMentorshipModal();
@@ -694,11 +704,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginBtnNavMobile) {
         loginBtnNavMobile.addEventListener('click', () => {
             if (localStorage.getItem('isLoggedIn') === 'true') {
-                const selectedCourse = localStorage.getItem('selectedCourse');
-                if (selectedCourse) {
-                    window.location.href = 'html/dashboard.html';
-                }
+                // User is logged in - navigate to dashboard regardless of course selection
+                window.location.href = 'html/dashboard.html';
             } else {
+                // User is not logged in - show login modal
                 setAuthState('login');
                 openModal();
             }

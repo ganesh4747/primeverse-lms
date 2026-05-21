@@ -642,9 +642,8 @@
     <script>
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
-        } else if (!localStorage.getItem('selectedCourse')) {
-            window.location.replace('../index.html');
         }
+        // Removed selectedCourse requirement - users can access community without formal course enrollment
 
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) {
@@ -668,7 +667,7 @@
             }
 
             // Dynamic Program Sidebar menu tab visibility
-            const selectedCourse = localStorage.getItem('selectedCourse');
+            const selectedPlan = localStorage.getItem('selectedCourse');
             const navMastery = document.getElementById('nav-mastery');
             const navMentorship = document.getElementById('nav-mentorship');
             if (navMastery) navMastery.style.display = 'flex';

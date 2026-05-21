@@ -660,29 +660,42 @@
             const buildSystemBtn = document.getElementById('buildSystemBtn');
 
             // Direct Navigation to Dashboard
-            buildSystemBtn.addEventListener('click', () => {
-                localStorage.setItem('selectedCourse', 'PrimeVerse Pro Mentorship');
-                localStorage.setItem('enrollDate', new Date().toISOString());
+            buildSystemBtn.addEventListener('click', async () => {
+                const courseName = 'PrimeVerse Pro Mentorship';
+                const enrollmentDate = new Date().toISOString();
                 
-                // Update Supabase profiles table for the current user to store PrimeVerse Pro Mentorship selection
+                localStorage.setItem('selectedCourse', courseName);
+                localStorage.setItem('enrollDate', enrollmentDate);
+                
+                // Update Supabase profiles table for the current user
                 const userEmail = localStorage.getItem('userEmail');
                 const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
                 
                 if (userEmail && supabase) {
-                    supabase
-                        .from('profiles')
-                        .update({
-                            enroll_date: new Date().toISOString(),
-                            selected_course: 'PrimeVerse Pro Mentorship',
-                            payment_status: 'free_access'
-                        })
-                        .ilike('email', userEmail.trim())
-                        .then(() => {
-                            window.location.href = 'dashboard.html';
-                        });
-                } else {
-                    window.location.href = 'dashboard.html';
+                    try {
+                        const { data, error } = await supabase
+                            .from('profiles')
+                            .update({
+                                enroll_date: enrollmentDate,
+                                selected_course: courseName,
+                                payment_status: 'free_access'
+                            })
+                            .eq('email', userEmail.trim());
+                        
+                        if (error) {
+                            console.error("❌ Error updating course enrollment:", error);
+                        } else {
+                            console.log("✅ Pro Mentorship enrollment saved to Supabase");
+                        }
+                    } catch (e) {
+                        console.error("❌ Exception during enrollment:", e);
+                    }
                 }
+                
+                // Navigate to dashboard
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 300);
             });
         }); 
     </script>

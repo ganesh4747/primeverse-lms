@@ -1091,9 +1091,8 @@
     <script>
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
-        } else if (!localStorage.getItem('selectedCourse')) {
-            window.location.replace('../index.html');
         }
+        // Removed selectedCourse requirement - users can access account settings without formal course enrollment
 
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) {
@@ -1279,10 +1278,10 @@
             // Populate active program name dynamically
             const activeProgramNameEl = document.getElementById('activeProgramName');
             if (activeProgramNameEl) {
-                let courseName = localStorage.getItem('selectedCourse') || 'PrimeVerse Mastery Program';
+                let selectedPlan = localStorage.getItem('selectedCourse') || 'PrimeVerse Mastery Program';
                 // Clean up "Program" at the end to match screen mockup
-                courseName = courseName.replace(/\s+Program$/i, '');
-                activeProgramNameEl.innerText = courseName;
+                selectedPlan = selectedPlan.replace(/\s+Program$/i, '');
+                activeProgramNameEl.innerText = selectedPlan;
             }
 
             // Settings password visibility toggle

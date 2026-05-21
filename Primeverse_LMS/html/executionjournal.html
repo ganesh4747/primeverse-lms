@@ -1495,9 +1495,8 @@
     <script>
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
-        } else if (!localStorage.getItem('selectedCourse')) {
-            window.location.replace('../index.html');
         }
+        // Removed selectedCourse requirement - users can access execution journal without formal course enrollment
 
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) {
