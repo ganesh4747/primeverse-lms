@@ -887,7 +887,7 @@
                 <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
                 <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
                 <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
-                <a href="executionjournal.html" class="nav-item"><i data-lucide="book-marked"></i> Execution Journal</a>
+                <a href="executionjournal.html" class="nav-item" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
                 <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
                 <a href="accountsetting.html" class="nav-item active" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
             </div>
@@ -1091,6 +1091,8 @@
     <script>
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
+        } else if (localStorage.getItem('userRole') !== 'admin' && localStorage.getItem('payment_status') === 'unpaid') {
+            window.location.replace('../index.html?unpaid=true');
         }
         // Removed selectedCourse requirement - users can access account settings without formal course enrollment
 
@@ -1115,25 +1117,39 @@
                 });
             }
 
-            // Show selected course in sidebar if active
-            const selectedCourse = localStorage.getItem('selectedCourse');
-            const navMastery = document.getElementById('nav-mastery');
-            const navMentorship = document.getElementById('nav-mentorship');
-            if (navMastery) navMastery.style.display = 'flex';
-            if (navMentorship) {
-                navMentorship.style.display = 'flex';
-                // Lock icon evaluation for Pro Mentorship (locked until Day 18 complete / Day 19)
-                const enrollDateStr = localStorage.getItem('enrollDate');
-                let currentDay = parseInt(localStorage.getItem('currentDay')) || 11;
-                if (!localStorage.getItem('currentDay')) {
-                    if (enrollDateStr) {
-                        const enrollDate = new Date(enrollDateStr);
-                        const today = new Date();
-                        const diffTime = Math.abs(today - enrollDate);
-                        const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                        currentDay = daysSinceEnroll + 1;
+            // If user is admin, only show Community tab, Settings, and Logout in the sidebar
+            if (localStorage.getItem('userRole') === 'admin') {
+                const navDashboard = document.getElementById('nav-dashboard-link');
+                const navMastery = document.getElementById('nav-mastery');
+                const navMentorship = document.getElementById('nav-mentorship');
+                const navJournal = document.getElementById('nav-journal');
+                
+                if (navDashboard) navDashboard.style.display = 'none';
+                if (navMastery) navMastery.style.display = 'none';
+                if (navMentorship) navMentorship.style.display = 'none';
+                if (navJournal) navJournal.style.display = 'none';
+            }
+
+            // Show selected course in sidebar if active (only evaluated for non-admin students)
+            if (localStorage.getItem('userRole') !== 'admin') {
+                const selectedCourse = localStorage.getItem('selectedCourse');
+                const navMastery = document.getElementById('nav-mastery');
+                const navMentorship = document.getElementById('nav-mentorship');
+                if (navMastery) navMastery.style.display = 'flex';
+                if (navMentorship) {
+                    navMentorship.style.display = 'flex';
+                    // Lock icon evaluation for Pro Mentorship (locked until Day 18 complete / Day 19)
+                    const enrollDateStr = localStorage.getItem('enrollDate');
+                    let currentDay = parseInt(localStorage.getItem('currentDay')) || 11;
+                    if (!localStorage.getItem('currentDay')) {
+                        if (enrollDateStr) {
+                            const enrollDate = new Date(enrollDateStr);
+                            const today = new Date();
+                            const diffTime = Math.abs(today - enrollDate);
+                            const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                            currentDay = daysSinceEnroll + 1;
+                        }
                     }
-                }
                     if (currentDay < 19) {
                         navMentorship.innerHTML = '<i data-lucide="lock"></i> PrimeVerse Pro Mentorship';
                     } else {
@@ -1154,6 +1170,7 @@
                         window.lucide.createIcons();
                     }
                 }
+            }
 
             // --- Interactive Account Settings Logic ---
             const welcomeUserName = document.getElementById('welcomeUserName');
@@ -1208,6 +1225,7 @@
                     localStorage.removeItem('userEmail');
                     localStorage.removeItem('userPhone');
                     localStorage.removeItem('lastLogin');
+                    localStorage.removeItem('userRole');
                     
                     // Clear custom live progression cache fields
                     localStorage.removeItem('currentDay');
@@ -1248,10 +1266,13 @@
             if (profileSubName) profileSubName.innerText = savedName;
             if (avatarInitials) avatarInitials.innerText = getInitials(savedName);
 
-            // Fetch Real-time User Data directly from Supabase profiles table
+            // Fetch Real-time User Data directly from Supabase profiles or admins table
             if (savedEmail && supabase) {
+                const isUserAdmin = localStorage.getItem('userRole') === 'admin';
+                const targetTable = isUserAdmin ? 'admins' : 'profiles';
+                
                 supabase
-                    .from('profiles')
+                    .from(targetTable)
                     .select('*')
                     .ilike('email', savedEmail.trim())
                     .maybeSingle()
@@ -1275,13 +1296,25 @@
                     });
             }
 
-            // Populate active program name dynamically
+            // Populate active program name or system role dynamically
             const activeProgramNameEl = document.getElementById('activeProgramName');
-            if (activeProgramNameEl) {
-                let selectedPlan = localStorage.getItem('selectedCourse') || 'PrimeVerse Mastery Program';
-                // Clean up "Program" at the end to match screen mockup
-                selectedPlan = selectedPlan.replace(/\s+Program$/i, '');
-                activeProgramNameEl.innerText = selectedPlan;
+            const activeProgramLabelEl = document.querySelector('.active-program-label');
+            const activeProgramIconCircle = document.querySelector('.active-program-icon-circle');
+
+            if (localStorage.getItem('userRole') === 'admin') {
+                if (activeProgramLabelEl) activeProgramLabelEl.innerText = 'System Role';
+                if (activeProgramNameEl) activeProgramNameEl.innerText = 'ADMIN';
+                if (activeProgramIconCircle && window.lucide) {
+                    activeProgramIconCircle.innerHTML = '<i data-lucide="shield-check"></i>';
+                    window.lucide.createIcons();
+                }
+            } else {
+                if (activeProgramNameEl) {
+                    let selectedPlan = localStorage.getItem('selectedCourse') || 'PrimeVerse Mastery Program';
+                    // Clean up "Program" at the end to match screen mockup
+                    selectedPlan = selectedPlan.replace(/\s+Program$/i, '');
+                    activeProgramNameEl.innerText = selectedPlan;
+                }
             }
 
             // Settings password visibility toggle
@@ -1330,14 +1363,22 @@
                     const newPassword = settingsPasswordInput.value;
 
                     if (newName && newEmail && newPhone && newPassword) {
+                        // Validate phone number: must be exactly 10 digits
+                        if (!/^\d{10}$/.test(newPhone)) {
+                            alert("Please enter a valid 10-digit phone number.");
+                            return;
+                        }
+
                         // Activate cyber sync scanner
                         if (syncOverlay) syncOverlay.classList.add('active');
 
                         const oldEmail = localStorage.getItem('userEmail') || newEmail;
+                        const isUserAdmin = localStorage.getItem('userRole') === 'admin';
+                        const targetTable = isUserAdmin ? 'admins' : 'profiles';
 
                         if (supabase) {
                             const { error } = await supabase
-                                .from('profiles')
+                                .from(targetTable)
                                 .update({
                                     full_name: newName,
                                     email: newEmail,
@@ -1367,7 +1408,11 @@
                         // Play dynamic visual sync pause before returning
                         setTimeout(() => {
                             if (syncOverlay) syncOverlay.classList.remove('active');
-                            window.location.href = 'dashboard.html';
+                            if (isUserAdmin) {
+                                window.location.href = 'communitypage.html';
+                            } else {
+                                window.location.href = 'dashboard.html';
+                            }
                         }, 2000);
                     }
                 });

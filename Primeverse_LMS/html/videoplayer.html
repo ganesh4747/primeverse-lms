@@ -944,8 +944,14 @@
 
     <!-- Script player execution -->
     <script>
+        if (localStorage.getItem('userRole') === 'admin') {
+            window.location.replace('communitypage.html');
+        }
+
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
+        } else if (localStorage.getItem('payment_status') === 'unpaid') {
+            window.location.replace('../index.html?unpaid=true');
         }
         // Removed check for selectedCourse - users should be able to watch videos without formal course enrollment
 

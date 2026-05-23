@@ -725,7 +725,15 @@
                     </div>
                     <div class="input-group">
                         <label>Phone Number</label>
-                        <input type="tel" id="phoneInput" placeholder="Enter Phone Number">
+                        <input 
+                            type="tel" 
+                            id="phoneInput" 
+                            placeholder="Enter Phone Number"
+                            maxlength="10"
+                            pattern="[0-9]{10}"
+                            inputmode="numeric"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10)"
+                        >
                     </div>
                 </div>
 

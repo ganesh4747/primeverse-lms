@@ -617,7 +617,7 @@
                             <span>#announcements</span>
                         </div>
                         <div class="chat-channel-subtitle">
-                            <span><span class="online-dot"></span> 1,357 Traders Enrolled</span>
+                            <span><span class="online-dot"></span> <span id="enrolledTradersCount">1,357</span> Traders Enrolled</span>
                         </div>
                     </div>
                 </header>
@@ -642,10 +642,25 @@
     <script>
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
+        } else if (localStorage.getItem('userRole') !== 'admin' && localStorage.getItem('payment_status') === 'unpaid') {
+            window.location.replace('../index.html?unpaid=true');
         }
         // Removed selectedCourse requirement - users can access community without formal course enrollment
 
         document.addEventListener('DOMContentLoaded', () => {
+            // If user is admin, only show Community tab, Settings, and Logout in the sidebar
+            if (localStorage.getItem('userRole') === 'admin') {
+                const navDashboard = document.getElementById('nav-dashboard-link');
+                const navMastery = document.getElementById('nav-mastery');
+                const navMentorship = document.getElementById('nav-mentorship');
+                const navJournal = document.getElementById('nav-journal');
+                
+                if (navDashboard) navDashboard.style.display = 'none';
+                if (navMastery) navMastery.style.display = 'none';
+                if (navMentorship) navMentorship.style.display = 'none';
+                if (navJournal) navJournal.style.display = 'none';
+            }
+
             if (window.lucide) {
                 window.lucide.createIcons();
             }
@@ -666,25 +681,26 @@
                 });
             }
 
-            // Dynamic Program Sidebar menu tab visibility
-            const selectedPlan = localStorage.getItem('selectedCourse');
-            const navMastery = document.getElementById('nav-mastery');
-            const navMentorship = document.getElementById('nav-mentorship');
-            if (navMastery) navMastery.style.display = 'flex';
-            if (navMentorship) {
-                navMentorship.style.display = 'flex';
-                // Lock icon evaluation for Pro Mentorship (locked until Day 18 complete / Day 19)
-                const enrollDateStr = localStorage.getItem('enrollDate');
-                let currentDay = parseInt(localStorage.getItem('currentDay')) || 11;
-                if (!localStorage.getItem('currentDay')) {
-                    if (enrollDateStr) {
-                        const enrollDate = new Date(enrollDateStr);
-                        const today = new Date();
-                        const diffTime = Math.abs(today - enrollDate);
-                        const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                        currentDay = daysSinceEnroll + 1;
+            // Dynamic Program Sidebar menu tab visibility (only evaluated for non-admin students)
+            if (localStorage.getItem('userRole') !== 'admin') {
+                const selectedPlan = localStorage.getItem('selectedCourse');
+                const navMastery = document.getElementById('nav-mastery');
+                const navMentorship = document.getElementById('nav-mentorship');
+                if (navMastery) navMastery.style.display = 'flex';
+                if (navMentorship) {
+                    navMentorship.style.display = 'flex';
+                    // Lock icon evaluation for Pro Mentorship (locked until Day 18 complete / Day 19)
+                    const enrollDateStr = localStorage.getItem('enrollDate');
+                    let currentDay = parseInt(localStorage.getItem('currentDay')) || 11;
+                    if (!localStorage.getItem('currentDay')) {
+                        if (enrollDateStr) {
+                            const enrollDate = new Date(enrollDateStr);
+                            const today = new Date();
+                            const diffTime = Math.abs(today - enrollDate);
+                            const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                            currentDay = daysSinceEnroll + 1;
+                        }
                     }
-                }
                     if (currentDay < 19) {
                         navMentorship.innerHTML = '<i data-lucide="lock"></i> PrimeVerse Pro Mentorship';
                     } else {
@@ -705,6 +721,7 @@
                         window.lucide.createIcons();
                     }
                 }
+            }
 
             // Handle Sidebar Logout Action
             const logoutBtnCommunity = document.getElementById('logoutBtnCommunity');
@@ -720,6 +737,7 @@
                     localStorage.removeItem('userEmail');
                     localStorage.removeItem('userPhone');
                     localStorage.removeItem('lastLogin');
+                    localStorage.removeItem('userRole');
                     
                     // Clear custom live progression cache fields
                     localStorage.removeItem('currentDay');
@@ -735,7 +753,7 @@
             // --- Supabase Announcement Broadcaster & Authentication Gate ---
             const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
             const loggedInEmail = localStorage.getItem('userEmail');
-            const isAdmin = (loggedInEmail === 'harishramanan4415@gmail.com');
+            const isAdmin = (localStorage.getItem('userRole') === 'admin');
 
             const chatInputArea = document.getElementById('chatInputArea');
             const chatFeed = document.getElementById('chatFeed');
@@ -810,8 +828,9 @@
                 }
             };
 
-            // Fetch announcements from Supabase
+            // Fetch announcements & enrolled traders count from Supabase
             if (supabase) {
+                // Fetch community messages
                 supabase
                     .from('community_messages')
                     .select('*')
@@ -825,6 +844,22 @@
                             });
                         } else {
                             console.error("Error loading community messages:", error);
+                        }
+                    });
+
+                // Fetch count of profiles with paid status
+                supabase
+                    .from('profiles')
+                    .select('*', { count: 'exact', head: true })
+                    .in('payment_status', ['paid', 'free_access'])
+                    .then(({ count, error }) => {
+                        if (!error && count !== null) {
+                            const enrolledCountEl = document.getElementById('enrolledTradersCount');
+                            if (enrolledCountEl) {
+                                enrolledCountEl.textContent = (1357 + count).toLocaleString();
+                            }
+                        } else {
+                            console.error("Error loading enrolled traders count:", error);
                         }
                     });
             }

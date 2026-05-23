@@ -1493,8 +1493,14 @@
     </div>
 
     <script>
+        if (localStorage.getItem('userRole') === 'admin') {
+            window.location.replace('communitypage.html');
+        }
+
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
+        } else if (localStorage.getItem('payment_status') === 'unpaid') {
+            window.location.replace('../index.html?unpaid=true');
         }
         // Removed selectedCourse requirement - users can access execution journal without formal course enrollment
 

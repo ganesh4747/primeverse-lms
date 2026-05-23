@@ -3046,9 +3046,16 @@
     <script src="../js/supabase.js"></script>
 
     <script>
+        // Redirect Admin users to Community Page only
+        if (localStorage.getItem('userRole') === 'admin') {
+            window.location.replace('communitypage.html');
+        }
+
         // Enforce Login to access Dashboard
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
+        } else if (localStorage.getItem('payment_status') === 'unpaid') {
+            window.location.replace('../index.html?unpaid=true');
         }
         // Removed selectedCourse requirement - users can access dashboard and learn without formal course enrollment
 
@@ -3059,7 +3066,7 @@
                 'isLoggedIn', 'userEmail', 'userName', 'userPhone', 
                 'lastLogin', 'enrollDate', 'selectedCourse',
                 'currentDay', 'programProgress', 'stageTitle',
-                'modulesCompleted', 'totalModules'
+                'modulesCompleted', 'totalModules', 'payment_status', 'userRole'
             ];
             
             // Clear user progress markers for all days
@@ -3117,6 +3124,15 @@
                     if (error) {
                         console.error("❌ Error fetching user data:", error);
                     } else if (userData) {
+                        // Check if payment_status is unpaid
+                        if (userData.payment_status === 'unpaid') {
+                            console.warn("⚠️ User has unpaid status. Blocking access.");
+                            localStorage.setItem('payment_status', 'unpaid');
+                            window.performLogout();
+                            return;
+                        }
+                        localStorage.setItem('payment_status', userData.payment_status || 'paid');
+
                         // Sync user data from Supabase to localStorage
                         localStorage.setItem('userEmail', userData.email);
                         localStorage.setItem('userName', userData.full_name || 'User');
@@ -3717,16 +3733,8 @@
 
                 // Execution Journal Sidebar Lock Evaluation
                 if (navJournal) {
-                    if (currentDay < 13) {
-                        navJournal.innerHTML = '<i data-lucide="lock"></i> Execution Journal';
-                        navJournal.onclick = (e) => {
-                            e.preventDefault();
-                            showPremiumAlert('Execution Journal Locked', 'Your execution journal and trade trackers will unlock automatically on Day 13 of the Mastery Program.', 'lock');
-                        };
-                    } else {
-                        navJournal.innerHTML = '<i data-lucide="book-marked"></i> Execution Journal';
-                        navJournal.onclick = null;
-                    }
+                    navJournal.innerHTML = '<i data-lucide="book-marked"></i> Execution Journal';
+                    navJournal.onclick = null;
                 }
 
                 const initialLessonData = lessonsDatabase[currentDay] || lessonsDatabase[1];

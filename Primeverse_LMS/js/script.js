@@ -294,6 +294,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         setAuthState('login');
                     }
                 } else if (authState === 'signup') {
+                    // Validate phone number: must be exactly 10 digits
+                    if (!/^\d{10}$/.test(phone)) {
+                        showSnackbar("Please enter a valid 10-digit phone number.", "error");
+                        submitBtn.innerText = originalBtnText;
+                        submitBtn.disabled = false;
+                        isSubmitting = false;
+                        return;
+                    }
+
                     // Check if email already exists in profiles table
                     const { data: existingUser, error: checkError } = await supabase
                         .from('profiles')
@@ -307,6 +316,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     if (existingUser) {
+                        showSnackbar("An account with this email already exists.", "error");
+                        return;
+                    }
+
+                    // Also check if email already exists in admins table to prevent account collisions
+                    const { data: existingAdmin, error: adminCheckError } = await supabase
+                        .from('admins')
+                        .select('email')
+                        .ilike('email', email)
+                        .maybeSingle();
+
+                    if (adminCheckError) {
+                        showSnackbar(adminCheckError.message, "error");
+                        return;
+                    }
+
+                    if (existingAdmin) {
                         showSnackbar("An account with this email already exists.", "error");
                         return;
                     }
@@ -331,7 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 total_modules: 18,
                                 program_progress: 0,
                                 stage_title: 'Financial Market Foundations',
-                                selected_course: ''
+                                selected_course: '',
+                                payment_status: 'unpaid'
                             }
                         ])
                         .select();
@@ -345,6 +372,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('userName', fullName);
                         localStorage.setItem('userPhone', phone);
                         localStorage.setItem('lastLogin', new Date().toISOString());
+                        localStorage.setItem('payment_status', 'unpaid');
+                        localStorage.setItem('userRole', 'user');
                         
                         // Use the same enrollment date (midnight)
                         localStorage.setItem('enrollDate', enrollDateISO);
@@ -362,7 +391,40 @@ document.addEventListener('DOMContentLoaded', () => {
                         showSnackbar("Registration successful! Welcome to PrimeVerse.", "success");
                     }
                 } else {
-                    // Login state - verify credentials against profiles table
+                    // Login state - verify credentials against database tables
+                    // 1. Check the dedicated admins table first
+                    let { data: adminUser, error: adminError } = await supabase
+                        .from('admins')
+                        .select('*')
+                        .ilike('email', email)
+                        .eq('password', password)
+                        .maybeSingle();
+
+                    if (!adminError && adminUser) {
+                        isLoggedIn = true;
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('userEmail', adminUser.email);
+                        localStorage.setItem('userName', adminUser.full_name);
+                        if (adminUser.phone) localStorage.setItem('userPhone', adminUser.phone);
+                        localStorage.setItem('lastLogin', new Date().toISOString());
+                        localStorage.setItem('selectedCourse', 'PrimeVerse Mastery Program');
+                        localStorage.setItem('payment_status', 'paid');
+                        localStorage.setItem('userRole', 'admin');
+                        
+                        // Seed admin progression markers
+                        localStorage.setItem('currentDay', 18);
+                        localStorage.setItem('programProgress', 100);
+                        localStorage.setItem('stageTitle', 'Admin Master Workspace');
+                        localStorage.setItem('modulesCompleted', 18);
+                        localStorage.setItem('totalModules', 18);
+                        
+                        closeModal();
+                        updateAuthUI();
+                        showSnackbar("Welcome back, Administrator!", "success");
+                        return;
+                    }
+
+                    // 2. Fallback: verify credentials against student profiles table
                     const { data: user, error } = await supabase
                         .from('profiles')
                         .select('*')
@@ -382,6 +444,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (user.phone) localStorage.setItem('userPhone', user.phone);
                         localStorage.setItem('lastLogin', new Date().toISOString());
                         localStorage.setItem('selectedCourse', user.selected_course || '');
+                        localStorage.setItem('payment_status', user.payment_status || 'unpaid');
+                        localStorage.setItem('userRole', user.role || 'user');
                         
                         // Cache dynamic database-driven progression metrics
                         const cDay = user.current_day !== undefined && user.current_day !== null ? parseInt(user.current_day) : 1;
@@ -476,7 +540,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Simulate purchase and redirect
             btn.innerText = 'Redirecting...';
             setTimeout(() => {
-                window.location.href = 'html/dashboard.html';
+                if (localStorage.getItem('userRole') === 'admin') {
+                    window.location.href = 'html/communitypage.html';
+                } else {
+                    window.location.href = 'html/dashboard.html';
+                }
             }, 1000);
         }
     };
@@ -491,8 +559,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginBtnNav) {
         loginBtnNav.addEventListener('click', () => {
             if (localStorage.getItem('isLoggedIn') === 'true') {
-                // User is logged in - navigate to dashboard regardless of course selection
-                window.location.href = 'html/dashboard.html';
+                if (localStorage.getItem('payment_status') === 'unpaid') {
+                    showSnackbar("Please complete payment to access the program dashboard.", "error");
+                    const programSection = document.getElementById('program');
+                    if (programSection) {
+                        programSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                } else {
+                    // User is logged in - navigate to dashboard/community based on role
+                    if (localStorage.getItem('userRole') === 'admin') {
+                        window.location.href = 'html/communitypage.html';
+                    } else {
+                        window.location.href = 'html/dashboard.html';
+                    }
+                }
             } else {
                 // User is not logged in - show login modal
                 setAuthState('login');
@@ -512,6 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem('userName');
                 localStorage.removeItem('userEmail');
                 localStorage.removeItem('userPhone');
+                localStorage.removeItem('userRole');
                 location.reload();
             } else {
                 setAuthState('signup');
@@ -538,7 +619,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('viewProgramBtn').addEventListener('click', (e) => {
             e.preventDefault();
             if (localStorage.getItem('isLoggedIn') === 'true') {
-                if (localStorage.getItem('selectedCourse') === 'PrimeVerse Mastery Program') {
+                if (localStorage.getItem('userRole') === 'admin') {
+                    window.location.href = 'html/communitypage.html';
+                } else if (localStorage.getItem('selectedCourse') === 'PrimeVerse Mastery Program') {
                     window.location.href = 'html/dashboard.html';
                 } else {
                     window.location.href = 'html/mastery-program.html';
@@ -633,17 +716,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Deep link redirect parameters
     const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('unpaid') === 'true') {
+        showSnackbar("Please complete payment to access the program dashboard.", "error");
+    }
     if (urlParams.get('login') === 'true') {
         // Check if user is already logged in (e.g., after page refresh)
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const userEmail = localStorage.getItem('userEmail');
         
         if (isLoggedIn && userEmail) {
-            // User is already logged in, auto-redirect to dashboard
-            console.log('✅ User already logged in, redirecting to dashboard...');
-            setTimeout(() => {
-                window.location.href = 'html/dashboard.html';
-            }, 300);
+            if (localStorage.getItem('payment_status') === 'unpaid') {
+                showSnackbar("Please complete payment to access the program dashboard.", "error");
+            } else {
+                // User is already logged in, auto-redirect to dashboard
+                console.log('✅ User already logged in, redirecting to dashboard...');
+                setTimeout(() => {
+                    window.location.href = 'html/dashboard.html';
+                }, 300);
+            }
         } else {
             // User is not logged in, show login modal
             setAuthState('login');
@@ -704,8 +794,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginBtnNavMobile) {
         loginBtnNavMobile.addEventListener('click', () => {
             if (localStorage.getItem('isLoggedIn') === 'true') {
-                // User is logged in - navigate to dashboard regardless of course selection
-                window.location.href = 'html/dashboard.html';
+                if (localStorage.getItem('payment_status') === 'unpaid') {
+                    showSnackbar("Please complete payment to access the program dashboard.", "error");
+                    const programSection = document.getElementById('program');
+                    if (programSection) {
+                        programSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                } else {
+                    // User is logged in - navigate to dashboard regardless of course selection
+                    window.location.href = 'html/dashboard.html';
+                }
             } else {
                 // User is not logged in - show login modal
                 setAuthState('login');
