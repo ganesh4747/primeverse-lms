@@ -889,6 +889,7 @@
                 <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
                 <a href="executionjournal.html" class="nav-item" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
                 <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
+                <a href="addmember.html" class="nav-item" id="nav-addmember"><i data-lucide="user-plus"></i> Add Member</a>
                 <a href="accountsetting.html" class="nav-item active" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
             </div>
             <div class="nav-bottom">
@@ -1117,7 +1118,8 @@
                 });
             }
 
-            // If user is admin, only show Community tab, Settings, and Logout in the sidebar
+            // If user is admin, only show Community tab, Settings, Add Member, and Logout in the sidebar
+            const navAddMember = document.getElementById('nav-addmember');
             if (localStorage.getItem('userRole') === 'admin') {
                 const navDashboard = document.getElementById('nav-dashboard-link');
                 const navMastery = document.getElementById('nav-mastery');
@@ -1128,6 +1130,9 @@
                 if (navMastery) navMastery.style.display = 'none';
                 if (navMentorship) navMentorship.style.display = 'none';
                 if (navJournal) navJournal.style.display = 'none';
+                if (navAddMember) navAddMember.style.display = 'flex';
+            } else {
+                if (navAddMember) navAddMember.style.display = 'none';
             }
 
             // Show selected course in sidebar if active (only evaluated for non-admin students)

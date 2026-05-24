@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Member - PrimeVerse LMS</title>
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --gold-hover: #f3e5ab;
+            --gold-glow: rgba(212, 175, 55, 0.15);
+            --glass-bg: rgba(13, 23, 38, 0.4);
+            --font-outfit: 'Outfit', sans-serif;
+            --font-sans: 'Satoshi', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--navy);
+            color: var(--white);
+            font-family: 'Satoshi', sans-serif;
+            overflow-x: hidden;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Ambient Background Grid & Glow --- */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(212, 175, 55, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--navy-dark);
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            z-index: 100;
+            flex-shrink: 0;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+        .sidebar-logo {
+            margin-bottom: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-grow: 1;
+        }
+
+        .nav-bottom {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: var(--gray);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--glass);
+            color: var(--gold);
+            border-radius: 8px;
+        }
+
+        .nav-item i {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* --- Main Dashboard Container --- */
+        .main-dash {
+            flex: 1;
+            padding: 3rem;
+            overflow-y: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dashboard-header-premium {
+            margin-bottom: 3.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-badge {
+            background: rgba(59, 130, 246, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #3b82f6;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .welcome-title {
+            font-family: var(--font-outfit);
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .gradient-text-gold {
+            background: linear-gradient(135deg, var(--white) 30%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-quote {
+            color: var(--gray);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* --- Provision Panel Grid Layout --- */
+        .settings-title-glow {
+            font-family: var(--font-outfit);
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .title-icon-spin {
+            color: var(--gold);
+            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+        }
+
+        .settings-grid-split {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        /* --- Left Column: Info card --- */
+        .holographic-profile-hub {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        .glow-orb {
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            filter: blur(20px);
+            pointer-events: none;
+        }
+
+        .avatar-dynamic-wrapper {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 2rem auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-ring-dashed {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px dashed rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            animation: spin-clockwise 20s linear infinite;
+        }
+
+        .avatar-ring-solid {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 50%;
+        }
+
+        .avatar-initials-dynamic {
+            font-family: var(--font-outfit);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--gold);
+            z-index: 2;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .profile-display-name {
+            font-family: var(--font-outfit);
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.3px;
+        }
+
+        .trader-tier-tag {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 4px 12px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .active-program-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .active-program-icon-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .active-program-icon-circle i {
+            width: 20px;
+            height: 20px;
+            color: var(--gold);
+        }
+
+        .active-program-text-block {
+            text-align: left;
+        }
+
+        .active-program-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gray);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .active-program-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        /* --- Right Column: Form Container --- */
+        .cyber-form-wrapper {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        .form-row-premium {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            align-items: center;
+        }
+
+        .form-row-premium:last-of-type {
+            border-bottom: none;
+        }
+
+        .form-row-label-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .row-icon-wrapper {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .form-row-premium:hover .row-icon-wrapper {
+            border-color: rgba(212, 175, 55, 0.25);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.03);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.05);
+        }
+
+        .row-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .row-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: 0.3px;
+        }
+
+        .row-subtitle {
+            font-size: 0.72rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .cyber-input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .cyber-input-field {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--glass-border);
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            color: var(--white);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cyber-input-field::placeholder {
+            color: rgba(143, 156, 174, 0.4);
+            font-weight: 500;
+        }
+
+        .cyber-input-field:focus {
+            border-color: var(--gold);
+            box-shadow: 
+                inset 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 15px rgba(212, 175, 55, 0.08);
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .cyber-select-field {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--glass-border);
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            color: var(--white);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238f9cae' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1.2rem center;
+            background-size: 1rem;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cyber-select-field option {
+            background-color: var(--navy-dark);
+            color: var(--white);
+        }
+
+        .cyber-select-field:focus {
+            border-color: var(--gold);
+            box-shadow: 
+                inset 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 15px rgba(212, 175, 55, 0.08);
+        }
+
+        /* Custom Toggle Switch for Access Checkbox */
+        .toggle-switch-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            transition: .4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--gray);
+            transition: .4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+            background-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .toggle-status-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        input:checked ~ .toggle-status-label {
+            color: var(--gold);
+        }
+
+        /* Provision Action Button */
+        .action-button-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .cyber-provision-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+            border: none;
+            padding: 1rem 2.2rem;
+            border-radius: 12px;
+            color: #000;
+            font-family: var(--font-outfit);
+            font-size: 0.95rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            outline: none;
+            text-transform: uppercase;
+        }
+
+        .cyber-provision-btn i {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.4s ease;
+        }
+
+        .cyber-provision-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 20px rgba(212, 175, 55, 0.4),
+                0 0 15px rgba(212, 175, 55, 0.2);
+            background: linear-gradient(135deg, var(--gold-hover) 0%, var(--gold) 100%);
+        }
+
+        .cyber-provision-btn:hover i {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .cyber-provision-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* --- Provision Sync Overlay --- */
+        .hologram-sync-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(6, 13, 23, 0.92);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .hologram-sync-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sync-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 480px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sync-scanner {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-ring 1.5s infinite;
+        }
+
+        .sync-scanner i {
+            width: 36px;
+            height: 36px;
+            color: var(--gold);
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(212, 175, 55, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+
+        /* --- Mobile Navigation Header --- */
+        .mobile-nav-bar {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--navy-dark);
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            margin: -3rem -3rem 3rem -3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-nav-bar .logo-wrap {
+            gap: 8px !important;
+        }
+
+        .mobile-nav-bar .logo-text {
+            font-size: 1.1rem !important;
+        }
+
+        .mobile-nav-bar .logo-tagline {
+            font-size: 0.4rem;
+            letter-spacing: 0.3px;
+        }
+
+        /* --- Keyframes & Media Queries --- */
+        @keyframes spin-clockwise {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .sidebar {
+                display: none !important;
+            }
+
+            .sidebar.active {
+                display: flex !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 280px;
+                height: 100vh;
+                box-shadow: 20px 0 40px rgba(0, 0, 0, 0.5);
+            }
+
+            .mobile-nav-bar {
+                display: flex !important;
+            }
+
+            .settings-grid-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-dash {
+                padding: 1.5rem;
+            }
+
+            .cyber-form-wrapper {
+                padding: 1.5rem;
+            }
+
+            .form-row-premium {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-grid"></div>
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="communitypage.html" class="logo-wrap" style="gap: 8px !important;">
+                <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 40px; display: block;">
+                <div class="logo-info">
+                    <div class="logo-text">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
+                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                </div>
+            </a>
+        </div>
+
+        <nav class="nav-menu">
+            <div class="nav-top">
+                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link" style="display: none;"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery" style="display: none;"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
+                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship" style="display: none;"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
+                <a href="executionjournal.html" class="nav-item" id="nav-journal" style="display: none;"><i data-lucide="book-marked"></i> Execution Journal</a>
+                
+                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
+                <a href="addmember.html" class="nav-item active" id="nav-addmember"><i data-lucide="user-plus"></i> Add Member</a>
+                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
+            </div>
+            <div class="nav-bottom">
+                <a href="../index.html" class="nav-item" id="logoutBtnSettings" style="color: var(--red);"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-dash">
+        <!-- Mobile Navigation Header -->
+        <div class="mobile-nav-bar">
+            <a href="communitypage.html" class="logo-wrap">
+                <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 30px; display: block;">
+                <div class="logo-info">
+                    <div class="logo-text">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
+                    <div class="logo-tagline">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                </div>
+            </a>
+            <button id="mobileMenuBtn" style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
+                <i data-lucide="menu" style="width: 26px; height: 26px;"></i>
+            </button>
+        </div>
+
+        <header class="dashboard-header-premium">
+            <div class="header-left">
+                <div class="header-badge">
+                    <i data-lucide="shield" style="width: 14px; height: 14px; color: #3b82f6;"></i>
+                    <span>ADMIN CONTROL MODULE</span>
+                </div>
+                <h1 class="welcome-title">Add New <span class="gradient-text-gold" id="welcomeUserName">Member Profile</span> 👋</h1>
+                <p class="header-quote">"Empower the community by onboarding verified traders and expanding execution networks."</p>
+            </div>
+        </header>
+
+        <!-- Dynamic Form Container -->
+        <div class="innovative-settings-container">
+            <h2 class="settings-title-glow">
+                <i data-lucide="user-plus" class="title-icon-spin"></i> Provision Member Credentials
+            </h2>
+
+            <div class="settings-grid-split">
+                <!-- Left Column: Holographic Hub -->
+                <div class="holographic-profile-hub">
+                    <div class="glow-orb"></div>
+                    <div class="avatar-dynamic-wrapper">
+                        <div class="avatar-ring-dashed"></div>
+                        <div class="avatar-ring-solid"></div>
+                        <div id="avatarInitials" class="avatar-initials-dynamic">PV</div>
+                    </div>
+
+                    <h3 id="profileSubName" class="profile-display-name">New Trader</h3>
+                    <div class="trader-tier-tag"><i data-lucide="zap"></i> VERIFYING NODE</div>
+
+                    <div class="active-program-card">
+                        <div class="active-program-icon-circle">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <div class="active-program-text-block">
+                            <span class="active-program-label">Active Node Role</span>
+                            <h4 class="active-program-name" id="activeProgramName">PRIME VERSE </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Settings Form -->
+                <div class="cyber-form-wrapper">
+                    <form id="addMemberForm">
+                        <!-- Full Name -->
+                        <div class="form-row-premium">
+                            <div class="form-row-label-block">
+                                <div class="row-icon-wrapper">
+                                    <i data-lucide="user"></i>
+                                </div>
+                                <div class="row-text-wrapper">
+                                    <span class="row-title">Full Name</span>
+                                    <span class="row-subtitle">Enter student's name</span>
+                                </div>
+                            </div>
+                            <div class="cyber-input-wrapper">
+                                <input type="text" id="memberName" class="cyber-input-field" placeholder="Ganesh Kumar" required autocomplete="off">
+                            </div>
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="form-row-premium">
+                            <div class="form-row-label-block">
+                                <div class="row-icon-wrapper">
+                                    <i data-lucide="mail"></i>
+                                </div>
+                                <div class="row-text-wrapper">
+                                    <span class="row-title">Email Address</span>
+                                    <span class="row-subtitle">Security login node</span>
+                                </div>
+                            </div>
+                            <div class="cyber-input-wrapper">
+                                <input type="email" id="memberEmail" class="cyber-input-field" placeholder="primeverse@gmail.com" required autocomplete="off">
+                            </div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="form-row-premium">
+                            <div class="form-row-label-block">
+                                <div class="row-icon-wrapper">
+                                    <i data-lucide="phone"></i>
+                                </div>
+                                <div class="row-text-wrapper">
+                                    <span class="row-title">Phone Number</span>
+                                    <span class="row-subtitle">10-digit primary line</span>
+                                </div>
+                            </div>
+                            <div class="cyber-input-wrapper">
+                                <input type="tel" id="memberPhone" class="cyber-input-field" placeholder="1234567890" required maxlength="10" pattern="\d{10}">
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-row-premium">
+                            <div class="form-row-label-block">
+                                <div class="row-icon-wrapper">
+                                    <i data-lucide="key-round"></i>
+                                </div>
+                                <div class="row-text-wrapper">
+                                    <span class="row-title">Access Password</span>
+                                    <span class="row-subtitle">Min 6 characters node</span>
+                                </div>
+                            </div>
+                            <div class="cyber-input-wrapper">
+                                <input type="password" id="memberPassword" class="cyber-input-field" placeholder="••••••••" required minlength="6">
+                            </div>
+                        </div>
+
+                        <!-- Course Selection -->
+                        <div class="form-row-premium">
+                            <div class="form-row-label-block">
+                                <div class="row-icon-wrapper">
+                                    <i data-lucide="book-open"></i>
+                                </div>
+                                <div class="row-text-wrapper">
+                                    <span class="row-title">Assigned Course</span>
+                                    <span class="row-subtitle">Assigned learning path</span>
+                                </div>
+                            </div>
+                            <div class="cyber-input-wrapper">
+                                <select id="memberCourse" class="cyber-select-field" required>
+                                    <option value="PrimeVerse Mastery Program" selected>PrimeVerse Mastery Program</option>
+                                    <option value="PrimeVerse Pro Mentorship">PrimeVerse Pro Mentorship</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Instant Paid Access Switch -->
+                        <div class="form-row-premium">
+                            <div class="form-row-label-block">
+                                <div class="row-icon-wrapper">
+                                    <i data-lucide="credit-card"></i>
+                                </div>
+                                <div class="row-text-wrapper">
+                                    <span class="row-title">Instant Access</span>
+                                    <span class="row-subtitle">Give paid access straightly</span>
+                                </div>
+                            </div>
+                            <div class="toggle-switch-wrapper">
+                                <label class="switch">
+                                    <input type="checkbox" id="memberInstantAccess" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="toggle-status-label" id="accessLabel">PAID ACCESS GRANTED</span>
+                            </div>
+                        </div>
+
+                        <!-- Provision Button -->
+                        <div class="action-button-row">
+                            <button type="submit" class="cyber-provision-btn">
+                                <i data-lucide="user-plus"></i> ADD MEMBER NOW
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Holographic Provisioning Scanner Overlay -->
+    <div id="syncOverlay" class="hologram-sync-overlay">
+        <div class="sync-card">
+            <div class="sync-scanner">
+                <i data-lucide="shield-alert"></i>
+            </div>
+            <h3 style="font-family: var(--font-outfit); font-size: 1.4rem; font-weight: 900; color: var(--white); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
+                PROVISIONING PROFILE...
+            </h3>
+            <p style="color: var(--gray); font-size: 0.9rem; line-height: 1.6; max-width: 320px; margin: 0 auto;">
+                Authenticating server connections, securing enrollment vectors, and deploying credentials database node. Do not close...
+            </p>
+        </div>
+    </div>
+
+    <!-- Supabase Setup & Operations Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Restrict page exclusively to logged-in administrators
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.replace('../index.html?login=true');
+        } else if (localStorage.getItem('userRole') !== 'admin') {
+            window.location.replace('communitypage.html');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+
+            // Mobile menu drawer
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.querySelector('.sidebar');
+            if (mobileMenuBtn && sidebar) {
+                mobileMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('active');
+                });
+
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        sidebar.classList.remove('active');
+                    });
+                });
+            }
+
+            // Dynamic card update based on form inputs
+            const memberNameInput = document.getElementById('memberName');
+            const profileSubName = document.getElementById('profileSubName');
+            const avatarInitials = document.getElementById('avatarInitials');
+            const addMemberForm = document.getElementById('addMemberForm');
+            const syncOverlay = document.getElementById('syncOverlay');
+
+            memberNameInput.addEventListener('input', () => {
+                const val = memberNameInput.value.trim();
+                if (val) {
+                    profileSubName.innerText = val;
+                    const words = val.split(/\s+/);
+                    let initials = words[0][0].toUpperCase();
+                    if (words.length > 1 && words[1][0]) {
+                        initials += words[1][0].toUpperCase();
+                    }
+                    avatarInitials.innerText = initials;
+                } else {
+                    profileSubName.innerText = 'New Trader';
+                    avatarInitials.innerText = 'PV';
+                }
+            });
+
+            // Instant access status label update
+            const instantAccessCheckbox = document.getElementById('memberInstantAccess');
+            const accessLabel = document.getElementById('accessLabel');
+
+            instantAccessCheckbox.addEventListener('change', () => {
+                if (instantAccessCheckbox.checked) {
+                    accessLabel.innerText = 'PAID ACCESS GRANTED';
+                    accessLabel.style.color = 'var(--gold)';
+                } else {
+                    accessLabel.innerText = 'PENDING (UNPAID MODE)';
+                    accessLabel.style.color = 'var(--gray)';
+                }
+            });
+
+            // Connect to Supabase
+            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+
+            // Handle Member Provisioning Submission
+            if (addMemberForm) {
+                addMemberForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const fullName = document.getElementById('memberName').value.trim();
+                    const email = document.getElementById('memberEmail').value.trim().toLowerCase();
+                    const phone = document.getElementById('memberPhone').value.trim();
+                    const password = document.getElementById('memberPassword').value;
+                    const selectedCourse = document.getElementById('memberCourse').value;
+                    const isPaid = instantAccessCheckbox.checked;
+
+                    // Phone format validation
+                    if (!/^\d{10}$/.test(phone)) {
+                        alert("Please enter a valid 10-digit phone number.");
+                        return;
+                    }
+
+                    if (supabase) {
+                        // Activate cyber provisioning sync screen
+                        if (syncOverlay) syncOverlay.classList.add('active');
+
+                        // 1. Verify if email already exists in profiles database
+                        const { data: existingUser, error: fetchErr } = await supabase
+                            .from('profiles')
+                            .select('email')
+                            .ilike('email', email)
+                            .maybeSingle();
+
+                        if (fetchErr) {
+                            console.error("Database communication error:", fetchErr);
+                            alert("Database error: " + fetchErr.message);
+                            if (syncOverlay) syncOverlay.classList.remove('active');
+                            return;
+                        }
+
+                        if (existingUser) {
+                            alert("Provision failed: A profile with email '" + email + "' is already registered in the database.");
+                            if (syncOverlay) syncOverlay.classList.remove('active');
+                            return;
+                        }
+
+                        // 2. Perform safe, clean database insert direct to profiles table
+                        const { error: insertErr } = await supabase
+                            .from('profiles')
+                            .insert([
+                                {
+                                    full_name: fullName,
+                                    phone: phone,
+                                    email: email,
+                                    password: password,
+                                    selected_course: selectedCourse,
+                                    payment_status: isPaid ? 'paid' : 'unpaid',
+                                    enroll_date: new Date().toISOString(),
+                                    current_day: 1,
+                                    modules_completed: 0,
+                                    total_modules: 18,
+                                    program_progress: 0,
+                                    stage_title: 'Financial Market Foundations',
+                                    completed_lessons: ''
+                                }
+                            ]);
+
+                        if (insertErr) {
+                            console.error("Database insertion failed:", insertErr);
+                            alert("Provision failed: " + insertErr.message);
+                            if (syncOverlay) syncOverlay.classList.remove('active');
+                            return;
+                        }
+
+                        // Successful creation
+                        setTimeout(() => {
+                            if (syncOverlay) syncOverlay.classList.remove('active');
+                            alert("SUCCESS: Trader profile created successfully!\n\nEmail: " + email + "\nPassword: " + password + "\nStatus: " + (isPaid ? "PAID ACCESS ACTIVE" : "UNPAID STATUS"));
+                            addMemberForm.reset();
+                            profileSubName.innerText = 'New Trader';
+                            avatarInitials.innerText = 'PV';
+                            accessLabel.innerText = 'PAID ACCESS GRANTED';
+                            accessLabel.style.color = 'var(--gold)';
+                        }, 2000);
+                    } else {
+                        alert("Supabase client is not calibrated properly. Please refresh page.");
+                    }
+                });
+            }
+
+            // Standard logout handler
+            const logoutBtn = document.getElementById('logoutBtnSettings');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.clear();
+                    window.location.replace('../index.html');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
