@@ -713,6 +713,140 @@
                 gap: 0.75rem;
             }
         }
+        /* --- Premium Custom Success Alert --- */
+        .custom-success-alert {
+            display: none;
+            margin-top: 2rem;
+            background: rgba(34, 197, 94, 0.03);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            animation: slideDownFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(34, 197, 94, 0.02);
+        }
+
+        .custom-success-alert.active {
+            display: block;
+        }
+
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.75rem;
+        }
+
+        .alert-badge-success {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #22c55e;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .alert-badge-success i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .close-alert-btn {
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .close-alert-btn:hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .close-alert-btn i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .alert-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .alert-details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-label {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--gray);
+            letter-spacing: 1px;
+        }
+
+        .detail-val {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .status-paid {
+            color: var(--gold) !important;
+        }
+
+        .alert-action-row {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .copy-creds-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .copy-creds-btn:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .copy-creds-btn i {
+            width: 16px;
+            height: 16px;
+        }
     </style>
 </head>
 
@@ -916,6 +1050,41 @@
                             </button>
                         </div>
                     </form>
+
+                    <!-- Beautiful Custom Success Alert Box -->
+                    <div id="customSuccessAlert" class="custom-success-alert">
+                        <div class="alert-header">
+                            <div class="alert-badge-success">
+                                <i data-lucide="check-circle"></i>
+                                <span>MEMBER ADDED SUCCESSFULLY</span>
+                            </div>
+                        </div>
+                        
+                        <div class="alert-details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">FULL NAME</span>
+                                <span class="detail-val" id="alertFullName">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">EMAIL ADDRESS</span>
+                                <span class="detail-val" id="alertEmail">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">PASSWORD</span>
+                                <span class="detail-val" id="alertPassword">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">ACCESS STATUS</span>
+                                <span class="detail-val status-paid" id="alertStatus">-</span>
+                            </div>
+                        </div>
+
+                        <div class="alert-action-row">
+                            <button type="button" id="copyCredsBtn" class="copy-creds-btn">
+                                <i data-lucide="copy"></i> COPY CREDENTIALS
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1080,7 +1249,46 @@
                         // Successful creation
                         setTimeout(() => {
                             if (syncOverlay) syncOverlay.classList.remove('active');
-                            alert("SUCCESS: Trader profile created successfully!\n\nEmail: " + email + "\nPassword: " + password + "\nStatus: " + (isPaid ? "PAID ACCESS ACTIVE" : "UNPAID STATUS"));
+                            
+                            // Populate Custom Success Alert UI
+                            document.getElementById('alertFullName').innerText = fullName;
+                            document.getElementById('alertEmail').innerText = email;
+                            document.getElementById('alertPassword').innerText = password;
+                            document.getElementById('alertStatus').innerText = isPaid ? "PAID ACCESS ACTIVE" : "UNPAID STATUS";
+                            
+                            // Activate success alert container
+                            const successAlert = document.getElementById('customSuccessAlert');
+                            if (successAlert) {
+                                successAlert.classList.add('active');
+                                successAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+
+                            // Setup copy credentials listener
+                            const copyBtn = document.getElementById('copyCredsBtn');
+                            if (copyBtn) {
+                                // Clone to clear old listeners if any
+                                const newCopyBtn = copyBtn.cloneNode(true);
+                                copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
+                                
+                                newCopyBtn.addEventListener('click', () => {
+                                    const textToCopy = `Email: ${email}\nPassword: ${password}`;
+                                    navigator.clipboard.writeText(textToCopy).then(() => {
+                                        newCopyBtn.innerHTML = '<i data-lucide="check"></i> COPIED!';
+                                        if (window.lucide) window.lucide.createIcons();
+                                        setTimeout(() => {
+                                            newCopyBtn.innerHTML = '<i data-lucide="copy"></i> COPY CREDENTIALS';
+                                            if (window.lucide) window.lucide.createIcons();
+                                        }, 2000);
+                                    }).catch(err => {
+                                        console.error('Failed to copy text: ', err);
+                                    });
+                                });
+                            }
+
+                            if (window.lucide) {
+                                window.lucide.createIcons();
+                            }
+
                             addMemberForm.reset();
                             profileSubName.innerText = 'New Trader';
                             avatarInitials.innerText = 'PV';
