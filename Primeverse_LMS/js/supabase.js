@@ -37,7 +37,7 @@ async function validateSingleSession() {
         const { data, error } = await client
             .from(table)
             .select('session_id')
-            .ilike('email', userEmail.trim())
+            .eq('email', userEmail.trim())
             .maybeSingle();
 
         if (error) {
@@ -83,3 +83,6 @@ if (document.readyState === 'loading') {
 
 // Trigger validation when user switches back to this tab
 window.addEventListener('focus', validateSingleSession);
+
+// Check session validity periodically (every 15 seconds) to catch logouts while tab is open
+setInterval(validateSingleSession, 15000);
