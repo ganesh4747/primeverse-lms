@@ -35,8 +35,8 @@ const lessonsDatabase = {
     },
     6: {
         title: "Trend Analysis & Market Direction",
-        part1: { title: "Day 06 - Part 1: Understanding Market Trends", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
-        part2: { title: "Day 06 - Part 2: Live Trend Analysis & Market Examples", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: { title: "Day 06 - Part 1: Understanding Market Trends", src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/Day6module1.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvRGF5Nm1vZHVsZTEubXA0IiwiaWF0IjoxNzc5NzIyNTUwLCJleHAiOjI0MTA0NDI1NTB9.vcIYc6iODYVU4o1ZQlfoUUi20whDNDn_HLeJPC_T5hU" },
+        part2: { title: "Day 06 - Part 2: Live Trend Analysis & Market Examples", src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/Day6module2.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvRGF5Nm1vZHVsZTIubXA0IiwiaWF0IjoxNzc5NzIyNTkyLCJleHAiOjI0MTA0NDI1OTJ9.7hXwKb8uh_C6MC_TpP3kiAQ4ZfgyFzYRV1pEZL3EjX8" }
     },
     7: {
         title: "Key Levels & Market Reaction Zone",
