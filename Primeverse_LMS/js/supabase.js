@@ -33,7 +33,7 @@ async function validateSingleSession() {
 
     try {
         const table = userRole === 'admin' ? 'admins' : 'profiles';
-        
+
         const { data, error } = await client
             .from(table)
             .select('session_id')
@@ -49,7 +49,7 @@ async function validateSingleSession() {
             // If the database session_id does not match the local one, user logged in elsewhere
             if (data.session_id !== localSessionId) {
                 console.warn("Multiple active sessions detected. Logging out.");
-                
+
                 // Clear user auth storage
                 localStorage.removeItem('isLoggedIn');
                 localStorage.removeItem('session_id');
@@ -65,7 +65,7 @@ async function validateSingleSession() {
                 // Redirect to login page
                 const isRoot = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/Primeverse_LMS/');
                 const redirectUrl = isRoot ? 'index.html?login=true&logout=multiple_devices' : '../index.html?login=true&logout=multiple_devices';
-                
+
                 window.location.replace(redirectUrl);
             }
         }
@@ -85,4 +85,4 @@ if (document.readyState === 'loading') {
 window.addEventListener('focus', validateSingleSession);
 
 // Check session validity periodically (every 15 seconds) to catch logouts while tab is open
-setInterval(validateSingleSession, 15000);
+setInterval(validateSingleSession, 3000);
