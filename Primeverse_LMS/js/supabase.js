@@ -21,8 +21,14 @@ try {
 }
 
 // --- Global Single Login Session Validation ---
+// Capture the session ID for this specific tab to prevent other tabs from silently overriding it in localStorage
+let currentTabSessionId = sessionStorage.getItem('tab_session_id');
+
 async function validateSingleSession() {
-    if (localStorage.getItem('isLoggedIn') !== 'true') return;
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+        sessionStorage.removeItem('tab_session_id');
+        return;
+    }
 
     const userEmail = localStorage.getItem('userEmail');
     const localSessionId = localStorage.getItem('session_id');
@@ -30,6 +36,12 @@ async function validateSingleSession() {
     const client = window.supabaseClient;
 
     if (!userEmail || !localSessionId || !client) return;
+
+    // Initialize this tab's session ID if it doesn't have one yet
+    if (!currentTabSessionId && localSessionId) {
+        currentTabSessionId = localSessionId;
+        sessionStorage.setItem('tab_session_id', currentTabSessionId);
+    }
 
     try {
         const table = userRole === 'admin' ? 'admins' : 'profiles';
@@ -46,13 +58,14 @@ async function validateSingleSession() {
         }
 
         if (data && data.session_id) {
-            // If the database session_id does not match the local one, user logged in elsewhere
-            if (data.session_id !== localSessionId) {
+            // Compare the database session ID against THIS tab's session ID
+            if (data.session_id !== currentTabSessionId) {
                 console.warn("Multiple active sessions detected. Logging out.");
 
                 // Clear user auth storage
                 localStorage.removeItem('isLoggedIn');
                 localStorage.removeItem('session_id');
+                sessionStorage.removeItem('tab_session_id');
                 localStorage.removeItem('hasAccessToMastery');
                 localStorage.removeItem('hasAccessToMentorship');
                 localStorage.removeItem('selectedCourse');
