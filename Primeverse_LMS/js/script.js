@@ -405,7 +405,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (!adminError && adminUser) {
                         const newSessionId = crypto.randomUUID();
-                        await supabase.from('admins').update({ session_id: newSessionId }).ilike('email', adminUser.email);
+                        const { error: adminUpdateError } = await supabase.from('admins').update({ session_id: newSessionId }).eq('email', adminUser.email);
+                        if (adminUpdateError) console.error("Admin session update failed:", adminUpdateError);
                         
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
@@ -445,7 +446,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         showSnackbar("Invalid email or password.", "error");
                     } else {
                         const newSessionId = crypto.randomUUID();
-                        await supabase.from('profiles').update({ session_id: newSessionId }).ilike('email', user.email);
+                        const { error: profileUpdateError } = await supabase.from('profiles').update({ session_id: newSessionId }).eq('email', user.email);
+                        if (profileUpdateError) console.error("Profile session update failed:", profileUpdateError);
                         
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
