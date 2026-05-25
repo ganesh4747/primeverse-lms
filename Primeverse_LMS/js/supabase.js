@@ -19,3 +19,67 @@ try {
 } catch (error) {
     console.error("Error initializing Supabase client:", error);
 }
+
+// --- Global Single Login Session Validation ---
+async function validateSingleSession() {
+    if (localStorage.getItem('isLoggedIn') !== 'true') return;
+
+    const userEmail = localStorage.getItem('userEmail');
+    const localSessionId = localStorage.getItem('session_id');
+    const userRole = localStorage.getItem('userRole') || 'user';
+    const client = window.supabaseClient;
+
+    if (!userEmail || !localSessionId || !client) return;
+
+    try {
+        const table = userRole === 'admin' ? 'admins' : 'profiles';
+        
+        const { data, error } = await client
+            .from(table)
+            .select('session_id')
+            .ilike('email', userEmail.trim())
+            .maybeSingle();
+
+        if (error) {
+            console.error("Session validation error:", error);
+            return;
+        }
+
+        if (data && data.session_id) {
+            // If the database session_id does not match the local one, user logged in elsewhere
+            if (data.session_id !== localSessionId) {
+                console.warn("Multiple active sessions detected. Logging out.");
+                
+                // Clear user auth storage
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('session_id');
+                localStorage.removeItem('hasAccessToMastery');
+                localStorage.removeItem('hasAccessToMentorship');
+                localStorage.removeItem('selectedCourse');
+                localStorage.removeItem('enrollDate');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userPhone');
+                localStorage.removeItem('userRole');
+
+                // Redirect to login page
+                const isRoot = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/Primeverse_LMS/');
+                const redirectUrl = isRoot ? 'index.html?login=true&logout=multiple_devices' : '../index.html?login=true&logout=multiple_devices';
+                
+                window.location.replace(redirectUrl);
+            }
+        }
+    } catch (err) {
+        console.error("Failed to validate session:", err);
+    }
+}
+
+// Trigger validation on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', validateSingleSession);
+} else {
+    validateSingleSession();
+}
+
+// Trigger validation when user switches back to this tab
+window.addEventListener('focus', validateSingleSession);

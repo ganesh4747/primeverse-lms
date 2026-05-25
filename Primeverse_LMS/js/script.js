@@ -343,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const enrollDateISO = enrollDateMidnight.toISOString();
 
                     // Insert the new user into profiles table
+                    const newSessionId = crypto.randomUUID();
                     const { data, error } = await supabase
                         .from('profiles')
                         .insert([
@@ -351,6 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 phone: phone,
                                 email: email,
                                 password: password,
+                                session_id: newSessionId,
                                 enroll_date: enrollDateISO,
                                 current_day: 1,
                                 modules_completed: 0,
@@ -368,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('session_id', newSessionId);
                         localStorage.setItem('userEmail', email);
                         localStorage.setItem('userName', fullName);
                         localStorage.setItem('userPhone', phone);
@@ -401,8 +404,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         .maybeSingle();
 
                     if (!adminError && adminUser) {
+                        const newSessionId = crypto.randomUUID();
+                        await supabase.from('admins').update({ session_id: newSessionId }).ilike('email', adminUser.email);
+                        
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('session_id', newSessionId);
                         localStorage.setItem('userEmail', adminUser.email);
                         localStorage.setItem('userName', adminUser.full_name);
                         if (adminUser.phone) localStorage.setItem('userPhone', adminUser.phone);
@@ -437,8 +444,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else if (!user) {
                         showSnackbar("Invalid email or password.", "error");
                     } else {
+                        const newSessionId = crypto.randomUUID();
+                        await supabase.from('profiles').update({ session_id: newSessionId }).ilike('email', user.email);
+                        
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('session_id', newSessionId);
                         localStorage.setItem('userEmail', user.email);
                         localStorage.setItem('userName', user.full_name);
                         if (user.phone) localStorage.setItem('userPhone', user.phone);
@@ -716,6 +727,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Deep link redirect parameters
     const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('logout') === 'multiple_devices') {
+        showSnackbar("You have been logged out because your account was accessed from another device.", "error");
+    }
     if (urlParams.get('unpaid') === 'true') {
         showSnackbar("Please complete payment to access the program dashboard.", "error");
     }
