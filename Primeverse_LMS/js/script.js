@@ -344,6 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Insert the new user into profiles table
                     const newSessionId = crypto.randomUUID();
+                    const sessionCreatedAt = new Date().toISOString();
                     const { data, error } = await supabase
                         .from('profiles')
                         .insert([
@@ -353,6 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 email: email,
                                 password: password,
                                 session_id: newSessionId,
+                                session_created_at: sessionCreatedAt,
                                 enroll_date: enrollDateISO,
                                 current_day: 1,
                                 modules_completed: 0,
@@ -371,6 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
                         localStorage.setItem('session_id', newSessionId);
+                        localStorage.setItem('session_created_at', sessionCreatedAt);
                         localStorage.setItem('userEmail', email);
                         localStorage.setItem('userName', fullName);
                         localStorage.setItem('userPhone', phone);
@@ -405,12 +408,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (!adminError && adminUser) {
                         const newSessionId = crypto.randomUUID();
-                        const { error: adminUpdateError } = await supabase.from('admins').update({ session_id: newSessionId }).eq('email', adminUser.email);
+                        const sessionCreatedAt = new Date().toISOString();
+                        const { error: adminUpdateError } = await supabase
+                            .from('admins')
+                            .update({ 
+                                session_id: newSessionId,
+                                session_created_at: sessionCreatedAt
+                            })
+                            .eq('email', adminUser.email);
                         if (adminUpdateError) console.error("Admin session update failed:", adminUpdateError);
                         
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
                         localStorage.setItem('session_id', newSessionId);
+                        localStorage.setItem('session_created_at', sessionCreatedAt);
                         localStorage.setItem('userEmail', adminUser.email);
                         localStorage.setItem('userName', adminUser.full_name);
                         if (adminUser.phone) localStorage.setItem('userPhone', adminUser.phone);
@@ -446,12 +457,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         showSnackbar("Invalid email or password.", "error");
                     } else {
                         const newSessionId = crypto.randomUUID();
-                        const { error: profileUpdateError } = await supabase.from('profiles').update({ session_id: newSessionId }).eq('email', user.email);
+                        const sessionCreatedAt = new Date().toISOString();
+                        const { error: profileUpdateError } = await supabase
+                            .from('profiles')
+                            .update({ 
+                                session_id: newSessionId,
+                                session_created_at: sessionCreatedAt
+                            })
+                            .eq('email', user.email);
                         if (profileUpdateError) console.error("Profile session update failed:", profileUpdateError);
                         
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
                         localStorage.setItem('session_id', newSessionId);
+                        localStorage.setItem('session_created_at', sessionCreatedAt);
                         localStorage.setItem('userEmail', user.email);
                         localStorage.setItem('userName', user.full_name);
                         if (user.phone) localStorage.setItem('userPhone', user.phone);
@@ -597,7 +616,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (signupBtnNav) {
         signupBtnNav.addEventListener('click', async () => {
             if (localStorage.getItem('isLoggedIn') === 'true') {
+                // Clear session from database before logging out
+                const userEmail = localStorage.getItem('userEmail');
+                const userRole = localStorage.getItem('userRole') || 'user';
+                const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+
+                if (userEmail && supabase) {
+                    try {
+                        const table = userRole === 'admin' ? 'admins' : 'profiles';
+                        await supabase
+                            .from(table)
+                            .update({ session_id: null, session_created_at: null })
+                            .eq('email', userEmail);
+                        console.log("✅ Session cleared from database on logout");
+                    } catch (err) {
+                        console.error("Error clearing session from database:", err);
+                    }
+                }
+
+                // Clear local storage
                 localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('session_id');
+                localStorage.removeItem('session_created_at');
                 localStorage.removeItem('hasAccessToMastery');
                 localStorage.removeItem('hasAccessToMentorship');
                 localStorage.removeItem('selectedCourse');
@@ -606,6 +646,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem('userEmail');
                 localStorage.removeItem('userPhone');
                 localStorage.removeItem('userRole');
+                sessionStorage.removeItem('tab_session_id');
+                
                 location.reload();
             } else {
                 setAuthState('signup');
