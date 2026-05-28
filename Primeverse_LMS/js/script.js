@@ -158,11 +158,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginBtnNav) {
                 if (selectedPlan === 'PrimeVerse Pro Mentorship') {
                     loginBtnNav.innerText = 'PRO STATUS';
+                    loginBtnNav.style.background = 'transparent';
+                    loginBtnNav.style.color = 'var(--gold)';
+                    loginBtnNav.style.border = '1px solid var(--gold)';
                 } else {
                     loginBtnNav.innerText = 'DASHBOARD';
+                    loginBtnNav.style.background = 'rgba(255, 255, 255, 0.05)';
+                    loginBtnNav.style.color = '';
+                    loginBtnNav.style.border = '';
                 }
                 loginBtnNav.style.display = 'inline-block';
-                loginBtnNav.style.background = 'rgba(255, 255, 255, 0.05)';
             }
             if (signupBtnNav) {
                 signupBtnNav.innerText = 'SIGN OUT';
@@ -173,8 +178,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginBtnNavMobile) {
                 if (selectedPlan === 'PrimeVerse Pro Mentorship') {
                     loginBtnNavMobile.innerText = 'PRO STATUS';
+                    loginBtnNavMobile.style.background = 'transparent';
+                    loginBtnNavMobile.style.color = 'var(--gold)';
+                    loginBtnNavMobile.style.border = '1px solid var(--gold)';
                 } else {
                     loginBtnNavMobile.innerText = 'DASHBOARD';
+                    loginBtnNavMobile.style.background = '';
+                    loginBtnNavMobile.style.color = '';
+                    loginBtnNavMobile.style.border = '';
                 }
                 loginBtnNavMobile.style.display = 'block';
             }
@@ -210,6 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 loginBtnNav.innerText = 'Sign In';
                 loginBtnNav.style.display = 'inline-block';
                 loginBtnNav.style.background = '';
+                loginBtnNav.style.color = '';
+                loginBtnNav.style.border = '';
             }
             if (signupBtnNav) {
                 signupBtnNav.innerText = 'Sign Up';
@@ -221,6 +234,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginBtnNavMobile) {
                 loginBtnNavMobile.innerText = 'Sign In';
                 loginBtnNavMobile.style.display = 'block';
+                loginBtnNavMobile.style.background = '';
+                loginBtnNavMobile.style.color = '';
+                loginBtnNavMobile.style.border = '';
             }
             if (signupBtnNavMobile) {
                 signupBtnNavMobile.innerText = 'Sign Up';
