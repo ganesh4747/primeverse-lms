@@ -51,7 +51,7 @@ const lessonsDatabase = {
     },
     9: {
         title: "Fibonacci Framework & Market Strength Analysis",
-        part1: { title: "Day 09 - Part 1: Understanding the Fibonacci Tool", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
+        part1: { title: "Day 09 - Part 1: Understanding the Fibonacci Tool", src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/0525.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvMDUyNS5tcDQiLCJpYXQiOjE3Nzk5NTMyMDYsImV4cCI6MjQxMDY3MzIwNn0.CSlz7EIs5CaiG1i2oA3JQ46382hIlakCayn1tstiRO0" },
         part2: { title: "Day 09 - Part 2: Strong & Weak Highs & Lows", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
     },
     10: {
