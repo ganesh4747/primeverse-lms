@@ -46,12 +46,12 @@ const lessonsDatabase = {
     },
     8: {
         title: "Expansion & Retracement ,  Internal & External Market Structure",
-        part1: { title: "Day 08 - Part 1: Understanding Expansion & Retracing", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
+        part1: { title: "Day 08 - Part 1: Understanding Expansion & Retracing", src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day%208%20-%20low%20.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5IDggLSBsb3cgLm1wNCIsImlhdCI6MTc3OTk3NjAxOCwiZXhwIjoyNDEwNjk2MDE4fQ.KTzyd9jq0dA6sdchKM4xLFsZeBsPBTqJQo300p21RoU" },
         part2: { title: "Day 08 - Part 2: Internal & External Market Structure", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
     },
     9: {
         title: "Fibonacci Framework & Market Strength Analysis",
-        part1: { title: "Day 09 - Part 1: Understanding the Fibonacci Tool", src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/0525.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvMDUyNS5tcDQiLCJpYXQiOjE3Nzk5NTMyMDYsImV4cCI6MjQxMDY3MzIwNn0.CSlz7EIs5CaiG1i2oA3JQ46382hIlakCayn1tstiRO0" },
+        part1: { title: "Day 09 - Part 1: Understanding the Fibonacci Tool", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
         part2: { title: "Day 09 - Part 2: Strong & Weak Highs & Lows", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
     },
     10: {
