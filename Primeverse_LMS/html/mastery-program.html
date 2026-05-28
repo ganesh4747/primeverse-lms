@@ -561,7 +561,15 @@
                     </div>
                 </div>
 
-
+                <!-- Coupon Section -->
+                <div style="margin-bottom: 2rem;">
+                    <div style="font-weight: 800; font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); font-family: 'Satoshi', sans-serif; margin-bottom: 0.8rem;">Apply Coupon</div>
+                    <div style="display: flex; gap: 12px;">
+                        <input type="text" placeholder="ENTER CODE" id="couponCode" style="flex: 1; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 0.8rem 1.2rem; color: var(--white); font-family: 'Satoshi', sans-serif; font-size: 0.9rem; font-weight: 700; outline: none; transition: 0.3s;" onfocus="this.style.borderColor='rgba(212, 175, 55, 0.5)'" onblur="this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+                        <button type="button" id="applyCouponBtn" style="background: var(--gold); color: #000; border: none; border-radius: 12px; padding: 0.8rem 1.8rem; font-weight: 900; font-family: 'Satoshi', sans-serif; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212,175,55,0.1);" onmouseover="this.style.background='#c29d2f'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(212,175,55,0.2)';" onmouseout="this.style.background='var(--gold)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(212,175,55,0.1)';">Apply</button>
+                    </div>
+                    <div id="couponMessage" style="font-size: 0.8rem; margin-top: 8px; font-weight: 700; font-family: 'Satoshi', sans-serif; display: none;"></div>
+                </div>
 
                 <!-- Total Amount Container Box -->
                 <div class="amount-box">
@@ -604,6 +612,24 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const buildSystemBtn = document.getElementById('buildSystemBtn');
+            const applyCouponBtn = document.getElementById('applyCouponBtn');
+            const couponCodeInput = document.getElementById('couponCode');
+            const couponMessage = document.getElementById('couponMessage');
+
+            if (applyCouponBtn && couponCodeInput && couponMessage) {
+                applyCouponBtn.addEventListener('click', () => {
+                    const code = couponCodeInput.value.trim();
+                    if (code === '') {
+                        couponMessage.textContent = 'Please enter a coupon code.';
+                        couponMessage.style.color = '#ff4d4d';
+                        couponMessage.style.display = 'block';
+                    } else {
+                        couponMessage.textContent = 'Invalid coupon code.';
+                        couponMessage.style.color = '#ff4d4d';
+                        couponMessage.style.display = 'block';
+                    }
+                });
+            }
 
             // Direct Navigation to Dashboard
             buildSystemBtn.addEventListener('click', async () => {
