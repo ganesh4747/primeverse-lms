@@ -631,49 +631,9 @@
                 });
             }
 
-            // Direct Navigation to Dashboard
-            buildSystemBtn.addEventListener('click', async () => {
-                const courseName = 'PrimeVerse Mastery Program';
-                const enrollmentDate = new Date().toISOString();
-                
-                localStorage.setItem('selectedCourse', courseName); // Stores the selected plan
-                localStorage.setItem('enrollDate', enrollmentDate);
-                localStorage.setItem('payment_status', 'free_access');
-                
-                // Update Supabase profiles table for the current user
-                const userEmail = localStorage.getItem('userEmail');
-                const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
-                
-                if (userEmail && supabase) {
-                    try {
-                        const { data, error } = await supabase
-                            .from('profiles')
-                            .update({
-                                enroll_date: enrollmentDate,
-                                selected_course: courseName,
-                                current_day: 1,
-                                modules_completed: 0,
-                                total_modules: 18,
-                                program_progress: 0,
-                                stage_title: 'Financial Market Foundations',
-                                payment_status: 'free_access'
-                            })
-                            .eq('email', userEmail.trim());
-                        
-                        if (error) {
-                            console.error("❌ Error updating course enrollment:", error);
-                        } else {
-                            console.log("✅ Course enrollment saved to Supabase");
-                        }
-                    } catch (e) {
-                        console.error("❌ Exception during enrollment:", e);
-                    }
-                }
-                
-                // Navigate to dashboard
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 300);
+            buildSystemBtn.addEventListener('click', () => {
+                // Redirect to Razorpay payment link
+                window.location.href = 'https://rzp.io/rzp/TGIFvsg';
             });
         });
     </script>

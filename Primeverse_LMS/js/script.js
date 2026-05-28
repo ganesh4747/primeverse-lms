@@ -153,6 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const viewProgramBtn = document.getElementById('viewProgramBtn');
         const applyNowBtn = document.getElementById('applyNowBtn');
 
+        const userRole = localStorage.getItem('userRole');
+
         if (loggedIn) {
             // Desk Nav
             if (loginBtnNav) {
@@ -161,13 +163,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     loginBtnNav.style.background = 'transparent';
                     loginBtnNav.style.color = 'var(--gold)';
                     loginBtnNav.style.border = '1px solid var(--gold)';
-                } else {
+                    loginBtnNav.style.display = 'inline-block';
+                } else if (selectedPlan === 'PrimeVerse Mastery Program' || userRole === 'admin') {
                     loginBtnNav.innerText = 'DASHBOARD';
                     loginBtnNav.style.background = 'rgba(255, 255, 255, 0.05)';
                     loginBtnNav.style.color = '';
                     loginBtnNav.style.border = '';
+                    loginBtnNav.style.display = 'inline-block';
+                } else {
+                    loginBtnNav.style.display = 'none';
                 }
-                loginBtnNav.style.display = 'inline-block';
             }
             if (signupBtnNav) {
                 signupBtnNav.innerText = 'SIGN OUT';
@@ -181,13 +186,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     loginBtnNavMobile.style.background = 'transparent';
                     loginBtnNavMobile.style.color = 'var(--gold)';
                     loginBtnNavMobile.style.border = '1px solid var(--gold)';
-                } else {
+                    loginBtnNavMobile.style.display = 'block';
+                } else if (selectedPlan === 'PrimeVerse Mastery Program' || userRole === 'admin') {
                     loginBtnNavMobile.innerText = 'DASHBOARD';
                     loginBtnNavMobile.style.background = '';
                     loginBtnNavMobile.style.color = '';
                     loginBtnNavMobile.style.border = '';
+                    loginBtnNavMobile.style.display = 'block';
+                } else {
+                    loginBtnNavMobile.style.display = 'none';
                 }
-                loginBtnNavMobile.style.display = 'block';
             }
             if (signupBtnNavMobile) {
                 signupBtnNavMobile.innerText = 'SIGN OUT';
@@ -607,7 +615,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginBtnNav) {
         loginBtnNav.addEventListener('click', () => {
             if (localStorage.getItem('isLoggedIn') === 'true') {
-                if (localStorage.getItem('payment_status') === 'unpaid') {
+                if (localStorage.getItem('selectedCourse') === 'PrimeVerse Pro Mentorship') {
+                    window.openMentorshipModal();
+                } else if (localStorage.getItem('payment_status') === 'unpaid') {
                     showSnackbar("Please complete payment to access the program dashboard.", "error");
                     const programSection = document.getElementById('program');
                     if (programSection) {
@@ -615,9 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } else {
                     // User is logged in - check course or role
-                    if (localStorage.getItem('selectedCourse') === 'PrimeVerse Pro Mentorship') {
-                        window.openMentorshipModal();
-                    } else if (localStorage.getItem('userRole') === 'admin') {
+                    if (localStorage.getItem('userRole') === 'admin') {
                         window.location.href = 'html/communitypage.html';
                     } else {
                         window.location.href = 'html/dashboard.html';
@@ -796,6 +804,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Deep link redirect parameters
     const urlParams = new URLSearchParams(window.location.search);
+
+    // Razorpay Success Redirect Logic
+    if (urlParams.has('razorpay_payment_id') || urlParams.get('payment') === 'success') {
+        const userEmail = localStorage.getItem('userEmail');
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const razorpayPaymentId = urlParams.get('razorpay_payment_id') || 'unknown';
+
+        if (isLoggedIn && userEmail) {
+            localStorage.setItem('payment_status', 'free_access'); // Using free_access for parity with previous logic
+            
+            // Default to Mastery Program unless Pro Mentorship is specified
+            const currentPlan = localStorage.getItem('selectedCourse');
+            const targetCourse = (currentPlan === 'PrimeVerse Pro Mentorship' || urlParams.get('course') === 'pro') 
+                ? 'PrimeVerse Pro Mentorship' : 'PrimeVerse Mastery Program';
+            
+            localStorage.setItem('selectedCourse', targetCourse);
+            localStorage.setItem('enrollDate', new Date().toISOString());
+
+            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+            
+            if (supabase) {
+                supabase.from('profiles').update({
+                    payment_status: 'free_access',
+                    selected_course: targetCourse,
+                    enroll_date: new Date().toISOString(),
+                    current_day: 1,
+                    modules_completed: 0,
+                    total_modules: 18,
+                    program_progress: 0,
+                    stage_title: 'Financial Market Foundations',
+                    razorpay_payment_id: razorpayPaymentId
+                }).ilike('email', userEmail.trim()).then(({ error }) => {
+                    if (error) {
+                        console.error('Error updating payment status:', error);
+                    } else {
+                        console.log('Payment status updated successfully in Supabase.');
+                    }
+                    
+                    // Clean up URL parameter to avoid re-triggering
+                    if (window.history.replaceState) {
+                        const url = new URL(window.location);
+                        url.searchParams.delete('razorpay_payment_id');
+                        url.searchParams.delete('razorpay_payment_link_id');
+                        url.searchParams.delete('razorpay_payment_link_reference_id');
+                        url.searchParams.delete('razorpay_payment_link_status');
+                        url.searchParams.delete('razorpay_signature');
+                        url.searchParams.delete('payment');
+                        url.searchParams.delete('course');
+                        window.history.replaceState(null, '', url);
+                    }
+
+                    // Show success state
+                    if (targetCourse === 'PrimeVerse Pro Mentorship') {
+                        if (!window.location.pathname.includes('index.html') && !window.location.pathname.endsWith('/')) {
+                            window.location.href = (window.location.pathname.includes('/html/')) ? '../index.html?enrolled=pro' : 'index.html?enrolled=pro';
+                        } else {
+                            window.openMentorshipModal();
+                            updateAuthUI();
+                        }
+                    } else {
+                        if (!window.location.pathname.includes('dashboard.html')) {
+                            window.location.href = (window.location.pathname.includes('/html/')) ? 'dashboard.html' : 'html/dashboard.html';
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        }
+    }
+
     if (urlParams.get('enrolled') === 'pro') {
         window.openMentorshipModal();
     }
@@ -880,7 +959,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginBtnNavMobile) {
         loginBtnNavMobile.addEventListener('click', () => {
             if (localStorage.getItem('isLoggedIn') === 'true') {
-                if (localStorage.getItem('payment_status') === 'unpaid') {
+                if (localStorage.getItem('selectedCourse') === 'PrimeVerse Pro Mentorship') {
+                    window.openMentorshipModal();
+                } else if (localStorage.getItem('payment_status') === 'unpaid') {
                     showSnackbar("Please complete payment to access the program dashboard.", "error");
                     const programSection = document.getElementById('program');
                     if (programSection) {
@@ -888,9 +969,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } else {
                     // User is logged in - check course or role
-                    if (localStorage.getItem('selectedCourse') === 'PrimeVerse Pro Mentorship') {
-                        window.openMentorshipModal();
-                    } else if (localStorage.getItem('userRole') === 'admin') {
+                    if (localStorage.getItem('userRole') === 'admin') {
                         window.location.href = 'html/communitypage.html';
                     } else {
                         window.location.href = 'html/dashboard.html';

@@ -685,43 +685,9 @@
                 });
             }
 
-            // Direct Navigation to Dashboard
-            buildSystemBtn.addEventListener('click', async () => {
-                const courseName = 'PrimeVerse Pro Mentorship';
-                const enrollmentDate = new Date().toISOString();
-                
-                localStorage.setItem('selectedCourse', courseName);
-                localStorage.setItem('enrollDate', enrollmentDate);
-                localStorage.setItem('payment_status', 'free_access');
-                
-                // Update Supabase profiles table for the current user
-                const userEmail = localStorage.getItem('userEmail');
-                const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
-                
-                if (userEmail && supabase) {
-                    try {
-                        const { data, error } = await supabase
-                            .from('profiles')
-                            .update({
-                                enroll_date: enrollmentDate,
-                                selected_course: courseName,
-                                payment_status: 'free_access'
-                            })
-                            .eq('email', userEmail.trim());
-                        
-                        if (error) {
-                            console.error("❌ Error updating course enrollment:", error);
-                        } else {
-                            console.log("✅ Pro Mentorship enrollment saved to Supabase");
-                        }
-                    } catch (e) {
-                        console.error("❌ Exception during enrollment:", e);
-                    }
-                }
-                // Navigate to index page
-                setTimeout(() => {
-                    window.location.href = '../index.html?enrolled=pro';
-                }, 300);
+            buildSystemBtn.addEventListener('click', () => {
+                // Redirect to Razorpay payment link
+                window.location.href = 'https://rzp.io/rzp/F89qkMo8';
             });
         }); 
     </script>
