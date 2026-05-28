@@ -598,8 +598,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         programSection.scrollIntoView({ behavior: 'smooth' });
                     }
                 } else {
-                    // User is logged in - navigate to dashboard/community based on role
-                    if (localStorage.getItem('userRole') === 'admin') {
+                    // User is logged in - check course or role
+                    if (localStorage.getItem('selectedCourse') === 'PrimeVerse Pro Mentorship') {
+                        window.openMentorshipModal();
+                    } else if (localStorage.getItem('userRole') === 'admin') {
                         window.location.href = 'html/communitypage.html';
                     } else {
                         window.location.href = 'html/dashboard.html';
@@ -727,6 +729,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // When closing the mentorship modal, update selectedPlan to PrimeVerse Pro Mentorship
         // so that they can access the dashboard, and store it in their profile table in Supabase
         localStorage.setItem('selectedCourse', 'PrimeVerse Pro Mentorship');
+        updateAuthUI();
 
         const userEmail = localStorage.getItem('userEmail');
         const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
@@ -744,8 +747,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Redirect to dashboard
-        window.location.href = 'html/dashboard.html';
+        // Clean up URL parameter if it exists
+        if (window.history.replaceState) {
+            const url = new URL(window.location);
+            if (url.searchParams.has('enrolled')) {
+                url.searchParams.delete('enrolled');
+                window.history.replaceState(null, '', url);
+            }
+        }
     };
 
     if (closeMentorshipModal) {
@@ -771,6 +780,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Deep link redirect parameters
     const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('enrolled') === 'pro') {
+        window.openMentorshipModal();
+    }
     if (urlParams.get('logout') === 'multiple_devices') {
         showSnackbar("You have been logged out because your account was accessed from another device.", "error");
     }
@@ -859,8 +871,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         programSection.scrollIntoView({ behavior: 'smooth' });
                     }
                 } else {
-                    // User is logged in - navigate to dashboard regardless of course selection
-                    window.location.href = 'html/dashboard.html';
+                    // User is logged in - check course or role
+                    if (localStorage.getItem('selectedCourse') === 'PrimeVerse Pro Mentorship') {
+                        window.openMentorshipModal();
+                    } else if (localStorage.getItem('userRole') === 'admin') {
+                        window.location.href = 'html/communitypage.html';
+                    } else {
+                        window.location.href = 'html/dashboard.html';
+                    }
                 }
             } else {
                 // User is not logged in - show login modal

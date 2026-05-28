@@ -718,10 +718,9 @@
                         console.error("❌ Exception during enrollment:", e);
                     }
                 }
-                
-                // Navigate to dashboard
+                // Navigate to index page
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = '../index.html?enrolled=pro';
                 }, 300);
             });
         }); 
