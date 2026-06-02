@@ -572,6 +572,125 @@
             transform: translateY(1px);
         }
 
+        /* Custom Table Styles */
+        .modern-user-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.75rem;
+            text-align: left;
+            color: var(--white);
+        }
+        
+        .modern-user-table thead th {
+            padding: 0.5rem 1.5rem;
+            color: var(--gray);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            border: none;
+        }
+
+        .modern-user-table tbody tr {
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .modern-user-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px) scale(1.005);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(212, 175, 55, 0.15);
+        }
+
+        .modern-user-table tbody td {
+            padding: 1.25rem 1.5rem;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .modern-user-table tbody tr td:first-child {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+        
+        .modern-user-table tbody tr td:last-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .user-avatar-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 1rem;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        .btn-sleek {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            margin-right: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-block {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        
+        .btn-block:hover {
+            background: rgba(245, 158, 11, 0.2);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+        }
+        
+        .btn-unblock {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-unblock:hover {
+            background: rgba(16, 185, 129, 0.2);
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-remove {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-remove:hover {
+            background: rgba(239, 68, 68, 0.2);
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
+        }
+
         /* --- Provision Sync Overlay --- */
         .hologram-sync-overlay {
             position: fixed;
@@ -622,9 +741,87 @@
         }
 
         .sync-scanner i {
-            width: 36px;
-            height: 36px;
+            animation: pulse-glow 2s infinite ease-in-out;
             color: var(--gold);
+        }
+        
+        /* Custom Confirm Modal */
+        .custom-confirm-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(6, 13, 23, 0.85);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .custom-confirm-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .custom-confirm-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .custom-confirm-overlay.active .custom-confirm-card {
+            transform: scale(1);
+        }
+        .custom-confirm-icon {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem auto;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+        .custom-confirm-icon i { width: 30px; height: 30px; }
+        .custom-confirm-title {
+            font-size: 1.25rem; font-weight: 800; color: var(--white);
+            margin-bottom: 0.75rem; letter-spacing: 0.5px;
+        }
+        .custom-confirm-desc {
+            font-size: 0.9rem; color: var(--gray);
+            line-height: 1.5; margin-bottom: 2rem;
+        }
+        .custom-confirm-actions {
+            display: flex; gap: 12px; justify-content: center;
+        }
+        .btn-confirm-cancel {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border: 1px solid var(--glass-border);
+            padding: 10px 20px; border-radius: 8px;
+            font-size: 0.85rem; font-weight: 700; cursor: pointer;
+            transition: all 0.2s; flex: 1; text-transform: uppercase;
+        }
+        .btn-confirm-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .btn-confirm-delete {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 10px 20px; border-radius: 8px;
+            font-size: 0.85rem; font-weight: 700; cursor: pointer;
+            transition: all 0.2s; flex: 1; text-transform: uppercase;
+        }
+        .btn-confirm-delete:hover {
+            background: #ef4444; color: white;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
         }
 
         @keyframes pulse-ring {
@@ -875,8 +1072,8 @@
                 <a href="executionjournal.html" class="nav-item" id="nav-journal" style="display: none;"><i data-lucide="book-marked"></i> Execution Journal</a>
                 
                 <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
-                <a href="addmember.html" class="nav-item active" id="nav-addmember"><i data-lucide="user-plus"></i> Add Member</a>
-                <a href="usercontrol.html" class="nav-item" id="nav-usercontrol"><i data-lucide="shield-minus"></i> User Control</a>
+                <a href="addmember.html" class="nav-item" id="nav-addmember"><i data-lucide="user-plus"></i> Add Member</a>
+                <a href="usercontrol.html" class="nav-item active" id="nav-usercontrol"><i data-lucide="shield-minus"></i> User Control</a>
                 <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
             </div>
             <div class="nav-bottom">
@@ -906,193 +1103,52 @@
                     <i data-lucide="shield" style="width: 14px; height: 14px; color: #3b82f6;"></i>
                     <span>ADMIN CONTROL MODULE</span>
                 </div>
-                <h1 class="welcome-title">Add New <span class="gradient-text-gold" id="welcomeUserName">Member Profile</span> 👋</h1>
-                <p class="header-quote">"Empower the community by onboarding verified traders and expanding execution networks."</p>
+                <h1 class="welcome-title">Manage <span class="gradient-text-gold">Users</span> 👋</h1>
+                <p class="header-quote">"Block or remove users from the platform based on their enrollment date."</p>
             </div>
         </header>
 
         <!-- Dynamic Form Container -->
         <div class="innovative-settings-container">
-            <h2 class="settings-title-glow">
-                <i data-lucide="user-plus" class="title-icon-spin"></i> Provision Member Credentials
+            <h2 class="settings-title-glow" style="display: flex; justify-content: space-between; align-items: center;">
+                <div><i data-lucide="shield-minus" class="title-icon-spin"></i> User Access Control</div>
+                <div style="font-size: 1rem; color: var(--gold); background: rgba(212, 175, 55, 0.1); padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
+                    Total Users: <span id="totalUsersCount" style="font-weight: 800;">0</span>
+                </div>
             </h2>
-
-            <div class="settings-grid-split">
-                <!-- Left Column: Holographic Hub -->
-                <div class="holographic-profile-hub">
-                    <div class="glow-orb"></div>
-                    <div class="avatar-dynamic-wrapper">
-                        <div class="avatar-ring-dashed"></div>
-                        <div class="avatar-ring-solid"></div>
-                        <div id="avatarInitials" class="avatar-initials-dynamic">PV</div>
-                    </div>
-
-                    <h3 id="profileSubName" class="profile-display-name">New Trader</h3>
-                    <div class="trader-tier-tag"><i data-lucide="zap"></i> VERIFYING NODE</div>
-
-                    <div class="active-program-card">
-                        <div class="active-program-icon-circle">
-                            <i data-lucide="shield-check"></i>
-                        </div>
-                        <div class="active-program-text-block">
-                            <span class="active-program-label">Active Node Role</span>
-                            <h4 class="active-program-name" id="activeProgramName">PRIME VERSE </h4>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Settings Form -->
-                <div class="cyber-form-wrapper">
-                    <form id="addMemberForm">
-                        <!-- Full Name -->
-                        <div class="form-row-premium">
-                            <div class="form-row-label-block">
-                                <div class="row-icon-wrapper">
-                                    <i data-lucide="user"></i>
-                                </div>
-                                <div class="row-text-wrapper">
-                                    <span class="row-title">Full Name</span>
-                                    <span class="row-subtitle">Enter student's name</span>
-                                </div>
-                            </div>
-                            <div class="cyber-input-wrapper">
-                                <input type="text" id="memberName" class="cyber-input-field" placeholder="Ganesh Kumar" required autocomplete="off">
-                            </div>
-                        </div>
-
-                        <!-- Email Address -->
-                        <div class="form-row-premium">
-                            <div class="form-row-label-block">
-                                <div class="row-icon-wrapper">
-                                    <i data-lucide="mail"></i>
-                                </div>
-                                <div class="row-text-wrapper">
-                                    <span class="row-title">Email Address</span>
-                                    <span class="row-subtitle">Security login node</span>
-                                </div>
-                            </div>
-                            <div class="cyber-input-wrapper">
-                                <input type="email" id="memberEmail" class="cyber-input-field" placeholder="primeverse@gmail.com" required autocomplete="off">
-                            </div>
-                        </div>
-
-                        <!-- Phone Number -->
-                        <div class="form-row-premium">
-                            <div class="form-row-label-block">
-                                <div class="row-icon-wrapper">
-                                    <i data-lucide="phone"></i>
-                                </div>
-                                <div class="row-text-wrapper">
-                                    <span class="row-title">Phone Number</span>
-                                    <span class="row-subtitle">10-digit primary line</span>
-                                </div>
-                            </div>
-                            <div class="cyber-input-wrapper">
-                                <input type="tel" id="memberPhone" class="cyber-input-field" placeholder="1234567890" required maxlength="10" pattern="\d{10}">
-                            </div>
-                        </div>
-
-                        <!-- Password -->
-                        <div class="form-row-premium">
-                            <div class="form-row-label-block">
-                                <div class="row-icon-wrapper">
-                                    <i data-lucide="key-round"></i>
-                                </div>
-                                <div class="row-text-wrapper">
-                                    <span class="row-title">Access Password</span>
-                                    <span class="row-subtitle">Min 6 characters node</span>
-                                </div>
-                            </div>
-                            <div class="cyber-input-wrapper">
-                                <input type="password" id="memberPassword" class="cyber-input-field" placeholder="••••••••" required minlength="6">
-                            </div>
-                        </div>
-
-                        <!-- Course Selection -->
-                        <div class="form-row-premium">
-                            <div class="form-row-label-block">
-                                <div class="row-icon-wrapper">
-                                    <i data-lucide="book-open"></i>
-                                </div>
-                                <div class="row-text-wrapper">
-                                    <span class="row-title">Assigned Course</span>
-                                    <span class="row-subtitle">Assigned learning path</span>
-                                </div>
-                            </div>
-                            <div class="cyber-input-wrapper">
-                                <select id="memberCourse" class="cyber-select-field" required>
-                                    <option value="PrimeVerse Mastery Program" selected>PrimeVerse Mastery Program</option>
-                                    <option value="PrimeVerse Pro Mentorship">PrimeVerse Pro Mentorship</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Instant Paid Access Switch -->
-                        <div class="form-row-premium">
-                            <div class="form-row-label-block">
-                                <div class="row-icon-wrapper">
-                                    <i data-lucide="credit-card"></i>
-                                </div>
-                                <div class="row-text-wrapper">
-                                    <span class="row-title">Instant Access</span>
-                                    <span class="row-subtitle">Give paid access straightly</span>
-                                </div>
-                            </div>
-                            <div class="toggle-switch-wrapper">
-                                <label class="switch">
-                                    <input type="checkbox" id="memberInstantAccess" checked>
-                                    <span class="slider"></span>
-                                </label>
-                                <span class="toggle-status-label" id="accessLabel">PAID ACCESS GRANTED</span>
-                            </div>
-                        </div>
-
-                        <!-- Provision Button -->
-                        <div class="action-button-row">
-                            <button type="submit" class="cyber-provision-btn">
-                                <i data-lucide="user-plus"></i> ADD MEMBER NOW
-                            </button>
-                        </div>
-                    </form>
-
-                    <!-- Beautiful Custom Success Alert Box -->
-                    <div id="customSuccessAlert" class="custom-success-alert">
-                        <div class="alert-header">
-                            <div class="alert-badge-success">
-                                <i data-lucide="check-circle"></i>
-                                <span>MEMBER ADDED SUCCESSFULLY</span>
-                            </div>
-                        </div>
-                        
-                        <div class="alert-details-grid">
-                            <div class="detail-item">
-                                <span class="detail-label">FULL NAME</span>
-                                <span class="detail-val" id="alertFullName">-</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">EMAIL ADDRESS</span>
-                                <span class="detail-val" id="alertEmail">-</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">PASSWORD</span>
-                                <span class="detail-val" id="alertPassword">-</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">ACCESS STATUS</span>
-                                <span class="detail-val status-paid" id="alertStatus">-</span>
-                            </div>
-                        </div>
-
-                        <div class="alert-action-row">
-                            <button type="button" id="copyCredsBtn" class="copy-creds-btn">
-                                <i data-lucide="copy"></i> COPY CREDENTIALS
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="cyber-form-wrapper" style="padding: 1.5rem; overflow-x: auto; background: transparent; border: none; box-shadow: none;">
+                <table class="modern-user-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Enroll Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <!-- Users will be populated here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
+
+    <!-- Custom Confirm Modal -->
+    <div id="customConfirmOverlay" class="custom-confirm-overlay">
+        <div class="custom-confirm-card">
+            <div class="custom-confirm-icon">
+                <i data-lucide="alert-triangle"></i>
+            </div>
+            <h3 class="custom-confirm-title">Remove User</h3>
+            <p class="custom-confirm-desc">Are you sure you want to permanently remove this user? This action cannot be undone.</p>
+            <div class="custom-confirm-actions">
+                <button id="cancelRemoveBtn" class="btn-confirm-cancel">Cancel</button>
+                <button id="confirmRemoveBtn" class="btn-confirm-delete">Remove</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Holographic Provisioning Scanner Overlay -->
     <div id="syncOverlay" class="hologram-sync-overlay">
@@ -1112,7 +1168,6 @@
     <!-- Supabase Setup & Operations Script -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Restrict page exclusively to logged-in administrators
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.replace('../index.html?login=true');
         } else if (localStorage.getItem('userRole') !== 'admin') {
@@ -1124,7 +1179,6 @@
                 window.lucide.createIcons();
             }
 
-            // Mobile menu drawer
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const sidebar = document.querySelector('.sidebar');
             if (mobileMenuBtn && sidebar) {
@@ -1132,197 +1186,11 @@
                     e.stopPropagation();
                     sidebar.classList.toggle('active');
                 });
-
                 document.querySelectorAll('.nav-item').forEach(item => {
-                    item.addEventListener('click', () => {
-                        sidebar.classList.remove('active');
-                    });
+                    item.addEventListener('click', () => sidebar.classList.remove('active'));
                 });
             }
 
-            // Dynamic card update based on form inputs
-            const memberNameInput = document.getElementById('memberName');
-            const profileSubName = document.getElementById('profileSubName');
-            const avatarInitials = document.getElementById('avatarInitials');
-            const addMemberForm = document.getElementById('addMemberForm');
-            const syncOverlay = document.getElementById('syncOverlay');
-
-            memberNameInput.addEventListener('input', () => {
-                const val = memberNameInput.value.trim();
-                if (val) {
-                    profileSubName.innerText = val;
-                    const words = val.split(/\s+/);
-                    let initials = words[0][0].toUpperCase();
-                    if (words.length > 1 && words[1][0]) {
-                        initials += words[1][0].toUpperCase();
-                    }
-                    avatarInitials.innerText = initials;
-                } else {
-                    profileSubName.innerText = 'New Trader';
-                    avatarInitials.innerText = 'PV';
-                }
-            });
-
-            // Instant access status label update
-            const instantAccessCheckbox = document.getElementById('memberInstantAccess');
-            const accessLabel = document.getElementById('accessLabel');
-
-            instantAccessCheckbox.addEventListener('change', () => {
-                if (instantAccessCheckbox.checked) {
-                    accessLabel.innerText = 'PAID ACCESS GRANTED';
-                    accessLabel.style.color = 'var(--gold)';
-                } else {
-                    accessLabel.innerText = 'PENDING (UNPAID MODE)';
-                    accessLabel.style.color = 'var(--gray)';
-                }
-            });
-
-            // Connect to Supabase
-            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
-
-            // Auto-populate password field
-            const autoPopulatePassword = async () => {
-                if (!supabase) return;
-                const { count, error } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
-                if (!error) {
-                    const nextNum = (count || 0) + 1;
-                    const passInput = document.getElementById('memberPassword');
-                    passInput.value = `primeverse@${nextNum}`;
-                    passInput.setAttribute('readonly', 'true');
-                    passInput.style.cursor = 'not-allowed';
-                    passInput.style.opacity = '0.8';
-                }
-            };
-            
-            autoPopulatePassword();
-
-            // Handle Member Provisioning Submission
-            if (addMemberForm) {
-                addMemberForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-
-                    const fullName = document.getElementById('memberName').value.trim();
-                    const email = document.getElementById('memberEmail').value.trim().toLowerCase();
-                    const phone = document.getElementById('memberPhone').value.trim();
-                    const password = document.getElementById('memberPassword').value;
-                    const selectedCourse = document.getElementById('memberCourse').value;
-                    const isPaid = instantAccessCheckbox.checked;
-
-                    // Phone format validation
-                    if (!/^\d{10}$/.test(phone)) {
-                        alert("Please enter a valid 10-digit phone number.");
-                        return;
-                    }
-
-                    if (supabase) {
-                        // Activate cyber provisioning sync screen
-                        if (syncOverlay) syncOverlay.classList.add('active');
-
-                        // 1. Verify if email already exists in profiles database
-                        const { data: existingUser, error: fetchErr } = await supabase
-                            .from('profiles')
-                            .select('email')
-                            .ilike('email', email)
-                            .maybeSingle();
-
-                        if (fetchErr) {
-                            console.error("Database communication error:", fetchErr);
-                            alert("Database error: " + fetchErr.message);
-                            if (syncOverlay) syncOverlay.classList.remove('active');
-                            return;
-                        }
-
-                        if (existingUser) {
-                            alert("Provision failed: A profile with email '" + email + "' is already registered in the database.");
-                            if (syncOverlay) syncOverlay.classList.remove('active');
-                            return;
-                        }
-
-                        // 2. Perform safe, clean database insert direct to profiles table
-                        const { error: insertErr } = await supabase
-                            .from('profiles')
-                            .insert([
-                                {
-                                    full_name: fullName,
-                                    phone: phone,
-                                    email: email,
-                                    password: password,
-                                    selected_course: selectedCourse,
-                                    payment_status: isPaid ? 'paid' : 'unpaid',
-                                    enroll_date: new Date().toISOString(),
-                                    current_day: 1,
-                                    modules_completed: 0,
-                                    total_modules: 18,
-                                    program_progress: 0,
-                                    stage_title: 'Financial Market Foundations',
-                                    completed_lessons: ''
-                                }
-                            ]);
-
-                        if (insertErr) {
-                            console.error("Database insertion failed:", insertErr);
-                            alert("Provision failed: " + insertErr.message);
-                            if (syncOverlay) syncOverlay.classList.remove('active');
-                            return;
-                        }
-
-                        // Successful creation
-                        setTimeout(() => {
-                            if (syncOverlay) syncOverlay.classList.remove('active');
-                            
-                            // Populate Custom Success Alert UI
-                            document.getElementById('alertFullName').innerText = fullName;
-                            document.getElementById('alertEmail').innerText = email;
-                            document.getElementById('alertPassword').innerText = password;
-                            document.getElementById('alertStatus').innerText = isPaid ? "PAID ACCESS ACTIVE" : "UNPAID STATUS";
-                            
-                            // Activate success alert container
-                            const successAlert = document.getElementById('customSuccessAlert');
-                            if (successAlert) {
-                                successAlert.classList.add('active');
-                                successAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                            }
-
-                            // Setup copy credentials listener
-                            const copyBtn = document.getElementById('copyCredsBtn');
-                            if (copyBtn) {
-                                // Clone to clear old listeners if any
-                                const newCopyBtn = copyBtn.cloneNode(true);
-                                copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
-                                
-                                newCopyBtn.addEventListener('click', () => {
-                                    const textToCopy = `Email: ${email}\nPassword: ${password}`;
-                                    navigator.clipboard.writeText(textToCopy).then(() => {
-                                        newCopyBtn.innerHTML = '<i data-lucide="check"></i> COPIED!';
-                                        if (window.lucide) window.lucide.createIcons();
-                                        setTimeout(() => {
-                                            newCopyBtn.innerHTML = '<i data-lucide="copy"></i> COPY CREDENTIALS';
-                                            if (window.lucide) window.lucide.createIcons();
-                                        }, 2000);
-                                    }).catch(err => {
-                                        console.error('Failed to copy text: ', err);
-                                    });
-                                });
-                            }
-
-                            if (window.lucide) {
-                                window.lucide.createIcons();
-                            }
-
-                            addMemberForm.reset();
-                            profileSubName.innerText = 'New Trader';
-                            avatarInitials.innerText = 'PV';
-                            accessLabel.innerText = 'PAID ACCESS GRANTED';
-                            accessLabel.style.color = 'var(--gold)';
-                            autoPopulatePassword();
-                        }, 2000);
-                    } else {
-                        alert("Supabase client is not calibrated properly. Please refresh page.");
-                    }
-                });
-            }
-
-            // Standard logout handler
             const logoutBtn = document.getElementById('logoutBtnSettings');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', (e) => {
@@ -1331,6 +1199,102 @@
                     window.location.replace('../index.html');
                 });
             }
+
+            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+
+            const loadUsers = async () => {
+                if (!supabase) return;
+                const { data: users, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .order('enroll_date', { ascending: false });
+
+                if (error) {
+                    console.error("Error loading users:", error);
+                    return;
+                }
+
+                const countElement = document.getElementById('totalUsersCount');
+                if (countElement) countElement.innerText = users.length;
+
+                const tbody = document.getElementById('userTableBody');
+                tbody.innerHTML = '';
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    
+                    const isBlocked = user.status === 'blocked' || user.payment_status === 'blocked';
+                    const blockBtnText = isBlocked ? 'Unblock' : 'Block';
+                    const blockBtnClass = isBlocked ? 'btn-unblock' : 'btn-block';
+                    const statusText = isBlocked ? 'Blocked' : 'Active';
+                    
+                    const nameParts = user.full_name ? user.full_name.split(' ') : ['U'];
+                    let initials = nameParts[0].charAt(0);
+                    if (nameParts.length > 1) {
+                        initials += nameParts[nameParts.length - 1].charAt(0);
+                    }
+                    
+                    row.innerHTML = `
+                        <td>
+                            <div class="user-avatar-cell">
+                                <div class="user-avatar">${initials}</div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--white); font-size: 0.95rem;">${user.full_name}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="color: rgba(255,255,255,0.7); font-size: 0.9rem; font-weight: 500;">${user.email}</td>
+                        <td style="color: rgba(255,255,255,0.7); font-size: 0.9rem; font-weight: 500;">${new Date(user.enroll_date).toLocaleDateString()}</td>
+                        <td>
+                            <span style="padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; background: ${isBlocked ? 'rgba(239,68,68,0.1)' : 'rgba(16,185,129,0.1)'}; color: ${isBlocked ? '#ef4444' : '#10b981'}; border: 1px solid ${isBlocked ? 'rgba(239,68,68,0.2)' : 'rgba(16,185,129,0.2)'};">
+                                ${statusText}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-sleek ${blockBtnClass} block-btn" data-email="${user.email}" data-blocked="${isBlocked}">${blockBtnText}</button>
+                            <button class="btn-sleek btn-remove remove-btn" data-email="${user.email}">Remove</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                document.querySelectorAll('.block-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const email = e.target.getAttribute('data-email');
+                        const currentlyBlocked = e.target.getAttribute('data-blocked') === 'true';
+                        const newStatus = currentlyBlocked ? 'active' : 'blocked';
+                        
+                        // We update both status and payment_status to handle both columns in case one is missing
+                        const { error } = await supabase.from('profiles').update({ status: newStatus, payment_status: currentlyBlocked ? 'paid' : 'blocked' }).eq('email', email);
+                        if (!error) loadUsers();
+                    });
+                });
+
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        emailToRemove = e.target.getAttribute('data-email');
+                        document.getElementById('customConfirmOverlay').classList.add('active');
+                    });
+                });
+            };
+
+            let emailToRemove = null;
+            const confirmOverlay = document.getElementById('customConfirmOverlay');
+            
+            document.getElementById('cancelRemoveBtn').addEventListener('click', () => {
+                confirmOverlay.classList.remove('active');
+                emailToRemove = null;
+            });
+
+            document.getElementById('confirmRemoveBtn').addEventListener('click', async () => {
+                if(emailToRemove) {
+                    const { error } = await supabase.from('profiles').delete().eq('email', emailToRemove);
+                    if (!error) loadUsers();
+                }
+                confirmOverlay.classList.remove('active');
+                emailToRemove = null;
+            });
+
+            loadUsers();
         });
     </script>
 </body>

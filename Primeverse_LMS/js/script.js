@@ -479,6 +479,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         showSnackbar(error.message, "error");
                     } else if (!user) {
                         showSnackbar("Invalid email or password.", "error");
+                    } else if (user.status === 'blocked' || user.payment_status === 'blocked') {
+                        showSnackbar("Your account has been blocked. Contact the team.", "error");
                     } else {
                         const newSessionId = crypto.randomUUID();
                         const sessionCreatedAt = new Date().toISOString();
