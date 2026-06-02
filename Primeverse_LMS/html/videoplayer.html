@@ -1137,11 +1137,16 @@
         function applyResolution(res, skipReplay = false) {
             if (!videoPlayer) return;
 
-            const originalUrl = lessonsDatabase[activeDayNum]['part' + activePartNum]?.src || lessonsDatabase[activeDayNum].part1.src;
+            const partData = lessonsDatabase[activeDayNum]['part' + activePartNum] || lessonsDatabase[activeDayNum].part1;
+            const originalUrl = partData.src;
             let targetUrl = originalUrl;
 
-            if (res !== 'auto') {
-                targetUrl = originalUrl.replace(/\.mp4$/i, `-${res}.mp4`);
+            // Check if video has pre-defined quality links
+            if (res !== 'auto' && partData.qualityLinks && partData.qualityLinks[res]) {
+                targetUrl = partData.qualityLinks[res];
+            } else if (res !== 'auto') {
+                // Fall back to suffix appending for videos without pre-defined qualityLinks
+                targetUrl = originalUrl.replace(/\.mp4.*$/i, `-${res}.mp4`);
             }
 
             // If it's already playing that URL, do nothing
@@ -1258,8 +1263,12 @@
 
             // Set source (applying user resolution preference with self-healing fallback)
             let finalSrc = partData.src;
-            if (selectedResolution !== 'auto') {
-                finalSrc = partData.src.replace(/\.mp4$/i, `-${selectedResolution}.mp4`);
+            if (selectedResolution !== 'auto' && partData.qualityLinks && partData.qualityLinks[selectedResolution]) {
+                // Use pre-defined quality link if available
+                finalSrc = partData.qualityLinks[selectedResolution];
+            } else if (selectedResolution !== 'auto') {
+                // Fall back to suffix appending for videos without pre-defined qualityLinks
+                finalSrc = partData.src.replace(/\.mp4.*$/i, `-${selectedResolution}.mp4`);
             }
 
             videoPlayer.src = finalSrc;
