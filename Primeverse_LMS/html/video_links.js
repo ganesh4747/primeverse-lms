@@ -7,7 +7,15 @@ const introVideoSrc = 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/objec
 const lessonsDatabase = {
     0: {
         title: "YOUR FUTURE IS HERE , INTRODUCTION",
-        part1: { title: "YOUR FUTURE IS HERE , INTRODUCTION", src: introVideoSrc }
+        part1: { 
+            title: "YOUR FUTURE IS HERE , INTRODUCTION", 
+            src: introVideoSrc,
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzgwNDAxMjcyLCJleHAiOjE4MTE5MzcyNzJ9.ZXK4xNxF2ekZ0NkpD0aafaal-wvq7Kgis8IWLBAe9CU",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8tNzIwLm1wNCIsImlhdCI6MTc4MDQwMjIwMiwiZXhwIjoxODExOTM4MjAyfQ.1sqo6p0bz2J07k2W1dc9NwnFXqBguDXvhmLEnok7tag",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8tNDgwLm1wNCIsImlhdCI6MTc4MDQwMTMxOSwiZXhwIjoxODExOTM3MzE5fQ.956-IzFa2D4HDOoxanSSlnaJB2OvyGu3sjx_dntYCUA"
+            }
+        }
     },
     1: {
         title: "Financial Market Foundations",
