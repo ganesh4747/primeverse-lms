@@ -1133,30 +1133,103 @@
 
         let selectedResolution = localStorage.getItem('preferredResolution') || 'auto';
 
+        // Detect user's network speed category (1080p, 720p, or 480p)
+        async function getAutoResolution() {
+            let detectedRes = '720p'; // Default fallback
+
+            if (navigator.connection && navigator.connection.effectiveType) {
+                const type = navigator.connection.effectiveType;
+                const downlink = navigator.connection.downlink; // Megabits per second
+                console.log(`[Auto Quality] navigator.connection: type=${type}, downlink=${downlink} Mbps`);
+
+                if (type === 'slow-2g' || type === '2g' || downlink < 1.5) {
+                    detectedRes = '480p';
+                } else if (type === '3g' || downlink < 10.0) {
+                    detectedRes = '720p';
+                } else {
+                    detectedRes = '1080p';
+                }
+            } else {
+                // Fallback: Measure actual download speed of a small asset (lesson_thumbnail.png, ~58 KB)
+                try {
+                    const startTime = performance.now();
+                    const response = await fetch('../assets/lesson_thumbnail.png?cb=' + startTime, { cache: 'no-store' });
+                    if (response.ok) {
+                        const blob = await response.blob();
+                        const endTime = performance.now();
+                        const durationSec = (endTime - startTime) / 1000;
+                        if (durationSec > 0) {
+                            const fileSizeBits = blob.size * 8;
+                            const speedMbps = (fileSizeBits / durationSec) / (1024 * 1024);
+                            console.log(`[Auto Quality] Measured download speed: ${speedMbps.toFixed(2)} Mbps`);
+                            if (speedMbps < 1.5) {
+                                detectedRes = '480p';
+                            } else if (speedMbps < 10.0) {
+                                detectedRes = '720p';
+                            } else {
+                                detectedRes = '1080p';
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.warn('[Auto Quality] Speed test failed, defaulting to 720p:', e);
+                }
+            }
+            return detectedRes;
+        }
+
         // Apply Resolution to player
-        function applyResolution(res, skipReplay = false) {
+        async function applyResolution(res, skipReplay = false, isNewVideo = false) {
             if (!videoPlayer) return;
 
             const partData = lessonsDatabase[activeDayNum]['part' + activePartNum] || lessonsDatabase[activeDayNum].part1;
             const originalUrl = partData.src;
             let targetUrl = originalUrl;
+            let detectedRes = null;
 
-            // Check if video has pre-defined quality links
-            if (res !== 'auto' && partData.qualityLinks && partData.qualityLinks[res]) {
-                targetUrl = partData.qualityLinks[res];
-            } else if (res !== 'auto') {
-                // Fall back to suffix appending for videos without pre-defined qualityLinks
-                targetUrl = originalUrl.replace(/\.mp4.*$/i, `-${res}.mp4`);
+            if (res === 'auto') {
+                if (partData.qualityLinks) {
+                    detectedRes = await getAutoResolution();
+                    // Map to the closest available quality link if the exact one is missing
+                    if (!partData.qualityLinks[detectedRes]) {
+                        const targetHeight = parseInt(detectedRes);
+                        const availableQualities = Object.keys(partData.qualityLinks);
+                        if (availableQualities.length > 0) {
+                            let closestRes = availableQualities[0];
+                            let minDiff = Math.abs(parseInt(closestRes) - targetHeight);
+                            for (let i = 1; i < availableQualities.length; i++) {
+                                const currentHeight = parseInt(availableQualities[i]);
+                                const diff = Math.abs(currentHeight - targetHeight);
+                                if (diff < minDiff) {
+                                    minDiff = diff;
+                                    closestRes = availableQualities[i];
+                                }
+                            }
+                            detectedRes = closestRes;
+                        }
+                    }
+                    targetUrl = partData.qualityLinks[detectedRes] || originalUrl;
+                } else {
+                    targetUrl = originalUrl;
+                }
+            } else {
+                // Check if video has pre-defined quality links
+                if (partData.qualityLinks && partData.qualityLinks[res]) {
+                    targetUrl = partData.qualityLinks[res];
+                } else {
+                    // Fall back to suffix appending for videos without pre-defined qualityLinks
+                    targetUrl = originalUrl.replace(/\.mp4.*$/i, `-${res}.mp4`);
+                }
             }
 
-            // If it's already playing that URL, do nothing
-            if (videoPlayer.src === targetUrl) {
-                updateQualityUIActiveState(res);
+            // If it's already playing that URL, and not a new video, do nothing
+            if (!isNewVideo && videoPlayer.src === targetUrl) {
+                updateQualityUIActiveState(res, detectedRes);
                 return;
             }
 
-            const currentTime = videoPlayer.currentTime;
-            const isPaused = videoPlayer.paused;
+            const currentTime = isNewVideo ? 0 : videoPlayer.currentTime;
+            const isPaused = isNewVideo ? true : videoPlayer.paused;
 
             // Define dynamic error recovery callback
             const handleLoadError = function () {
@@ -1173,11 +1246,13 @@
                 updateQualityUIActiveState('auto');
 
                 // Seek back to position
-                videoPlayer.addEventListener('loadedmetadata', function revertSeek() {
-                    videoPlayer.currentTime = currentTime;
-                    if (!isPaused) videoPlayer.play();
-                    videoPlayer.removeEventListener('loadedmetadata', revertSeek);
-                });
+                if (!isNewVideo) {
+                    videoPlayer.addEventListener('loadedmetadata', function revertSeek() {
+                        videoPlayer.currentTime = currentTime;
+                        if (!isPaused) videoPlayer.play();
+                        videoPlayer.removeEventListener('loadedmetadata', revertSeek);
+                    });
+                }
 
                 showQualityToast("Resolution not available. Playing original quality.", true);
             };
@@ -1194,24 +1269,34 @@
                 // Remove error listener since load succeeded
                 videoPlayer.removeEventListener('error', handleLoadError);
 
-                videoPlayer.currentTime = currentTime;
-                if (!isPaused && !skipReplay) videoPlayer.play();
+                if (!isNewVideo) {
+                    videoPlayer.currentTime = currentTime;
+                    if (!isPaused && !skipReplay) videoPlayer.play();
+                }
 
                 videoPlayer.removeEventListener('loadedmetadata', successSeek);
 
-                if (res === 'auto') {
-                    showQualityToast("Switched to Original Quality");
-                } else {
-                    showQualityToast(`Switched to Resolution: ${res}`);
+                if (!isNewVideo) {
+                    if (res === 'auto') {
+                        showQualityToast(`Auto-selected Quality: ${detectedRes || 'Original'}`);
+                    } else {
+                        showQualityToast(`Switched to Resolution: ${res}`);
+                    }
+                } else if (res === 'auto' && detectedRes) {
+                    console.log(`[Auto Quality] Loaded new video with auto-detected quality: ${detectedRes}`);
                 }
             });
 
-            updateQualityUIActiveState(res);
+            updateQualityUIActiveState(res, detectedRes);
         }
 
-        function updateQualityUIActiveState(res) {
+        function updateQualityUIActiveState(res, detectedRes = null) {
             if (currentQualityLabel) {
-                currentQualityLabel.innerText = res === 'auto' ? 'Auto' : res;
+                if (res === 'auto') {
+                    currentQualityLabel.innerText = detectedRes ? `Auto (${detectedRes})` : 'Auto';
+                } else {
+                    currentQualityLabel.innerText = res;
+                }
             }
             if (qualityOptions) {
                 qualityOptions.forEach(opt => {
@@ -1239,7 +1324,7 @@
         }
 
         // Initialize state
-        function renderLesson(dayNum, partNum) {
+        async function renderLesson(dayNum, partNum) {
             activeDayNum = dayNum;
             activePartNum = partNum;
 
@@ -1262,29 +1347,7 @@
             }
 
             // Set source (applying user resolution preference with self-healing fallback)
-            let finalSrc = partData.src;
-            if (selectedResolution !== 'auto' && partData.qualityLinks && partData.qualityLinks[selectedResolution]) {
-                // Use pre-defined quality link if available
-                finalSrc = partData.qualityLinks[selectedResolution];
-            } else if (selectedResolution !== 'auto') {
-                // Fall back to suffix appending for videos without pre-defined qualityLinks
-                finalSrc = partData.src.replace(/\.mp4.*$/i, `-${selectedResolution}.mp4`);
-            }
-
-            videoPlayer.src = finalSrc;
-
-            const handleLessonResError = function () {
-                videoPlayer.removeEventListener('error', handleLessonResError);
-                videoPlayer.src = partData.src;
-                videoPlayer.load();
-                updateQualityUIActiveState('auto');
-            };
-            videoPlayer.addEventListener('error', handleLessonResError);
-
-            videoPlayer.load();
-
-            // Ensure UI is kept in sync
-            updateQualityUIActiveState(selectedResolution);
+            await applyResolution(selectedResolution, true, true);
 
             // Reset player visibility to poster
             playerOverlay.style.display = 'flex';
@@ -1330,8 +1393,8 @@
         }
 
         // Trigger Switch Parts on-page
-        window.triggerSwitchPart = function (partNum) {
-            renderLesson(activeDayNum, partNum);
+        window.triggerSwitchPart = async function (partNum) {
+            await renderLesson(activeDayNum, partNum);
             // Auto play immediately on toggle
             playerOverlay.style.display = 'none';
             videoPlayer.play();
