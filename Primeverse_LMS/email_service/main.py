@@ -195,8 +195,11 @@ def render_progression_template(full_name: str, day_str: str, lesson_title: str)
         template = jinja_env.get_template("progression.html")
         return template.render(
             full_name=full_name,
+            name=full_name,
             day_str=day_str,
-            lesson_title=lesson_title
+            day=day_str,
+            lesson_title=lesson_title,
+            module_name=lesson_title
         )
     except Exception as e:
         logger.error(f"Error rendering JINJA2 progression template: {str(e)}")

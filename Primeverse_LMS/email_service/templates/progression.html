@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day {{ day_str }} Unlocked - PrimeVerse</title>
+    <title>Day {{ day }} Unlocked - PrimeVerse</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
@@ -246,49 +246,35 @@
             </tr>
             <tr>
                 <td class="content">
-                    <h2 class="greeting">Hi {{ full_name }},</h2>
+                    <h2 class="greeting">Hi {{ name }},</h2>
                     
-                    <div class="paragraph">Welcome to PrimeVerse.</div>
+                    <div class="paragraph">Your Day {{ day }} module is now unlocked inside PrimeVerse Mastery Program.</div>
                     
-                    <div class="paragraph">You’ve officially taken the first step toward building a structured and disciplined trading system.</div>
-                    
-                    <div class="paragraph">Most traders spend years jumping from one strategy to another without clarity, consistency, or proper execution.</div>
-                    
-                    <div class="paragraph">This program was built to change that.</div>
-                    
-                    <div class="paragraph">Over the next 18 days, you will gradually unlock each module designed to help you build:</div>
-                    
-                    <div class="list-container">
-                        <div class="list-item">Market clarity</div>
-                        <div class="list-item">Structured execution</div>
-                        <div class="list-item">Risk management discipline</div>
-                        <div class="list-item">A repeatable trading framework</div>
-                    </div>
-                    
-                    <div class="paragraph">This is not about learning random entries.</div>
-                    
-                    <div class="paragraph">This is about building a professional trading system you can trust and execute with confidence.</div>
-
                     <div class="highlight-box">
-                        <p class="highlight-text">🎉 Your Day {{ day_str }} module is now unlocked.</p>
-                        {% if lesson_title %}
-                        <p style="margin: 8px 0 0 0; font-size: 14.5px; color: #F5D76E; font-weight: 500;">📖 Today's Topic: {{ lesson_title }}</p>
-                        {% endif %}
+                        <p class="highlight-text">📖 Today’s topic:</p>
+                        <p style="margin: 8px 0 0 0; font-size: 16px; color: #F5D76E; font-weight: 600;">{{ module_name }}</p>
                     </div>
-
-                    <div class="paragraph">Access your dashboard and begin your journey.</div>
+                    
+                    <div class="paragraph">Remember — consistency doesn’t come from learning more strategies.</div>
+                    
+                    <div class="paragraph">It comes from executing one clear system with discipline.</div>
+                    
+                    <div class="paragraph">Study the module properly, focus on implementation, and continue building your trading framework.</div>
+                    
+                    <div class="paragraph">Small execution improvements create massive long-term results.</div>
+                    
+                    <div class="paragraph" style="margin-bottom: 25px;">Access your module now.</div>
 
                     <div class="button-container">
-                        <a href="https://www.primeverseportal.pro/" class="btn" target="_blank">Access Dashboard</a>
+                        <a href="https://www.primeverseportal.pro/" class="btn" target="_blank">Access Module</a>
                     </div>
 
                     <div class="signature-container">
-                        <p class="signature-name">— Ganesh Kumar</p>
-                        <p class="signature-title">Founder, PrimeVerse</p>
+                        <p class="signature-name">— PrimeVerse team</p>
                     </div>
 
                     <div class="closing">
-                        <div class="closing-title">Welcome to PrimeVerse</div>
+                        <div class="closing-title">PrimeVerse Mastery Program</div>
                         <div class="closing-subtitle">Clarity • Discipline • Consistency</div>
                     </div>
                 </td>
