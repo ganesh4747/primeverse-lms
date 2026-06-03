@@ -838,21 +838,49 @@
 
             // Fetch announcements & enrolled traders count from Supabase
             if (supabase) {
-                // Fetch community messages
+                // Fetch all admins to get updated names
                 supabase
-                    .from('community_messages')
-                    .select('*')
-                    .order('created_at', { ascending: true })
-                    .then(({ data: messages, error }) => {
-                        if (messages && !error) {
-                            // Remove any old dynamic messages to avoid duplicates on fast hot reload
-                            document.querySelectorAll('.dynamic-announcement').forEach(el => el.remove());
-                            messages.forEach(msg => {
-                                renderMessage(msg.sender_name, msg.sender_title, msg.message_text, new Date(msg.created_at));
+                    .from('admins')
+                    .select('email, full_name')
+                    .then(({ data: admins, error: adminsError }) => {
+                        const adminMap = {};
+                        if (admins && !adminsError) {
+                            admins.forEach(a => {
+                                if (a.email) {
+                                    adminMap[a.email.toLowerCase()] = a.full_name;
+                                }
                             });
-                        } else {
-                            console.error("Error loading community messages:", error);
                         }
+                        
+                        // Fetch community messages
+                        supabase
+                            .from('community_messages')
+                            .select('*')
+                            .order('created_at', { ascending: true })
+                            .then(({ data: messages, error }) => {
+                                if (messages && !error) {
+                                    // Remove any old dynamic messages to avoid duplicates on fast hot reload
+                                    document.querySelectorAll('.dynamic-announcement').forEach(el => el.remove());
+                                    messages.forEach(msg => {
+                                        const sEmail = msg.sender_email ? msg.sender_email.toLowerCase() : null;
+                                        let finalName = sEmail ? adminMap[sEmail] : null;
+                                        
+                                        // Fallback for older messages that were saved without sender_email
+                                        if (!finalName && msg.sender_name === 'BUTCHER') {
+                                            finalName = adminMap['primeversepro@gmail.com'] || 'PRIMEVERSE';
+                                        }
+                                        if (!finalName && msg.sender_name === 'Harish') {
+                                            finalName = adminMap['harishramanan4415@gmail.com'] || 'Harish';
+                                        }
+
+                                        finalName = finalName || msg.sender_name;
+                                        
+                                        renderMessage(finalName, msg.sender_title, msg.message_text, new Date(msg.created_at));
+                                    });
+                                } else {
+                                    console.error("Error loading community messages:", error);
+                                }
+                            });
                     });
 
                 // Fetch count of profiles with paid status
