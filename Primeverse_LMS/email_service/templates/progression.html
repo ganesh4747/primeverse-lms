@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day {{ day_str }} Unlocked - PrimeVerse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            background: #f4f5f7;
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        img {
+            border: 0;
+            outline: none;
+            text-decoration: none;
+            display: block;
+        }
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            padding: 40px 15px;
+            background: #f4f5f7;
+        }
+        .main-table {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+        }
+        .header {
+            padding: 50px 30px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 50%;
+            top: -140px;
+            right: -100px;
+            filter: blur(80px);
+        }
+        .logo {
+            height: 55px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .header-subtitle {
+            margin-top: 14px;
+            font-size: 12px;
+            color: #9ca3af;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+        .gold-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+        .content {
+            padding: 45px 35px;
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.8;
+            text-align: left;
+        }
+        .greeting {
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+            margin: 0 0 25px;
+        }
+        .welcome-banner {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 30px;
+        }
+        .welcome-title {
+            margin: 0;
+            color: #F5D76E;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .welcome-text {
+            margin: 10px 0 0;
+            color: #cbd5e1;
+            font-size: 14.5px;
+            line-height: 1.7;
+        }
+        .paragraph {
+            margin: 0 0 20px 0;
+        }
+        .list-container {
+            margin: 20px 0;
+            padding-left: 10px;
+        }
+        .list-item {
+            margin-bottom: 10px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 20px;
+        }
+        .list-item::before {
+            content: "•";
+            color: #D4AF37;
+            font-weight: bold;
+            font-size: 18px;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.04);
+            border-left: 4px solid #D4AF37;
+            border-radius: 0 12px 12px 0;
+            padding: 20px;
+            margin: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .highlight-text {
+            margin: 0;
+            font-size: 15px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .button-container {
+            text-align: center;
+            margin: 35px 0;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f5d76e 0%, #D4AF37 100%);
+            color: #111827 !important;
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, .35);
+        }
+        .quote {
+            text-align: center;
+            color: #9ca3af;
+            font-style: italic;
+            line-height: 1.8;
+            margin: 30px 0;
+            font-size: 14px;
+        }
+        .signature-container {
+            margin-top: 35px;
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            padding-top: 25px;
+        }
+        .signature-name {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 15px;
+            margin: 0;
+        }
+        .signature-title {
+            color: #9ca3af;
+            font-size: 13px;
+            margin: 2px 0 0 0;
+        }
+        .closing {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .closing-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .closing-subtitle {
+            color: #9ca3af;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .footer {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 30px;
+            text-align: center;
+        }
+        .footer-text {
+            color: #9ca3af;
+            font-size: 12px;
+            line-height: 1.7;
+            margin: 5px 0;
+        }
+        .footer-links {
+            margin-top: 18px;
+        }
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 12px;
+        }
+        @media screen and (max-width:600px) {
+            .content, .header, .footer {
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+            .greeting { font-size: 22px; }
+            .welcome-title { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <center class="wrapper">
+        <table class="main-table" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="header">
+                    <img src="https://www.primeverseportal.pro/assets/logo.png" alt="PrimeVerse Logo" class="logo">
+                    <div class="header-subtitle">Learning Management System</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="gold-line"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="content">
+                    <h2 class="greeting">Hi {{ full_name }},</h2>
+                    
+                    <div class="paragraph">Welcome to PrimeVerse.</div>
+                    
+                    <div class="paragraph">You’ve officially taken the first step toward building a structured and disciplined trading system.</div>
+                    
+                    <div class="paragraph">Most traders spend years jumping from one strategy to another without clarity, consistency, or proper execution.</div>
+                    
+                    <div class="paragraph">This program was built to change that.</div>
+                    
+                    <div class="paragraph">Over the next 18 days, you will gradually unlock each module designed to help you build:</div>
+                    
+                    <div class="list-container">
+                        <div class="list-item">Market clarity</div>
+                        <div class="list-item">Structured execution</div>
+                        <div class="list-item">Risk management discipline</div>
+                        <div class="list-item">A repeatable trading framework</div>
+                    </div>
+                    
+                    <div class="paragraph">This is not about learning random entries.</div>
+                    
+                    <div class="paragraph">This is about building a professional trading system you can trust and execute with confidence.</div>
+
+                    <div class="highlight-box">
+                        <p class="highlight-text">🎉 Your Day {{ day_str }} module is now unlocked.</p>
+                        {% if lesson_title %}
+                        <p style="margin: 8px 0 0 0; font-size: 14.5px; color: #F5D76E; font-weight: 500;">📖 Today's Topic: {{ lesson_title }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="paragraph">Access your dashboard and begin your journey.</div>
+
+                    <div class="button-container">
+                        <a href="https://www.primeverseportal.pro/" class="btn" target="_blank">Access Dashboard</a>
+                    </div>
+
+                    <div class="signature-container">
+                        <p class="signature-name">— Ganesh Kumar</p>
+                        <p class="signature-title">Founder, PrimeVerse</p>
+                    </div>
+
+                    <div class="closing">
+                        <div class="closing-title">Welcome to PrimeVerse</div>
+                        <div class="closing-subtitle">Clarity • Discipline • Consistency</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="footer">
+                    <div class="footer-text">© 2026 PrimeVerse LMS. All rights reserved.</div>
+                    <div class="footer-text">You received this email because you are enrolled in PrimeVerse.</div>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Support</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>

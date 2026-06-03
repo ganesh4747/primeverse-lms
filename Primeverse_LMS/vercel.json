@@ -42,5 +42,11 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/send-daily-progression",
+      "schedule": "30 18 * * *"
+    }
   ]
 }
