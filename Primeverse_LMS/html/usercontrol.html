@@ -1288,6 +1288,30 @@
                 users.forEach(user => {
                     window.usersDataMap[user.id] = user;
                     const row = document.createElement('tr');
+                    row.className = 'user-row-clickable';
+                    row.setAttribute('data-userid', user.id);
+                    row.style.cursor = 'pointer';
+                    row.style.transition = 'all 0.3s';
+                    row.onmouseover = function() {
+                        this.style.background = 'rgba(212, 175, 55, 0.04)';
+                        const avatar = this.querySelector('.user-avatar');
+                        if (avatar) {
+                            avatar.style.transform = 'scale(1.1)';
+                            avatar.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.4)';
+                        }
+                        const nameText = this.querySelector('.user-fullname-text');
+                        if (nameText) nameText.style.color = 'var(--gold)';
+                    };
+                    row.onmouseout = function() {
+                        this.style.background = 'transparent';
+                        const avatar = this.querySelector('.user-avatar');
+                        if (avatar) {
+                            avatar.style.transform = 'scale(1)';
+                            avatar.style.boxShadow = '0 0 15px rgba(212, 175, 55, 0.1)';
+                        }
+                        const nameText = this.querySelector('.user-fullname-text');
+                        if (nameText) nameText.style.color = 'var(--white)';
+                    };
                     
                     const isBlocked = user.status === 'blocked' || user.payment_status === 'blocked';
                     const blockBtnText = isBlocked ? 'Unblock' : 'Block';
@@ -1302,7 +1326,7 @@
                     
                     row.innerHTML = `
                         <td>
-                            <div class="user-avatar-cell user-name-clickable" data-userid="${user.id}" style="cursor: pointer; transition: all 0.3s;" title="View User Dashboard" onmouseover="this.querySelector('.user-avatar').style.transform='scale(1.1)'; this.querySelector('.user-avatar').style.boxShadow='0 0 20px rgba(212, 175, 55, 0.4)'; this.querySelector('.user-fullname-text').style.color='var(--gold)';" onmouseout="this.querySelector('.user-avatar').style.transform='scale(1)'; this.querySelector('.user-avatar').style.boxShadow='0 0 15px rgba(212, 175, 55, 0.1)'; this.querySelector('.user-fullname-text').style.color='var(--white)';">
+                            <div class="user-avatar-cell" title="View User Dashboard">
                                 <div class="user-avatar" style="transition: all 0.3s; pointer-events: none;">${initials}</div>
                                 <div style="pointer-events: none;">
                                     <div class="user-fullname-text" style="font-weight: 800; color: var(--white); font-size: 0.95rem; transition: color 0.3s;">${user.full_name}</div>
@@ -1326,6 +1350,7 @@
 
                 document.querySelectorAll('.block-btn').forEach(btn => {
                     btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
                         const email = e.target.getAttribute('data-email');
                         const currentlyBlocked = e.target.getAttribute('data-blocked') === 'true';
                         const newStatus = currentlyBlocked ? 'active' : 'blocked';
@@ -1338,12 +1363,13 @@
 
                 document.querySelectorAll('.remove-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         emailToRemove = e.target.getAttribute('data-email');
                         document.getElementById('customConfirmOverlay').classList.add('active');
                     });
                 });
 
-                document.querySelectorAll('.user-name-clickable').forEach(el => {
+                document.querySelectorAll('.user-row-clickable').forEach(el => {
                     el.addEventListener('click', (e) => {
                         const userId = e.currentTarget.getAttribute('data-userid');
                         const user = window.usersDataMap[userId];
