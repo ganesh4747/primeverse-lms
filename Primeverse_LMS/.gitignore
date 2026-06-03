@@ -1,0 +1,19 @@
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables (Sensitive credentials)
+.env
+email_service/.env
+
+# Local IDEs
+.vscode/
+.idea/
+.DS_Store

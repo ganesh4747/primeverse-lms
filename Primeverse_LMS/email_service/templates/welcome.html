@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to PrimeVerse LMS</title>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and styles for email clients */
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            background-color: #0d0d0e;
+            font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            color: #e0e0e6;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+        /* Layout */
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            background-color: #0d0d0e;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        .main-table {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+            background-color: #121214;
+            border-radius: 12px;
+            border: 1px solid #222226;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        /* Header styling */
+        .header {
+            background: linear-gradient(135deg, #18181c 0%, #0d0d0e 100%);
+            padding: 40px 30px 30px 30px;
+            text-align: center;
+            border-bottom: 1px solid #222226;
+            position: relative;
+        }
+        .header-logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #D4AF37; /* Brand Gold */
+            text-transform: uppercase;
+            margin: 0;
+            display: inline-block;
+        }
+        .header-subtitle {
+            font-size: 11px;
+            color: #888892;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 5px;
+            margin-bottom: 0;
+        }
+        /* Gold accent line */
+        .gold-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            width: 100%;
+        }
+        /* Content area */
+        .content {
+            padding: 40px 30px;
+        }
+        .greeting {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .text-block {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #b5b5c0;
+            margin-bottom: 25px;
+        }
+        /* Card feature box */
+        .card {
+            background-color: #1a1a1e;
+            border: 1px solid #2a2a30;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #D4AF37;
+            margin-top: 0;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .feature-item {
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #b5b5c0;
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .feature-item-icon {
+            color: #D4AF37;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+        /* Buttons */
+        .button-container {
+            text-align: center;
+            margin: 35px 0;
+        }
+        .btn-gold {
+            display: inline-block;
+            background-color: #D4AF37;
+            color: #000000 !important;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none !important;
+            padding: 14px 32px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+        }
+        /* Footer styling */
+        .footer {
+            padding: 30px 30px;
+            background-color: #0c0c0e;
+            text-align: center;
+            border-top: 1px solid #1c1c1f;
+        }
+        .footer-text {
+            font-size: 12px;
+            color: #5d5d66;
+            line-height: 1.5;
+            margin: 5px 0;
+        }
+        .footer-links {
+            margin-top: 15px;
+        }
+        .footer-link {
+            color: #888892;
+            text-decoration: none;
+            font-size: 12px;
+            margin: 0 10px;
+        }
+        .footer-link:hover {
+            color: #D4AF37;
+        }
+    </style>
+</head>
+<body>
+    <center class="wrapper">
+        <table class="main-table" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="header">
+                    <img src="https://www.primeverseportal.pro/assets/logo.png" alt="PrimeVerse Logo" style="height: 45px; display: inline-block; vertical-align: middle;">
+                    <p class="header-subtitle" style="margin-top: 10px;">Learning Management System</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="gold-line"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="content">
+                    <h2 class="greeting">Hi {{ full_name }},</h2>
+                    <h3 style="font-size: 18px; color: #D4AF37; margin-top: 0; margin-bottom: 25px; font-weight: 700;">
+                        🎉 Welcome to PrimeVerse Mastery Program
+                    </h3>
+                    
+                    <div class="card">
+                        <h3 class="card-title">Getting Started</h3>
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td style="padding-bottom: 18px; font-size: 14px; line-height: 1.6; color: #b5b5c0; vertical-align: top;">
+                                    <span style="font-size: 16px; margin-right: 10px;">1️⃣</span>
+                                    <strong>Login to your portal:</strong><br>
+                                    <a href="https://www.primeverseportal.pro/" style="color: #D4AF37; text-decoration: underline;" target="_blank">https://www.primeverseportal.pro/</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 18px; font-size: 14px; line-height: 1.6; color: #b5b5c0; vertical-align: top;">
+                                    <span style="font-size: 16px; margin-right: 10px;">2️⃣</span>
+                                    <strong>After login:</strong> Go to <strong>Profile</strong> &rarr; <strong>Change your password</strong>.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 14px; line-height: 1.6; color: #b5b5c0; vertical-align: top;">
+                                    <span style="font-size: 16px; margin-right: 10px;">3️⃣</span>
+                                    <strong>Open your Dashboard:</strong> Access your account and start <strong>Day 01</strong>.
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="button-container" style="margin: 25px 0 35px 0;">
+                        <a href="https://www.primeverseportal.pro/" class="btn-gold" target="_blank">Login to Portal</a>
+                    </div>
+
+                    <p class="text-block" style="font-style: italic; color: #ffffff; text-align: center; font-size: 15px; margin-bottom: 30px;">
+                        📈 Focus on learning, implementation, and disciplined execution.
+                    </p>
+
+                    <div style="border-top: 1px solid #222226; padding-top: 25px; margin-top: 25px; text-align: center;">
+                        <p style="font-size: 16px; font-weight: 700; color: #ffffff; margin: 0 0 5px 0;">Welcome to PrimeVerse.</p>
+                        <p style="font-size: 13px; color: #888892; letter-spacing: 2px; text-transform: uppercase; margin: 0;">
+                            Clarity. Discipline. Consistency.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="footer">
+                    <p class="footer-text">© 2026 PrimeVerse LMS. All rights reserved.</p>
+                    <p class="footer-text">You received this email because you registered for an account on PrimeVerse.</p>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
+                        <a href="#" class="footer-link">Support</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>
