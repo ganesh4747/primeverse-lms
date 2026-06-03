@@ -37,13 +37,15 @@ def handle_profiles_insert(payload):
 
         email = new_record.get("email")
         full_name = new_record.get("full_name") or "New User"
+        password = new_record.get("password") or ""
+        selected_course = new_record.get("selected_course") or ""
 
         if not email:
             logger.warning("No email found in insert record. Skipping.")
             return
 
         logger.info(f"Triggering welcome email for {full_name} ({email})...")
-        process_and_send_welcome_email(full_name, email)
+        process_and_send_welcome_email(full_name, email, password, selected_course)
 
     except Exception as e:
         logger.error(f"Error handling insert callback: {str(e)}")

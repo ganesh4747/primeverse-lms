@@ -3,177 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to PrimeVerse LMS</title>
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+    <title>Welcome to PrimeVerse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Reset and styles for email clients */
         body {
             margin: 0;
             padding: 0;
             width: 100% !important;
-            background-color: #0d0d0e;
-            font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f4f5f7;
+            font-family: 'Poppins', sans-serif;
             -webkit-font-smoothing: antialiased;
-            color: #e0e0e6;
         }
         table {
             border-collapse: collapse;
         }
         img {
             border: 0;
-            height: auto;
-            line-height: 100%;
             outline: none;
             text-decoration: none;
+            display: block;
         }
-        /* Layout */
         .wrapper {
             width: 100%;
             table-layout: fixed;
-            background-color: #0d0d0e;
-            padding-top: 40px;
-            padding-bottom: 40px;
+            padding: 40px 15px;
+            background: #f4f5f7;
         }
         .main-table {
             width: 100%;
             max-width: 680px;
             margin: 0 auto;
-            background-color: #121214;
-            border-radius: 12px;
-            border: 1px solid #222226;
+            background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
         }
-        /* Header styling */
         .header {
-            background: linear-gradient(135deg, #18181c 0%, #0d0d0e 100%);
-            padding: 40px 30px 30px 30px;
+            padding: 50px 30px 40px;
             text-align: center;
-            border-bottom: 1px solid #222226;
             position: relative;
+            overflow: hidden;
         }
-        .header-logo {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: 4px;
-            color: #D4AF37; /* Brand Gold */
-            text-transform: uppercase;
-            margin: 0;
-            display: inline-block;
+        .header::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 50%;
+            top: -140px;
+            right: -100px;
+            filter: blur(80px);
+        }
+        .logo {
+            height: 55px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
         .header-subtitle {
-            font-size: 11px;
-            color: #888892;
+            margin-top: 14px;
+            font-size: 12px;
+            color: #9ca3af;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-top: 5px;
-            margin-bottom: 0;
+            position: relative;
+            z-index: 2;
         }
-        /* Gold accent line */
         .gold-line {
             height: 2px;
             background: linear-gradient(90deg, transparent, #D4AF37, transparent);
-            width: 100%;
         }
-        /* Content area */
         .content {
-            padding: 40px 30px;
+            padding: 45px 35px;
         }
         .greeting {
-            font-size: 22px;
+            font-size: 30px;
             font-weight: 700;
-            color: #ffffff;
-            margin-top: 0;
-            margin-bottom: 20px;
+            color: white;
+            margin: 0 0 15px;
         }
-        .text-block {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #b5b5c0;
-            margin-bottom: 25px;
-        }
-        /* Card feature box */
-        .card {
-            background-color: #1a1a1e;
-            border: 1px solid #2a2a30;
-            border-radius: 8px;
-            padding: 24px;
+        .welcome-banner {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 16px;
+            padding: 20px;
             margin-bottom: 30px;
         }
-        .card-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #D4AF37;
-            margin-top: 0;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .welcome-title {
+            margin: 0;
+            color: #F5D76E;
+            font-size: 20px;
+            font-weight: 700;
         }
-        .feature-item {
-            margin-bottom: 12px;
+        .welcome-text {
+            margin: 10px 0 0;
+            color: #cbd5e1;
             font-size: 14px;
-            color: #b5b5c0;
-            list-style-type: none;
-            padding-left: 0;
+            line-height: 1.7;
         }
-        .feature-item-icon {
-            color: #D4AF37;
-            margin-right: 8px;
-            font-weight: bold;
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 28px;
+            margin-top: 20px;
         }
-        /* Buttons */
+        .card-title {
+            margin: 0 0 20px;
+            color: #F5D76E;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .step {
+            color: #d1d5db;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+        .step strong {
+            color: #ffffff;
+        }
+        .portal-link {
+            color: #F5D76E;
+            text-decoration: none;
+        }
         .button-container {
             text-align: center;
             margin: 35px 0;
         }
-        .btn-gold {
+        .btn {
             display: inline-block;
-            background-color: #D4AF37;
-            color: #000000 !important;
-            font-weight: 700;
+            background: linear-gradient(135deg, #f5d76e 0%, #D4AF37 100%);
+            color: #111827 !important;
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 14px;
             font-size: 14px;
-            text-decoration: none !important;
-            padding: 14px 32px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+            font-weight: 700;
+            letter-spacing: .5px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, .35);
         }
-        /* Footer styling */
-        .footer {
-            padding: 30px 30px;
-            background-color: #0c0c0e;
+        .quote {
             text-align: center;
-            border-top: 1px solid #1c1c1f;
+            color: white;
+            font-style: italic;
+            line-height: 1.8;
+            margin: 30px 0;
+            font-size: 15px;
+        }
+        .closing {
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            margin-top: 30px;
+            padding-top: 25px;
+            text-align: center;
+        }
+        .closing-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .closing-subtitle {
+            color: #9ca3af;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .footer {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 30px;
+            text-align: center;
         }
         .footer-text {
+            color: #9ca3af;
             font-size: 12px;
-            color: #5d5d66;
-            line-height: 1.5;
+            line-height: 1.7;
             margin: 5px 0;
         }
         .footer-links {
-            margin-top: 15px;
+            margin-top: 18px;
         }
-        .footer-link {
-            color: #888892;
+        .footer-links a {
+            color: #cbd5e1;
             text-decoration: none;
-            font-size: 12px;
             margin: 0 10px;
+            font-size: 12px;
         }
-        .footer-link:hover {
-            color: #D4AF37;
+        @media screen and (max-width:600px) {
+            .content, .header, .footer {
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+            .greeting { font-size: 24px; }
+            .welcome-title { font-size: 18px; }
         }
     </style>
 </head>
 <body>
     <center class="wrapper">
-        <table class="main-table" width="100%" cellpadding="0" cellspacing="0">
+        <table class="main-table" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="header">
-                    <img src="https://www.primeverseportal.pro/assets/logo.png" alt="PrimeVerse Logo" style="height: 45px; display: inline-block; vertical-align: middle;">
-                    <p class="header-subtitle" style="margin-top: 10px;">Learning Management System</p>
+                    <img src="https://www.primeverseportal.pro/assets/logo.png" alt="PrimeVerse Logo" class="logo">
+                    <div class="header-subtitle">Learning Management System</div>
                 </td>
             </tr>
             <tr>
@@ -184,59 +217,62 @@
             <tr>
                 <td class="content">
                     <h2 class="greeting">Hi {{ full_name }},</h2>
-                    <h3 style="font-size: 18px; color: #D4AF37; margin-top: 0; margin-bottom: 25px; font-weight: 700;">
-                        🎉 Welcome to PrimeVerse Mastery Program
-                    </h3>
                     
+                    <div class="welcome-banner">
+                        <h3 class="welcome-title">🚀 Welcome to {{ selected_course }}</h3>
+                        <p class="welcome-text">
+                            Your journey towards structured learning, implementation, and career growth starts today.
+                        </p>
+                    </div>
+
+                    {% if password %}
+                    <div style="background: rgba(255, 255, 255, 0.04); border-left: 4px solid #D4AF37; border-radius: 0 12px 12px 0; padding: 22px; margin-bottom: 30px; text-align: left; border-top: 1px solid rgba(255, 255, 255, 0.05); border-right: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                        <h4 style="color: #F5D76E; font-size: 13px; font-weight: 700; text-transform: uppercase; margin: 0 0 12px 0; letter-spacing: 1px;">🔐 Your Login Credentials</h4>
+                        <p style="font-size: 14px; margin: 0 0 8px 0; color: #d1d5db; font-family: 'Poppins', sans-serif;"><strong>Email:</strong> <code style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 3px 6px; border-radius: 4px; color: #ffffff; font-family: monospace; font-size: 13px;">{{ email }}</code></p>
+                        <p style="font-size: 14px; margin: 0; color: #d1d5db; font-family: 'Poppins', sans-serif;"><strong>Password:</strong> <code style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 3px 6px; border-radius: 4px; color: #ffffff; font-family: monospace; font-size: 13px;">{{ password }}</code></p>
+                    </div>
+                    {% endif %}
+
                     <div class="card">
                         <h3 class="card-title">Getting Started</h3>
-                        <table width="100%" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td style="padding-bottom: 18px; font-size: 14px; line-height: 1.6; color: #b5b5c0; vertical-align: top;">
-                                    <span style="font-size: 16px; margin-right: 10px;">1️⃣</span>
-                                    <strong>Login to your portal:</strong><br>
-                                    <a href="https://www.primeverseportal.pro/" style="color: #D4AF37; text-decoration: underline;" target="_blank">https://www.primeverseportal.pro/</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-bottom: 18px; font-size: 14px; line-height: 1.6; color: #b5b5c0; vertical-align: top;">
-                                    <span style="font-size: 16px; margin-right: 10px;">2️⃣</span>
-                                    <strong>After login:</strong> Go to <strong>Profile</strong> &rarr; <strong>Change your password</strong>.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-size: 14px; line-height: 1.6; color: #b5b5c0; vertical-align: top;">
-                                    <span style="font-size: 16px; margin-right: 10px;">3️⃣</span>
-                                    <strong>Open your Dashboard:</strong> Access your account and start <strong>Day 01</strong>.
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="step">
+                            1️⃣ <strong>Login to your portal</strong><br>
+                            <a href="https://www.primeverseportal.pro/" class="portal-link" target="_blank">
+                                https://www.primeverseportal.pro/
+                            </a>
+                        </div>
+                        <div class="step">
+                            2️⃣ <strong>Change your password</strong><br>
+                            Go to Profile &rarr; Change Password.
+                        </div>
+                        <div class="step">
+                            3️⃣ <strong>Start Day 01</strong><br>
+                            Open your dashboard and begin your learning journey.
+                        </div>
                     </div>
 
-                    <div class="button-container" style="margin: 25px 0 35px 0;">
-                        <a href="https://www.primeverseportal.pro/" class="btn-gold" target="_blank">Login to Portal</a>
+                    <div class="button-container">
+                        <a href="https://www.primeverseportal.pro/" class="btn" target="_blank">Access Portal</a>
                     </div>
 
-                    <p class="text-block" style="font-style: italic; color: #ffffff; text-align: center; font-size: 15px; margin-bottom: 30px;">
+                    <div class="quote">
                         📈 Focus on learning, implementation, and disciplined execution.
-                    </p>
+                    </div>
 
-                    <div style="border-top: 1px solid #222226; padding-top: 25px; margin-top: 25px; text-align: center;">
-                        <p style="font-size: 16px; font-weight: 700; color: #ffffff; margin: 0 0 5px 0;">Welcome to PrimeVerse.</p>
-                        <p style="font-size: 13px; color: #888892; letter-spacing: 2px; text-transform: uppercase; margin: 0;">
-                            Clarity. Discipline. Consistency.
-                        </p>
+                    <div class="closing">
+                        <div class="closing-title">Welcome to PrimeVerse</div>
+                        <div class="closing-subtitle">Clarity • Discipline • Consistency</div>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td class="footer">
-                    <p class="footer-text">© 2026 PrimeVerse LMS. All rights reserved.</p>
-                    <p class="footer-text">You received this email because you registered for an account on PrimeVerse.</p>
+                    <div class="footer-text">© 2026 PrimeVerse LMS. All rights reserved.</div>
+                    <div class="footer-text">You received this email because you created an account on PrimeVerse.</div>
                     <div class="footer-links">
-                        <a href="#" class="footer-link">Privacy Policy</a>
-                        <a href="#" class="footer-link">Terms of Service</a>
-                        <a href="#" class="footer-link">Support</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Support</a>
                     </div>
                 </td>
             </tr>

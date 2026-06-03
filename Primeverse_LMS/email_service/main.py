@@ -114,13 +114,18 @@ def send_smtp_email(to_email: str, subject: str, html_content: str):
         logger.error(f"Failed to send email via SMTP: {str(e)}")
         raise e
 
-def render_welcome_template(full_name: str) -> str:
+def render_welcome_template(full_name: str, email: str = "", password: str = "", selected_course: str = "") -> str:
     """
     Loads and renders the welcome.html template using Jinja2
     """
     try:
         template = jinja_env.get_template("welcome.html")
-        return template.render(full_name=full_name)
+        return template.render(
+            full_name=full_name,
+            email=email,
+            password=password,
+            selected_course=selected_course or "PrimeVerse Mastery Program"
+        )
     except Exception as e:
         logger.error(f"Error rendering JINJA2 welcome template: {str(e)}")
         # Fallback simple template
@@ -134,13 +139,13 @@ def render_welcome_template(full_name: str) -> str:
         </html>
         """
 
-def process_and_send_welcome_email(full_name: str, email: str):
+def process_and_send_welcome_email(full_name: str, email: str, password: str = "", selected_course: str = ""):
     """
     Worker task to compile and send the welcome email.
     """
     try:
-        subject = "Welcome to PrimeVerse LMS!"
-        html_body = render_welcome_template(full_name)
+        subject = "Welcome to PrimeVerse!"
+        html_body = render_welcome_template(full_name, email, password, selected_course)
         send_smtp_email(email, subject, html_body)
     except Exception as e:
         logger.error(f"Background task failed to process email for {email}: {str(e)}")
@@ -185,13 +190,15 @@ async def send_welcome_webhook(payload: WebhookPayload, background_tasks: Backgr
     record = payload.record
     email = record.get("email")
     full_name = record.get("full_name") or "New User"
+    password = record.get("password") or ""
+    selected_course = record.get("selected_course") or ""
 
     if not email:
         logger.warning("No email found in insert record. Skipping email send.")
         return {"status": "skipped", "reason": "email field missing or null"}
 
     # Queue email sending in the background to respond to Supabase immediately
-    background_tasks.add_task(process_and_send_welcome_email, full_name, email)
+    background_tasks.add_task(process_and_send_welcome_email, full_name, email, password, selected_course)
     
     return {
         "status": "queued",
@@ -207,7 +214,7 @@ async def send_test_email(request: TestEmailRequest):
     logger.info(f"Sending manual test email to {request.email}...")
     try:
         subject = "PrimeVerse SMTP Test Connection"
-        html_body = render_welcome_template(request.full_name)
+        html_body = render_welcome_template(request.full_name, request.email, "primeverse@123", "PrimeVerse Mastery Program")
         send_smtp_email(request.email, subject, html_body)
         return {
             "status": "success",
