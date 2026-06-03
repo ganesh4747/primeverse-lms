@@ -1150,6 +1150,71 @@
         </div>
     </div>
 
+    <!-- User Details Modal -->
+    <div id="userDetailsOverlay" class="custom-confirm-overlay" style="z-index: 10001;">
+        <div class="custom-confirm-card" style="max-width: 650px; width: 95%; text-align: left; padding: 2.5rem; background: var(--navy-dark); border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 20px rgba(212,175,55,0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div id="modalUserAvatar" class="user-avatar" style="width: 55px; height: 55px; font-size: 1.3rem;">U</div>
+                    <div>
+                        <h3 id="modalUserName" style="font-family: var(--font-outfit); font-size: 1.6rem; font-weight: 900; color: var(--white); margin-bottom: 0.2rem;">User Name</h3>
+                        <p id="modalUserEmail" style="color: var(--gray); font-size: 0.95rem; font-weight: 500;">user@example.com</p>
+                    </div>
+                </div>
+                <button id="closeUserDetailsBtn" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--white); cursor: pointer; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)';" onmouseout="this.style.background='rgba(255,255,255,0.05)';">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2rem;">
+                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p style="font-size: 0.75rem; color: var(--gold); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px;">Phone Number</p>
+                    <p id="modalUserPhone" style="color: var(--white); font-weight: 700; font-size: 1rem;">-</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p style="font-size: 0.75rem; color: var(--gold); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px;">Enrollment Date</p>
+                    <p id="modalUserEnrollDate" style="color: var(--white); font-weight: 700; font-size: 1rem;">-</p>
+                </div>
+            </div>
+
+            <h4 style="color: var(--white); font-family: var(--font-outfit); font-weight: 800; margin-bottom: 1.2rem; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="activity" style="color: var(--gold); width: 20px; height: 20px;"></i> Program Progress
+            </h4>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2rem;">
+                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Selected Course</p>
+                    <p id="modalUserCourse" style="color: var(--white); font-weight: 800; font-size: 0.95rem;">-</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Stage Title</p>
+                    <p id="modalUserStage" style="color: var(--white); font-weight: 800; font-size: 0.95rem;">-</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Current Day</p>
+                    <p id="modalUserDay" style="color: var(--white); font-weight: 800; font-size: 1.2rem;">-</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Modules</p>
+                    <p id="modalUserModules" style="color: var(--white); font-weight: 800; font-size: 1.2rem;">- / -</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Progress</p>
+                    <p id="modalUserProgress" style="color: var(--gold); font-weight: 900; font-size: 1.2rem;">-</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Payment Status</p>
+                    <p id="modalUserPayment" style="font-weight: 800; font-size: 1.1rem; text-transform: uppercase;">-</p>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px;">Completed Lessons (IDs)</p>
+                <div id="modalUserLessons" style="color: var(--white); font-weight: 500; font-size: 0.85rem; word-break: break-all; max-height: 100px; overflow-y: auto; line-height: 1.6; padding-right: 10px;">-</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Holographic Provisioning Scanner Overlay -->
     <div id="syncOverlay" class="hologram-sync-overlay">
         <div class="sync-card">
@@ -1219,7 +1284,9 @@
 
                 const tbody = document.getElementById('userTableBody');
                 tbody.innerHTML = '';
+                window.usersDataMap = {};
                 users.forEach(user => {
+                    window.usersDataMap[user.id] = user;
                     const row = document.createElement('tr');
                     
                     const isBlocked = user.status === 'blocked' || user.payment_status === 'blocked';
@@ -1235,10 +1302,10 @@
                     
                     row.innerHTML = `
                         <td>
-                            <div class="user-avatar-cell">
-                                <div class="user-avatar">${initials}</div>
-                                <div>
-                                    <div style="font-weight: 700; color: var(--white); font-size: 0.95rem;">${user.full_name}</div>
+                            <div class="user-avatar-cell user-name-clickable" data-userid="${user.id}" style="cursor: pointer; transition: all 0.3s;" title="View User Dashboard" onmouseover="this.querySelector('.user-avatar').style.transform='scale(1.1)'; this.querySelector('.user-avatar').style.boxShadow='0 0 20px rgba(212, 175, 55, 0.4)'; this.querySelector('.user-fullname-text').style.color='var(--gold)';" onmouseout="this.querySelector('.user-avatar').style.transform='scale(1)'; this.querySelector('.user-avatar').style.boxShadow='0 0 15px rgba(212, 175, 55, 0.1)'; this.querySelector('.user-fullname-text').style.color='var(--white)';">
+                                <div class="user-avatar" style="transition: all 0.3s; pointer-events: none;">${initials}</div>
+                                <div style="pointer-events: none;">
+                                    <div class="user-fullname-text" style="font-weight: 800; color: var(--white); font-size: 0.95rem; transition: color 0.3s;">${user.full_name}</div>
                                 </div>
                             </div>
                         </td>
@@ -1275,7 +1342,50 @@
                         document.getElementById('customConfirmOverlay').classList.add('active');
                     });
                 });
+
+                document.querySelectorAll('.user-name-clickable').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const userId = e.currentTarget.getAttribute('data-userid');
+                        const user = window.usersDataMap[userId];
+                        if(user) {
+                            openUserDetailsModal(user);
+                        }
+                    });
+                });
             };
+
+            const openUserDetailsModal = (user) => {
+                document.getElementById('modalUserName').innerText = user.full_name || 'N/A';
+                document.getElementById('modalUserEmail').innerText = user.email || 'N/A';
+                
+                const nameParts = user.full_name ? user.full_name.split(' ') : ['U'];
+                let initials = nameParts[0].charAt(0);
+                if (nameParts.length > 1) {
+                    initials += nameParts[nameParts.length - 1].charAt(0);
+                }
+                document.getElementById('modalUserAvatar').innerText = initials;
+                
+                document.getElementById('modalUserPhone').innerText = user.phone || 'Not provided';
+                document.getElementById('modalUserEnrollDate').innerText = user.enroll_date ? new Date(user.enroll_date).toLocaleDateString() : 'N/A';
+                document.getElementById('modalUserCourse').innerText = user.selected_course || 'None';
+                document.getElementById('modalUserStage').innerText = user.stage_title || 'None';
+                document.getElementById('modalUserDay').innerText = user.current_day != null ? user.current_day : '-';
+                document.getElementById('modalUserModules').innerText = `${user.modules_completed != null ? user.modules_completed : '-'} / ${user.total_modules != null ? user.total_modules : '-'}`;
+                document.getElementById('modalUserProgress').innerText = user.program_progress != null ? `${user.program_progress}%` : '-';
+                
+                const pStatus = document.getElementById('modalUserPayment');
+                pStatus.innerText = user.payment_status || 'unpaid';
+                pStatus.style.color = (user.payment_status === 'paid') ? '#10b981' : ((user.payment_status === 'blocked') ? '#ef4444' : 'var(--gold)');
+
+                document.getElementById('modalUserLessons').innerText = user.completed_lessons || 'No lessons completed yet.';
+
+                document.getElementById('userDetailsOverlay').classList.add('active');
+                if (window.lucide) window.lucide.createIcons();
+            };
+
+            document.getElementById('closeUserDetailsBtn').addEventListener('click', () => {
+                document.getElementById('userDetailsOverlay').classList.remove('active');
+            });
 
             let emailToRemove = null;
             const confirmOverlay = document.getElementById('customConfirmOverlay');
@@ -1298,5 +1408,4 @@
         });
     </script>
 </body>
-
 </html>
