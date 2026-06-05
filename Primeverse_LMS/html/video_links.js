@@ -124,20 +124,20 @@ const lessonsDatabase = {
         title: "Trend Analysis & Market Direction",
         part1: { 
             title: "Day 06 - Part 1: Understanding Market Trends", 
-            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS0xMDgwLm1wNCIsImlhdCI6MTc4MDY3NzAwMCwiZXhwIjoxODEyMjEzMDAwfQ.Ic4v4yn0XI3Lxmlm9CvUI0g_ekq4413IA92dmep0Ues",
-            qualityLinks: {
-                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS0xMDgwLm1wNCIsImlhdCI6MTc4MDY3NzAwMCwiZXhwIjoxODEyMjEzMDAwfQ.Ic4v4yn0XI3Lxmlm9CvUI0g_ekq4413IA92dmep0Ues",
-                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS00ODAubXA0IiwiaWF0IjoxNzgwNjc3MDk1LCJleHAiOjE4MTIyMTMwOTV9.ic_7SowXXNeLR38bXV88s3iC5vkeLOHdk_vqw8SZo-M",
-                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS00ODAubXA0IiwiaWF0IjoxNzgwNjc3MTEyLCJleHAiOjE4MTIyMTMxMTJ9.VF7_JZJ3HpNUEhcOnvP1aJWvE61FhdnPBYFp14OC-Ow"
-            }
-        },
-        part2: { 
-            title: "Day 06 - Part 2: Live Trend Analysis & Market Examples", 
-            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMi0xMDgwLm1wNCIsImlhdCI6MTc4MDYzMjEyNSwiZXhwIjoxODEyMTY4MTI1fQ.rYVfZYx9Ljn1-WgCnqy8ApLs7BWPB8TEddbhmYo-0G4",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMi03MjAubXA0IiwiaWF0IjoxNzgwNjMyMTMyLCJleHAiOjE4MTIxNjgxMzJ9.0VDE3RO_9J3mdqzRyRDvnKdCiBVh3nxosSGT507qwRA",
             qualityLinks: {
                 "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMi0xMDgwLm1wNCIsImlhdCI6MTc4MDYzMjEyNSwiZXhwIjoxODEyMTY4MTI1fQ.rYVfZYx9Ljn1-WgCnqy8ApLs7BWPB8TEddbhmYo-0G4",
                 "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMi03MjAubXA0IiwiaWF0IjoxNzgwNjMyMTMyLCJleHAiOjE4MTIxNjgxMzJ9.0VDE3RO_9J3mdqzRyRDvnKdCiBVh3nxosSGT507qwRA",
                 "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMi00ODAubXA0IiwiaWF0IjoxNzgwNjMyMTUwLCJleHAiOjE4MTIxNjgxNTB9.bGZRYj5XVg3ZNfhYIPhPvCgZBKOL-73GYe-LqnzYpjM"
+            }
+        },
+        part2: { 
+            title: "Day 06 - Part 2: Live Trend Analysis & Market Examples", 
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS00ODAubXA0IiwiaWF0IjoxNzgwNjc3MDk1LCJleHAiOjE4MTIyMTMwOTV9.ic_7SowXXNeLR38bXV88s3iC5vkeLOHdk_vqw8SZo-M",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS0xMDgwLm1wNCIsImlhdCI6MTc4MDY3NzAwMCwiZXhwIjoxODEyMjEzMDAwfQ.Ic4v4yn0XI3Lxmlm9CvUI0g_ekq4413IA92dmep0Ues",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS00ODAubXA0IiwiaWF0IjoxNzgwNjc3MDk1LCJleHAiOjE4MTIyMTMwOTV9.ic_7SowXXNeLR38bXV88s3iC5vkeLOHdk_vqw8SZo-M",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS00ODAubXA0IiwiaWF0IjoxNzgwNjc3MTEyLCJleHAiOjE4MTIyMTMxMTJ9.VF7_JZJ3HpNUEhcOnvP1aJWvE61FhdnPBYFp14OC-Ow"
             }
         }
     },
