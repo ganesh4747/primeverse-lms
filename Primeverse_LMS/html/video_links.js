@@ -143,9 +143,33 @@ const lessonsDatabase = {
     },
     7: {
         title: "Key Levels & Market Reaction Zone",
-        part1: { title: "Day 07 - Part 1: Understanding Key Levels", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
-        part2: { title: "Day 07 - Part 2: How to Draw Accurate Key Levels", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
-        part3: { title: "Day 07 - Part 3: Live Key Level Market Examples", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: { 
+            title: "Day 07 - Part 1: Understanding Key Levels", 
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7module1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5N21vZHVsZTEtMTA4MHAubXA0IiwiaWF0IjoxNzgwNzU0OTAxLCJleHAiOjE4MTIyOTA5MDF9.1IJaogpsVkkJvtBeNRBt212rPH2er7SyOw8eAesn7Kg",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7module1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5N21vZHVsZTEtMTA4MHAubXA0IiwiaWF0IjoxNzgwNzU0OTAxLCJleHAiOjE4MTIyOTA5MDF9.1IJaogpsVkkJvtBeNRBt212rPH2er7SyOw8eAesn7Kg",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7module1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5N21vZHVsZTEtNzIwcC5tcDQiLCJpYXQiOjE3ODA3NTQ5MTEsImV4cCI6MTgxMjI5MDkxMX0.sHP2vESCRKQcNrnctRi947STOlMVMuLf9UQ_I59Q5og",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7module1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5N21vZHVsZTEtNDgwcC5tcDQiLCJpYXQiOjE3ODA3NTQ5MjcsImV4cCI6MTgxMjI5MDkyN30.5eH1Zxb6jdkxV_2L7YqQ2__3QkqQOkfJ-4waZYom_jg"
+            }
+        },
+        part2: { 
+            title: "Day 07 - Part 2: How to Draw Accurate Key Levels", 
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMi03MjAubXA0IiwiaWF0IjoxNzgwNzU0OTUzLCJleHAiOjE4MTIyOTA5NTN9.oErWyCBV_qkECNz1fTQdlnUnjhu5ZZPZLSUHH5veBVk",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7module1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5N21vZHVsZTEtNDgwcC5tcDQiLCJpYXQiOjE3ODA3NTQ5MjcsImV4cCI6MTgxMjI5MDkyN30.5eH1Zxb6jdkxV_2L7YqQ2__3QkqQOkfJ-4waZYom_jg",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMi03MjAubXA0IiwiaWF0IjoxNzgwNzU0OTUzLCJleHAiOjE4MTIyOTA5NTN9.oErWyCBV_qkECNz1fTQdlnUnjhu5ZZPZLSUHH5veBVk",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMi00ODAubXA0IiwiaWF0IjoxNzgwNzU0OTYyLCJleHAiOjE4MTIyOTA5NjJ9.qdfgT0jeHZVj5wvaHgu0phhtneLBvg2efV7S8Q-YHiY"
+            }
+        },
+        part3: { 
+            title: "Day 07 - Part 3: Live Key Level Market Examples", 
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7-s3-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMy0xMDgwLm1wNCIsImlhdCI6MTc4MDc1NDk4MSwiZXhwIjoxODEyMjkwOTgxfQ.WAJAdRq3cspLpWxwG-2i_w5hBIcA-1rtP52PZzQn0oQ",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7-s3-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5Ny1zMy0xMDgwLm1wNCIsImlhdCI6MTc4MDc1NDk4MSwiZXhwIjoxODEyMjkwOTgxfQ.WAJAdRq3cspLpWxwG-2i_w5hBIcA-1rtP52PZzQn0oQ",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/day7-s3-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMy03MjAubXA0IiwiaWF0IjoxNzgwNzU0OTkxLCJleHAiOjE4MTIyOTA5OTF9.IxaLJZvgWctOPj7XZQa-vsztLu4Ivtk2fH67U53oZVY",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-7/d7-s3-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZDctczMtNDgwLm1wNCIsImlhdCI6MTc4MDc1NTAwMywiZXhwIjoxODEyMjkxMDAzfQ.udrE1s4Ubj7jx_qEo2dFFWvYcHqL94a5LzRxeksqZuM"
+            }
+        }
     },
     8: {
         title: "Expansion & Retracement ,  Internal & External Market Structure",
