@@ -173,8 +173,24 @@ const lessonsDatabase = {
     },
     8: {
         title: "Expansion & Retracement ,  Internal & External Market Structure",
-        part1: { title: "Day 08 - Part 1: Understanding Expansion & Retracing", src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day%208%20-%20low%20.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5IDggLSBsb3cgLm1wNCIsImlhdCI6MTc3OTk3NjAxOCwiZXhwIjoyNDEwNjk2MDE4fQ.KTzyd9jq0dA6sdchKM4xLFsZeBsPBTqJQo300p21RoU" },
-        part2: { title: "Day 08 - Part 2: Internal & External Market Structure", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: { 
+            title: "Day 08 - Part 1: Understanding Expansion & Retracing", 
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s1-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMS03MjAubXA0IiwiaWF0IjoxNzgwODQ0MDY3LCJleHAiOjE4MTIzODAwNjd9._P3nWCqvD2RipgVwAXDmPwy6eMGTvzbb8S8jXfNTDZc",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMS0xMDgwLm1wNCIsImlhdCI6MTc4MDg0NDA1OCwiZXhwIjoxODEyMzgwMDU4fQ.FeJrSLByx1MlVKXNG6Lbr1TSdqi49W78XQYHpFjI6IY",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s1-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMS03MjAubXA0IiwiaWF0IjoxNzgwODQ0MDY3LCJleHAiOjE4MTIzODAwNjd9._P3nWCqvD2RipgVwAXDmPwy6eMGTvzbb8S8jXfNTDZc",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMS00ODAubXA0IiwiaWF0IjoxNzgwODQ0MDc4LCJleHAiOjE4MTIzODAwNzh9.rjSycl_AtDq6kDdPq81mysgud3JiE8b8OMqhM3dEI80"
+            }
+        },
+        part2: { 
+            title: "Day 08 - Part 2: Internal & External Market Structure", 
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMi03MjAubXA0IiwiaWF0IjoxNzgwODQ0MTA3LCJleHAiOjE4MTIzODAxMDd9.80wTdGM8kOmU70sufQYk0gXdkHCJhyRYl9dUgDsI0v0",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-sub2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zdWIyLTEwODAubXA0IiwiaWF0IjoxNzgwODQ0MDk3LCJleHAiOjE4MTIzODAwOTd9.ICgoRdUrn8ZJ1JOwPkRlxtUvzfMtI8TgfQejAJyXfxk",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMi03MjAubXA0IiwiaWF0IjoxNzgwODQ0MTA3LCJleHAiOjE4MTIzODAxMDd9.80wTdGM8kOmU70sufQYk0gXdkHCJhyRYl9dUgDsI0v0",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMi00ODAubXA0IiwiaWF0IjoxNzgwODQ0MTE2LCJleHAiOjE4MTIzODAxMTZ9.vSynTSnhZk4_wae9rO0t-q7T4jdr4gR4Jn7NKLqlir4"
+            }
+        }
     },
     9: {
         title: "Fibonacci Framework & Market Strength Analysis",
