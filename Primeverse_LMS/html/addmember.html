@@ -1238,7 +1238,17 @@
                             return;
                         }
 
-                        // 2. Perform safe, clean database insert direct to profiles table
+                        // 2. Trigger Supabase Auth to send the "Magic Link / OTP" email
+                        // (You must paste the Welcome HTML into the "Magic Link" template in Supabase)
+                        const { error: otpErr } = await supabase.auth.signInWithOtp({
+                            email: email
+                        });
+                        
+                        if (otpErr) {
+                            console.warn("Could not trigger Supabase OTP email:", otpErr.message);
+                        }
+
+                        // 3. Perform safe, clean database insert direct to profiles table
                         const { error: insertErr } = await supabase
                             .from('profiles')
                             .insert([
