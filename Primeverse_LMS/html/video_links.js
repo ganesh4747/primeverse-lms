@@ -197,8 +197,24 @@ const lessonsDatabase = {
     },
     9: {
         title: "Fibonacci Framework & Market Strength Analysis",
-        part1: { title: "Day 09 - Part 1: Understanding the Fibonacci Tool", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
-        part2: { title: "Day 09 - Part 2: Strong & Weak Highs & Lows", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: {
+            title: "Day 09 - Part 1: Understanding the Fibonacci Tool",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/day9sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvZGF5OXN1YjEtMTA4MHAubXA0IiwiaWF0IjoxNzgwOTgzOTMxLCJleHAiOjE4MTI1MTk5MzF9.NieqiIvxAtYHUstrPjVeRYHsk-pMCeJXg9gXmOx8aC4",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/day9sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvZGF5OXN1YjEtMTA4MHAubXA0IiwiaWF0IjoxNzgwOTgzOTMxLCJleHAiOjE4MTI1MTk5MzF9.NieqiIvxAtYHUstrPjVeRYHsk-pMCeJXg9gXmOx8aC4",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/day9sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvZGF5OXN1YjEtNzIwcC5tcDQiLCJpYXQiOjE3ODA5ODM5MjAsImV4cCI6MTgxMjUxOTkyMH0.Lox0Ihv_MlW14sgxlIDCxKVUjKqqY_daIyZB9gR64lQ",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/day9sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvZGF5OXN1YjEtNDgwcC5tcDQiLCJpYXQiOjE3ODA5ODM5MTAsImV4cCI6MTgxMjUxOTkxMH0.NdG2tgA2BtqeK3eMQP33_sbDq4bO8RdlDH5Nk2nYI7I"
+            }
+        },
+        part2: {
+            title: "Day 09 - Part 2: Strong & Weak Highs & Lows",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/day9sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvZGF5OXN1YjItMTA4MHAubXA0IiwiaWF0IjoxNzgwOTg0NDk1LCJleHAiOjE4MTI1MjA0OTV9.LUknmzwmoxluqzitcbjDPcSfMj6fzcoTNl1P1dHS20k",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/day9sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvZGF5OXN1YjItMTA4MHAubXA0IiwiaWF0IjoxNzgwOTg0NDk1LCJleHAiOjE4MTI1MjA0OTV9.LUknmzwmoxluqzitcbjDPcSfMj6fzcoTNl1P1dHS20k",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/day9sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvZGF5OXN1YjItNzIwcC5tcDQiLCJpYXQiOjE3ODA5ODQ1MDcsImV4cCI6MTgxMjUyMDUwN30.gRCbh-Ry51RCigT-nV_suNRcijnmL7t_DqQGXyxElQ4",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-9/day9sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTkvZGF5OXN1YjItNDgwcC5tcDQiLCJpYXQiOjE3ODA5ODQzNTEsImV4cCI6MTgxMjUyMDM1MX0.4ItjWmCjNucdc7NgGmfpJZdC4_M7awYwiI5ibQP1nrE"
+            }
+        }
     },
     10: {
         title: "Fibonacci Optimal Trade Entry (OTE)",
