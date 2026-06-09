@@ -218,7 +218,15 @@ const lessonsDatabase = {
     },
     10: {
         title: "Fibonacci Optimal Trade Entry (OTE)",
-        part1: { title: "Day 10 - Part 1: Understanding Fibonacci OTE Levels", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: {
+            title: "Day 10 - Part 1: Understanding Fibonacci OTE Levels",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-10/day10sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEwL2RheTEwc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMDI2MDczLCJleHAiOjE4MTI1NjIwNzN9.e4OZUY5PLVAvL5haklCpSiAt45FKiXXC7g0jiVao73E",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-10/day10sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEwL2RheTEwc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMDI2MDczLCJleHAiOjE4MTI1NjIwNzN9.e4OZUY5PLVAvL5haklCpSiAt45FKiXXC7g0jiVao73E",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-10/day10sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEwL2RheTEwc3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEwMjYwODQsImV4cCI6MTgxMjU2MjA4NH0.y_Sf0AcqfyMMrB9GwLJ4MVdXiv9BdPQIGV3jGoCsN3s",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-10/day10sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEwL2RheTEwc3ViMS00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEwMjYwOTIsImV4cCI6MTgxMjU2MjA5Mn0._FQUHHEt2H15iyzmjrIVsTgeZ6kEf4sSC3ywUEAIljE"
+            }
+        }
     },
     11: {
         title: "Structure Break, Liquidity, Stop Hunt & Failure Swing",
