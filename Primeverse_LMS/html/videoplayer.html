@@ -1746,6 +1746,18 @@
             document.addEventListener('mouseleave', activateSecurityBlackout);
             document.addEventListener('mouseenter', deactivateSecurityBlackout);
 
+            // Visibility change detection
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    if (videoElement) {
+                        videoElement.pause();
+                    } else {
+                        const video = document.querySelector("video");
+                        if (video) video.pause();
+                    }
+                }
+            });
+
             // Intercept OS-level PrtScn key and devtools shortcut keys
             window.addEventListener('keydown', (e) => {
                 if (e.key === 'PrintScreen' || e.keyCode === 44) {
