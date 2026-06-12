@@ -1794,23 +1794,6 @@
                 e.preventDefault();
             });
 
-            // Developer tools detection check to avoid screenshot and recording
-            setInterval(() => {
-                const widthThreshold = window.outerWidth - window.innerWidth > 160;
-                const heightThreshold = window.outerHeight - window.innerHeight > 160;
-
-                if (widthThreshold || heightThreshold) {
-                    if (videoElement) {
-                        videoElement.pause();
-                    } else {
-                        const video = document.querySelector("video");
-                        if (video) video.pause();
-                    }
-                    activateSecurityBlackout();
-                    alert("Developer tools detected");
-                }
-            }, 1000);
-
             // Sync live watch progress in background
             fetchLiveCompletionFromSupabase();
 
