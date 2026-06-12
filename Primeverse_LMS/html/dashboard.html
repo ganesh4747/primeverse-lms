@@ -3777,12 +3777,12 @@
                     Dashboard</a>
                 <a href="#" class="nav-item" id="nav-mastery"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery
                     Program</a>
-                <a href="#" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i>
-                    PrimeVerse Pro Mentorship</a>
-                <a href="#" class="nav-item" id="nav-concept-support"><i data-lucide="clipboard-check"></i>
-                    Concept Implementation Support</a>
                 <a href="executionjournal.html" class="nav-item" id="nav-journal"><i data-lucide="book-marked"></i>
                     Execution Journal</a>
+                <a href="#" class="nav-item" id="nav-concept-support"><i data-lucide="clipboard-check"></i>
+                    Concept Implementation Support</a>
+                <a href="#" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i>
+                    PrimeVerse Pro Mentorship</a>
                 <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse
                     Community</a>
                 <a href="oneonecommunity.html" class="nav-item" id="nav-oneone" style="display: none;"><i data-lucide="message-square"></i> PrimeVerse One:One</a>
@@ -4980,7 +4980,7 @@
                         <div>
                             <span class="mentorship-card-badge"
                                 style="background: rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.25); color: var(--gold); margin-bottom: 1rem; text-transform: uppercase; font-weight: 800; font-size: 0.75rem; letter-spacing: 1px;">
-                                Day 18 Complete Requirement
+                                Day 17 Complete Requirement
                             </span>
                         </div>
 
@@ -4989,7 +4989,7 @@
                             MENTORSHIP LOCKED</h2>
                         <p
                             style="color: #cbd5e1; font-size: 0.92rem; font-weight: 600; text-align: center; max-width: 340px; margin-bottom: 1.5rem; line-height: 1.6; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">
-                            Unlock this advanced execution module after completing Day 18 of the Mastery Program.
+                            Unlock this advanced execution module after completing Day 17 of the Mastery Program.
                         </p>
 
                         <!-- Mini Progress bar inside overlay -->
@@ -5001,7 +5001,7 @@
                         </div>
                         <p id="mentorshipOverlayText"
                             style="color: #94a3b8; font-size: 0.8rem; font-weight: 700; margin: 0; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">
-                            Day 1 of 18 (17 days remaining)
+                            Day 1 of 17 (17 days remaining)
                         </p>
                     </div>
 
@@ -7136,9 +7136,8 @@
 
             // Unified Dynamic Dashboard Update & Gating Logic
             window.updateDashboardUI = function () {
-                // --- Mentorship Lock/Unlock Overlay Controller Logic ---
                 const isMentorshipEnrolled = localStorage.getItem('selectedCourse') === 'PrimeVerse Pro Mentorship'; // Note: selectedPlan concept
-                const isMentorshipLocked = !isMentorshipEnrolled && (currentDay < 19);
+                const isMentorshipLocked = !isMentorshipEnrolled && (currentDay < 18);
                 const lockOverlay = document.getElementById('mentorshipLockOverlay');
                 const overlayBar = document.getElementById('mentorshipOverlayBar');
                 const overlayText = document.getElementById('mentorshipOverlayText');
@@ -7187,12 +7186,12 @@
 
                         // Populate locked progress details inside overlay
                         if (overlayBar) {
-                            const percent = Math.min(100, Math.max(0, (currentDay / 19) * 100));
+                            const percent = Math.min(100, Math.max(0, (currentDay / 18) * 100));
                             overlayBar.style.width = `${percent}%`;
                         }
                         if (overlayText) {
-                            const remaining = 19 - currentDay;
-                            overlayText.innerText = `Day ${currentDay} of 18 (${remaining} day${remaining > 1 ? 's' : ''} remaining)`;
+                            const remaining = 18 - currentDay;
+                            overlayText.innerText = `Day ${currentDay} of 17 (${remaining} day${remaining > 1 ? 's' : ''} remaining)`;
                         }
                     } else {
                         // Change sidebar icon to crown
