@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeVerse One:One | LMS</title>
+    
+    <!-- Satoshi and Outfit Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=outfit@100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    
+    <!-- Base Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --font-satoshi: 'Satoshi', sans-serif;
+            --font-outfit: 'Outfit', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-satoshi);
+            background-color: var(--navy-dark);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* --- Split Page Layout --- */
+        .main-dash {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .oneone-container {
+            flex: 1;
+            display: flex;
+            background: rgba(10, 16, 28, 0.55);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            height: calc(100vh - 180px);
+            overflow: hidden;
+            position: relative;
+            margin-top: 1.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Left Side: Submissions List Sidebar */
+        .submissions-sidebar-left {
+            width: 360px;
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            background: rgba(4, 6, 12, 0.3);
+            flex-shrink: 0;
+        }
+
+        .sidebar-search-section {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .search-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-title-row h3 {
+            font-family: var(--font-outfit);
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .submissions-count-badge {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 900;
+        }
+
+        .search-bar-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-bar-wrapper i,
+        .search-bar-wrapper svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: var(--gray);
+            pointer-events: none;
+        }
+
+        .search-input-sleek {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 0.75rem 1rem 0.75rem 2.25rem;
+            color: var(--white);
+            font-family: var(--font-satoshi);
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-sleek:focus {
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.05);
+        }
+
+        /* Filter Pills Row */
+        .filter-pills-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding-bottom: 2px;
+        }
+
+        .filter-pills-row::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        .filter-pills-row::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .filter-pill {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            color: var(--gray);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .filter-pill:hover,
+        .filter-pill.active {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .filter-pill.active {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        /* List Items container */
+        .submissions-list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .submissions-list-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .submissions-list-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .submissions-list-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+        }
+
+        .submission-list-item {
+            padding: 1.1rem;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+        }
+
+        .submission-list-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateX(2px);
+        }
+
+        .submission-list-item.active {
+            background: rgba(212, 175, 55, 0.04);
+            border-color: rgba(212, 175, 55, 0.25);
+            box-shadow: inset 3px 0 0 var(--gold);
+        }
+
+        /* Grouped Submissions Styles */
+        .submission-list-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .submission-group-header {
+            padding: 1rem 1.1rem;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+        }
+
+        .submission-group-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateX(2px);
+        }
+
+        .submission-list-group.active .submission-group-header {
+            border-color: rgba(212, 175, 55, 0.2);
+            background: rgba(212, 175, 55, 0.02);
+        }
+
+        .group-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .group-student-name {
+            font-family: var(--font-satoshi);
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--white);
+        }
+
+        .group-student-email {
+            font-size: 0.72rem;
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 170px;
+        }
+
+        .group-badge {
+            font-size: 0.7rem;
+            font-weight: 800;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            flex-shrink: 0;
+        }
+
+        .group-sub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 0.75rem;
+            margin-top: 4px;
+            margin-bottom: 8px;
+            border-left: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .group-sub-item {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+
+        .group-sub-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .group-sub-item.active {
+            background: rgba(212, 175, 55, 0.06);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: inset 3px 0 0 var(--gold);
+        }
+
+        .sub-item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sub-item-concept {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--white);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
+        }
+
+        .sub-item-date {
+            font-size: 0.65rem;
+            color: var(--gray);
+        }
+
+        .status-badge.mini {
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .submission-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .submission-item-title {
+            font-family: var(--font-satoshi);
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: var(--white);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+
+        .submission-item-student {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gold);
+            opacity: 0.85;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .status-badge {
+            font-size: 0.62rem;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.08);
+            color: #f59e0b;
+            border-color: rgba(245, 158, 11, 0.15);
+        }
+
+        .status-badge.reviewed {
+            background: rgba(59, 130, 246, 0.08);
+            color: #3b82f6;
+            border-color: rgba(59, 130, 246, 0.15);
+        }
+
+        .status-badge.approved {
+            background: rgba(16, 185, 129, 0.08);
+            color: #10b981;
+            border-color: rgba(16, 185, 129, 0.15);
+        }
+
+        .status-badge.needs-improvement {
+            background: rgba(239, 68, 68, 0.08);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.15);
+        }
+
+        .submission-item-module {
+            font-size: 0.72rem;
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .submission-item-time {
+            font-size: 0.68rem;
+            color: rgba(255, 255, 255, 0.25);
+            text-align: right;
+            margin-top: 2px;
+        }
+
+        /* Right Side: Chat Portal & Details Content */
+        .chat-content-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: rgba(5, 7, 12, 0.1);
+        }
+
+        /* Placeholder Layout */
+        .chat-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .placeholder-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(212, 175, 55, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.05);
+        }
+
+        .placeholder-icon i {
+            width: 30px;
+            height: 30px;
+        }
+
+        .chat-placeholder h3 {
+            font-family: var(--font-outfit);
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .chat-placeholder p {
+            font-size: 0.88rem;
+            color: var(--gray);
+            max-width: 360px;
+            line-height: 1.6;
+        }
+
+        /* Active Chat Workspace */
+        .chat-active-workspace {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-header {
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 16, 28, 0.35);
+            backdrop-filter: blur(10px);
+            z-index: 5;
+        }
+
+        .chat-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: left;
+        }
+
+        .chat-header-left h4 {
+            font-family: var(--font-outfit);
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .chat-header-left span {
+            font-size: 0.78rem;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .chat-header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        /* Status Dropdown / Controls */
+        .status-dropdown-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dropdown-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-select-sleek {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            color: var(--gold) !important;
+            border-radius: 8px;
+            padding: 6px 28px 6px 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        /* Custom Dropdown Styling */
+        .custom-status-dropdown {
+            position: relative;
+            width: 170px;
+        }
+
+        .custom-dropdown-selected {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            color: var(--gold) !important;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .custom-dropdown-selected:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .custom-dropdown-options {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            width: 100%;
+            background: rgba(8, 14, 27, 0.98);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+            animation: dropdownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes dropdownFade {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .custom-dropdown-option {
+            padding: 10px 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            user-select: none;
+        }
+
+        .custom-dropdown-option:hover {
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--gold);
+        }
+
+        .custom-dropdown-option.active {
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--gold);
+        }
+
+        /* Core Workspace Area (Flex Horizontal Split) */
+        .chat-workspace-split {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- Submission Main Post Card in Chat --- */
+        .submission-main-post {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid var(--glass-border) !important;
+            border-radius: 16px !important;
+            padding: 1.5rem !important;
+            margin-bottom: 2rem !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 1.25rem !important;
+            max-width: 100% !important;
+            align-self: stretch !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .submission-main-post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.75rem;
+        }
+
+        .submission-main-post-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submission-main-post-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
+        }
+
+        .submission-main-post-meta {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .submission-main-post-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .submission-main-post-email {
+            font-size: 0.72rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .submission-main-post-date {
+            font-size: 0.75rem;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .submission-main-post-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem !important;
+            text-align: left;
+        }
+
+        .submission-main-post-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .submission-main-post-explanation {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: #d1dce8;
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .submission-main-post-image-container {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-height: 400px;
+        }
+
+        .submission-main-post-image-container img {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .submission-main-post-image-container:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Right Side of split: Message Feed Window */
+        .workspace-chat-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: rgba(5, 7, 12, 0.1);
+        }
+
+        .chat-messages-log {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .chat-messages-log::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chat-messages-log::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+        }
+
+        .chat-message-bubble {
+            max-width: 75%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .chat-message-bubble.student {
+            align-self: flex-start;
+        }
+
+        .chat-message-bubble.admin {
+            align-self: flex-end;
+        }
+
+        .chat-message-bubble.system {
+            align-self: flex-start;
+        }
+
+        .chat-message-sender-name {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chat-message-bubble.student .chat-message-sender-name {
+            color: var(--gold);
+            text-align: left;
+        }
+
+        .chat-message-bubble.admin .chat-message-sender-name {
+            color: #3b82f6;
+            text-align: right;
+        }
+
+        .chat-message-bubble.system .chat-message-sender-name {
+            color: var(--gray);
+            text-align: left;
+        }
+
+        .chat-bubble-content {
+            padding: 1rem 1.25rem;
+            border-radius: 16px;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .chat-message-bubble.student .chat-bubble-content {
+            background: rgba(212, 175, 55, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: var(--white);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message-bubble.admin .chat-bubble-content {
+            background: rgba(59, 130, 246, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: var(--white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message-bubble.system .chat-bubble-content {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message-time {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 600;
+        }
+
+        .chat-message-bubble.student .chat-message-time {
+            text-align: left;
+        }
+
+        .chat-message-bubble.admin .chat-message-time {
+            text-align: right;
+        }
+
+        .chat-message-bubble.system .chat-message-time {
+            text-align: left;
+        }
+
+        /* Message input footer area */
+        .chat-input-container {
+            padding: 1.25rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 1rem;
+            background: rgba(4, 6, 12, 0.25);
+            backdrop-filter: blur(10px);
+            align-items: center;
+        }
+
+        .chat-message-input-form {
+            flex: 1;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-message-input-field {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.9rem 1.2rem;
+            color: var(--white);
+            font-family: var(--font-satoshi);
+            font-size: 0.88rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .chat-message-input-field:focus {
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.05);
+        }
+
+        .chat-send-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--gold) 0%, #bfa030 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .chat-send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .chat-send-btn i {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* --- Fullscreen Image Zoom Overlay --- */
+        .zoom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 7, 12, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 10005;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .zoom-overlay.active {
+            opacity: 1;
+            display: flex;
+        }
+
+        .zoom-card {
+            position: relative;
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        .zoom-card img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            object-fit: contain;
+        }
+
+        .zoom-close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--white);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .zoom-close-btn:hover {
+            background: var(--red);
+            border-color: var(--red);
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+        }
+
+        /* Mini spinner visual loader */
+        .spinner-mini {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Media Queries */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+                height: auto;
+                overflow-y: auto !important;
+            }
+
+            .sidebar {
+                display: none !important;
+            }
+
+            .sidebar.active {
+                display: flex !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 280px;
+                height: 100vh;
+                z-index: 1000;
+                box-shadow: 20px 0 40px rgba(0, 0, 0, 0.5);
+            }
+
+            .mobile-nav-bar {
+                display: flex !important;
+            }
+
+            .main-dash {
+                height: calc(100vh - 65px);
+                padding: 1rem;
+            }
+
+            .oneone-container {
+                height: auto;
+                flex-direction: column;
+            }
+
+            .submissions-sidebar-left {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--glass-border);
+                max-height: 250px;
+            }
+
+            .chat-workspace-split {
+                flex-direction: column;
+                height: 500px;
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Sidebar Menu Component -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="dashboard.html" class="logo-wrap" style="gap: 8px !important; text-decoration: none;">
+                <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 40px; display: block;">
+                <div class="logo-info">
+                    <div class="logo-text">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
+                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                </div>
+            </a>
+        </div>
+
+        <nav class="nav-menu">
+            <div class="nav-top">
+                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
+                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
+                <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="executionjournal.html" class="nav-item" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
+                
+                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
+                <a href="oneonecommunity.html" class="nav-item active" id="nav-oneone"><i data-lucide="message-square"></i> PrimeVerse One:One</a>
+                <a href="addmember.html" class="nav-item" id="nav-addmember"><i data-lucide="user-plus"></i> Add Member</a>
+                <a href="usercontrol.html" class="nav-item" id="nav-usercontrol"><i data-lucide="shield-minus"></i> User Control</a>
+                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
+            </div>
+            <div class="nav-bottom">
+                <a href="../index.html" class="nav-item" id="logoutBtn" style="color: var(--red);"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="main-dash">
+        <!-- Mobile Navigation Header -->
+        <div class="mobile-nav-bar" style="display: none; justify-content: space-between; align-items: center; background: var(--navy-dark); padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 99; margin: -2rem -2rem 1rem -2rem; backdrop-filter: blur(10px);">
+            <a href="dashboard.html" class="logo-wrap" style="gap: 8px !important; text-decoration: none;">
+                <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 30px; display: block;">
+                <div class="logo-info">
+                    <div class="logo-text" style="font-size: 1.1rem !important;">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
+                    <div class="logo-tagline" style="font-size: 0.4rem; letter-spacing: 0.3px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                </div>
+            </a>
+            <button id="mobileMenuBtn" style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
+                <i data-lucide="menu" style="width: 26px; height: 26px;"></i>
+            </button>
+        </div>
+
+        <!-- Dashboard Header -->
+        <header class="dashboard-header-premium" style="margin-bottom: 0;">
+            <div class="header-left">
+                <div class="header-badge">
+                    <i data-lucide="message-square" style="width: 14px; height: 14px; color: #3b82f6;"></i>
+                    <span id="roleHeaderLabel">1-TO-1 MENTORSHIP WORKSPACE</span>
+                </div>
+                <h1 class="welcome-title"><span class="gold-gradient">One:One Support</span> 💬</h1>
+            </div>
+        </header>
+
+        <!-- Split Workspace Container -->
+        <div class="oneone-container">
+            
+            <!-- Left sidebar submissions list -->
+            <section class="submissions-sidebar-left">
+                <div class="sidebar-search-section">
+                    <div class="search-title-row">
+                        <h3 id="submissionsListTitle">Submissions</h3>
+                        <span id="submissionsCountBadge" class="submissions-count-badge">0</span>
+                    </div>
+                    
+                    <div class="search-bar-wrapper">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="submissionsSearchInput" class="search-input-sleek" placeholder="Search concept or user..." autocomplete="off">
+                    </div>
+
+                    <div class="filter-pills-row" id="filterPillsRow">
+                        <span class="filter-pill active" data-status="all">All</span>
+                        <span class="filter-pill" data-status="Pending Review">Pending</span>
+                        <span class="filter-pill" data-status="Reviewed">Reviewed</span>
+                        <span class="filter-pill" data-status="Approved">Approved</span>
+                        <span class="filter-pill" data-status="Needs Improvement">Needs Work</span>
+                    </div>
+                </div>
+
+                <div class="submissions-list-container" id="submissionsList">
+                    <!-- Dynamic entries will populate here -->
+                </div>
+            </section>
+
+            <!-- Right Workspace: Selected ticket chat & details -->
+            <section class="chat-content-right">
+                
+                <!-- Placeholder when nothing is selected -->
+                <div class="chat-placeholder" id="workspacePlaceholder">
+                    <div class="placeholder-icon">
+                        <i data-lucide="message-square"></i>
+                    </div>
+                    <h3>One:One Mentor Ticket</h3>
+                    <p id="placeholderInstruction">Select a student concept submission from the list to view markups, check explanations, adjust statuses, and exchange feedback comments.</p>
+                </div>
+
+                <!-- Active workspace thread -->
+                <div class="chat-active-workspace" id="workspaceActive" style="display: none;">
+                    
+                    <!-- Chat Top Info Bar -->
+                    <header class="chat-header">
+                        <div class="chat-header-info">
+                            <h4 id="chatActiveConceptTitle">Concept Markup</h4>
+                            <span id="chatActiveModuleSubtitle">Module Name</span>
+                        </div>
+                        
+                        <div class="chat-header-right">
+                            <!-- Status Controller -->
+                            <div class="status-dropdown-wrapper" id="statusDropdownWrapper" style="display: none;">
+                                <span class="status-dropdown-label">Review Status:</span>
+                                <select id="statusSelector" style="display: none;">
+                                    <option value="Pending Review">Pending Review</option>
+                                    <option value="Reviewed">Reviewed</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Needs Improvement">Needs Improvement</option>
+                                </select>
+                                <div class="custom-status-dropdown" id="customStatusDropdown">
+                                    <div class="custom-dropdown-selected" id="customDropdownSelected">
+                                        <span id="customDropdownSelectedText">Pending Review</span>
+                                        <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
+                                    </div>
+                                    <div class="custom-dropdown-options" id="customDropdownOptions">
+                                        <div class="custom-dropdown-option" data-value="Pending Review">Pending Review</div>
+                                        <div class="custom-dropdown-option" data-value="Reviewed">Reviewed</div>
+                                        <div class="custom-dropdown-option" data-value="Approved">Approved</div>
+                                        <div class="custom-dropdown-option" data-value="Needs Improvement">Needs Improvement</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Student read-only status -->
+                            <div id="studentStatusBadgeContainer" style="display: none;">
+                                <span class="status-badge" id="studentStatusBadge">Pending</span>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- Split Details and Message Feed -->
+                    <div class="chat-workspace-split">
+                        
+                        <!-- Hidden Details Panel for script compatibility -->
+                        <div style="display: none;">
+                            <span id="detailStudentName"></span>
+                            <span id="detailStudentEmail"></span>
+                            <span id="detailDate"></span>
+                            <div id="detailScreenshotSection">
+                                <img id="detailImage" />
+                            </div>
+                            <p id="detailExplanation"></p>
+                        </div>
+
+                        <!-- Chat pane (Right) -->
+                        <div class="workspace-chat-pane">
+                            <div class="chat-messages-log" id="chatMessagesLog">
+                                <!-- Dynamic messages load here -->
+                            </div>
+
+                            <!-- Comment Input Form -->
+                            <footer class="chat-input-container">
+                                <form id="chatSendMessageForm" class="chat-message-input-form" autocomplete="off">
+                                    <input type="text" id="chatMessageInput" class="chat-message-input-field" placeholder="Write a response / feedback message..." required>
+                                    <button type="submit" class="chat-send-btn" id="chatSendBtn">
+                                        <i data-lucide="send"></i>
+                                    </button>
+                                </form>
+                            </footer>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Screenshot Zoom Lightbox Overlay -->
+    <div class="zoom-overlay" id="zoomOverlay">
+        <div class="zoom-card">
+            <img src="" id="zoomOverlayImage" alt="Zoomed Chart Markup" />
+            <button class="zoom-close-btn" id="zoomCloseBtn">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Supabase Core Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // --- Session Gate & Authentication Redirects ---
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.replace('../index.html?login=true');
+        } else if (localStorage.getItem('userRole') !== 'admin') {
+            window.location.replace('communitypage.html');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lucide icons init
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.querySelector('.sidebar');
+            if (mobileMenuBtn && sidebar) {
+                mobileMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('active');
+                });
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => sidebar.classList.remove('active'));
+                });
+            }
+
+            // --- Logged in Details & Sidebar Adaptive Navigation ---
+            const loggedInEmail = localStorage.getItem('userEmail') || 'unknown@primeverse.pro';
+            const loggedInName = localStorage.getItem('userName') || 'PrimeVerse Member';
+            const userRole = localStorage.getItem('userRole') || 'user';
+            const isAdmin = (userRole === 'admin');
+
+            // Set role label header
+            const roleHeaderLabel = document.getElementById('roleHeaderLabel');
+            if (roleHeaderLabel) {
+                roleHeaderLabel.textContent = isAdmin ? 'ADMIN MENTOR WORKSPACE' : '1-TO-1 SUPPORT WORKSPACE';
+            }
+
+            // Hides/Shows side links depending on role
+            const navAddMember = document.getElementById('nav-addmember');
+            const navUserControl = document.getElementById('nav-usercontrol');
+            const navDashboard = document.getElementById('nav-dashboard-link');
+            const navMastery = document.getElementById('nav-mastery');
+            const navMentorship = document.getElementById('nav-mentorship');
+            const navJournal = document.getElementById('nav-journal');
+            const navConceptSupport = document.getElementById('nav-concept-support');
+
+            if (isAdmin) {
+                if (navDashboard) navDashboard.style.display = 'none';
+                if (navMastery) navMastery.style.display = 'none';
+                if (navMentorship) navMentorship.style.display = 'none';
+                if (navJournal) navJournal.style.display = 'none';
+                if (navConceptSupport) navConceptSupport.style.display = 'none';
+                if (navAddMember) navAddMember.style.display = 'flex';
+                if (navUserControl) navUserControl.style.display = 'flex';
+            } else {
+                if (navAddMember) navAddMember.style.display = 'none';
+                if (navUserControl) navUserControl.style.display = 'none';
+                if (navDashboard) navDashboard.style.display = 'flex';
+                if (navMastery) navMastery.style.display = 'flex';
+                if (navMentorship) navMentorship.style.display = 'flex';
+                if (navJournal) navJournal.style.display = 'flex';
+                if (navConceptSupport) navConceptSupport.style.display = 'flex';
+
+                // Evaluate locked items for student
+                let currentDay = parseInt(localStorage.getItem('currentDay')) || 1;
+                if (currentDay < 19 && navMentorship) {
+                    navMentorship.innerHTML = '<i data-lucide="lock"></i> PrimeVerse Pro Mentorship';
+                }
+                if (currentDay < 13 && navJournal) {
+                    navJournal.innerHTML = '<i data-lucide="lock"></i> Execution Journal';
+                }
+                if (window.lucide) window.lucide.createIcons();
+            }
+
+            // Logout Action
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.clear();
+                    window.location.replace('../index.html?login=true');
+                });
+            }
+
+            // --- Database Sync Core (Supabase Client Init) ---
+            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+
+            let allSubmissionsCached = [];
+            let activeSubmission = null;
+            let currentFilterStatus = 'all';
+
+            // Filter pills logic
+            document.querySelectorAll('.filter-pill').forEach(pill => {
+                pill.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                    pill.classList.add('active');
+                    currentFilterStatus = pill.getAttribute('data-status');
+                    applyFiltersAndSearch();
+                });
+            });
+
+            // Search bar input logic
+            const searchInput = document.getElementById('submissionsSearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    applyFiltersAndSearch();
+                });
+            }
+
+            // Change review status listener (Admin-only)
+            const statusSelector = document.getElementById('statusSelector');
+            if (statusSelector) {
+                statusSelector.addEventListener('change', async () => {
+                    if (!activeSubmission) return;
+                    const newStatus = statusSelector.value;
+                    await updateSubmissionStatus(activeSubmission, newStatus);
+                });
+            }
+
+            // Custom Status Dropdown Toggle and Option Click Listener
+            const customDropdownSelected = document.getElementById('customDropdownSelected');
+            const customDropdownOptions = document.getElementById('customDropdownOptions');
+            
+            if (customDropdownSelected && customDropdownOptions) {
+                customDropdownSelected.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isVisible = customDropdownOptions.style.display === 'flex';
+                    customDropdownOptions.style.display = isVisible ? 'none' : 'flex';
+                });
+
+                document.querySelectorAll('.custom-dropdown-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const val = option.getAttribute('data-value');
+                        
+                        // Update native select
+                        const nativeSelect = document.getElementById('statusSelector');
+                        if (nativeSelect) {
+                            nativeSelect.value = val;
+                            nativeSelect.dispatchEvent(new Event('change'));
+                        }
+
+                        // Update custom dropdown UI
+                        document.getElementById('customDropdownSelectedText').innerText = val;
+                        document.querySelectorAll('.custom-dropdown-option').forEach(o => o.classList.remove('active'));
+                        option.classList.add('active');
+
+                        // Hide dropdown options
+                        customDropdownOptions.style.display = 'none';
+                    });
+                });
+
+                // Close dropdown on click outside
+                document.addEventListener('click', () => {
+                    customDropdownOptions.style.display = 'none';
+                });
+            }
+
+            // Message Form submission
+            const chatSendMessageForm = document.getElementById('chatSendMessageForm');
+            if (chatSendMessageForm) {
+                chatSendMessageForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!activeSubmission) return;
+
+                    const input = document.getElementById('chatMessageInput');
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    await sendChatMessage(activeSubmission, text);
+                    input.value = '';
+                });
+            }
+
+            // Lightbox Zoom actions
+            const zoomOverlay = document.getElementById('zoomOverlay');
+            const zoomOverlayImage = document.getElementById('zoomOverlayImage');
+            const zoomTrigger = document.getElementById('zoomTrigger');
+            const zoomCloseBtn = document.getElementById('zoomCloseBtn');
+
+            window.openZoomModal = function(url) {
+                if (zoomOverlay && zoomOverlayImage) {
+                    zoomOverlayImage.src = url;
+                    zoomOverlay.style.display = 'flex';
+                    setTimeout(() => {
+                        zoomOverlay.classList.add('active');
+                    }, 10);
+                }
+            };
+
+            const closeZoomModal = () => {
+                if (zoomOverlay) {
+                    zoomOverlay.classList.remove('active');
+                    setTimeout(() => {
+                        zoomOverlay.style.display = 'none';
+                    }, 300);
+                }
+            };
+
+            if (zoomTrigger) {
+                zoomTrigger.addEventListener('click', () => {
+                    const img = document.getElementById('detailImage');
+                    if (img && img.src) {
+                        window.openZoomModal(img.src);
+                    }
+                });
+            }
+
+            if (zoomCloseBtn) zoomCloseBtn.addEventListener('click', closeZoomModal);
+            if (zoomOverlay) zoomOverlay.addEventListener('click', closeZoomModal);
+
+            // Fetch submissions
+            const fetchSubmissions = async () => {
+                let listContainer = document.getElementById('submissionsList');
+                if (!listContainer) return;
+
+                listContainer.innerHTML = '<div style="color: var(--gray); text-align: center; padding: 2rem; font-size: 0.85rem;"><div class="spinner-mini" style="margin:0 auto 0.75rem auto;"></div>Loading ticket submissions...</div>';
+
+                let submissions = [];
+
+                if (supabase) {
+                    try {
+                        let query = supabase.from('concept_submissions').select('*');
+                        if (!isAdmin) {
+                            query = query.ilike('user_email', loggedInEmail.trim());
+                        }
+                        const { data, error } = await query.order('created_at', { ascending: false });
+                        if (!error && data) {
+                            submissions = data;
+                        } else {
+                            console.warn("Supabase fetch concept_submissions returned error:", error);
+                        }
+                    } catch (e) {
+                        console.error("Supabase concept_submissions fetch exception:", e);
+                    }
+                }
+
+                // LocalStorage Fallback if Supabase fails or is empty
+                if (!submissions || !submissions.length) {
+                    const localSub = JSON.parse(localStorage.getItem('concept_submissions') || '[]');
+                    if (isAdmin) {
+                        submissions = localSub;
+                    } else {
+                        submissions = localSub.filter(sub => sub.user_email && sub.user_email.toLowerCase().trim() === loggedInEmail.toLowerCase().trim());
+                    }
+                    submissions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                }
+
+                allSubmissionsCached = submissions;
+                applyFiltersAndSearch();
+            };
+
+            const applyFiltersAndSearch = () => {
+                const queryText = (searchInput ? searchInput.value.trim().toLowerCase() : '');
+                let filtered = allSubmissionsCached;
+
+                // Status Filter
+                if (currentFilterStatus !== 'all') {
+                    filtered = filtered.filter(sub => (sub.status || 'Pending Review').toLowerCase() === currentFilterStatus.toLowerCase());
+                }
+
+                // Search Filter (concept_name, module, user_name, user_email)
+                if (queryText) {
+                    filtered = filtered.filter(sub => {
+                        const concept = (sub.concept_name || '').toLowerCase();
+                        const mod = (sub.module || '').toLowerCase();
+                        const name = (sub.user_name || '').toLowerCase();
+                        const email = (sub.user_email || '').toLowerCase();
+                        return concept.includes(queryText) || mod.includes(queryText) || name.includes(queryText) || email.includes(queryText);
+                    });
+                }
+
+                // Render Submissions Count
+                const countBadge = document.getElementById('submissionsCountBadge');
+                if (countBadge) countBadge.textContent = filtered.length;
+
+                // Render in DOM list
+                const listContainer = document.getElementById('submissionsList');
+                if (!listContainer) return;
+                listContainer.innerHTML = '';
+
+                if (!filtered.length) {
+                    activeSubmission = null;
+                    document.getElementById('workspacePlaceholder').style.display = 'flex';
+                    document.getElementById('workspaceActive').style.display = 'none';
+                    listContainer.innerHTML = '<div style="color: var(--gray); text-align: center; padding: 2rem; font-size: 0.85rem;">No matching submissions found.</div>';
+                    return;
+                }
+
+                // Auto select first entry if activeSubmission is null or not in list
+                const exists = filtered.find(s => activeSubmission && s.id === activeSubmission.id);
+                if (!exists && filtered.length > 0) {
+                    activeSubmission = filtered[0];
+                    selectSubmission(filtered[0]);
+                }
+
+                // Group by user_email
+                const groups = {};
+                filtered.forEach(sub => {
+                    const email = (sub.user_email || 'unknown').toLowerCase().trim();
+                    if (!groups[email]) {
+                        groups[email] = {
+                            user_name: sub.user_name || 'Student',
+                            user_email: sub.user_email || '',
+                            submissions: []
+                        };
+                    }
+                    groups[email].submissions.push(sub);
+                });
+
+                // Render groups in listContainer
+                Object.values(groups).forEach(group => {
+                    const groupItem = document.createElement('div');
+                    groupItem.className = 'submission-list-group';
+
+                    const groupHeader = document.createElement('div');
+                    groupHeader.className = 'submission-group-header';
+
+                    const subCount = group.submissions.length;
+                    const hasActive = activeSubmission && group.submissions.some(s => s.id === activeSubmission.id);
+                    if (hasActive) {
+                        groupItem.classList.add('active');
+                    }
+
+                    groupHeader.innerHTML = `
+                        <div class="group-info">
+                            <span class="group-student-name">${group.user_name}</span>
+                            <span class="group-student-email">${group.user_email}</span>
+                        </div>
+                        <span class="group-badge">${subCount} submission${subCount > 1 ? 's' : ''}</span>
+                    `;
+
+                    const subList = document.createElement('div');
+                    subList.className = 'group-sub-list';
+                    subList.style.display = hasActive ? 'flex' : 'none';
+
+                    group.submissions.forEach(sub => {
+                        const subItem = document.createElement('div');
+                        subItem.className = 'group-sub-item';
+                        if (activeSubmission && activeSubmission.id === sub.id) {
+                            subItem.classList.add('active');
+                        }
+
+                        const dateStr = sub.created_at ? new Date(sub.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'N/A';
+                        const currentStatus = sub.status || 'Pending Review';
+                        let statusClass = 'pending';
+                        if (currentStatus.toLowerCase().includes('approved')) statusClass = 'approved';
+                        else if (currentStatus.toLowerCase().includes('reviewed')) statusClass = 'reviewed';
+                        else if (currentStatus.toLowerCase().includes('improvement') || currentStatus.toLowerCase().includes('needs')) statusClass = 'needs-improvement';
+
+                        subItem.innerHTML = `
+                            <div class="sub-item-meta">
+                                <span class="sub-item-concept" title="${sub.concept_name}">${sub.concept_name}</span>
+                                <span class="status-badge mini ${statusClass}">${currentStatus}</span>
+                            </div>
+                            <div class="sub-item-date">${dateStr}</div>
+                        `;
+
+                        subItem.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            document.querySelectorAll('.group-sub-item').forEach(el => el.classList.remove('active'));
+                            subItem.classList.add('active');
+                            selectSubmission(sub);
+                        });
+
+                        subList.appendChild(subItem);
+                    });
+
+                    groupHeader.addEventListener('click', () => {
+                        const isExpanded = subList.style.display !== 'none';
+                        // Collapse all other lists
+                        document.querySelectorAll('.group-sub-list').forEach(el => {
+                            if (el !== subList) el.style.display = 'none';
+                        });
+                        subList.style.display = isExpanded ? 'none' : 'flex';
+                    });
+
+                    groupItem.appendChild(groupHeader);
+                    groupItem.appendChild(subList);
+                    listContainer.appendChild(groupItem);
+                });
+            };
+
+            const selectSubmission = async (submission) => {
+                activeSubmission = submission;
+                
+                document.getElementById('workspacePlaceholder').style.display = 'none';
+                document.getElementById('workspaceActive').style.display = 'flex';
+
+                // Header details
+                document.getElementById('chatActiveConceptTitle').innerText = submission.concept_name;
+                document.getElementById('chatActiveModuleSubtitle').innerText = submission.module;
+
+                // Status configurations
+                if (isAdmin) {
+                    document.getElementById('statusDropdownWrapper').style.display = 'flex';
+                    document.getElementById('studentStatusBadgeContainer').style.display = 'none';
+                    const statusVal = submission.status || 'Pending Review';
+                    document.getElementById('statusSelector').value = statusVal;
+
+                    // Update Custom Dropdown UI
+                    const customSelectedText = document.getElementById('customDropdownSelectedText');
+                    if (customSelectedText) {
+                        customSelectedText.innerText = statusVal;
+                    }
+                    document.querySelectorAll('.custom-dropdown-option').forEach(opt => {
+                        if (opt.getAttribute('data-value') === statusVal) {
+                            opt.classList.add('active');
+                        } else {
+                            opt.classList.remove('active');
+                        }
+                    });
+                } else {
+                    document.getElementById('statusDropdownWrapper').style.display = 'none';
+                    document.getElementById('studentStatusBadgeContainer').style.display = 'block';
+                    
+                    const badge = document.getElementById('studentStatusBadge');
+                    const curStatus = submission.status || 'Pending Review';
+                    badge.textContent = curStatus;
+                    badge.className = 'status-badge';
+                    if (curStatus.toLowerCase().includes('approved')) badge.classList.add('approved');
+                    else if (curStatus.toLowerCase().includes('reviewed')) badge.classList.add('reviewed');
+                    else if (curStatus.toLowerCase().includes('improvement')) badge.classList.add('needs-improvement');
+                    else badge.classList.add('pending');
+                }
+
+                // Details Pane Data
+                document.getElementById('detailStudentName').innerText = submission.user_name || 'PrimeVerse Student';
+                document.getElementById('detailStudentEmail').innerText = submission.user_email || '-';
+                document.getElementById('detailDate').innerText = submission.created_at ? new Date(submission.created_at).toLocaleString() : 'N/A';
+                document.getElementById('detailExplanation').innerText = submission.explanation || 'No notes provided.';
+
+                // Image details
+                const imgContainer = document.getElementById('detailScreenshotSection');
+                const imgEl = document.getElementById('detailImage');
+                if (submission.screenshot_url) {
+                    imgContainer.style.display = 'flex';
+                    imgEl.src = submission.screenshot_url;
+                } else {
+                    imgContainer.style.display = 'none';
+                    imgEl.src = '';
+                }
+
+                // Lucide icon update
+                if (window.lucide) window.lucide.createIcons();
+
+                // Load Chat logs
+                await loadChatLogs(submission);
+            };
+
+            const loadChatLogs = async (submission) => {
+                const log = document.getElementById('chatMessagesLog');
+                if (!log) return;
+
+                log.innerHTML = '<div style="color: var(--gray); text-align: center; padding: 1.5rem; font-size: 0.85rem;"><div class="spinner-mini" style="margin: 0 auto 0.5rem auto;"></div>Loading chat log...</div>';
+
+                // 1. Core Submission Details (Student Bubble representation)
+                const fullDateStr = submission.created_at ? new Date(submission.created_at).toLocaleString() : 'N/A';
+                const subDateStr = submission.created_at ? new Date(submission.created_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : '';
+                const studentMsg = document.createElement('div');
+                studentMsg.className = 'submission-main-post';
+                
+                // Initials for avatar
+                const initials = (submission.user_name || 'S').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+                studentMsg.innerHTML = `
+                    <div class="submission-main-post-header">
+                        <div class="submission-main-post-user">
+                            <div class="submission-main-post-avatar">${initials}</div>
+                            <div class="submission-main-post-meta">
+                                <span class="submission-main-post-name">${submission.user_name || 'PrimeVerse Student'}</span>
+                                <span class="submission-main-post-email">${submission.user_email || '-'}</span>
+                            </div>
+                        </div>
+                        <span class="submission-main-post-date">${fullDateStr}</span>
+                    </div>
+                    <div class="submission-main-post-body">
+                        ${submission.screenshot_url ? `
+                            <div class="detail-card-section">
+                                <span class="submission-main-post-label">Screenshot Markup</span>
+                                <div class="submission-main-post-image-container" onclick="window.openZoomModal('${submission.screenshot_url}')">
+                                    <img src="${submission.screenshot_url}" alt="Chart Markup" />
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="detail-card-section">
+                            <span class="submission-main-post-label">Student Explanation</span>
+                            <p class="submission-main-post-explanation">${submission.explanation || 'No notes provided.'}</p>
+                        </div>
+                    </div>
+                `;
+
+                let chatMessages = [];
+
+                if (supabase && submission.id && !submission.id.startsWith('loc_')) {
+                    try {
+                        const { data, error } = await supabase
+                            .from('concept_messages')
+                            .select('*')
+                            .eq('submission_id', submission.id)
+                            .order('created_at', { ascending: true });
+                        if (!error && data) {
+                            chatMessages = data;
+                        }
+                    } catch (err) {
+                        console.error("Supabase concept_messages fetch failed:", err);
+                    }
+                }
+
+                // Fallback to local storage
+                if (!chatMessages.length) {
+                    const msgKey = `concept_messages_${submission.id || submission.created_at}`;
+                    const customMessages = JSON.parse(localStorage.getItem(msgKey) || '[]');
+                    chatMessages = customMessages.map(msg => ({
+                        sender_role: msg.sender === 'student' ? 'student' : (msg.sender === 'system' ? 'admin' : msg.sender),
+                        sender_name: msg.sender === 'student' ? (submission.user_name || 'Student') : 'PrimeVerse Mentor',
+                        message_text: msg.text,
+                        created_at: msg.time
+                    }));
+                }
+
+                // Render messages
+                log.innerHTML = '';
+                log.appendChild(studentMsg);
+
+                chatMessages.forEach(msg => {
+                    const bubble = document.createElement('div');
+                    // Normalize role
+                    const roleClass = (msg.sender_role === 'admin' || msg.sender_role === 'system' || msg.sender_role === 'mentor') ? 'admin' : 'student';
+                    bubble.className = `chat-message-bubble ${roleClass}`;
+                    const displayTime = msg.created_at ? new Date(msg.created_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : '';
+
+                    bubble.innerHTML = `
+                        <span class="chat-message-sender-name">${msg.sender_name}</span>
+                        <div class="chat-bubble-content">
+                            <p>${msg.message_text}</p>
+                        </div>
+                        <span class="chat-message-time">${displayTime}</span>
+                    `;
+                    log.appendChild(bubble);
+                });
+
+                if (window.lucide) window.lucide.createIcons();
+
+                // Scroll to bottom
+                setTimeout(() => {
+                    log.scrollTop = log.scrollHeight;
+                }, 50);
+            };
+
+            const sendChatMessage = async (submission, text) => {
+                const newMsg = {
+                    submission_id: submission.id,
+                    sender_email: loggedInEmail,
+                    sender_name: loggedInName,
+                    sender_role: isAdmin ? 'admin' : 'student',
+                    message_text: text
+                };
+
+                let dbSuccess = false;
+
+                // Write to Supabase if possible
+                if (supabase && submission.id && !submission.id.startsWith('loc_')) {
+                    try {
+                        const { data, error } = await supabase
+                            .from('concept_messages')
+                            .insert([newMsg])
+                            .select();
+                        if (!error && data && data.length) {
+                            dbSuccess = true;
+                            newMsg.created_at = data[0].created_at;
+                            console.log("Supabase: message inserted successfully.");
+                        } else {
+                            console.warn("Supabase message insert error:", error);
+                        }
+                    } catch (e) {
+                        console.error("Supabase message insert exception:", e);
+                    }
+                }
+
+                // If not synced or local fallback
+                if (!dbSuccess) {
+                    newMsg.created_at = new Date().toISOString();
+                }
+
+                // Save to LocalStorage
+                const msgKey = `concept_messages_${submission.id || submission.created_at}`;
+                const customMessages = JSON.parse(localStorage.getItem(msgKey) || '[]');
+                customMessages.push({
+                    sender: newMsg.sender_role === 'admin' ? 'system' : 'student',
+                    text: newMsg.message_text,
+                    time: newMsg.created_at
+                });
+                localStorage.setItem(msgKey, JSON.stringify(customMessages));
+
+                // Auto-Update Status to "Reviewed" if Admin replies to student ticket
+                if (isAdmin && submission.status !== 'Reviewed' && submission.status !== 'Approved' && submission.status !== 'Needs Improvement') {
+                    await updateSubmissionStatus(submission, 'Reviewed');
+                } else {
+                    // Just reload chat
+                    await loadChatLogs(submission);
+                }
+            };
+
+            const updateSubmissionStatus = async (submission, newStatus) => {
+                let dbSuccess = false;
+
+                if (supabase && submission.id && !submission.id.startsWith('loc_')) {
+                    try {
+                        const { error } = await supabase
+                            .from('concept_submissions')
+                            .update({ status: newStatus })
+                            .eq('id', submission.id);
+                        if (!error) {
+                            dbSuccess = true;
+                            console.log("Supabase: submission status updated to", newStatus);
+                        } else {
+                            console.error("Supabase status update error:", error);
+                        }
+                    } catch (e) {
+                        console.error("Supabase status update exception:", e);
+                    }
+                }
+
+                // Update Local Cache always
+                submission.status = newStatus;
+                const cachedSub = allSubmissionsCached.find(s => s.id === submission.id);
+                if (cachedSub) cachedSub.status = newStatus;
+
+                // Sync to localStorage
+                const localSub = JSON.parse(localStorage.getItem('concept_submissions') || '[]');
+                const found = localSub.find(s => s.id === submission.id || s.created_at === submission.created_at);
+                if (found) {
+                    found.status = newStatus;
+                    localStorage.setItem('concept_submissions', JSON.stringify(localSub));
+                }
+
+                // Refresh UI
+                applyFiltersAndSearch();
+                selectSubmission(submission);
+            };
+
+            // Trigger fetch
+            fetchSubmissions();
+        });
+    </script>
+</body>
+</html>

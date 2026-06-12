@@ -7,7 +7,9 @@
     <title>Add Member - PrimeVerse LMS</title>
     <link rel="icon" type="image/png" href="../assets/login.png">
     <!-- Premium Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../css/style.css">
@@ -43,7 +45,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(212, 175, 55, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -51,64 +53,7 @@
             z-index: 0;
         }
 
-        /* --- Sidebar --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--navy-dark);
-            border-right: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            padding: 2rem;
-            padding-bottom: 5rem;
-            z-index: 100;
-            flex-shrink: 0;
-            height: 100vh;
-            position: sticky;
-            top: 0;
-            overflow-y: auto;
-        }
 
-        .sidebar-logo {
-            margin-bottom: 2rem;
-        }
-
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            flex-grow: 1;
-        }
-
-        .nav-bottom {
-            margin-top: auto;
-            padding-top: 2rem;
-            border-top: 1px solid var(--glass-border);
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            color: var(--gray);
-            text-decoration: none;
-            border-radius: 12px;
-            transition: 0.3s;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .nav-item:hover,
-        .nav-item.active {
-            background: var(--glass);
-            color: var(--gold);
-            border-radius: 8px;
-        }
-
-        .nav-item i {
-            width: 20px;
-            height: 20px;
-        }
 
         /* --- Main Dashboard Container --- */
         .main-dash {
@@ -417,7 +362,7 @@
 
         .cyber-input-field:focus {
             border-color: var(--gold);
-            box-shadow: 
+            box-shadow:
                 inset 0 2px 8px rgba(0, 0, 0, 0.3),
                 0 0 15px rgba(212, 175, 55, 0.08);
             background: rgba(0, 0, 0, 0.25);
@@ -451,7 +396,7 @@
 
         .cyber-select-field:focus {
             border-color: var(--gold);
-            box-shadow: 
+            box-shadow:
                 inset 0 2px 8px rgba(0, 0, 0, 0.3),
                 0 0 15px rgba(212, 175, 55, 0.08);
         }
@@ -501,12 +446,12 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: rgba(212, 175, 55, 0.1);
             border-color: var(--gold);
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             transform: translateX(24px);
             background-color: var(--gold);
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
@@ -519,7 +464,7 @@
             transition: color 0.3s ease;
         }
 
-        input:checked ~ .toggle-status-label {
+        input:checked~.toggle-status-label {
             color: var(--gold);
         }
 
@@ -558,7 +503,7 @@
 
         .cyber-provision-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 
+            box-shadow:
                 0 6px 20px rgba(212, 175, 55, 0.4),
                 0 0 15px rgba(212, 175, 55, 0.2);
             background: linear-gradient(135deg, var(--gold-hover) 0%, var(--gold) 100%);
@@ -580,7 +525,7 @@
             text-align: left;
             color: var(--white);
         }
-        
+
         .modern-user-table thead th {
             padding: 0.5rem 1.5rem;
             color: var(--gray);
@@ -594,13 +539,13 @@
         .modern-user-table tbody tr {
             background: rgba(255, 255, 255, 0.02);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .modern-user-table tbody tr:hover {
             background: rgba(255, 255, 255, 0.04);
             transform: translateY(-2px) scale(1.005);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(212, 175, 55, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(212, 175, 55, 0.15);
         }
 
         .modern-user-table tbody td {
@@ -613,7 +558,7 @@
             border-top-left-radius: 12px;
             border-bottom-left-radius: 12px;
         }
-        
+
         .modern-user-table tbody tr td:last-child {
             border-top-right-radius: 12px;
             border-bottom-right-radius: 12px;
@@ -663,12 +608,12 @@
             color: #f59e0b;
             border: 1px solid rgba(245, 158, 11, 0.2);
         }
-        
+
         .btn-block:hover {
             background: rgba(245, 158, 11, 0.2);
             box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
         }
-        
+
         .btn-unblock {
             background: rgba(16, 185, 129, 0.1);
             color: #10b981;
@@ -744,11 +689,14 @@
             animation: pulse-glow 2s infinite ease-in-out;
             color: var(--gold);
         }
-        
+
         /* Custom Confirm Modal */
         .custom-confirm-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background: rgba(6, 13, 23, 0.85);
             z-index: 10000;
             display: flex;
@@ -759,10 +707,12 @@
             transition: opacity 0.3s ease;
             backdrop-filter: blur(10px);
         }
+
         .custom-confirm-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
+
         .custom-confirm-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--glass-border);
@@ -771,56 +721,90 @@
             width: 90%;
             max-width: 420px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
             transform: scale(0.95);
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .custom-confirm-overlay.active .custom-confirm-card {
             transform: scale(1);
         }
+
         .custom-confirm-icon {
-            width: 60px; height: 60px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: rgba(239, 68, 68, 0.1);
             color: #ef4444;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin: 0 auto 1.5rem auto;
             border: 1px solid rgba(239, 68, 68, 0.2);
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
         }
-        .custom-confirm-icon i { width: 30px; height: 30px; }
+
+        .custom-confirm-icon i {
+            width: 30px;
+            height: 30px;
+        }
+
         .custom-confirm-title {
-            font-size: 1.25rem; font-weight: 800; color: var(--white);
-            margin-bottom: 0.75rem; letter-spacing: 0.5px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.5px;
         }
+
         .custom-confirm-desc {
-            font-size: 0.9rem; color: var(--gray);
-            line-height: 1.5; margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.5;
+            margin-bottom: 2rem;
         }
+
         .custom-confirm-actions {
-            display: flex; gap: 12px; justify-content: center;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
         }
+
         .btn-confirm-cancel {
             background: rgba(255, 255, 255, 0.05);
             color: var(--white);
             border: 1px solid var(--glass-border);
-            padding: 10px 20px; border-radius: 8px;
-            font-size: 0.85rem; font-weight: 700; cursor: pointer;
-            transition: all 0.2s; flex: 1; text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+            text-transform: uppercase;
         }
+
         .btn-confirm-cancel:hover {
             background: rgba(255, 255, 255, 0.1);
         }
+
         .btn-confirm-delete {
             background: rgba(239, 68, 68, 0.15);
             color: #ef4444;
             border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 10px 20px; border-radius: 8px;
-            font-size: 0.85rem; font-weight: 700; cursor: pointer;
-            transition: all 0.2s; flex: 1; text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+            text-transform: uppercase;
         }
+
         .btn-confirm-delete:hover {
-            background: #ef4444; color: white;
+            background: #ef4444;
+            color: white;
             box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
         }
 
@@ -828,9 +812,11 @@
             0% {
                 box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
             }
+
             70% {
                 box-shadow: 0 0 0 20px rgba(212, 175, 55, 0);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
             }
@@ -866,8 +852,13 @@
 
         /* --- Keyframes & Media Queries --- */
         @keyframes spin-clockwise {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 1024px) {
@@ -876,19 +867,7 @@
                 min-height: 100vh;
             }
 
-            .sidebar {
-                display: none !important;
-            }
 
-            .sidebar.active {
-                display: flex !important;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 280px;
-                height: 100vh;
-                box-shadow: 20px 0 40px rgba(0, 0, 0, 0.5);
-            }
 
             .mobile-nav-bar {
                 display: flex !important;
@@ -913,6 +892,7 @@
                 gap: 0.75rem;
             }
         }
+
         /* --- Premium Custom Success Alert --- */
         .custom-success-alert {
             display: none;
@@ -922,7 +902,7 @@
             border-radius: 20px;
             padding: 1.5rem;
             animation: slideDownFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            box-shadow: 
+            box-shadow:
                 0 10px 30px rgba(0, 0, 0, 0.3),
                 inset 0 0 20px rgba(34, 197, 94, 0.02);
         }
@@ -1059,25 +1039,39 @@
                 <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 40px; display: block;">
                 <div class="logo-info">
                     <div class="logo-text">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
-                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE •
+                        CONSISTENCY</div>
                 </div>
             </a>
         </div>
 
         <nav class="nav-menu">
             <div class="nav-top">
-                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link" style="display: none;"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery" style="display: none;"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
-                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship" style="display: none;"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
-                <a href="executionjournal.html" class="nav-item" id="nav-journal" style="display: none;"><i data-lucide="book-marked"></i> Execution Journal</a>
-                
-                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
-                <a href="addmember.html" class="nav-item" id="nav-addmember"><i data-lucide="user-plus"></i> Add Member</a>
-                <a href="usercontrol.html" class="nav-item active" id="nav-usercontrol"><i data-lucide="shield-minus"></i> User Control</a>
-                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
+                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link" style="display: none;"><i
+                        data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery" style="display: none;"><i
+                        data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
+                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship" style="display: none;"><i
+                        data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
+                <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"
+                    style="display: none;"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="executionjournal.html" class="nav-item" id="nav-journal" style="display: none;"><i
+                        data-lucide="book-marked"></i> Execution Journal</a>
+
+                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse
+                    Community</a>
+                <a href="oneonecommunity.html" class="nav-item" id="nav-oneone"><i data-lucide="message-square"></i>
+                    PrimeVerse One:One</a>
+                <a href="addmember.html" class="nav-item" id="nav-addmember"><i data-lucide="user-plus"></i> Add
+                    Member</a>
+                <a href="usercontrol.html" class="nav-item active" id="nav-usercontrol"><i
+                        data-lucide="shield-minus"></i> User Control</a>
+                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account
+                    Settings</a>
             </div>
             <div class="nav-bottom">
-                <a href="../index.html" class="nav-item" id="logoutBtnSettings" style="color: var(--red);"><i data-lucide="log-out"></i> Logout</a>
+                <a href="../index.html" class="nav-item" id="logoutBtnSettings" style="color: var(--red);"><i
+                        data-lucide="log-out"></i> Logout</a>
             </div>
         </nav>
     </aside>
@@ -1092,7 +1086,8 @@
                     <div class="logo-tagline">CLARITY • DISCIPLINE • CONSISTENCY</div>
                 </div>
             </a>
-            <button id="mobileMenuBtn" style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
+            <button id="mobileMenuBtn"
+                style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
                 <i data-lucide="menu" style="width: 26px; height: 26px;"></i>
             </button>
         </div>
@@ -1112,11 +1107,13 @@
         <div class="innovative-settings-container">
             <h2 class="settings-title-glow" style="display: flex; justify-content: space-between; align-items: center;">
                 <div><i data-lucide="shield-minus" class="title-icon-spin"></i> User Access Control</div>
-                <div style="font-size: 1rem; color: var(--gold); background: rgba(212, 175, 55, 0.1); padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
+                <div
+                    style="font-size: 1rem; color: var(--gold); background: rgba(212, 175, 55, 0.1); padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
                     Total Users: <span id="totalUsersCount" style="font-weight: 800;">0</span>
                 </div>
             </h2>
-            <div class="cyber-form-wrapper" style="padding: 1.5rem; overflow-x: auto; background: transparent; border: none; box-shadow: none;">
+            <div class="cyber-form-wrapper"
+                style="padding: 1.5rem; overflow-x: auto; background: transparent; border: none; box-shadow: none;">
                 <table class="modern-user-table">
                     <thead>
                         <tr>
@@ -1142,7 +1139,8 @@
                 <i data-lucide="alert-triangle"></i>
             </div>
             <h3 class="custom-confirm-title">Remove User</h3>
-            <p class="custom-confirm-desc">Are you sure you want to permanently remove this user? This action cannot be undone.</p>
+            <p class="custom-confirm-desc">Are you sure you want to permanently remove this user? This action cannot be
+                undone.</p>
             <div class="custom-confirm-actions">
                 <button id="cancelRemoveBtn" class="btn-confirm-cancel">Cancel</button>
                 <button id="confirmRemoveBtn" class="btn-confirm-delete">Remove</button>
@@ -1152,65 +1150,104 @@
 
     <!-- User Details Modal -->
     <div id="userDetailsOverlay" class="custom-confirm-overlay" style="z-index: 10001;">
-        <div class="custom-confirm-card" style="max-width: 650px; width: 95%; text-align: left; padding: 2.5rem; background: var(--navy-dark); border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 20px rgba(212,175,55,0.05);">
+        <div class="custom-confirm-card"
+            style="max-width: 650px; width: 95%; text-align: left; padding: 2.5rem; background: var(--navy-dark); border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 20px rgba(212,175,55,0.05);">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div id="modalUserAvatar" class="user-avatar" style="width: 55px; height: 55px; font-size: 1.3rem;">U</div>
+                    <div id="modalUserAvatar" class="user-avatar" style="width: 55px; height: 55px; font-size: 1.3rem;">
+                        U</div>
                     <div>
-                        <h3 id="modalUserName" style="font-family: var(--font-outfit); font-size: 1.6rem; font-weight: 900; color: var(--white); margin-bottom: 0.2rem;">User Name</h3>
-                        <p id="modalUserEmail" style="color: var(--gray); font-size: 0.95rem; font-weight: 500;">user@example.com</p>
+                        <h3 id="modalUserName"
+                            style="font-family: var(--font-outfit); font-size: 1.6rem; font-weight: 900; color: var(--white); margin-bottom: 0.2rem;">
+                            User Name</h3>
+                        <p id="modalUserEmail" style="color: var(--gray); font-size: 0.95rem; font-weight: 500;">
+                            user@example.com</p>
                     </div>
                 </div>
-                <button id="closeUserDetailsBtn" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--white); cursor: pointer; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)';" onmouseout="this.style.background='rgba(255,255,255,0.05)';">
+                <button id="closeUserDetailsBtn"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--white); cursor: pointer; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.3s;"
+                    onmouseover="this.style.background='rgba(255,255,255,0.1)';"
+                    onmouseout="this.style.background='rgba(255,255,255,0.05)';">
                     <i data-lucide="x" style="width: 18px; height: 18px;"></i>
                 </button>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2rem;">
-                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
-                    <p style="font-size: 0.75rem; color: var(--gold); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px;">Phone Number</p>
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p
+                        style="font-size: 0.75rem; color: var(--gold); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px;">
+                        Phone Number</p>
                     <p id="modalUserPhone" style="color: var(--white); font-weight: 700; font-size: 1rem;">-</p>
                 </div>
-                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
-                    <p style="font-size: 0.75rem; color: var(--gold); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px;">Enrollment Date</p>
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p
+                        style="font-size: 0.75rem; color: var(--gold); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 6px;">
+                        Enrollment Date</p>
                     <p id="modalUserEnrollDate" style="color: var(--white); font-weight: 700; font-size: 1rem;">-</p>
                 </div>
             </div>
 
-            <h4 style="color: var(--white); font-family: var(--font-outfit); font-weight: 800; margin-bottom: 1.2rem; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+            <h4
+                style="color: var(--white); font-family: var(--font-outfit); font-weight: 800; margin-bottom: 1.2rem; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
                 <i data-lucide="activity" style="color: var(--gold); width: 20px; height: 20px;"></i> Program Progress
             </h4>
-            
+
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2rem;">
-                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
-                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Selected Course</p>
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p
+                        style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">
+                        Selected Course</p>
                     <p id="modalUserCourse" style="color: var(--white); font-weight: 800; font-size: 0.95rem;">-</p>
                 </div>
-                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
-                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Stage Title</p>
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p
+                        style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">
+                        Stage Title</p>
                     <p id="modalUserStage" style="color: var(--white); font-weight: 800; font-size: 0.95rem;">-</p>
                 </div>
-                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
-                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Current Day</p>
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p
+                        style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">
+                        Current Day</p>
                     <p id="modalUserDay" style="color: var(--white); font-weight: 800; font-size: 1.2rem;">-</p>
                 </div>
-                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
-                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Modules</p>
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p
+                        style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">
+                        Modules</p>
                     <p id="modalUserModules" style="color: var(--white); font-weight: 800; font-size: 1.2rem;">- / -</p>
                 </div>
-                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
-                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Progress</p>
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p
+                        style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">
+                        Progress</p>
                     <p id="modalUserProgress" style="color: var(--gold); font-weight: 900; font-size: 1.2rem;">-</p>
                 </div>
-                <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
-                    <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">Payment Status</p>
-                    <p id="modalUserPayment" style="font-weight: 800; font-size: 1.1rem; text-transform: uppercase;">-</p>
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                    <p
+                        style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">
+                        Payment Status</p>
+                    <p id="modalUserPayment" style="font-weight: 800; font-size: 1.1rem; text-transform: uppercase;">-
+                    </p>
                 </div>
             </div>
 
-            <div style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
-                <p style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px;">Completed Lessons (IDs)</p>
-                <div id="modalUserLessons" style="color: var(--white); font-weight: 500; font-size: 0.85rem; word-break: break-all; max-height: 100px; overflow-y: auto; line-height: 1.6; padding-right: 10px;">-</div>
+            <div
+                style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--glass-border);">
+                <p
+                    style="font-size: 0.75rem; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px;">
+                    Completed Lessons (IDs)</p>
+                <div id="modalUserLessons"
+                    style="color: var(--white); font-weight: 500; font-size: 0.85rem; word-break: break-all; max-height: 100px; overflow-y: auto; line-height: 1.6; padding-right: 10px;">
+                    -</div>
             </div>
         </div>
     </div>
@@ -1221,11 +1258,13 @@
             <div class="sync-scanner">
                 <i data-lucide="shield-alert"></i>
             </div>
-            <h3 style="font-family: var(--font-outfit); font-size: 1.4rem; font-weight: 900; color: var(--white); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
+            <h3
+                style="font-family: var(--font-outfit); font-size: 1.4rem; font-weight: 900; color: var(--white); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
                 PROVISIONING PROFILE...
             </h3>
             <p style="color: var(--gray); font-size: 0.9rem; line-height: 1.6; max-width: 320px; margin: 0 auto;">
-                Authenticating server connections, securing enrollment vectors, and deploying credentials database node. Do not close...
+                Authenticating server connections, securing enrollment vectors, and deploying credentials database node.
+                Do not close...
             </p>
         </div>
     </div>
@@ -1292,7 +1331,7 @@
                     row.setAttribute('data-userid', user.id);
                     row.style.cursor = 'pointer';
                     row.style.transition = 'all 0.3s';
-                    row.onmouseover = function() {
+                    row.onmouseover = function () {
                         this.style.background = 'rgba(212, 175, 55, 0.04)';
                         const avatar = this.querySelector('.user-avatar');
                         if (avatar) {
@@ -1302,7 +1341,7 @@
                         const nameText = this.querySelector('.user-fullname-text');
                         if (nameText) nameText.style.color = 'var(--gold)';
                     };
-                    row.onmouseout = function() {
+                    row.onmouseout = function () {
                         this.style.background = 'transparent';
                         const avatar = this.querySelector('.user-avatar');
                         if (avatar) {
@@ -1312,18 +1351,18 @@
                         const nameText = this.querySelector('.user-fullname-text');
                         if (nameText) nameText.style.color = 'var(--white)';
                     };
-                    
+
                     const isBlocked = user.status === 'blocked' || user.payment_status === 'blocked';
                     const blockBtnText = isBlocked ? 'Unblock' : 'Block';
                     const blockBtnClass = isBlocked ? 'btn-unblock' : 'btn-block';
                     const statusText = isBlocked ? 'Blocked' : 'Active';
-                    
+
                     const nameParts = user.full_name ? user.full_name.split(' ') : ['U'];
                     let initials = nameParts[0].charAt(0);
                     if (nameParts.length > 1) {
                         initials += nameParts[nameParts.length - 1].charAt(0);
                     }
-                    
+
                     row.innerHTML = `
                         <td>
                             <div class="user-avatar-cell" title="View User Dashboard">
@@ -1354,7 +1393,7 @@
                         const email = e.target.getAttribute('data-email');
                         const currentlyBlocked = e.target.getAttribute('data-blocked') === 'true';
                         const newStatus = currentlyBlocked ? 'active' : 'blocked';
-                        
+
                         // We update both status and payment_status to handle both columns in case one is missing
                         const { error } = await supabase.from('profiles').update({ status: newStatus, payment_status: currentlyBlocked ? 'paid' : 'blocked' }).eq('email', email);
                         if (!error) loadUsers();
@@ -1373,7 +1412,7 @@
                     el.addEventListener('click', (e) => {
                         const userId = e.currentTarget.getAttribute('data-userid');
                         const user = window.usersDataMap[userId];
-                        if(user) {
+                        if (user) {
                             openUserDetailsModal(user);
                         }
                     });
@@ -1383,14 +1422,14 @@
             const openUserDetailsModal = (user) => {
                 document.getElementById('modalUserName').innerText = user.full_name || 'N/A';
                 document.getElementById('modalUserEmail').innerText = user.email || 'N/A';
-                
+
                 const nameParts = user.full_name ? user.full_name.split(' ') : ['U'];
                 let initials = nameParts[0].charAt(0);
                 if (nameParts.length > 1) {
                     initials += nameParts[nameParts.length - 1].charAt(0);
                 }
                 document.getElementById('modalUserAvatar').innerText = initials;
-                
+
                 document.getElementById('modalUserPhone').innerText = user.phone || 'Not provided';
                 document.getElementById('modalUserEnrollDate').innerText = user.enroll_date ? new Date(user.enroll_date).toLocaleDateString() : 'N/A';
                 document.getElementById('modalUserCourse').innerText = user.selected_course || 'None';
@@ -1398,7 +1437,7 @@
                 document.getElementById('modalUserDay').innerText = user.current_day != null ? user.current_day : '-';
                 document.getElementById('modalUserModules').innerText = `${user.modules_completed != null ? user.modules_completed : '-'} / ${user.total_modules != null ? user.total_modules : '-'}`;
                 document.getElementById('modalUserProgress').innerText = user.program_progress != null ? `${user.program_progress}%` : '-';
-                
+
                 const pStatus = document.getElementById('modalUserPayment');
                 pStatus.innerText = user.payment_status || 'unpaid';
                 pStatus.style.color = (user.payment_status === 'paid') ? '#10b981' : ((user.payment_status === 'blocked') ? '#ef4444' : 'var(--gold)');
@@ -1415,14 +1454,14 @@
 
             let emailToRemove = null;
             const confirmOverlay = document.getElementById('customConfirmOverlay');
-            
+
             document.getElementById('cancelRemoveBtn').addEventListener('click', () => {
                 confirmOverlay.classList.remove('active');
                 emailToRemove = null;
             });
 
             document.getElementById('confirmRemoveBtn').addEventListener('click', async () => {
-                if(emailToRemove) {
+                if (emailToRemove) {
                     const { error } = await supabase.from('profiles').delete().eq('email', emailToRemove);
                     if (!error) loadUsers();
                 }
@@ -1434,4 +1473,5 @@
         });
     </script>
 </body>
+
 </html>
