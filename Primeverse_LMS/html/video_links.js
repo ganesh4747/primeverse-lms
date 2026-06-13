@@ -251,8 +251,24 @@ const lessonsDatabase = {
     },
     12: {
         title: "Power of Two Confirmation Patterns",
-        part1: { title: "Day 12 - Part 1: SH + SB &  FS + SB (Confirmation Model)", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
-        part2: { title: "Day 12 - Part 2: Live Market Apply", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: {
+            title: "Day 12 - Part 1: SH + SB &  FS + SB (Confirmation Model)",
+            src: "INSERT_DAY_12_PART_1_1080P_URL",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzczMjIxLCJleHAiOjIwOTY3MzMyMjF9.G1bwIJSmu5zyKF93HfT_GPY7fElcz0gqIarxHjy6TMo",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzMyODIsImV4cCI6MjA5NjczMzI4Mn0.Uq8dXh6jdlBRVAr9OdWY_46gqrZbosuKgaq_Eg_amLA",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzMyNTgsImV4cCI6MjA5NjczMzI1OH0.F5PuRlfZyH1N-s98rw3ZiZ6MTrXclV4kkqqh1KbqyGc"
+            }
+        },
+        part2: {
+            title: "Day 12 - Part 2: Live Market Apply",
+            src: "INSERT_DAY_12_PART_2_1080P_URL",
+            qualityLinks: {
+                "1080p": "INSERT_DAY_12_PART_2_1080P_URL",
+                "720p": "INSERT_DAY_12_PART_2_720P_URL",
+                "480p": "INSERT_DAY_12_PART_2_480P_URL"
+            }
+        }
     },
     13: {
         title: "Risk Management & Trading Journal Framework",

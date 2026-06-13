@@ -1019,6 +1019,133 @@
         @keyframes spin-loader {
             to { transform: rotate(360deg); }
         }
+
+        /* Premium Templates Download View Styles */
+        .template-row-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .template-row-card-emerald:hover {
+            border-color: rgba(16, 185, 129, 0.2);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.05);
+            background: rgba(16, 185, 129, 0.01);
+        }
+
+        .template-row-card-gold:hover {
+            border-color: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.05);
+            background: rgba(212, 175, 55, 0.01);
+        }
+
+        .template-row-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            padding-right: 2rem;
+        }
+
+        .template-section-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .badge-emerald {
+            color: #10b981;
+        }
+
+        .badge-gold {
+            color: var(--gold);
+        }
+
+        .template-row-title {
+            font-family: 'Outfit', 'Satoshi', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--white);
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .template-row-desc {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin: 0;
+            max-width: 600px;
+        }
+
+        .template-row-right {
+            flex-shrink: 0;
+        }
+
+        .template-download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.82rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-decoration: none !important;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-teal {
+            background: #10b981;
+            color: #05070c;
+        }
+
+        .btn-teal:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: #05070c;
+        }
+
+        .btn-gold:hover {
+            background: #cfa12f;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .template-row-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            .template-row-left {
+                padding-right: 0;
+            }
+            .template-download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 
@@ -1040,8 +1167,8 @@
             <div class="nav-top">
                 <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
                 <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
-                <a href="executionjournal.html" class="nav-item active" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
                 <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="executionjournal.html" class="nav-item active" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
                 <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
                 <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
                 <a href="oneonecommunity.html" class="nav-item" id="nav-oneone" style="display: none;"><i data-lucide="message-square"></i> PrimeVerse One:One</a>
@@ -1080,6 +1207,66 @@
                 <p class="header-quote">"The market rewards disciplined execution — not emotional decisions."</p>
             </div>
         </header>
+
+        <!-- Premium Templates Resource Download View -->
+        <div id="templates-download-view" style="display: none; position: relative; min-height: 500px; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+            <!-- Top Controls Row -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="header-badge" style="background: rgba(212, 175, 55, 0.1); padding: 8px 16px; border-radius: 6px; border: 1px solid rgba(212, 175, 55, 0.3); font-size: 0.75rem; font-weight: 800; color: var(--gold); display: inline-flex; align-items: center; gap: 8px; letter-spacing: 0.5px;">
+                    <i data-lucide="download" style="width: 14px; height: 14px;"></i>
+                    <span>DOWNLOAD RESOURCES</span>
+                </div>
+                <button onclick="closeTemplatesView()" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); color: var(--white); padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; transition: all 0.3s; text-transform: uppercase;">
+                    <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
+                    <span>Back to Journal</span>
+                </button>
+            </div>
+
+            <!-- Headline Section -->
+            <div style="margin-bottom: 2.5rem; text-align: left;">
+                <h1 style="font-family: 'Outfit', 'Satoshi', sans-serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 1px; color: var(--white); margin: 0 0 0.5rem 0; text-transform: uppercase;">
+                    PREMIUM <span style="color: var(--gold);">TEMPLATES</span>
+                </h1>
+                <p style="color: var(--gray); font-size: 0.95rem; font-style: italic; margin: 0;">
+                    "The market rewards disciplined execution — not emotional decisions."
+                </p>
+            </div>
+
+            <!-- Templates Grid List -->
+            <div class="templates-grid-list" style="display: flex; flex-direction: column; gap: 2rem;">
+                <!-- Row 1: Execution Journal -->
+                <div class="template-row-card template-row-card-emerald">
+                    <div class="template-row-left">
+                        <div class="template-section-badge badge-emerald">
+                            <span>📝 SECTION 01: EVERY TRADE TRACKING</span>
+                        </div>
+                        <h2 class="template-row-title">EXECUTION JOURNAL</h2>
+                        <p class="template-row-desc">Document every trade, analyze your decisions, and build the discipline required for consistent trading results.</p>
+                    </div>
+                    <div class="template-row-right">
+                        <a href="https://app.notion.com/p/JUNE-2026-284939af80a78384bebb01d9e444ab17?source=copy_link" target="_blank" rel="noopener noreferrer" onclick="handleDownload()" class="template-download-btn btn-teal">
+                            <i data-lucide="download"></i> DOWNLOAD JOURNAL
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Row 2: Performance Tracker -->
+                <div class="template-row-card template-row-card-gold">
+                    <div class="template-row-left">
+                        <div class="template-section-badge badge-gold">
+                            <span>📊 SECTION 02: WEEKLY RESULT TRACKER</span>
+                        </div>
+                        <h2 class="template-row-title">PERFORMANCE TRACKER</h2>
+                        <p class="template-row-desc">Track your weekly and monthly trading performance to measure consistency, identify patterns, and monitor long-term growth.</p>
+                    </div>
+                    <div class="template-row-right">
+                        <a href="https://app.notion.com/p/WEEK-RESULT-2026-ab9939af80a782879a3d01b8952be712?source=copy_link" target="_blank" rel="noopener noreferrer" onclick="handleDownload()" class="template-download-btn btn-gold">
+                            <i data-lucide="download"></i> DOWNLOAD TRACKER
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Premium Execution Journal View -->
         <div id="journal-view" style="position: relative; min-height: 500px;">
@@ -1200,22 +1387,13 @@
                                     </p>
                                 </div>
                             </div>
-
                             <!-- Interactive Premium Button -->
-                            <a href="../video/Screen Recording 2025-09-04 202308.mp4" download="PrimeVerse_Execution_Journal_Template.xlsx" onclick="handleDownload()" id="downloadBtn" class="w-full relative py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(16,185,129,0.25)] hover:shadow-[0_8px_30px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 overflow-hidden group/btn active:scale-[0.98]" style="text-decoration: none !important;">
-                                <div class="absolute inset-0 w-1/2 h-full bg-white/10 skew-x-12 -translate-x-full group-hover/btn:animate-[shimmer_1s_ease-in-out]"></div>
-                                <span id="downloadText" class="flex items-center gap-2">
+                            <button onclick="openTemplatesView()" id="downloadBtn" class="w-full relative py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(16,185,129,0.25)] hover:shadow-[0_8px_30px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 overflow-hidden group/btn active:scale-[0.98] border-0 cursor-pointer">
+                                <span class="flex items-center gap-2">
                                     <i data-lucide="download" class="w-5 h-5"></i>
                                     DOWNLOAD TEMPLATE
                                 </span>
-                                <span id="downloadProgress" class="hidden flex items-center gap-3">
-                                    <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                    PREPARING FILE...
-                                </span>
-                            </a>
+                            </button>
                         </div>
 
                         <!-- Card 2: Execution Journal Walkthrough -->
@@ -1658,6 +1836,30 @@
                 if (progressPercent) progressPercent.className = "w-10 h-10 rounded-full bg-emerald-500 text-[#05070C] flex items-center justify-center text-xs font-black animate-pulse shadow-lg shadow-emerald-500/20";
             }
         }
+
+        window.openTemplatesView = function() {
+            const header = document.querySelector('.dashboard-header-premium');
+            const journalView = document.getElementById('journal-view');
+            const templatesView = document.getElementById('templates-download-view');
+            
+            if (header) header.style.display = 'none';
+            if (journalView) journalView.style.display = 'none';
+            if (templatesView) templatesView.style.display = 'block';
+
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        };
+
+        window.closeTemplatesView = function() {
+            const header = document.querySelector('.dashboard-header-premium');
+            const journalView = document.getElementById('journal-view');
+            const templatesView = document.getElementById('templates-download-view');
+            
+            if (header) header.style.display = '';
+            if (journalView) journalView.style.display = '';
+            if (templatesView) templatesView.style.display = 'none';
+        };
 
         // Simulating the premium XLSX download functionality
         window.handleDownload = function() {
