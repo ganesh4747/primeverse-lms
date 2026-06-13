@@ -264,9 +264,9 @@ const lessonsDatabase = {
             title: "Day 12 - Part 2: Live Market Apply",
             src: "INSERT_DAY_12_PART_2_1080P_URL",
             qualityLinks: {
-                "1080p": "INSERT_DAY_12_PART_2_1080P_URL",
-                "720p": "INSERT_DAY_12_PART_2_720P_URL",
-                "480p": "INSERT_DAY_12_PART_2_480P_URL"
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzc3OTQxLCJleHAiOjg2NTc4MTI5MTU0MX0.rN4JH2F9UuC340uJrzheo4bbnb2NQ6Ym5vwupzIyMc8",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzg0MzksImV4cCI6ODY1NzgxMjkyMDM5fQ.8tjMinhABCqWv5LabUpRDa57eeH5xX_UKd-LUGYZQsk",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzgxOTAsImV4cCI6ODY1NzgxMjkxNzkwfQ.D45l3Ud9GJY9aRHxmAUqOVnCSw7W3zYaVhXenmwkccU"
             }
         }
     },
