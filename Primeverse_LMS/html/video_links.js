@@ -285,9 +285,9 @@ const lessonsDatabase = {
             title: "Day 13 - Part 2: Trading Journal & Performance Tracking",
             src: "INSERT_DAY_13_PART_2_1080P_URL",
             qualityLinks: {
-                "1080p": "INSERT_DAY_13_PART_2_1080P_URL",
-                "720p": "INSERT_DAY_13_PART_2_720P_URL",
-                "480p": "INSERT_DAY_13_PART_2_480P_URL"
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDQ0ODUxLCJleHAiOjIwOTY4MDQ4NTF9.zsVSTxSPFo7qklP8Xy2gASUtt_fVfMzSv9D6ervbcSY",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NDQ4OTksImV4cCI6MjA5NjgwNDg5OX0.lKa5o6cyZMfqcfcqDUl0NMVhv0NdSCXcP-a96nLCII0",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NDQ4NzgsImV4cCI6MjA5NjgwNDg3OH0.A1ze0JgUedXh2O9Lp5PykCDj06ZT_En_jsa-rPioDPI"
             }
         }
     },
