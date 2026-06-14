@@ -253,7 +253,7 @@ const lessonsDatabase = {
         title: "Power of Two Confirmation Patterns",
         part1: {
             title: "Day 12 - Part 1: SH + SB &  FS + SB (Confirmation Model)",
-            src: "INSERT_DAY_12_PART_1_1080P_URL",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzczMjIxLCJleHAiOjIwOTY3MzMyMjF9.G1bwIJSmu5zyKF93HfT_GPY7fElcz0gqIarxHjy6TMo",
             qualityLinks: {
                 "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzczMjIxLCJleHAiOjIwOTY3MzMyMjF9.G1bwIJSmu5zyKF93HfT_GPY7fElcz0gqIarxHjy6TMo",
                 "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzMyODIsImV4cCI6MjA5NjczMzI4Mn0.Uq8dXh6jdlBRVAr9OdWY_46gqrZbosuKgaq_Eg_amLA",
@@ -262,7 +262,7 @@ const lessonsDatabase = {
         },
         part2: {
             title: "Day 12 - Part 2: Live Market Apply",
-            src: "INSERT_DAY_12_PART_2_1080P_URL",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzc3OTQxLCJleHAiOjg2NTc4MTI5MTU0MX0.rN4JH2F9UuC340uJrzheo4bbnb2NQ6Ym5vwupzIyMc8",
             qualityLinks: {
                 "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzc3OTQxLCJleHAiOjg2NTc4MTI5MTU0MX0.rN4JH2F9UuC340uJrzheo4bbnb2NQ6Ym5vwupzIyMc8",
                 "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzg0MzksImV4cCI6ODY1NzgxMjkyMDM5fQ.8tjMinhABCqWv5LabUpRDa57eeH5xX_UKd-LUGYZQsk",
@@ -274,7 +274,7 @@ const lessonsDatabase = {
         title: "Risk Management & Trading Journal Framework",
         part1: {
             title: "Day 13 - Part 1: Professional Risk Management Principles",
-            src: "INSERT_DAY_13_PART_1_1080P_URL",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDM1MjcxLCJleHAiOjIwOTY3OTUyNzF9.i0U9NnWglX7wcnZ37qokeTFBFIYPF0oB1Rv7G2YjPrs",
             qualityLinks: {
                 "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDM1MjcxLCJleHAiOjIwOTY3OTUyNzF9.i0U9NnWglX7wcnZ37qokeTFBFIYPF0oB1Rv7G2YjPrs",
                 "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0MzU2MTEsImV4cCI6MjA5Njc5NTYxMX0.AbbhEG1CfD5KiMLLi7Ivr3dNQO-TexdhC4ZDwGWki9U",
@@ -283,7 +283,7 @@ const lessonsDatabase = {
         },
         part2: {
             title: "Day 13 - Part 2: Trading Journal & Performance Tracking",
-            src: "INSERT_DAY_13_PART_2_1080P_URL",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDQ0ODUxLCJleHAiOjIwOTY4MDQ4NTF9.zsVSTxSPFo7qklP8Xy2gASUtt_fVfMzSv9D6ervbcSY",
             qualityLinks: {
                 "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDQ0ODUxLCJleHAiOjIwOTY4MDQ4NTF9.zsVSTxSPFo7qklP8Xy2gASUtt_fVfMzSv9D6ervbcSY",
                 "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NDQ4OTksImV4cCI6MjA5NjgwNDg5OX0.lKa5o6cyZMfqcfcqDUl0NMVhv0NdSCXcP-a96nLCII0",
@@ -295,11 +295,11 @@ const lessonsDatabase = {
         title: "Trading Psychology & Emotional Discipline",
         part1: {
             title: "Day 14 - Part 1: Understanding Trading Psychology and Emotional Control & Discipline Framework",
-            src: "INSERT_DAY_14_PART_1_1080P_URL",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0c3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDQ3ODg5LCJleHAiOjIwOTY4MDc4ODl9.QhlwpB-72p1_plOrFmpryVNtEAd49uNjfUywlmJMOzk",
             qualityLinks: {
-                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NDA3ODQsImV4cCI6MjA5NjgwMDc4NH0.m06QRt1XSG7VbWHvMR_JJezBc_QDqs-jtdtae7F1-nY",
-                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTcyMHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTQ0MDgwMCwiZXhwIjoyMDk2ODAwODAwfQ.Q6EUfQv1g_dsH1gBQHZ1sGkLrmNAhvNX8d2DN4GwfYc",
-                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTQ4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTQ0MDgxMSwiZXhwIjoyMDk2ODAwODExfQ.yvPTaFasZ3nd22iuW7PP3WcLnST0Lj5-BLzrA1kw9Ic"
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0c3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDQ3ODg5LCJleHAiOjIwOTY4MDc4ODl9.QhlwpB-72p1_plOrFmpryVNtEAd49uNjfUywlmJMOzk",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0c3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NDY1ODEsImV4cCI6MjA5NjgwNjU4MX0.N8yZwbpIwtsNAQaMtCUr5NiSaeSmYvCIa91biddGFP8",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0c3ViMS00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NDU4NjYsImV4cCI6MjA5NjgwNTg2Nn0.HMw4cgbP-Udt1IAc4JNOrldkyddcEmY4vMST-exAzHE"
             }
         }
     },
