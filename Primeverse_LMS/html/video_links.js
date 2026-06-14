@@ -272,12 +272,36 @@ const lessonsDatabase = {
     },
     13: {
         title: "Risk Management & Trading Journal Framework",
-        part1: { title: "Day 13 - Part 1: Professional Risk Management Principles", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
-        part2: { title: "Day 13 - Part 2: Trading Journal & Performance Tracking", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: {
+            title: "Day 13 - Part 1: Professional Risk Management Principles",
+            src: "INSERT_DAY_13_PART_1_1080P_URL",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDM1MjcxLCJleHAiOjIwOTY3OTUyNzF9.i0U9NnWglX7wcnZ37qokeTFBFIYPF0oB1Rv7G2YjPrs",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0MzU2MTEsImV4cCI6MjA5Njc5NTYxMX0.AbbhEG1CfD5KiMLLi7Ivr3dNQO-TexdhC4ZDwGWki9U",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0MzU1OTgsImV4cCI6MjA5Njc5NTU5OH0.volHz2dejZ0I8CJE9C4KuB8YDWUUA7uFX_taYLV5xGw"
+            }
+        },
+        part2: {
+            title: "Day 13 - Part 2: Trading Journal & Performance Tracking",
+            src: "INSERT_DAY_13_PART_2_1080P_URL",
+            qualityLinks: {
+                "1080p": "INSERT_DAY_13_PART_2_1080P_URL",
+                "720p": "INSERT_DAY_13_PART_2_720P_URL",
+                "480p": "INSERT_DAY_13_PART_2_480P_URL"
+            }
+        }
     },
     14: {
         title: "Trading Psychology & Emotional Discipline",
-        part1: { title: "Day 14 - Part 1: Understanding Trading Psychology and Emotional Control & Discipline Framework", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: {
+            title: "Day 14 - Part 1: Understanding Trading Psychology and Emotional Control & Discipline Framework",
+            src: "INSERT_DAY_14_PART_1_1080P_URL",
+            qualityLinks: {
+                "1080p": "INSERT_DAY_14_PART_1_1080P_URL",
+                "720p": "INSERT_DAY_14_PART_1_720P_URL",
+                "480p": "INSERT_DAY_14_PART_1_480P_URL"
+            }
+        }
     },
     15: {
         title: "Capital Growth & Compounding Methoad",
