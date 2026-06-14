@@ -4,6 +4,15 @@
 
 const introVideoSrc = 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY';
 
+const executionJournalVideo = {
+    src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NTE1LCJleHAiOjIwOTY4MTg1MTV9.w1PSH48761dL_thDBqPiPo_YZQJkvTnuBjii90yaofw",
+    qualityLinks: {
+        "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NTE1LCJleHAiOjIwOTY4MTg1MTV9.w1PSH48761dL_thDBqPiPo_YZQJkvTnuBjii90yaofw",
+        "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NTkwMTEsImV4cCI6MjA5NjgxOTAxMX0.C7Mhp-5wHUGbLdn1XT_aWK7ey1J5fEhPzbOt3wLIVlk",
+        "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NTg5NTgsImV4cCI6MjA5NjgxODk1OH0.rc5yG-hmR2rcfy2WFn3rOiPsf-ndtg4Dm69EwLYxtEA"
+    }
+};
+
 const lessonsDatabase = {
     0: {
         title: "YOUR FUTURE IS HERE , INTRODUCTION",
@@ -305,21 +314,77 @@ const lessonsDatabase = {
     },
     15: {
         title: "Capital Growth & Compounding Methoad",
-        part1: { title: "Day 15 - Part 1: Capital Growth Formula & Risk Scaling", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
-        part2: { title: "Day 15 - Part 2: Compounding Strategy & Long-Term Growth", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: {
+            title: "Day 15 - Part 1: Capital Growth Formula & Risk Scaling",
+            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            qualityLinks: {
+                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
+                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+            }
+        },
+        part2: {
+            title: "Day 15 - Part 2: Compounding Strategy & Long-Term Growth",
+            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            qualityLinks: {
+                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NDA4LCJleHAiOjIwOTY4MTg0MDh9.Ui0d5m143vq8IuQLfBqzHJMkMPoV4FMvpUFdXXeQNTQ"
+            }
+        }
     },
     16: {
         title: "Market Recap & Complete Market Flow",
-        part1: { title: "Day 16 - Part 1: Full Recap and Complete Market Flow", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: {
+            title: "Day 16 - Part 1: Full Recap and Complete Market Flow",
+            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            qualityLinks: {
+                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
+                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+            }
+        }
     },
     17: {
         title: "- Real-Time Trade Execution Examples",
-        part1: { title: "Day 17 - Part 1: Live Market Analysis", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
-        part2: { title: "Day 17 - Part 2: Real-Time Trade Execution Examples", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: {
+            title: "Day 17 - Part 1: Live Market Analysis",
+            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            qualityLinks: {
+                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
+                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+            }
+        },
+        part2: {
+            title: "Day 17 - Part 2: Real-Time Trade Execution Examples",
+            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            qualityLinks: {
+                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
+                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+            }
+        }
     },
     18: {
         title: "Key Takeaways For Confident Trading",
-        part1: { title: "Day 18 - Part 1: Core Trading Principles & Execution Review", src: "../video/Screen Recording 2025-09-04 202308.mp4" },
-        part2: { title: "Day 18 - Part 2: Building Confidence & Long-Term Consistency", src: "../video/Screen Recording 2025-09-04 202308.mp4" }
+        part1: {
+            title: "Day 18 - Part 1: Core Trading Principles & Execution Review",
+            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            qualityLinks: {
+                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
+                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+            }
+        },
+        part2: {
+            title: "Day 18 - Part 2: Building Confidence & Long-Term Consistency",
+            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            qualityLinks: {
+                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
+                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+            }
+        }
     }
 };

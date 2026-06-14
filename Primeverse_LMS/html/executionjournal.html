@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- Tailwind CSS CDN -->
@@ -933,6 +934,134 @@
             background: #000;
         }
 
+        /* Custom Quality/Resolution Selector Styling */
+        .custom-quality-container {
+            position: absolute;
+            top: 1rem;
+            right: 4rem;
+            z-index: 2147483645 !important;
+            display: inline-block;
+        }
+
+        .custom-quality-btn {
+            width: auto;
+            min-width: 44px;
+            height: 44px;
+            padding: 0 12px;
+            border-radius: 22px;
+            background: rgba(13, 21, 33, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: 'Satoshi', sans-serif;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .custom-quality-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: scale(1.05) translateZ(0);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.25);
+        }
+
+        .custom-quality-btn i {
+            font-size: 0.95rem;
+            transition: transform 0.4s ease;
+        }
+
+        .custom-quality-container.open .custom-quality-btn i {
+            transform: rotate(45deg);
+        }
+
+        .quality-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: rgba(10, 16, 26, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 6px;
+            width: 140px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .custom-quality-container.open .quality-dropdown {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .quality-option {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .quality-option:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+        }
+
+        .quality-option.active {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Video resolution feedback toast overlay */
+        .quality-toast {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%) translateZ(0);
+            background: rgba(5, 7, 12, 0.85);
+            border: 1.5px solid rgba(212, 175, 55, 0.4);
+            color: var(--gold);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            font-family: 'Satoshi', sans-serif;
+            letter-spacing: 0.5px;
+            z-index: 2147483647;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quality-toast.visible {
+            opacity: 1;
+            transform: translate(-50%, -10px) translateZ(0);
+        }
+
         @media (max-width: 1024px) {
             .journal-plan-flow-grid {
                 grid-template-columns: 1fr;
@@ -1597,10 +1726,22 @@
                 <i data-lucide="x"></i>
             </button>
             <div class="journal-modal-video-wrapper">
-                <video id="journalModalVideoPlayer" controls preload="metadata" playsinline>
-                    <source src="../video/Screen Recording 2025-09-04 202308.mp4" type="video/mp4">
+                <video id="journalModalVideoPlayer" controls controlslist="nodownload" disablepictureinpicture oncontextmenu="return false;" preload="metadata" playsinline>
+                    <source src="https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NTE1LCJleHAiOjIwOTY4MTg1MTV9.w1PSH48761dL_thDBqPiPo_YZQJkvTnuBjii90yaofw" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
+                <!-- Custom Quality/Resolution Selector Overlay -->
+                <div class="custom-quality-container" id="qualitySelectorContainer">
+                    <button id="customQualityBtn" class="custom-quality-btn" title="Change Resolution">
+                        <i class="fa-solid fa-gear"></i> <span id="currentQualityLabel">Auto</span>
+                    </button>
+                    <div class="quality-dropdown" id="qualityDropdown">
+                        <div class="quality-option" data-quality="1080p">1080p (FHD)</div>
+                        <div class="quality-option" data-quality="720p">720p (HD)</div>
+                        <div class="quality-option" data-quality="480p">480p (SD)</div>
+                        <div class="quality-option active" data-quality="auto">Original (Auto)</div>
+                    </div>
+                </div>
                 <!-- Glassmorphic Loading Spinner -->
                 <div id="journalVideoLoader" class="video-loader-overlay">
                     <div class="video-loader-spinner"></div>
@@ -1609,6 +1750,7 @@
         </div>
     </div>
 
+    <script src="video_links.js"></script>
     <script>
         if (localStorage.getItem('userRole') === 'admin') {
             window.location.replace('communitypage.html');
@@ -1763,9 +1905,10 @@
                 });
             }
 
-            window.openJournalVideoModal = function () {
+            window.openJournalVideoModal = async function () {
                 if (journalVideoModal && journalModalVideoPlayer) {
                     journalVideoModal.classList.add('active');
+                    await applyJournalResolution(preferredRes, true);
                     journalModalVideoPlayer.play();
                 }
             };
@@ -1783,6 +1926,165 @@
                     updateProgress();
                 }
             };
+
+            // Walkthrough Video Quality Switcher
+            const journalQualityLinks = executionJournalVideo.qualityLinks;
+
+            const qBtn = document.getElementById('customQualityBtn');
+            const qContainer = document.getElementById('qualitySelectorContainer');
+            const qDropdown = document.getElementById('qualityDropdown');
+            const qOptions = document.querySelectorAll('.quality-option');
+            const curQualityLabel = document.getElementById('currentQualityLabel');
+
+            if (qBtn && qContainer) {
+                qBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    qContainer.classList.toggle('open');
+                });
+
+                document.addEventListener('click', () => {
+                    qContainer.classList.remove('open');
+                });
+            }
+
+            let preferredRes = localStorage.getItem('preferredResolution') || 'auto';
+
+            async function getAutoResolution() {
+                let detectedRes = '720p';
+                if (navigator.connection && navigator.connection.effectiveType) {
+                    const type = navigator.connection.effectiveType;
+                    const downlink = navigator.connection.downlink;
+                    if (type === 'slow-2g' || type === '2g' || downlink < 1.5) {
+                        detectedRes = '480p';
+                    } else if (type === '3g' || downlink < 10.0) {
+                        detectedRes = '720p';
+                    } else {
+                        detectedRes = '1080p';
+                    }
+                }
+                return detectedRes;
+            }
+
+            // Show Toast Notification Helper inside modal
+            function showQualityToast(message, isError = false) {
+                let toast = document.getElementById('qualityToastNotification');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'qualityToastNotification';
+                    toast.className = 'quality-toast';
+                    const wrapper = document.querySelector('.journal-modal-video-wrapper');
+                    if (wrapper) wrapper.appendChild(toast);
+                }
+                toast.innerHTML = isError
+                    ? `<i class="fa-solid fa-circle-exclamation" style="color: #ef4444;"></i> ${message}`
+                    : `<i class="fa-solid fa-circle-check"></i> ${message}`;
+
+                if (isError) {
+                    toast.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+                    toast.style.color = '#f87171';
+                } else {
+                    toast.style.borderColor = 'rgba(212, 175, 55, 0.4)';
+                    toast.style.color = 'var(--gold)';
+                }
+
+                toast.classList.add('visible');
+                setTimeout(() => {
+                    toast.classList.remove('visible');
+                }, 3000);
+            }
+
+            async function applyJournalResolution(res, skipReplay = false) {
+                if (!journalModalVideoPlayer) return;
+
+                const originalUrl = (window.executionJournalVideo && window.executionJournalVideo.src) || journalQualityLinks["1080p"];
+                let targetUrl = originalUrl;
+                let detectedRes = null;
+
+                if (res === 'auto') {
+                    detectedRes = await getAutoResolution();
+                    targetUrl = journalQualityLinks[detectedRes] || originalUrl;
+                } else {
+                    targetUrl = journalQualityLinks[res] || originalUrl;
+                }
+
+                if (journalModalVideoPlayer.src === targetUrl) {
+                    updateQualityUIActiveState(res, detectedRes);
+                    return;
+                }
+
+                const currentTime = journalModalVideoPlayer.currentTime;
+                const isPaused = journalModalVideoPlayer.paused;
+
+                const handleLoadError = function () {
+                    console.warn(`Resolution ${res} failed to load. Reverting to 1080p.`);
+                    journalModalVideoPlayer.removeEventListener('error', handleLoadError);
+                    journalModalVideoPlayer.src = originalUrl;
+                    journalModalVideoPlayer.load();
+                    preferredRes = 'auto';
+                    updateQualityUIActiveState('auto');
+                    
+                    journalModalVideoPlayer.addEventListener('loadedmetadata', function revertSeek() {
+                        journalModalVideoPlayer.currentTime = currentTime;
+                        if (!isPaused) journalModalVideoPlayer.play();
+                        journalModalVideoPlayer.removeEventListener('loadedmetadata', revertSeek);
+                    });
+
+                    showQualityToast("Resolution not available. Playing original quality.", true);
+                };
+
+                journalModalVideoPlayer.addEventListener('error', handleLoadError);
+                journalModalVideoPlayer.src = targetUrl;
+                journalModalVideoPlayer.load();
+
+                journalModalVideoPlayer.addEventListener('loadedmetadata', function successSeek() {
+                    journalModalVideoPlayer.removeEventListener('error', handleLoadError);
+                    journalModalVideoPlayer.currentTime = currentTime;
+                    if (!isPaused && !skipReplay) journalModalVideoPlayer.play();
+                    journalModalVideoPlayer.removeEventListener('loadedmetadata', successSeek);
+
+                    if (!skipReplay) {
+                        if (res === 'auto') {
+                            showQualityToast(`Auto-selected Quality: ${detectedRes || 'Original'}`);
+                        } else {
+                            showQualityToast(`Switched to Resolution: ${res}`);
+                        }
+                    }
+                });
+
+                updateQualityUIActiveState(res, detectedRes);
+            }
+
+            function updateQualityUIActiveState(res, detectedRes = null) {
+                if (curQualityLabel) {
+                    if (res === 'auto') {
+                        curQualityLabel.innerText = detectedRes ? `Auto (${detectedRes})` : 'Auto';
+                    } else {
+                        curQualityLabel.innerText = res;
+                    }
+                }
+                if (qOptions) {
+                    qOptions.forEach(opt => {
+                        if (opt.getAttribute('data-quality') === res) {
+                            opt.classList.add('active');
+                        } else {
+                            opt.classList.remove('active');
+                        }
+                    });
+                }
+            }
+
+            if (qOptions) {
+                qOptions.forEach(opt => {
+                    opt.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const quality = opt.getAttribute('data-quality');
+                        preferredRes = quality;
+                        localStorage.setItem('preferredResolution', quality);
+                        applyJournalResolution(quality);
+                        qContainer.classList.remove('open');
+                    });
+                });
+            }
         });
 
         // Onboarding Checkbox Trackers
