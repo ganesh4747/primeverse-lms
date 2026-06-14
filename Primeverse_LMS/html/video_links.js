@@ -297,9 +297,9 @@ const lessonsDatabase = {
             title: "Day 14 - Part 1: Understanding Trading Psychology and Emotional Control & Discipline Framework",
             src: "INSERT_DAY_14_PART_1_1080P_URL",
             qualityLinks: {
-                "1080p": "INSERT_DAY_14_PART_1_1080P_URL",
-                "720p": "INSERT_DAY_14_PART_1_720P_URL",
-                "480p": "INSERT_DAY_14_PART_1_480P_URL"
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NDA3ODQsImV4cCI6MjA5NjgwMDc4NH0.m06QRt1XSG7VbWHvMR_JJezBc_QDqs-jtdtae7F1-nY",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTcyMHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTQ0MDgwMCwiZXhwIjoyMDk2ODAwODAwfQ.Q6EUfQv1g_dsH1gBQHZ1sGkLrmNAhvNX8d2DN4GwfYc",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTQ4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTQ0MDgxMSwiZXhwIjoyMDk2ODAwODExfQ.yvPTaFasZ3nd22iuW7PP3WcLnST0Lj5-BLzrA1kw9Ic"
             }
         }
     },
