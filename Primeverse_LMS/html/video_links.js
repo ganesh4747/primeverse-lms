@@ -313,18 +313,18 @@ const lessonsDatabase = {
         }
     },
     15: {
-        title: "Capital Growth & Compounding Methoad",
+        title: "Compounding Methoad & Complete Market Flow",
         part1: {
-            title: "Day 15 - Part 1: Capital Growth Formula & Risk Scaling",
-            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            title: "Day 15 - Part 1: Compounding Strategy & Long-Term Growth",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1c3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTQ1MDAzLCJleHAiOjE5MzkyMjUwMDN9.kx2QiLqBes0Y1sNGY0ljeosSUWkKOutZGITfo7zHsZg",
             qualityLinks: {
-                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
-                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
-                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjEtNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTE0NjgxLCJleHAiOjE4NzYxMjI2ODF9.dnn6Lc1RtT8GUU0aS_eT3XVHu4T8DyKqB2kB96_SLd0"
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1c3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTQ1MDAzLCJleHAiOjE5MzkyMjUwMDN9.kx2QiLqBes0Y1sNGY0ljeosSUWkKOutZGITfo7zHsZg",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1c3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE1NDUwMzUsImV4cCI6MTkzOTIyNTAzNX0.xSX0ke1Jn1O2-GzoYAYTuKTHz_yH8HyP615tVz6YXdc",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjEtNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTQ0Nzc0LCJleHAiOjE5MzkyMjQ3NzR9.11qrnR8os55J8__cao2ngyItT03eWPmuIw9qvt8kkjs"
             }
         },
         part2: {
-            title: "Day 15 - Part 2: Compounding Strategy & Long-Term Growth",
+            title: "Day 15 - Part 2: Full Recap and Complete Market Flow",
             src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzg0MywiZXhwIjoyMDk2ODY3ODQzfQ.gcGrOySg4mY6FCpcct-kw2ZyuesuVMBk-oynmEd1tGY",
             qualityLinks: {
                 "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzg0MywiZXhwIjoyMDk2ODY3ODQzfQ.gcGrOySg4mY6FCpcct-kw2ZyuesuVMBk-oynmEd1tGY",
@@ -334,9 +334,18 @@ const lessonsDatabase = {
         }
     },
     16: {
-        title: "Market Recap & Complete Market Flow",
+        title: "G5 STRATEGY",
         part1: {
-            title: "Day 16 - Part 1: Full Recap and Complete Market Flow",
+            title: "Day 16 - Part 1: Understanding G5 Strategy Conditions",
+            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            qualityLinks: {
+                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
+                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+            }
+        },
+        part2: {
+            title: "Day 16 - Part 2: G5 Strategy Execution & Case Studies",
             src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
             qualityLinks: {
                 "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
@@ -346,7 +355,7 @@ const lessonsDatabase = {
         }
     },
     17: {
-        title: "- Real-Time Trade Execution Examples",
+        title: "- Real-Time Trade Execution Examples (2)",
         part1: {
             title: "Day 17 - Part 1: Live Market Analysis",
             src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
@@ -367,7 +376,7 @@ const lessonsDatabase = {
         }
     },
     18: {
-        title: "Key Takeaways For Confident Trading",
+        title: "Key Takeaways For Confident Trading (2)",
         part1: {
             title: "Day 18 - Part 1: Core Trading Principles & Execution Review",
             src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",

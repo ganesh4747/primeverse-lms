@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Resources | PrimeVerse LMS</title>
+    <link rel="icon" type="image/png" href="../assets/login.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --font-satoshi: 'Satoshi', sans-serif;
+            --font-outfit: 'Satoshi', sans-serif;
+        }
+
+        body {
+            background-color: var(--navy);
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 500;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            color: var(--white);
+        }
+
+        /* --- Main Content --- */
+        .main-dash {
+            flex: 1;
+            overflow-y: auto;
+            padding: 3rem;
+            position: relative;
+        }
+
+        /* --- Premium Dashboard Header --- */
+        .dashboard-header-premium {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 3.5rem;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .welcome-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .gradient-text-blue {
+            background: linear-gradient(135deg, #FFF, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-quote {
+            color: var(--gray);
+            font-style: italic;
+            font-size: 1rem;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            padding-left: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+                height: auto;
+                overflow-x: hidden;
+                overflow-y: auto !important;
+            }
+
+            .sidebar {
+                display: flex !important;
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+                z-index: 1000;
+                box-shadow: 20px 0 40px rgba(0, 0, 0, 0.5);
+            }
+
+            .sidebar.active {
+                left: 0 !important;
+            }
+
+            .mobile-nav-bar {
+                display: flex !important;
+            }
+
+            .main-dash {
+                padding: 2rem !important;
+                margin-top: 0;
+                overflow-y: visible !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-dash {
+                padding: 1.5rem !important;
+            }
+
+            .mobile-nav-bar {
+                margin: -1.5rem -1.5rem 1.5rem -1.5rem !important;
+            }
+
+            .dashboard-header-premium {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+        }
+
+        /* Unified Resources Badges Bar */
+        .resources-badges-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            background: rgba(4, 6, 12, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .resources-badge-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            text-align: left;
+        }
+
+        .resources-badge-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -0.75rem;
+            top: 10%;
+            bottom: 10%;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .resources-badge-icon-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: rgba(212, 175, 55, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .resources-badge-item:hover .resources-badge-icon-box {
+            background: rgba(212, 175, 55, 0.12);
+            border-color: var(--gold);
+            transform: scale(1.05);
+        }
+
+        .resources-badge-content h4 {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--white);
+            margin: 0 0 3px 0;
+            letter-spacing: 0.3px;
+        }
+
+        .resources-badge-content p {
+            font-size: 0.72rem;
+            color: var(--gray);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        @media (max-width: 1024px) {
+            .resources-badges-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            .resources-badge-item:nth-child(2)::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .resources-badges-bar {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            .resources-badge-item:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        /* --- Premium Alert Modal CSS --- */
+        .premium-alert-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 6, 12, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .premium-alert-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .premium-alert-box {
+            background: rgba(10, 15, 30, 0.7);
+            border: 1.5px solid rgba(212, 175, 55, 0.2);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 50px rgba(212, 175, 55, 0.05);
+            transform: scale(0.85);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-alert-overlay.active .premium-alert-box {
+            transform: scale(1);
+        }
+
+        .premium-alert-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .premium-alert-icon-container {
+            width: 80px;
+            height: 80px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1.5px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            animation: pulse-gold-glow 2s infinite;
+        }
+
+        @keyframes pulse-gold-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(212, 175, 55, 0.35);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+            }
+        }
+
+        .premium-alert-icon {
+            width: 32px;
+            height: 32px;
+            color: var(--gold);
+        }
+
+        .premium-alert-title {
+            font-family: 'Satoshi', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+
+        .premium-alert-message {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .premium-alert-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, #bfa030 100%);
+            color: #000;
+            border: none;
+            padding: 0.9rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+        }
+
+        .premium-alert-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, #e5bd42 0%, #d4af37 100%);
+        }
+
+        .premium-alert-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-grid"></div>
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="dashboard.html" class="logo-wrap" style="gap: 8px !important; text-decoration: none;">
+                <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 40px; display: block;">
+                <div class="logo-info">
+                    <div class="logo-text">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
+                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                </div>
+            </a>
+        </div>
+
+        <nav class="nav-menu">
+            <div class="nav-top">
+                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
+                <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="additional-resources.html" class="nav-item active" id="nav-resources"><i data-lucide="folder-open"></i> Additional Resources</a>
+                <a href="executionjournal.html" class="nav-item" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
+                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
+                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
+                <a href="oneonecommunity.html" class="nav-item" id="nav-oneone" style="display: none;"><i data-lucide="message-square"></i> PrimeVerse One:One</a>
+                <a href="addmember.html" class="nav-item" id="nav-addmember" style="display: none;"><i data-lucide="user-plus"></i> Add Member</a>
+                <a href="usercontrol.html" class="nav-item" id="nav-usercontrol" style="display: none;"><i data-lucide="shield-minus"></i> User Control</a>
+                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
+            </div>
+            <div class="nav-bottom">
+                <a href="../index.html" class="nav-item" id="logoutBtnResources" style="color: var(--red);"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-dash">
+        <!-- Mobile Navigation Header -->
+        <div class="mobile-nav-bar" style="display: none; justify-content: space-between; align-items: center; background: var(--navy-dark); padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 99; margin: -3rem -3rem 3rem -3rem; backdrop-filter: blur(10px);">
+            <a href="dashboard.html" class="logo-wrap" style="gap: 8px !important; text-decoration: none;">
+                <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 30px; display: block;">
+                <div class="logo-info">
+                    <div class="logo-text" style="font-size: 1.1rem !important;">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
+                    <div class="logo-tagline" style="font-size: 0.4rem; letter-spacing: 0.3px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                </div>
+            </a>
+            <button id="mobileMenuBtn" style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
+                <i data-lucide="menu" style="width: 26px; height: 26px;"></i>
+            </button>
+        </div>
+
+        <header class="dashboard-header-premium">
+            <div class="header-left">
+                <div class="header-badge">
+                    <i data-lucide="gem" style="width: 14px; height: 14px; color: #3b82f6;"></i>
+                    <span>PRIMEVERSE RESOURCES</span>
+                </div>
+                <h1 class="welcome-title">Welcome Back, <span class="gradient-text-blue" id="welcomeUserName">Alex Carter</span> 👋</h1>
+                <p class="header-quote">"The market rewards disciplined execution — not emotional decisions."</p>
+            </div>
+        </header>
+
+        <!-- Additional Resources View -->
+        <div id="additional-resources-view" style="padding-top: 0.5rem; padding-bottom: 2rem;">
+            
+            <!-- Hero Header Banner matching screenshot -->
+            <div class="mastery-banner-premium" style="margin-bottom: 2.5rem; background: linear-gradient(135deg, #0b1528 0%, #070d19 100%); border: 1px solid var(--glass-border); border-left: 4px solid var(--gold); border-radius: 24px; padding: 2.5rem; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between;">
+                <!-- Glowing effect -->
+                <div class="glow-orb" style="position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(212, 175, 55, 0.08); filter: blur(80px); pointer-events: none;"></div>
+                
+                <div style="flex: 1; text-align: left; padding-right: 2rem; z-index: 2;">
+                    <h1 style="font-family: 'Satoshi', sans-serif; font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; color: var(--white); margin: 0 0 0.8rem 0; text-transform: uppercase;">ADDITIONAL RESOURCES</h1>
+                    <p style="font-family: 'Satoshi', sans-serif; color: var(--gray); font-size: 1.05rem; line-height: 1.6; max-width: 650px; margin: 0;">
+                        Access <span class="gold-text" style="color: var(--gold); font-weight: 700;">bonus</span> videos, PDFs, frameworks, and reference materials to deepen your understanding and improve execution.
+                    </p>
+                </div>
+                <!-- Right side graphic: folder icon with materials -->
+                <div class="resources-banner-graphic" style="position: relative; width: 340px; height: 180px; display: flex; align-items: center; justify-content: center; z-index: 2;">
+                    <img src="../assets/additional.png" alt="Additional Resources" style="width: 320px; max-width: 100%; height: auto; object-fit: contain;">
+                </div>
+            </div>
+
+            <!-- Bottom Row Badges matching screenshot -->
+            <div class="resources-badges-bar">
+                <div class="resources-badge-item">
+                    <div class="resources-badge-icon-box">
+                        <i data-lucide="crown" style="width: 20px; height: 20px;"></i>
+                    </div>
+                    <div class="resources-badge-content">
+                        <h4>Premium Resources</h4>
+                        <p>Curated high-value content</p>
+                    </div>
+                </div>
+                <div class="resources-badge-item">
+                    <div class="resources-badge-icon-box">
+                        <i data-lucide="user-check" style="width: 20px; height: 20px;"></i>
+                    </div>
+                    <div class="resources-badge-content">
+                        <h4>Expert Guidance</h4>
+                        <p>Created by professional traders</p>
+                    </div>
+                </div>
+                <div class="resources-badge-item">
+                    <div class="resources-badge-icon-box">
+                        <i data-lucide="target" style="width: 20px; height: 20px;"></i>
+                    </div>
+                    <div class="resources-badge-content">
+                        <h4>Actionable Insights</h4>
+                        <p>Apply and see real results</p>
+                    </div>
+                </div>
+                <div class="resources-badge-item">
+                    <div class="resources-badge-icon-box">
+                        <i data-lucide="infinity" style="width: 20px; height: 20px;"></i>
+                    </div>
+                    <div class="resources-badge-content">
+                        <h4>Lifetime Access</h4>
+                        <p>Learn anytime, anywhere</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BACK TO GRID BUTTON -->
+            <div id="resources-back-btn-container" style="display: none; margin-bottom: 2rem; text-align: left;">
+                <button onclick="window.showResourcesGrid()" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); color: var(--white); padding: 0.75rem 1.5rem; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease;">
+                    <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i> Back to Additional Resources
+                </button>
+            </div>
+
+            <!-- Main Resource Grid of 3 Cards -->
+            <div id="resources-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                
+                <!-- Card 1: Reference Videos -->
+                <div class="mentorship-glass-card" style="padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; min-height: 230px; text-align: left; margin: 0; background: rgba(11, 15, 25, 0.55); border-color: rgba(168, 85, 247, 0.15);">
+                    <div class="mentorship-card-glow-bar" style="background: linear-gradient(90deg, #8b5cf6, #a78bfa); height: 2px;"></div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.2); display: flex; align-items: center; justify-content: center; color: #a78bfa;">
+                                <i data-lucide="video" style="width: 30px; height: 30px;"></i>
+                            </div>
+                        </div>
+                        <h3 style="font-family: 'Satoshi', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">Reference Videos</h3>
+                        <p style="color: var(--gray); font-size: 0.9rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Deep-dive explanations and advanced concepts.</p>
+                    </div>
+                    <button class="mentorship-apply-btn" onclick="window.showReferenceVideosTab()" style="background: linear-gradient(90deg, #6d28d9, #8b5cf6); border: none; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.5px; border-radius: 12px; padding: 0.9rem 1.5rem; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(109, 40, 217, 0.2);">
+                        Watch Videos <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+                    </button>
+                </div>
+
+                <!-- Card 2: Bonus PDF Guides -->
+                <div class="mentorship-glass-card" style="padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; min-height: 230px; text-align: left; margin: 0; background: rgba(11, 15, 25, 0.55); border-color: rgba(16, 185, 129, 0.15);">
+                    <div class="mentorship-card-glow-bar" style="background: linear-gradient(90deg, #10b981, #34d399); height: 2px;"></div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); display: flex; align-items: center; justify-content: center; color: #34d399;">
+                                <i data-lucide="file-text" style="width: 30px; height: 30px;"></i>
+                            </div>
+                        </div>
+                        <h3 style="font-family: 'Satoshi', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">Bonus PDF Guides</h3>
+                        <p style="color: var(--gray); font-size: 0.9rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Download frameworks, checklists, and implementation guides.</p>
+                    </div>
+                    <button class="mentorship-apply-btn" onclick="window.showPDFGuidesTab()" style="background: linear-gradient(90deg, #047857, #10b981); border: none; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.5px; border-radius: 12px; padding: 0.9rem 1.5rem; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(4, 120, 87, 0.2);">
+                        Access PDFs <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+                    </button>
+                </div>
+
+                <!-- Card 3: Case Studies & Reviews -->
+                <div class="mentorship-glass-card" style="padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; min-height: 230px; text-align: left; margin: 0; background: rgba(11, 15, 25, 0.55); border-color: rgba(59, 130, 246, 0.15);">
+                    <div class="mentorship-card-glow-bar" style="background: linear-gradient(90deg, #3b82f6, #60a5fa); height: 2px;"></div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); display: flex; align-items: center; justify-content: center; color: #60a5fa;">
+                                <i data-lucide="trending-up" style="width: 30px; height: 30px;"></i>
+                            </div>
+                        </div>
+                        <h3 style="font-family: 'Satoshi', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">Case Studies & Reviews</h3>
+                        <p style="color: var(--gray); font-size: 0.9rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Review real trade examples and understand the decision-making process.</p>
+                    </div>
+                    <button class="mentorship-apply-btn" onclick="window.showCaseStudiesTab()" style="background: linear-gradient(90deg, #1d4ed8, #3b82f6); border: none; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.5px; border-radius: 12px; padding: 0.9rem 1.5rem; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(29, 78, 216, 0.2);">
+                        View Studies <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DYNAMIC SUB-VIEW: Reference Videos Section -->
+            <div id="resources-videos-section" style="display: none; text-align: left;">
+                <h2 style="font-family: 'Satoshi', sans-serif; font-size: 1.75rem; font-weight: 900; color: var(--white); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px;">
+                    <i data-lucide="video" style="color: #a78bfa; width: 28px; height: 28px;"></i> Reference Videos
+                </h2>
+                <p style="color: var(--gray); font-size: 0.95rem; margin-bottom: 2rem;">Deep-dive technical video walkthroughs covering core compounding strategies and G5 rules.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem;">
+                    <!-- Video Card 1 -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease;">
+                        <div style="position: relative; width: 100%; height: 190px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;">
+                            <img src="../assets/lesson_thumbnail.png" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.55;">
+                            <button onclick="window.playResourceVideo('Compounding Methodology Deep Dive', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease;">
+                                <i data-lucide="play" style="width: 24px; height: 24px; color: black; fill: black; margin-left: 2px;"></i>
+                            </button>
+                            <span style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.85); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; font-family: monospace;">14:25</span>
+                        </div>
+                        <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">Compounding Methodology Deep Dive</h4>
+                                <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Master the exponential growth of trading accounts with structure-based compounding parameters and strict drawdown bounds.</p>
+                            </div>
+                            <button onclick="window.playResourceVideo('Compounding Methodology Deep Dive', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2); color: var(--gold); border-radius: 8px; padding: 0.6rem; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;">
+                                Watch Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 2 -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease;">
+                        <div style="position: relative; width: 100%; height: 190px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;">
+                            <img src="../assets/lesson_thumbnail2.png" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.55;">
+                            <button onclick="window.playResourceVideo('Understanding G5 Strategy execution', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease;">
+                                <i data-lucide="play" style="width: 24px; height: 24px; color: black; fill: black; margin-left: 2px;"></i>
+                            </button>
+                            <span style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.85); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; font-family: monospace;">18:40</span>
+                        </div>
+                        <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">G5 Strategy Execution Framework</h4>
+                                <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">A breakdown of target alignment rules, entry confirmations, invalidation metrics, and case examples of G5 setups.</p>
+                            </div>
+                            <button onclick="window.playResourceVideo('Understanding G5 Strategy execution', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2); color: var(--gold); border-radius: 8px; padding: 0.6rem; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;">
+                                Watch Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 3 -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease;">
+                        <div style="position: relative; width: 100%; height: 190px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;">
+                            <img src="../assets/mastery_header_graphic.png" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.55;">
+                            <button onclick="window.playResourceVideo('Trade Management & Risk Mitigation', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease;">
+                                <i data-lucide="play" style="width: 24px; height: 24px; color: black; fill: black; margin-left: 2px;"></i>
+                            </button>
+                            <span style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.85); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; font-family: monospace;">12:15</span>
+                        </div>
+                        <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">Trade Management Blueprint</h4>
+                                <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">How to scale out, take partials, move stop-loss to breakeven, and let high RR setups run with absolute clarity.</p>
+                            </div>
+                            <button onclick="window.playResourceVideo('Trade Management & Risk Mitigation', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2); color: var(--gold); border-radius: 8px; padding: 0.6rem; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;">
+                                Watch Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DYNAMIC SUB-VIEW: Bonus PDF Guides Section -->
+            <div id="resources-pdfs-section" style="display: none; text-align: left;">
+                <h2 style="font-family: 'Satoshi', sans-serif; font-size: 1.75rem; font-weight: 900; color: var(--white); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px;">
+                    <i data-lucide="file-text" style="color: #34d399; width: 28px; height: 28px;"></i> Bonus PDF Guides
+                </h2>
+                <p style="color: var(--gray); font-size: 0.95rem; margin-bottom: 2rem;">Download premium, step-by-step PDF cheat sheets, confluence models, and roadmap handbooks.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <!-- PDF Card 1 -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 1.8rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; transition: all 0.3s ease;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span style="background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.2); color: #34d399; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Reference Guide</span>
+                                <i data-lucide="file-text" style="color: #34d399; width: 22px; height: 22px;"></i>
+                            </div>
+                            <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">Confluence Checklist Blueprint</h4>
+                            <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">A breakdown of primary, secondary, and tertiary confluence metrics required for G5 executions.</p>
+                        </div>
+                        <button onclick="showPremiumAlert('Downloading Guide', 'Starting download for Confluence Checklist Blueprint PDF...', 'file-text')" style="background: linear-gradient(90deg, #059669, #10b981); border: none; font-weight: 800; font-size: 0.8rem; border-radius: 10px; padding: 0.75rem; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i data-lucide="download" style="width: 16px; height: 16px;"></i> Download PDF
+                        </button>
+                    </div>
+
+                    <!-- PDF Card 2 -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 1.8rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; transition: all 0.3s ease;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span style="background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.2); color: #34d399; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Strategy Cheat Sheet</span>
+                                <i data-lucide="file-text" style="color: #34d399; width: 22px; height: 22px;"></i>
+                            </div>
+                            <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">G5 Execution Cheat Sheet</h4>
+                            <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">A printable pocket sheet illustrating valid G5 candlestick parameters, order blocks, and stop settings.</p>
+                        </div>
+                        <button onclick="showPremiumAlert('Downloading Cheat Sheet', 'Starting download for G5 Execution Cheat Sheet PDF...', 'file-text')" style="background: linear-gradient(90deg, #059669, #10b981); border: none; font-weight: 800; font-size: 0.8rem; border-radius: 10px; padding: 0.75rem; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i data-lucide="download" style="width: 16px; height: 16px;"></i> Download PDF
+                        </button>
+                    </div>
+
+                    <!-- PDF Card 3 -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 1.8rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; transition: all 0.3s ease;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span style="background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.2); color: #34d399; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Daily Habit Manual</span>
+                                <i data-lucide="file-text" style="color: #34d399; width: 22px; height: 22px;"></i>
+                            </div>
+                            <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">Daily Trading Routine Tracker</h4>
+                            <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Establish discipline. Track sleep duration, pre-market news checklists, live journaling, and rules-adherence.</p>
+                        </div>
+                        <button onclick="showPremiumAlert('Downloading Routine Tracker', 'Starting download for Daily Trading Routine PDF...', 'file-text')" style="background: linear-gradient(90deg, #059669, #10b981); border: none; font-weight: 800; font-size: 0.8rem; border-radius: 10px; padding: 0.75rem; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i data-lucide="download" style="width: 16px; height: 16px;"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DYNAMIC SUB-VIEW: Case Studies Section -->
+            <div id="resources-case-studies-section" style="display: none; text-align: left;">
+                <h2 style="font-family: 'Satoshi', sans-serif; font-size: 1.75rem; font-weight: 900; color: var(--white); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px;">
+                    <i data-lucide="trending-up" style="color: #60a5fa; width: 28px; height: 28px;"></i> Case Studies & Reviews
+                </h2>
+                <p style="color: var(--gray); font-size: 0.95rem; margin-bottom: 2rem;">Read in-depth reviews of historic trades, compounding sequences, and drawdowns management.</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- Case Study Item 1 -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; transition: all 0.3s ease;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                            <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--white); margin: 0;">Case Study 01: The +1:5 RR Compounding Run</h4>
+                            <span style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; font-family: monospace;">PROFITABLE SEQUENCE</span>
+                        </div>
+                        <p style="color: var(--gray); font-size: 0.9rem; line-height: 1.6; margin: 0;">An in-depth log mapping a consecutive triple-re-entry setup on EURUSD. We evaluate the compounding parameters that multiplied the initial 1% risk allocation into a clean +5% account growth sequence in under 6 hours.</p>
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.04);">
+                            <span style="color: var(--gray); font-size: 0.8rem;">Published: June 12, 2026 • Reading Time: 8 min</span>
+                            <button onclick="showPremiumAlert('Case Study Analysis', 'This case study breaks down a live trade executed on EURUSD, analyzing the multiple confluences that formed at the H4 key resistance zone. Sign in or message mentorship support for full chart images.', 'file-text')" style="background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--white); font-weight: 800; font-size: 0.8rem; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.3s ease;">
+                                Read Case Study
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Case Study Item 2 -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; transition: all 0.3s ease;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                            <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--white); margin: 0;">Case Study 02: Managing Risk During High-Impact News</h4>
+                            <span style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; font-family: monospace;">RISK MANAGEMENT</span>
+                        </div>
+                        <p style="color: var(--gray); font-size: 0.9rem; line-height: 1.6; margin: 0;">Detailed post-trade review analyzing G5 strategy behavior during FOMC rate releases. We cover how we moved our risk parameters to breakeven +0.2 pips before the spike, avoiding slippage and protecting trading capital.</p>
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.04);">
+                            <span style="color: var(--gray); font-size: 0.8rem;">Published: May 28, 2026 • Reading Time: 6 min</span>
+                            <button onclick="showPremiumAlert('Case Study Analysis', 'This news study evaluates the impact of spread widenings and slippages during the interest rate reports. Includes optimal entry execution tactics during high-volatility spikes.', 'file-text')" style="background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--white); font-weight: 800; font-size: 0.8rem; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.3s ease;">
+                                Read Case Study
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PrimeVerse Philosophy Footer matching screenshot -->
+            <div style="margin-top: 3.5rem; background: rgba(4, 6, 12, 0.45); border: 1px solid var(--gold); border-radius: 16px; padding: 1.25rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+                <!-- Left: Shield Logo -->
+                <div style="display: flex; align-items: center; flex-shrink: 0;">
+                    <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 60px; width: auto; object-fit: contain;">
+                </div>
+                
+                <!-- Center: Philosophy Text Flow -->
+                <div style="flex-grow: 1; text-align: center;">
+                    <span style="font-family: 'Satoshi', sans-serif; font-size: 0.85rem; font-weight: 800; letter-spacing: 2.5px; color: var(--white); display: block; text-transform: uppercase; margin-bottom: 4px;">PRIMEVERSE PHILOSOPHY</span>
+                    <div style="font-family: 'Satoshi', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--gold); display: flex; align-items: center; justify-content: center; width: 100%;">
+                        <span style="width: 200px; text-align: right; flex-shrink: 0; white-space: nowrap;">CLARITY</span>
+                        <span style="margin: 0 35px; opacity: 0.8; flex-shrink: 0;">→</span>
+                        <span style="flex-shrink: 0; text-align: center; white-space: nowrap;">DISCIPLINE</span>
+                        <span style="margin: 0 35px; opacity: 0.8; flex-shrink: 0;">→</span>
+                        <span style="width: 200px; text-align: left; flex-shrink: 0; white-space: nowrap;">CONSISTENCY</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; flex-shrink: 0;">
+                    <img src="../assets/chart.png" alt="Gold Chart Icon" style="height: 48px; width: auto; object-fit: contain; opacity: 0.95;">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Premium Glassmorphic Alert Modal -->
+    <div id="premiumAlertModal" class="premium-alert-overlay" style="display: none;">
+        <div class="premium-alert-box">
+            <div class="premium-alert-icon-container">
+                <i data-lucide="lock" class="premium-alert-icon"></i>
+            </div>
+            <h3 class="premium-alert-title" id="premiumAlertTitle">Module Locked</h3>
+            <p class="premium-alert-message" id="premiumAlertMessage">This module is currently locked.</p>
+            <button class="premium-alert-btn" id="premiumAlertBtn">Understood</button>
+        </div>
+    </div>
+
+    <!-- Video Player Resource Modal -->
+    <div id="videoResourceModal" class="hologram-sync-overlay" style="display: none; justify-content: center; align-items: center; z-index: 10000; background: rgba(10, 20, 35, 0.95); backdrop-filter: blur(15px); transition: opacity 0.3s ease;">
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.5rem; max-width: 800px; width: 90%; box-shadow: 0 0 50px rgba(0, 0, 0, 0.5); position: relative; text-align: center;">
+            <button onclick="window.closeResourceVideo()" style="position: absolute; top: 1.25rem; right: 1.25rem; background: transparent; border: none; color: var(--white); cursor: pointer;">
+                <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+            </button>
+            <h3 id="videoResourceTitle" style="font-family: 'Satoshi', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); margin: 0 0 1.25rem 0; text-align: left; padding-right: 2.5rem;">Video Title</h3>
+            <div style="position: relative; width: 100%; padding-top: 56.25%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                <video id="videoResourcePlayer" controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Enforce Login to access Resources
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.replace('../index.html?login=true');
+                return;
+            } else if (localStorage.getItem('payment_status') === 'unpaid') {
+                window.location.replace('../index.html?unpaid=true');
+                return;
+            }
+
+            // Redirect Admin users
+            if (localStorage.getItem('userRole') === 'admin') {
+                window.location.replace('communitypage.html');
+                return;
+            }
+
+            // Initialize Lucide icons
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+
+            // Load saved user name dynamically for the welcome header
+            const welcomeUserName = document.getElementById('welcomeUserName');
+            if (welcomeUserName) {
+                const storedName = localStorage.getItem('userName');
+                welcomeUserName.innerText = storedName || 'User';
+            }
+
+            // Handle sidebar role-gating visibility
+            const navAddMember = document.getElementById('nav-addmember');
+            const navConceptSupport = document.getElementById('nav-concept-support');
+            const navResources = document.getElementById('nav-resources');
+            const navOneOne = document.getElementById('nav-oneone');
+            if (localStorage.getItem('userRole') === 'admin') {
+                const navDashboard = document.getElementById('nav-dashboard-link');
+                const navMastery = document.getElementById('nav-mastery');
+                const navMentorship = document.getElementById('nav-mentorship');
+                const navJournal = document.getElementById('nav-journal');
+                const navUserControl = document.getElementById('nav-usercontrol');
+                
+                if (navDashboard) navDashboard.style.display = 'none';
+                if (navMastery) navMastery.style.display = 'none';
+                if (navMentorship) navMentorship.style.display = 'none';
+                if (navJournal) navJournal.style.display = 'none';
+                if (navConceptSupport) navConceptSupport.style.display = 'none';
+                if (navResources) navResources.style.display = 'none';
+                if (navAddMember) navAddMember.style.display = 'flex';
+                if (navUserControl) navUserControl.style.display = 'flex';
+                if (navOneOne) navOneOne.style.display = 'flex';
+            } else {
+                const navUserControl = document.getElementById('nav-usercontrol');
+                if (navAddMember) navAddMember.style.display = 'none';
+                if (navUserControl) navUserControl.style.display = 'none';
+                if (navConceptSupport) navConceptSupport.style.display = 'flex';
+                if (navResources) navResources.style.display = 'flex';
+                if (navOneOne) navOneOne.style.display = 'none';
+            }
+
+            // Show selected course in sidebar if active (only evaluated for non-admin students)
+            if (localStorage.getItem('userRole') !== 'admin') {
+                const navMastery = document.getElementById('nav-mastery');
+                const navMentorship = document.getElementById('nav-mentorship');
+                if (navMastery) navMastery.style.display = 'flex';
+                if (navMentorship) {
+                    navMentorship.style.display = 'flex';
+                    // Lock icon evaluation for Pro Mentorship (locked until Day 18 complete / Day 19)
+                    const enrollDateStr = localStorage.getItem('enrollDate');
+                    let currentDay = parseInt(localStorage.getItem('currentDay')) || 11;
+                    if (!localStorage.getItem('currentDay')) {
+                        if (enrollDateStr) {
+                            const enrollDate = new Date(enrollDateStr);
+                            const today = new Date();
+                            const diffTime = Math.abs(today - enrollDate);
+                            const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                            currentDay = daysSinceEnroll + 1;
+                        }
+                    }
+                    if (currentDay < 18) {
+                        navMentorship.innerHTML = '<i data-lucide="lock"></i> PrimeVerse Pro Mentorship';
+                    } else {
+                        navMentorship.innerHTML = '<i data-lucide="crown"></i> PrimeVerse Pro Mentorship';
+                    }
+
+                    // Execution Journal Sidebar Lock Evaluation
+                    const navJournal = document.getElementById('nav-journal');
+                    if (navJournal) {
+                        if (currentDay < 13) {
+                            navJournal.innerHTML = '<i data-lucide="lock"></i> Execution Journal';
+                        } else {
+                            navJournal.innerHTML = '<i data-lucide="book-marked"></i> Execution Journal';
+                        }
+                    }
+
+                    if (window.lucide) {
+                        window.lucide.createIcons();
+                    }
+                }
+            }
+
+            // Mobile menu toggle
+            const sidebar = document.querySelector('.sidebar');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenuBtn && sidebar) {
+                mobileMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (sidebar.classList.contains('active') && !sidebar.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                        sidebar.classList.remove('active');
+                    }
+                });
+
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        sidebar.classList.remove('active');
+                    });
+                });
+            }
+
+            // Premium alert close logic
+            const alertModal = document.getElementById('premiumAlertModal');
+            const alertBtn = document.getElementById('premiumAlertBtn');
+            if (alertModal && alertBtn) {
+                alertBtn.addEventListener('click', () => {
+                    alertModal.classList.remove('active');
+                    setTimeout(() => {
+                        alertModal.style.display = 'none';
+                    }, 300);
+                });
+            }
+
+            // Additional Resources sub-view switching functions
+            window.showResourcesGrid = function () {
+                document.getElementById('resources-cards-grid').style.display = 'grid';
+                document.getElementById('resources-back-btn-container').style.display = 'none';
+                document.getElementById('resources-videos-section').style.display = 'none';
+                document.getElementById('resources-pdfs-section').style.display = 'none';
+                document.getElementById('resources-case-studies-section').style.display = 'none';
+            };
+
+            window.showReferenceVideosTab = function () {
+                document.getElementById('resources-cards-grid').style.display = 'none';
+                document.getElementById('resources-back-btn-container').style.display = 'block';
+                document.getElementById('resources-videos-section').style.display = 'grid';
+                document.getElementById('resources-pdfs-section').style.display = 'none';
+                document.getElementById('resources-case-studies-section').style.display = 'none';
+                if (window.lucide) window.lucide.createIcons();
+            };
+
+            window.showPDFGuidesTab = function () {
+                document.getElementById('resources-cards-grid').style.display = 'none';
+                document.getElementById('resources-back-btn-container').style.display = 'block';
+                document.getElementById('resources-videos-section').style.display = 'none';
+                document.getElementById('resources-pdfs-section').style.display = 'grid';
+                document.getElementById('resources-case-studies-section').style.display = 'none';
+                if (window.lucide) window.lucide.createIcons();
+            };
+
+            window.showCaseStudiesTab = function () {
+                document.getElementById('resources-cards-grid').style.display = 'none';
+                document.getElementById('resources-back-btn-container').style.display = 'block';
+                document.getElementById('resources-videos-section').style.display = 'none';
+                document.getElementById('resources-pdfs-section').style.display = 'none';
+                document.getElementById('resources-case-studies-section').style.display = 'flex';
+                if (window.lucide) window.lucide.createIcons();
+            };
+
+            window.playResourceVideo = function (title, url) {
+                const modal = document.getElementById('videoResourceModal');
+                const titleEl = document.getElementById('videoResourceTitle');
+                const player = document.getElementById('videoResourcePlayer');
+                if (modal && titleEl && player) {
+                    titleEl.innerText = title;
+                    player.src = url;
+                    modal.style.display = 'flex';
+                    setTimeout(() => {
+                        modal.classList.add('active');
+                    }, 10);
+                    player.play().catch(e => console.log("Auto-play blocked or failed", e));
+                }
+            };
+
+            window.closeResourceVideo = function () {
+                const modal = document.getElementById('videoResourceModal');
+                const player = document.getElementById('videoResourcePlayer');
+                if (modal && player) {
+                    player.pause();
+                    player.src = '';
+                    modal.classList.remove('active');
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                    }, 300);
+                }
+            };
+
+            window.showPremiumAlert = function (title, message, iconType = 'lock') {
+                const modal = document.getElementById('premiumAlertModal');
+                const titleEl = document.getElementById('premiumAlertTitle');
+                const messageEl = document.getElementById('premiumAlertMessage');
+                const iconContainer = document.querySelector('.premium-alert-icon-container');
+
+                if (modal && titleEl && messageEl) {
+                    titleEl.innerText = title;
+                    messageEl.innerText = message;
+
+                    if (iconContainer) {
+                        iconContainer.innerHTML = `<i data-lucide="${iconType}" class="premium-alert-icon"></i>`;
+                    }
+
+                    if (window.lucide) {
+                        window.lucide.createIcons();
+                    }
+
+                    modal.style.display = 'flex';
+                    setTimeout(() => {
+                        modal.classList.add('active');
+                    }, 10);
+                }
+            };
+
+            // Logout Action
+            const logoutBtn = document.getElementById('logoutBtnResources');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.clear();
+                    window.location.replace('../index.html?login=true');
+                });
+            }
+
+            // Check if redirecting with specific sub tab param
+            const urlParams = new URLSearchParams(window.location.search);
+            const subParam = urlParams.get('sub');
+            if (subParam === 'videos') {
+                window.showReferenceVideosTab();
+            } else if (subParam === 'pdfs') {
+                window.showPDFGuidesTab();
+            } else if (subParam === 'studies') {
+                window.showCaseStudiesTab();
+            } else {
+                window.showResourcesGrid();
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -582,6 +582,7 @@
                 <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
                 <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
                 <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="additional-resources.html" class="nav-item" id="nav-resources"><i data-lucide="folder-open"></i> Additional Resources</a>
                 <a href="executionjournal.html" class="nav-item" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
                 <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
                 <a href="communitypage.html" class="nav-item active" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
@@ -658,6 +659,7 @@
             const navAddMember = document.getElementById('nav-addmember');
             const navConceptSupport = document.getElementById('nav-concept-support');
             const navOneOne = document.getElementById('nav-oneone');
+            const navResources = document.getElementById('nav-resources');
             if (localStorage.getItem('userRole') === 'admin') {
                 const navDashboard = document.getElementById('nav-dashboard-link');
                 const navMastery = document.getElementById('nav-mastery');
@@ -670,6 +672,7 @@
                 if (navMentorship) navMentorship.style.display = 'none';
                 if (navJournal) navJournal.style.display = 'none';
                 if (navConceptSupport) navConceptSupport.style.display = 'none';
+                if (navResources) navResources.style.display = 'none';
                 if (navAddMember) navAddMember.style.display = 'flex';
                 if (navUserControl) navUserControl.style.display = 'flex';
                 if (navOneOne) navOneOne.style.display = 'flex';
@@ -678,6 +681,7 @@
                 if (navAddMember) navAddMember.style.display = 'none';
                 if (navUserControl) navUserControl.style.display = 'none';
                 if (navConceptSupport) navConceptSupport.style.display = 'flex';
+                if (navResources) navResources.style.display = 'flex';
                 if (navOneOne) navOneOne.style.display = 'none';
             }
 

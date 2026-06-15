@@ -1110,6 +1110,7 @@
                 <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
                 <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
                 <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="additional-resources.html" class="nav-item" id="nav-resources"><i data-lucide="folder-open"></i> Additional Resources</a>
                 <a href="executionjournal.html" class="nav-item" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
                 <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
                 
@@ -1332,6 +1333,7 @@
             const navMentorship = document.getElementById('nav-mentorship');
             const navJournal = document.getElementById('nav-journal');
             const navConceptSupport = document.getElementById('nav-concept-support');
+            const navResources = document.getElementById('nav-resources');
 
             if (isAdmin) {
                 if (navDashboard) navDashboard.style.display = 'none';
@@ -1339,6 +1341,7 @@
                 if (navMentorship) navMentorship.style.display = 'none';
                 if (navJournal) navJournal.style.display = 'none';
                 if (navConceptSupport) navConceptSupport.style.display = 'none';
+                if (navResources) navResources.style.display = 'none';
                 if (navAddMember) navAddMember.style.display = 'flex';
                 if (navUserControl) navUserControl.style.display = 'flex';
             } else {
@@ -1349,6 +1352,7 @@
                 if (navMentorship) navMentorship.style.display = 'flex';
                 if (navJournal) navJournal.style.display = 'flex';
                 if (navConceptSupport) navConceptSupport.style.display = 'flex';
+                if (navResources) navResources.style.display = 'flex';
 
                 // Evaluate locked items for student
                 let currentDay = parseInt(localStorage.getItem('currentDay')) || 1;

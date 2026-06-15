@@ -1223,7 +1223,7 @@
         }
 
         .template-row-title {
-            font-family: 'Outfit', 'Satoshi', sans-serif;
+            font-family: 'Satoshi', sans-serif;
             font-size: 1.6rem;
             font-weight: 900;
             color: var(--white);
@@ -1324,6 +1324,8 @@
                         data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
                 <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i
                         data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="additional-resources.html" class="nav-item" id="nav-resources"><i
+                        data-lucide="folder-open"></i> Additional Resources</a>
                 <a href="executionjournal.html" class="nav-item active" id="nav-journal"><i
                         data-lucide="book-marked"></i> Execution Journal</a>
                 <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i>
@@ -1397,7 +1399,7 @@
             <!-- Headline Section -->
             <div style="margin-bottom: 2.5rem; text-align: left;">
                 <h1
-                    style="font-family: 'Outfit', 'Satoshi', sans-serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 1px; color: var(--white); margin: 0 0 0.5rem 0; text-transform: uppercase;">
+                    style="font-family: 'Satoshi', sans-serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 1px; color: var(--white); margin: 0 0 0.5rem 0; text-transform: uppercase;">
                     PREMIUM <span style="color: var(--gold);">TEMPLATES</span>
                 </h1>
                 <p style="color: var(--gray); font-size: 0.95rem; font-style: italic; margin: 0;">
@@ -1916,12 +1918,20 @@
             const navMastery = document.getElementById('nav-mastery');
             const navMentorship = document.getElementById('nav-mentorship');
             const navConceptSupport = document.getElementById('nav-concept-support');
+            const navResources = document.getElementById('nav-resources');
             if (navMastery) navMastery.style.display = 'flex';
             if (navConceptSupport) {
                 if (localStorage.getItem('userRole') === 'admin') {
                     navConceptSupport.style.display = 'none';
                 } else {
                     navConceptSupport.style.display = 'flex';
+                }
+            }
+            if (navResources) {
+                if (localStorage.getItem('userRole') === 'admin') {
+                    navResources.style.display = 'none';
+                } else {
+                    navResources.style.display = 'flex';
                 }
             }
             if (navMentorship) {
