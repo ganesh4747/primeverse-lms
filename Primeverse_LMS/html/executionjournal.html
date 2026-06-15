@@ -13,12 +13,14 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Inter & Plus Jakarta Sans Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <script>
         tailwind.config = {
             corePlugins: {
@@ -52,10 +54,12 @@
                 box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
                 border-color: rgba(212, 175, 55, 0.25);
             }
+
             50% {
                 box-shadow: 0 0 35px rgba(212, 175, 55, 0.35);
                 border-color: rgba(212, 175, 55, 0.5);
             }
+
             100% {
                 box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
                 border-color: rgba(212, 175, 55, 0.25);
@@ -1051,7 +1055,7 @@
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -1085,9 +1089,11 @@
         .glow-green {
             box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.15) !important;
         }
+
         .glow-purple {
             box-shadow: 0 0 35px -5px rgba(139, 92, 246, 0.15) !important;
         }
+
         .glow-gold {
             box-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.12) !important;
         }
@@ -1115,9 +1121,20 @@
 
         /* Pulse animation for key active components */
         @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 0.95; }
-            50% { transform: scale(1.03); opacity: 1; filter: brightness(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.95;
+            }
+
+            50% {
+                transform: scale(1.03);
+                opacity: 1;
+                filter: brightness(1.1);
+            }
         }
+
         .pulse-glow-button {
             animation: pulseGlow 3s infinite ease-in-out;
         }
@@ -1136,6 +1153,7 @@
             pointer-events: none;
             transition: all 0.3s ease;
         }
+
         .video-loader-spinner {
             width: 56px;
             height: 56px;
@@ -1145,8 +1163,11 @@
             animation: spin-loader 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
         }
+
         @keyframes spin-loader {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Premium Templates Download View Styles */
@@ -1267,9 +1288,11 @@
                 gap: 1.5rem;
                 padding: 1.5rem;
             }
+
             .template-row-left {
                 padding-right: 0;
             }
+
             .template-download-btn {
                 width: 100%;
                 justify-content: center;
@@ -1287,41 +1310,57 @@
                 <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 40px; display: block;">
                 <div class="logo-info">
                     <div class="logo-text">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
-                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE •
+                        CONSISTENCY</div>
                 </div>
             </a>
         </div>
 
         <nav class="nav-menu">
             <div class="nav-top">
-                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
-                <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
-                <a href="executionjournal.html" class="nav-item active" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
-                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
-                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
-                <a href="oneonecommunity.html" class="nav-item" id="nav-oneone" style="display: none;"><i data-lucide="message-square"></i> PrimeVerse One:One</a>
-                <a href="addmember.html" class="nav-item" id="nav-addmember" style="display: none;"><i data-lucide="user-plus"></i> Add Member</a>
-                <a href="usercontrol.html" class="nav-item" id="nav-usercontrol" style="display: none;"><i data-lucide="shield-minus"></i> User Control</a>
-                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
+                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i>
+                    Dashboard</a>
+                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i
+                        data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
+                <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i
+                        data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="executionjournal.html" class="nav-item active" id="nav-journal"><i
+                        data-lucide="book-marked"></i> Execution Journal</a>
+                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i>
+                    PrimeVerse Pro Mentorship</a>
+                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse
+                    Community</a>
+                <a href="oneonecommunity.html" class="nav-item" id="nav-oneone" style="display: none;"><i
+                        data-lucide="message-square"></i> PrimeVerse One:One</a>
+                <a href="addmember.html" class="nav-item" id="nav-addmember" style="display: none;"><i
+                        data-lucide="user-plus"></i> Add Member</a>
+                <a href="usercontrol.html" class="nav-item" id="nav-usercontrol" style="display: none;"><i
+                        data-lucide="shield-minus"></i> User Control</a>
+                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account
+                    Settings</a>
             </div>
             <div class="nav-bottom">
-                <a href="../index.html" class="nav-item" style="color: var(--red);"><i data-lucide="log-out"></i> Logout</a>
+                <a href="../index.html" class="nav-item" style="color: var(--red);"><i data-lucide="log-out"></i>
+                    Logout</a>
             </div>
         </nav>
     </aside>
 
     <main class="main-dash">
         <!-- Mobile Navigation Header -->
-        <div class="mobile-nav-bar" style="display: none; justify-content: space-between; align-items: center; background: var(--navy-dark); padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 99; margin: -3rem -3rem 3rem -3rem; backdrop-filter: blur(10px);">
+        <div class="mobile-nav-bar"
+            style="display: none; justify-content: space-between; align-items: center; background: var(--navy-dark); padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 99; margin: -3rem -3rem 3rem -3rem; backdrop-filter: blur(10px);">
             <a href="dashboard.html" class="logo-wrap" style="gap: 8px !important; text-decoration: none;">
                 <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 30px; display: block;">
                 <div class="logo-info">
-                    <div class="logo-text" style="font-size: 1.1rem !important;">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
-                    <div class="logo-tagline" style="font-size: 0.4rem; letter-spacing: 0.3px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                    <div class="logo-text" style="font-size: 1.1rem !important;">PRIME<span class="gold-text"
+                            style="color: var(--gold);">VERSE</span></div>
+                    <div class="logo-tagline" style="font-size: 0.4rem; letter-spacing: 0.3px;">CLARITY • DISCIPLINE •
+                        CONSISTENCY</div>
                 </div>
             </a>
-            <button id="mobileMenuBtn" style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
+            <button id="mobileMenuBtn"
+                style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
                 <i data-lucide="menu" style="width: 26px; height: 26px;"></i>
             </button>
         </div>
@@ -1332,20 +1371,24 @@
                     <i data-lucide="gem" style="width: 14px; height: 14px; color: #3b82f6;"></i>
                     <span>PRIMEVERSE EXECUTION JOURNAL</span>
                 </div>
-                <h1 class="welcome-title">Welcome Back, <span class="gradient-text-blue" id="welcomeUserName">Alex Carter</span> 👋</h1>
+                <h1 class="welcome-title">Welcome Back, <span class="gradient-text-blue" id="welcomeUserName">Alex
+                        Carter</span> 👋</h1>
                 <p class="header-quote">"The market rewards disciplined execution — not emotional decisions."</p>
             </div>
         </header>
 
         <!-- Premium Templates Resource Download View -->
-        <div id="templates-download-view" style="display: none; position: relative; min-height: 500px; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+        <div id="templates-download-view"
+            style="display: none; position: relative; min-height: 500px; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
             <!-- Top Controls Row -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <div class="header-badge" style="background: rgba(212, 175, 55, 0.1); padding: 8px 16px; border-radius: 6px; border: 1px solid rgba(212, 175, 55, 0.3); font-size: 0.75rem; font-weight: 800; color: var(--gold); display: inline-flex; align-items: center; gap: 8px; letter-spacing: 0.5px;">
+                <div class="header-badge"
+                    style="background: rgba(212, 175, 55, 0.1); padding: 8px 16px; border-radius: 6px; border: 1px solid rgba(212, 175, 55, 0.3); font-size: 0.75rem; font-weight: 800; color: var(--gold); display: inline-flex; align-items: center; gap: 8px; letter-spacing: 0.5px;">
                     <i data-lucide="download" style="width: 14px; height: 14px;"></i>
                     <span>DOWNLOAD RESOURCES</span>
                 </div>
-                <button onclick="closeTemplatesView()" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); color: var(--white); padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; transition: all 0.3s; text-transform: uppercase;">
+                <button onclick="closeTemplatesView()"
+                    style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); color: var(--white); padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; transition: all 0.3s; text-transform: uppercase;">
                     <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
                     <span>Back to Journal</span>
                 </button>
@@ -1353,7 +1396,8 @@
 
             <!-- Headline Section -->
             <div style="margin-bottom: 2.5rem; text-align: left;">
-                <h1 style="font-family: 'Outfit', 'Satoshi', sans-serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 1px; color: var(--white); margin: 0 0 0.5rem 0; text-transform: uppercase;">
+                <h1
+                    style="font-family: 'Outfit', 'Satoshi', sans-serif; font-size: 2.5rem; font-weight: 900; letter-spacing: 1px; color: var(--white); margin: 0 0 0.5rem 0; text-transform: uppercase;">
                     PREMIUM <span style="color: var(--gold);">TEMPLATES</span>
                 </h1>
                 <p style="color: var(--gray); font-size: 0.95rem; font-style: italic; margin: 0;">
@@ -1370,10 +1414,13 @@
                             <span>📝 SECTION 01: EVERY TRADE TRACKING</span>
                         </div>
                         <h2 class="template-row-title">EXECUTION JOURNAL</h2>
-                        <p class="template-row-desc">Document every trade, analyze your decisions, and build the discipline required for consistent trading results.</p>
+                        <p class="template-row-desc">Document every trade, analyze your decisions, and build the
+                            discipline required for consistent trading results.</p>
                     </div>
                     <div class="template-row-right">
-                        <a href="https://app.notion.com/p/JUNE-2026-284939af80a78384bebb01d9e444ab17?source=copy_link" target="_blank" rel="noopener noreferrer" onclick="handleDownload()" class="template-download-btn btn-teal">
+                        <a href="https://app.notion.com/p/JUNE-2026-284939af80a78384bebb01d9e444ab17?source=copy_link"
+                            target="_blank" rel="noopener noreferrer" onclick="handleDownload()"
+                            class="template-download-btn btn-teal">
                             <i data-lucide="download"></i> DOWNLOAD JOURNAL
                         </a>
                     </div>
@@ -1386,10 +1433,13 @@
                             <span>📊 SECTION 02: WEEKLY RESULT TRACKER</span>
                         </div>
                         <h2 class="template-row-title">PERFORMANCE TRACKER</h2>
-                        <p class="template-row-desc">Track your weekly and monthly trading performance to measure consistency, identify patterns, and monitor long-term growth.</p>
+                        <p class="template-row-desc">Track your weekly and monthly trading performance to measure
+                            consistency, identify patterns, and monitor long-term growth.</p>
                     </div>
                     <div class="template-row-right">
-                        <a href="https://app.notion.com/p/WEEK-RESULT-2026-ab9939af80a782879a3d01b8952be712?source=copy_link" target="_blank" rel="noopener noreferrer" onclick="handleDownload()" class="template-download-btn btn-gold">
+                        <a href="https://app.notion.com/p/WEEK-RESULT-2026-ab9939af80a782879a3d01b8952be712?source=copy_link"
+                            target="_blank" rel="noopener noreferrer" onclick="handleDownload()"
+                            class="template-download-btn btn-gold">
                             <i data-lucide="download"></i> DOWNLOAD TRACKER
                         </a>
                     </div>
@@ -1399,29 +1449,41 @@
 
         <!-- Premium Execution Journal View -->
         <div id="journal-view" style="position: relative; min-height: 500px;">
-            
+
             <!-- Center Lock Glass Overlay (Visible when locked) -->
-            <div id="journalLockOverlay" style="position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; background: rgba(5, 7, 12, 0.98); backdrop-filter: blur(35px) saturate(100%); -webkit-backdrop-filter: blur(35px) saturate(100%); z-index: 20; padding: 2rem; border-radius: 24px;">
-                <div style="width: 84px; height: 84px; background: rgba(212, 175, 55, 0.08); border: 1.5px solid rgba(212, 175, 55, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 0 35px rgba(212, 175, 55, 0.25); animation: pulse-gold 2s infinite;">
-                    <i data-lucide="lock" style="width: 38px; height: 38px; color: var(--gold); filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.5));"></i>
+            <div id="journalLockOverlay"
+                style="position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; background: rgba(5, 7, 12, 0.98); backdrop-filter: blur(35px) saturate(100%); -webkit-backdrop-filter: blur(35px) saturate(100%); z-index: 20; padding: 2rem; border-radius: 24px;">
+                <div
+                    style="width: 84px; height: 84px; background: rgba(212, 175, 55, 0.08); border: 1.5px solid rgba(212, 175, 55, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; box-shadow: 0 0 35px rgba(212, 175, 55, 0.25); animation: pulse-gold 2s infinite;">
+                    <i data-lucide="lock"
+                        style="width: 38px; height: 38px; color: var(--gold); filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.5));"></i>
                 </div>
-                
+
                 <div>
-                    <span class="mentorship-card-badge" style="background: rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.25); color: var(--gold); margin-bottom: 1rem; text-transform: uppercase; font-weight: 800; font-size: 0.75rem; letter-spacing: 1px; display: inline-block; padding: 6px 12px; border-radius: 6px; border: 1px solid;">
-                         Day 13 Requirement
+                    <span class="mentorship-card-badge"
+                        style="background: rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.25); color: var(--gold); margin-bottom: 1rem; text-transform: uppercase; font-weight: 800; font-size: 0.75rem; letter-spacing: 1px; display: inline-block; padding: 6px 12px; border-radius: 6px; border: 1px solid;">
+                        Day 13 Requirement
                     </span>
                 </div>
 
-                <h2 class="mentorship-card-title" style="font-size: 2rem; margin-bottom: 0.5rem; text-shadow: 0 0 20px rgba(0,0,0,0.5); color: var(--white); text-transform: uppercase; font-weight: 900;">Journal Locked</h2>
-                <p style="color: #cbd5e1; font-size: 0.92rem; font-weight: 600; text-align: center; max-width: 380px; margin-bottom: 1.5rem; line-height: 1.6; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">
-                    Unlock the Professional Execution Journal template and training modules after completing Day 13 of the Mastery Program.
+                <h2 class="mentorship-card-title"
+                    style="font-size: 2rem; margin-bottom: 0.5rem; text-shadow: 0 0 20px rgba(0,0,0,0.5); color: var(--white); text-transform: uppercase; font-weight: 900;">
+                    Journal Locked</h2>
+                <p
+                    style="color: #cbd5e1; font-size: 0.92rem; font-weight: 600; text-align: center; max-width: 380px; margin-bottom: 1.5rem; line-height: 1.6; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">
+                    Unlock the Professional Execution Journal template and training modules after completing Day 13 of
+                    the Mastery Program.
                 </p>
-                
+
                 <!-- Mini Progress bar inside overlay -->
-                <div style="width: 100%; max-width: 260px; background: rgba(255,255,255,0.05); border-radius: 10px; height: 6px; overflow: hidden; margin-bottom: 0.75rem; border: 1px solid rgba(255,255,255,0.05);">
-                    <div id="journalOverlayBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--gold), #f3e5ab); box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);"></div>
+                <div
+                    style="width: 100%; max-width: 260px; background: rgba(255,255,255,0.05); border-radius: 10px; height: 6px; overflow: hidden; margin-bottom: 0.75rem; border: 1px solid rgba(255,255,255,0.05);">
+                    <div id="journalOverlayBar"
+                        style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--gold), #f3e5ab); box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);">
+                    </div>
                 </div>
-                <p id="journalOverlayText" style="color: #94a3b8; font-size: 0.8rem; font-weight: 700; margin: 0; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">
+                <p id="journalOverlayText"
+                    style="color: #94a3b8; font-size: 0.8rem; font-weight: 700; margin: 0; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">
                     Day 1 of 13 (12 days remaining)
                 </p>
             </div>
@@ -1435,7 +1497,8 @@
                     <h1 class="journal-hero-title">EXECUTION <span class="gold-text">JOURNAL</span></h1>
                     <div class="journal-hero-bullets">
                         <p class="bullet-highlight">Track. Review. Improve. Become Consistent.</p>
-                        <p class="bullet-desc">Your journal is your edge. Document every trade, every lesson, and every decision.</p>
+                        <p class="bullet-desc">Your journal is your edge. Document every trade, every lesson, and every
+                            decision.</p>
                         <p class="bullet-desc">Repetition builds mastery.</p>
                     </div>
                 </div>
@@ -1448,10 +1511,11 @@
             <div class="journal-plan-flow-grid">
                 <!-- Left Column: YOUR JOURNAL PLAN (New Premium UI) -->
                 <div class="flex flex-col gap-6" style="min-width: 0;">
-                    
+
                     <!-- Header -->
                     <div class="flex items-center gap-4 pb-4 border-b border-white/5">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500/10 to-yellow-500/5 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.15)] relative overflow-hidden group">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500/10 to-yellow-500/5 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.15)] relative overflow-hidden group">
                             <i data-lucide="calendar-days" style="width: 22px; height: 22px; color: var(--gold);"></i>
                         </div>
                         <div class="text-left">
@@ -1459,9 +1523,13 @@
                                 YOUR JOURNAL PLAN
                             </h3>
                             <p class="text-xs text-slate-400 font-medium mt-1 flex items-center gap-2 m-0">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold border border-emerald-500/20">1 Journal Template File</span>
+                                <span
+                                    class="inline-flex items-center px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold border border-emerald-500/20">1
+                                    Journal Template File</span>
                                 <span class="text-slate-600">•</span>
-                                <span class="inline-flex items-center px-2 py-0.5 rounded bg-violet-500/10 text-violet-400 text-[10px] font-semibold border border-violet-500/20">1 Guided Walkthrough</span>
+                                <span
+                                    class="inline-flex items-center px-2 py-0.5 rounded bg-violet-500/10 text-violet-400 text-[10px] font-semibold border border-violet-500/20">1
+                                    Guided Walkthrough</span>
                             </p>
                         </div>
                     </div>
@@ -1470,37 +1538,51 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                         <!-- Card 1: Execution Journal Template -->
-                        <div class="premium-glass premium-glass-hover rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:glow-green group relative overflow-hidden">
+                        <div
+                            class="premium-glass premium-glass-hover rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:glow-green group relative overflow-hidden">
                             <!-- Highlight Gradient Bar -->
-                            <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-500/0 via-emerald-500/40 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div
+                                class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-500/0 via-emerald-500/40 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            </div>
 
                             <div>
                                 <!-- Badge -->
                                 <div class="flex justify-between items-start mb-6">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 uppercase">
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 uppercase">
                                         Template File
                                     </span>
                                 </div>
 
                                 <!-- Visual Asset Container -->
-                                <div class="h-44 w-full rounded-2xl bg-[#05070C]/60 border border-white/5 flex items-center justify-center mb-6 relative group/visual overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 to-transparent opacity-0 group-hover/visual:opacity-100 transition-opacity duration-300"></div>
-                                    
+                                <div
+                                    class="h-44 w-full rounded-2xl bg-[#05070C]/60 border border-white/5 flex items-center justify-center mb-6 relative group/visual overflow-hidden">
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 to-transparent opacity-0 group-hover/visual:opacity-100 transition-opacity duration-300">
+                                    </div>
+
                                     <!-- XLSX Document Block -->
-                                    <div class="w-24 h-28 relative flex flex-col justify-between items-center p-3 rounded-xl border border-emerald-500/30 bg-gradient-to-b from-[#0B0F19] to-[#05070C] shadow-xl group-hover:scale-105 transition-all duration-500">
+                                    <div
+                                        class="w-24 h-28 relative flex flex-col justify-between items-center p-3 rounded-xl border border-emerald-500/30 bg-gradient-to-b from-[#0B0F19] to-[#05070C] shadow-xl group-hover:scale-105 transition-all duration-500">
                                         <!-- Custom dash ring overlay inside -->
-                                        <div class="absolute inset-1.5 rounded-lg border border-dashed border-emerald-500/10 pointer-events-none"></div>
+                                        <div
+                                            class="absolute inset-1.5 rounded-lg border border-dashed border-emerald-500/10 pointer-events-none">
+                                        </div>
 
                                         <!-- Folded Corner Effect -->
-                                        <div class="absolute top-0 right-0 w-4 h-4 bg-emerald-500/20 border-l border-b border-emerald-500/30 rounded-bl-md"></div>
-                                        
+                                        <div
+                                            class="absolute top-0 right-0 w-4 h-4 bg-emerald-500/20 border-l border-b border-emerald-500/30 rounded-bl-md">
+                                        </div>
+
                                         <!-- Document Icon and Header -->
-                                        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mt-2">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mt-2">
                                             <i data-lucide="file-spreadsheet" class="w-6 h-6 text-emerald-400"></i>
                                         </div>
 
                                         <!-- Extension Text Badge -->
-                                        <div class="px-2.5 py-1 bg-emerald-500 text-slate-900 rounded font-black text-xs tracking-wider shadow-lg shadow-emerald-500/20 mb-1">
+                                        <div
+                                            class="px-2.5 py-1 bg-emerald-500 text-slate-900 rounded font-black text-xs tracking-wider shadow-lg shadow-emerald-500/20 mb-1">
                                             XLSX
                                         </div>
                                     </div>
@@ -1508,7 +1590,8 @@
 
                                 <!-- Metadata -->
                                 <div class="space-y-1 mb-8 text-left">
-                                    <h2 class="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors duration-200 m-0">
+                                    <h2
+                                        class="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors duration-200 m-0">
                                         EXECUTION JOURNAL TEMPLATE
                                     </h2>
                                     <p class="text-xs text-slate-400 m-0">
@@ -1517,7 +1600,8 @@
                                 </div>
                             </div>
                             <!-- Interactive Premium Button -->
-                            <button onclick="openTemplatesView()" id="downloadBtn" class="w-full relative py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(16,185,129,0.25)] hover:shadow-[0_8px_30px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 overflow-hidden group/btn active:scale-[0.98] border-0 cursor-pointer">
+                            <button onclick="openTemplatesView()" id="downloadBtn"
+                                class="w-full relative py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs tracking-wider transition-all duration-300 shadow-[0_4px_20px_rgba(16,185,129,0.25)] hover:shadow-[0_8px_30px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 overflow-hidden group/btn active:scale-[0.98] border-0 cursor-pointer">
                                 <span class="flex items-center gap-2">
                                     <i data-lucide="download" class="w-5 h-5"></i>
                                     DOWNLOAD TEMPLATE
@@ -1526,40 +1610,53 @@
                         </div>
 
                         <!-- Card 2: Execution Journal Walkthrough -->
-                        <div class="premium-glass premium-glass-hover rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:glow-purple group relative overflow-hidden">
+                        <div
+                            class="premium-glass premium-glass-hover rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:glow-purple group relative overflow-hidden">
                             <!-- Highlight Gradient Bar -->
-                            <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-violet-500/0 via-violet-500/40 to-violet-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div
+                                class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-violet-500/0 via-violet-500/40 to-violet-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            </div>
 
                             <div>
                                 <!-- Badge -->
                                 <div class="flex justify-between items-start mb-6">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wider text-violet-400 bg-violet-500/10 border border-violet-500/20 uppercase">
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wider text-violet-400 bg-violet-500/10 border border-violet-500/20 uppercase">
                                         Guided Video
                                     </span>
                                 </div>
 
                                 <!-- Visual Asset Container (Mock Video Player with High-Fidelity Interface) -->
-                                <div class="h-44 w-full rounded-2xl bg-[#05070C]/80 border border-white/5 flex items-center justify-center mb-6 relative overflow-hidden group/video cursor-pointer" onclick="openJournalVideoModal()">
+                                <div class="h-44 w-full rounded-2xl bg-[#05070C]/80 border border-white/5 flex items-center justify-center mb-6 relative overflow-hidden group/video cursor-pointer"
+                                    onclick="openJournalVideoModal()">
                                     <!-- Walkthrough Thumbnail Picture -->
-                                    <img src="../assets/journal_walkthrough_thumb.png" alt="Guided Video Walkthrough" class="absolute inset-0 w-full h-full object-contain opacity-95 group-hover/video:opacity-100 transition-opacity duration-300">
-                                    
+                                    <img src="../assets/journal_walkthrough_thumb.png" alt="Guided Video Walkthrough"
+                                        class="absolute inset-0 w-full h-full object-contain opacity-95 group-hover/video:opacity-100 transition-opacity duration-300">
+
                                     <!-- Simulated video background with gradient overlay -->
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-10"></div>
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-10">
+                                    </div>
 
                                     <!-- Floating Play Overlay with Ripple Ring -->
                                     <div class="relative z-20 flex flex-col items-center gap-2">
-                                        <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-2xl group-hover/video:scale-110 group-hover/video:bg-violet-600 group-hover/video:border-violet-400 transition-all duration-300 relative">
-                                            <span class="absolute -inset-2 rounded-full border border-violet-500/30 animate-ping opacity-75 group-hover/video:opacity-100"></span>
+                                        <div
+                                            class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-2xl group-hover/video:scale-110 group-hover/video:bg-violet-600 group-hover/video:border-violet-400 transition-all duration-300 relative">
+                                            <span
+                                                class="absolute -inset-2 rounded-full border border-violet-500/30 animate-ping opacity-75 group-hover/video:opacity-100"></span>
                                             <i data-lucide="play" class="w-6 h-6 text-white translate-x-0.5"></i>
                                         </div>
                                     </div>
 
                                     <!-- Video Title Overlay -->
-                                    <div class="absolute bottom-3 left-3 right-3 z-20 flex justify-between items-center">
-                                        <span class="text-[10px] text-slate-300 font-bold tracking-wider uppercase bg-black/60 backdrop-blur-sm px-2 py-1 rounded border border-white/5">
+                                    <div
+                                        class="absolute bottom-3 left-3 right-3 z-20 flex justify-between items-center">
+                                        <span
+                                            class="text-[10px] text-slate-300 font-bold tracking-wider uppercase bg-black/60 backdrop-blur-sm px-2 py-1 rounded border border-white/5">
                                             Trading Mastery
                                         </span>
-                                        <span class="text-[10px] text-violet-300 font-semibold flex items-center gap-1 bg-violet-500/25 backdrop-blur-sm px-2 py-1 rounded">
+                                        <span
+                                            class="text-[10px] text-violet-300 font-semibold flex items-center gap-1 bg-violet-500/25 backdrop-blur-sm px-2 py-1 rounded">
                                             <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></span>
                                             STEP-BY-STEP
                                         </span>
@@ -1568,7 +1665,8 @@
 
                                 <!-- Metadata -->
                                 <div class="space-y-1 mb-8 text-left">
-                                    <h2 class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors duration-200 m-0">
+                                    <h2
+                                        class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors duration-200 m-0">
                                         EXECUTION JOURNAL WALKTHROUGH
                                     </h2>
                                     <p class="text-xs text-slate-400 m-0">
@@ -1578,8 +1676,11 @@
                             </div>
 
                             <!-- Interactive Premium Button -->
-                            <button onclick="openJournalVideoModal()" class="w-full relative py-4 px-6 rounded-2xl bg-[#0B0F19] hover:bg-[#111827] text-white font-bold text-xs tracking-wider transition-all duration-300 border border-white/10 hover:border-violet-500/30 flex items-center justify-center gap-2 group/btn active:scale-[0.98]" style="text-decoration: none !important;">
-                                <span class="flex items-center gap-2 group-hover/btn:text-violet-400 transition-colors duration-200">
+                            <button onclick="openJournalVideoModal()"
+                                class="w-full relative py-4 px-6 rounded-2xl bg-[#0B0F19] hover:bg-[#111827] text-white font-bold text-xs tracking-wider transition-all duration-300 border border-white/10 hover:border-violet-500/30 flex items-center justify-center gap-2 group/btn active:scale-[0.98]"
+                                style="text-decoration: none !important;">
+                                <span
+                                    class="flex items-center gap-2 group-hover/btn:text-violet-400 transition-colors duration-200">
                                     <i data-lucide="play-circle" class="w-5 h-5 text-violet-400"></i>
                                     WATCH VIDEO WALKTHROUGH
                                 </span>
@@ -1589,61 +1690,83 @@
                     </div>
 
                     <!-- Premium "How to Use" Accordion / Drawer -->
-                    <div class="premium-glass rounded-3xl overflow-hidden transition-all duration-300 hover:glow-gold border border-amber-500/10">
+                    <div
+                        class="premium-glass rounded-3xl overflow-hidden transition-all duration-300 hover:glow-gold border border-amber-500/10">
                         <!-- Header bar / Toggle Button -->
-                        <button onclick="toggleOnboarding()" class="w-full p-6 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors duration-200 group bg-transparent border-0 cursor-pointer">
+                        <button onclick="toggleOnboarding()"
+                            class="w-full p-6 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors duration-200 group bg-transparent border-0 cursor-pointer">
                             <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
                                     <i data-lucide="info" class="w-5 h-5"></i>
                                 </div>
                                 <div class="text-left">
-                                    <h3 class="text-base font-bold text-white group-hover:text-amber-400 transition-colors duration-200 m-0">How to Use</h3>
+                                    <h3
+                                        class="text-base font-bold text-white group-hover:text-amber-400 transition-colors duration-200 m-0">
+                                        How to Use</h3>
                                     <p class="text-xs text-slate-400 mt-0.5 m-0">Quick Onboarding Steps & Checklists</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <span class="text-[10px] text-amber-500 font-semibold uppercase tracking-wider bg-amber-500/10 px-2.5 py-1 rounded border border-amber-500/20">
+                                <span
+                                    class="text-[10px] text-amber-500 font-semibold uppercase tracking-wider bg-amber-500/10 px-2.5 py-1 rounded border border-amber-500/20">
                                     Setup Steps
                                 </span>
-                                <i data-lucide="chevron-down" id="chevron-icon" class="w-5 h-5 text-slate-400 group-hover:text-white transition-transform duration-300 transform"></i>
+                                <i data-lucide="chevron-down" id="chevron-icon"
+                                    class="w-5 h-5 text-slate-400 group-hover:text-white transition-transform duration-300 transform"></i>
                             </div>
                         </button>
 
                         <!-- Expanded Drawer Content -->
-                        <div id="onboarding-drawer" class="border-t border-white/5 bg-[#05070C]/40 transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden">
+                        <div id="onboarding-drawer"
+                            class="border-t border-white/5 bg-[#05070C]/40 transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden">
                             <div class="p-6 md:p-8 space-y-6">
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    
+
                                     <!-- Step 1 -->
-                                    <div class="p-4 rounded-2xl bg-[#0B0F19]/60 border border-white/5 flex flex-col justify-between hover:border-emerald-500/20 transition-all duration-200">
+                                    <div
+                                        class="p-4 rounded-2xl bg-[#0B0F19]/60 border border-white/5 flex flex-col justify-between hover:border-emerald-500/20 transition-all duration-200">
                                         <div class="text-left">
                                             <div class="flex justify-between items-center mb-3">
-                                                <span class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Step 01</span>
+                                                <span
+                                                    class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Step
+                                                    01</span>
                                             </div>
                                             <h4 class="font-bold text-sm text-white m-0">Download Template</h4>
-                                            <p class="text-xs text-slate-400 mt-1 leading-relaxed m-0">Download and save the execution excel template onto your local workstation.</p>
+                                            <p class="text-xs text-slate-400 mt-1 leading-relaxed m-0">Download and save
+                                                the execution excel template onto your local workstation.</p>
                                         </div>
                                     </div>
 
                                     <!-- Step 2 -->
-                                    <div class="p-4 rounded-2xl bg-[#0B0F19]/60 border border-white/5 flex flex-col justify-between hover:border-violet-500/20 transition-all duration-200">
+                                    <div
+                                        class="p-4 rounded-2xl bg-[#0B0F19]/60 border border-white/5 flex flex-col justify-between hover:border-violet-500/20 transition-all duration-200">
                                         <div class="text-left">
                                             <div class="flex justify-between items-center mb-3">
-                                                <span class="text-[10px] font-black text-violet-400 uppercase tracking-widest">Step 02</span>
+                                                <span
+                                                    class="text-[10px] font-black text-violet-400 uppercase tracking-widest">Step
+                                                    02</span>
                                             </div>
                                             <h4 class="font-bold text-sm text-white m-0">Watch Walkthrough</h4>
-                                            <p class="text-xs text-slate-400 mt-1 leading-relaxed m-0">Spend 18 minutes reviewing the layout, formulas, and parameters included inside the template.</p>
+                                            <p class="text-xs text-slate-400 mt-1 leading-relaxed m-0">Spend 18 minutes
+                                                reviewing the layout, formulas, and parameters included inside the
+                                                template.</p>
                                         </div>
                                     </div>
 
                                     <!-- Step 3 -->
-                                    <div class="p-4 rounded-2xl bg-[#0B0F19]/60 border border-white/5 flex flex-col justify-between hover:border-amber-500/20 transition-all duration-200">
+                                    <div
+                                        class="p-4 rounded-2xl bg-[#0B0F19]/60 border border-white/5 flex flex-col justify-between hover:border-amber-500/20 transition-all duration-200">
                                         <div class="text-left">
                                             <div class="flex justify-between items-center mb-3">
-                                                <span class="text-[10px] font-black text-amber-400 uppercase tracking-widest">Step 03</span>
+                                                <span
+                                                    class="text-[10px] font-black text-amber-400 uppercase tracking-widest">Step
+                                                    03</span>
                                             </div>
                                             <h4 class="font-bold text-sm text-white m-0">Document Every Trade</h4>
-                                            <p class="text-xs text-slate-400 mt-1 leading-relaxed m-0">Begin logging entry, targets, stop-losses, emotional indicators, and strategy details weekly.</p>
+                                            <p class="text-xs text-slate-400 mt-1 leading-relaxed m-0">Begin logging
+                                                entry, targets, stop-losses, emotional indicators, and strategy details
+                                                weekly.</p>
                                         </div>
                                     </div>
 
@@ -1659,7 +1782,8 @@
                     <div class="card-header-with-badge">
                         <i data-lucide="git-branch" class="header-icon-gold"></i>
                         <div class="header-text-block">
-                            <h3 class="setup-card-title">JOURNAL FLOW <span class="muted-tag-text">(YOUR PLAN)</span></h3>
+                            <h3 class="setup-card-title">JOURNAL FLOW <span class="muted-tag-text">(YOUR PLAN)</span>
+                            </h3>
                         </div>
                     </div>
 
@@ -1726,8 +1850,11 @@
                 <i data-lucide="x"></i>
             </button>
             <div class="journal-modal-video-wrapper">
-                <video id="journalModalVideoPlayer" controls controlslist="nodownload" disablepictureinpicture oncontextmenu="return false;" preload="metadata" playsinline>
-                    <source src="https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NTE1LCJleHAiOjIwOTY4MTg1MTV9.w1PSH48761dL_thDBqPiPo_YZQJkvTnuBjii90yaofw" type="video/mp4">
+                <video id="journalModalVideoPlayer" controls controlslist="nodownload" disablepictureinpicture
+                    oncontextmenu="return false;" preload="metadata" playsinline>
+                    <source
+                        src="https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NTE1LCJleHAiOjIwOTY4MTg1MTV9.w1PSH48761dL_thDBqPiPo_YZQJkvTnuBjii90yaofw"
+                        type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <!-- Custom Quality/Resolution Selector Overlay -->
@@ -1811,69 +1938,69 @@
                         currentDay = daysSinceEnroll + 1;
                     }
                 }
-                    
-                    // Mentorship Sidebar Lock Icon Evaluation
-                    if (currentDay < 18) {
-                        navMentorship.innerHTML = '<i data-lucide="lock"></i> PrimeVerse Pro Mentorship';
-                    } else {
-                        navMentorship.innerHTML = '<i data-lucide="crown"></i> PrimeVerse Pro Mentorship';
-                    }
 
-                    // Execution Journal Page & Sidebar Locking Logic
-                    const navJournal = document.getElementById('nav-journal');
-                    const isJournalLocked = currentDay < 13;
-                    const journalOverlay = document.getElementById('journalLockOverlay');
-                    const journalBar = document.getElementById('journalOverlayBar');
-                    const journalText = document.getElementById('journalOverlayText');
-                    const journalView = document.getElementById('journal-view');
-                    
-                    if (isJournalLocked) {
-                        if (navJournal) {
-                            navJournal.innerHTML = '<i data-lucide="lock"></i> Execution Journal';
-                        }
-                        if (journalOverlay) {
-                            journalOverlay.style.display = 'flex';
-                        }
-                        // Heavily blur and hide all other content components of the journal
-                        if (journalView) {
-                            Array.from(journalView.children).forEach(child => {
-                                if (child !== journalOverlay) {
-                                    child.style.filter = 'blur(25px)';
-                                    child.style.opacity = '0';
-                                    child.style.visibility = 'hidden';
-                                }
-                            });
-                        }
-                        if (journalBar) {
-                            const percent = Math.min(100, Math.max(0, (currentDay / 13) * 100));
-                            journalBar.style.width = `${percent}%`;
-                        }
-                        if (journalText) {
-                            const remaining = 13 - currentDay;
-                            journalText.innerText = `Day ${currentDay} of 13 (${remaining} day${remaining > 1 ? 's' : ''} remaining)`;
-                        }
-                    } else {
-                        if (navJournal) {
-                            navJournal.innerHTML = '<i data-lucide="book-marked"></i> Execution Journal';
-                        }
-                        if (journalOverlay) {
-                            journalOverlay.style.display = 'none';
-                        }
-                        if (journalView) {
-                            Array.from(journalView.children).forEach(child => {
-                                if (child !== journalOverlay) {
-                                    child.style.filter = 'none';
-                                    child.style.opacity = '1';
-                                    child.style.visibility = 'visible';
-                                }
-                            });
-                        }
-                    }
+                // Mentorship Sidebar Lock Icon Evaluation
+                if (currentDay < 18) {
+                    navMentorship.innerHTML = '<i data-lucide="lock"></i> PrimeVerse Pro Mentorship';
+                } else {
+                    navMentorship.innerHTML = '<i data-lucide="crown"></i> PrimeVerse Pro Mentorship';
+                }
 
-                    if (window.lucide) {
-                        window.lucide.createIcons();
+                // Execution Journal Page & Sidebar Locking Logic
+                const navJournal = document.getElementById('nav-journal');
+                const isJournalLocked = currentDay < 13;
+                const journalOverlay = document.getElementById('journalLockOverlay');
+                const journalBar = document.getElementById('journalOverlayBar');
+                const journalText = document.getElementById('journalOverlayText');
+                const journalView = document.getElementById('journal-view');
+
+                if (isJournalLocked) {
+                    if (navJournal) {
+                        navJournal.innerHTML = '<i data-lucide="lock"></i> Execution Journal';
+                    }
+                    if (journalOverlay) {
+                        journalOverlay.style.display = 'flex';
+                    }
+                    // Heavily blur and hide all other content components of the journal
+                    if (journalView) {
+                        Array.from(journalView.children).forEach(child => {
+                            if (child !== journalOverlay) {
+                                child.style.filter = 'blur(25px)';
+                                child.style.opacity = '0';
+                                child.style.visibility = 'hidden';
+                            }
+                        });
+                    }
+                    if (journalBar) {
+                        const percent = Math.min(100, Math.max(0, (currentDay / 13) * 100));
+                        journalBar.style.width = `${percent}%`;
+                    }
+                    if (journalText) {
+                        const remaining = 13 - currentDay;
+                        journalText.innerText = `Day ${currentDay} of 13 (${remaining} day${remaining > 1 ? 's' : ''} remaining)`;
+                    }
+                } else {
+                    if (navJournal) {
+                        navJournal.innerHTML = '<i data-lucide="book-marked"></i> Execution Journal';
+                    }
+                    if (journalOverlay) {
+                        journalOverlay.style.display = 'none';
+                    }
+                    if (journalView) {
+                        Array.from(journalView.children).forEach(child => {
+                            if (child !== journalOverlay) {
+                                child.style.filter = 'none';
+                                child.style.opacity = '1';
+                                child.style.visibility = 'visible';
+                            }
+                        });
                     }
                 }
+
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }
 
             // Load saved user name dynamically for welcome header
             const welcomeUserName = document.getElementById('welcomeUserName');
@@ -2022,7 +2149,7 @@
                     journalModalVideoPlayer.load();
                     preferredRes = 'auto';
                     updateQualityUIActiveState('auto');
-                    
+
                     journalModalVideoPlayer.addEventListener('loadedmetadata', function revertSeek() {
                         journalModalVideoPlayer.currentTime = currentTime;
                         if (!isPaused) journalModalVideoPlayer.play();
@@ -2091,10 +2218,10 @@
         let chk1, chk2, chk3, progressPercent, progressStatusText;
 
         // Toggle Expandable "How to Use" Onboarding checklist
-        window.toggleOnboarding = function() {
+        window.toggleOnboarding = function () {
             const drawer = document.getElementById('onboarding-drawer');
             const chevron = document.getElementById('chevron-icon');
-            
+
             if (drawer.style.maxHeight && drawer.style.maxHeight !== '0px') {
                 drawer.style.maxHeight = '0px';
                 drawer.style.opacity = '0';
@@ -2107,7 +2234,7 @@
         }
 
         // Onboarding Checkboxes Logic
-        window.updateProgress = function() {
+        window.updateProgress = function () {
             chk1 = document.getElementById('chk-step-1');
             chk2 = document.getElementById('chk-step-2');
             chk3 = document.getElementById('chk-step-3');
@@ -2139,11 +2266,11 @@
             }
         }
 
-        window.openTemplatesView = function() {
+        window.openTemplatesView = function () {
             const header = document.querySelector('.dashboard-header-premium');
             const journalView = document.getElementById('journal-view');
             const templatesView = document.getElementById('templates-download-view');
-            
+
             if (header) header.style.display = 'none';
             if (journalView) journalView.style.display = 'none';
             if (templatesView) templatesView.style.display = 'block';
@@ -2153,18 +2280,18 @@
             }
         };
 
-        window.closeTemplatesView = function() {
+        window.closeTemplatesView = function () {
             const header = document.querySelector('.dashboard-header-premium');
             const journalView = document.getElementById('journal-view');
             const templatesView = document.getElementById('templates-download-view');
-            
+
             if (header) header.style.display = '';
             if (journalView) journalView.style.display = '';
             if (templatesView) templatesView.style.display = 'none';
         };
 
         // Simulating the premium XLSX download functionality
-        window.handleDownload = function() {
+        window.handleDownload = function () {
             const downloadBtn = document.getElementById('downloadBtn');
             const dText = document.getElementById('downloadText');
             const dProgress = document.getElementById('downloadProgress');
@@ -2192,7 +2319,7 @@
             }, 1800);
         }
 
-        window.triggerToast = function() {
+        window.triggerToast = function () {
             const toast = document.getElementById('toast');
             if (toast) {
                 toast.style.transform = 'translateY(0px)';
@@ -2209,7 +2336,8 @@
     </script>
 
     <!-- Notification Toast Popup -->
-    <div id="toast" class="fixed bottom-6 right-6 z-[1000] bg-emerald-950/90 border border-emerald-500/30 text-emerald-300 px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300 backdrop-blur-md">
+    <div id="toast"
+        class="fixed bottom-6 right-6 z-[1000] bg-emerald-950/90 border border-emerald-500/30 text-emerald-300 px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300 backdrop-blur-md">
         <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
@@ -2217,7 +2345,8 @@
         </div>
         <div class="text-left">
             <h5 class="text-sm font-bold text-white m-0">Download Started</h5>
-            <p class="text-xs text-emerald-400/80 mt-0.5 m-0">Your Premium Execution Journal is saving to your downloads folders.</p>
+            <p class="text-xs text-emerald-400/80 mt-0.5 m-0">Your Premium Execution Journal is saving to your downloads
+                folders.</p>
         </div>
     </div>
 </body>
