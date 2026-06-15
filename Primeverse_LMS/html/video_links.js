@@ -304,11 +304,11 @@ const lessonsDatabase = {
         title: "Trading Psychology & Emotional Discipline",
         part1: {
             title: "Day 14 - Part 1: Understanding Trading Psychology and Emotional Control & Discipline Framework",
-            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day15-sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE1LXN1YjItMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzEzNiwiZXhwIjoyMDk2ODY3MTM2fQ.PJdCN_Y22ApFlb6k5Jqej6E0iMbj7ZrAx4bQPyCoUqc",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE1MDc5MzksImV4cCI6MTkzOTE4NzkzOX0.WbEeIWtBF7F6_Rv-bSiVnWBDGcbMAq2vV1V2UUf4xyw",
             qualityLinks: {
-                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day15-sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE1LXN1YjItMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzEzNiwiZXhwIjoyMDk2ODY3MTM2fQ.PJdCN_Y22ApFlb6k5Jqej6E0iMbj7ZrAx4bQPyCoUqc",
-                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day15-sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE1LXN1YjItNzIwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTA3MjIwLCJleHAiOjIwOTY4NjcyMjB9.rx_nP42tMzNhpNAeeeWHyVQt3iO0TBwjWNAOR6VWtng",
-                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day15-sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE1LXN1YjItNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTA3MTk5LCJleHAiOjIwOTY4NjcxOTl9.VwoW8Sapb95QOtjAX08MY1vHAcD3BfB2gsOusdxM9yI"
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE1MDc5MzksImV4cCI6MTkzOTE4NzkzOX0.WbEeIWtBF7F6_Rv-bSiVnWBDGcbMAq2vV1V2UUf4xyw",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTcyMHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzk3OCwiZXhwIjoxOTA3NjUxOTc4fQ.j43GS-QpURD_URcLxjQrQP9wOdpFtjq2h-Xr_kVKTHw",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-14/day14-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTQ4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzk2NCwiZXhwIjoxOTM5MTg3OTY0fQ.KyGumrCk_2mN7ipKIuLzvx7NuoCK8zuBOsq5cqDGQlM"
             }
         }
     },
@@ -325,11 +325,11 @@ const lessonsDatabase = {
         },
         part2: {
             title: "Day 15 - Part 2: Compounding Strategy & Long-Term Growth",
-            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzg0MywiZXhwIjoyMDk2ODY3ODQzfQ.gcGrOySg4mY6FCpcct-kw2ZyuesuVMBk-oynmEd1tGY",
             qualityLinks: {
-                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
-                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
-                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NDA4LCJleHAiOjIwOTY4MTg0MDh9.Ui0d5m143vq8IuQLfBqzHJMkMPoV4FMvpUFdXXeQNTQ"
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzg0MywiZXhwIjoyMDk2ODY3ODQzfQ.gcGrOySg4mY6FCpcct-kw2ZyuesuVMBk-oynmEd1tGY",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItNzIwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTA3OTA3LCJleHAiOjE5MzkxODc5MDd9.WOWraYyZUtgyiNTFOGBDF6xAj9Mq2djkRj76eJKz30I",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTA3ODg1LCJleHAiOjE5MzkxODc4ODV9.KiR5oaMcg3odolEkxtQKM-21G54zEcyN_TZE540-KbU"
             }
         }
     },
