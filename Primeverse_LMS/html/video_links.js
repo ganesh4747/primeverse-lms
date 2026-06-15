@@ -320,7 +320,7 @@ const lessonsDatabase = {
             qualityLinks: {
                 "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
                 "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
-                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjEtNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTE0NjgxLCJleHAiOjE4NzYxMjI2ODF9.dnn6Lc1RtT8GUU0aS_eT3XVHu4T8DyKqB2kB96_SLd0"
             }
         },
         part2: {
