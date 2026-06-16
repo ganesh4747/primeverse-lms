@@ -355,23 +355,14 @@ const lessonsDatabase = {
         }
     },
     17: {
-        title: "- Real-Time Trade Execution Examples (2)",
+        title: "Real-Time Trade Execution Examples",
         part1: {
             title: "Day 17 - Part 1: Live Market Analysis",
-            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-17/day17-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY0Mzk1NSwiZXhwIjoxOTM5MzIzOTU1fQ.mMbhNiCrvbeJoqJBTlw68qiNe2xhK53mNGCKQsftGRM",
             qualityLinks: {
-                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
-                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
-                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
-            }
-        },
-        part2: {
-            title: "Day 17 - Part 2: Real-Time Trade Execution Examples",
-            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
-            qualityLinks: {
-                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
-                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
-                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-17/day17-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY0Mzk1NSwiZXhwIjoxOTM5MzIzOTU1fQ.mMbhNiCrvbeJoqJBTlw68qiNe2xhK53mNGCKQsftGRM",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-17/day17-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LTcyMC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNjQzNDAwLCJleHAiOjE5MzkzMjM0MDB9.8Nuc3LfTGpKZqYt9uR5a6_NMlYKvdP8iEEjDxg0pmro",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-17/day17-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LTQ4MC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNjQzMTYzLCJleHAiOjE5MzkzMjMxNjN9.EPFnlIrKlJ0YBNNCM9XjR8JGrt7kP8ZoruMaF2_45bo"
             }
         }
     },
