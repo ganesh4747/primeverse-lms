@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase.js"></script>
@@ -349,6 +350,196 @@
         .premium-alert-btn:active {
             transform: translateY(0);
         }
+
+        /* Custom Quality/Resolution Selector Styling */
+        .custom-quality-container {
+            position: absolute;
+            z-index: 2147483645 !important;
+            display: inline-block;
+        }
+
+        .custom-quality-btn {
+            width: auto;
+            min-width: 44px;
+            height: 44px;
+            padding: 0 12px;
+            border-radius: 22px;
+            background: rgba(13, 21, 33, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: 'Satoshi', sans-serif;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .custom-quality-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: scale(1.05) translateZ(0);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.25);
+        }
+
+        .custom-quality-btn i {
+            font-size: 0.95rem;
+            transition: transform 0.4s ease;
+        }
+
+        .custom-quality-container.open .custom-quality-btn i {
+            transform: rotate(45deg);
+        }
+
+        .quality-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: rgba(10, 16, 26, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 6px;
+            width: 140px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .custom-quality-container.open .quality-dropdown {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .quality-option {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .quality-option:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+        }
+
+        .quality-option.active {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Video resolution feedback toast overlay */
+        .quality-toast {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%) translateZ(0);
+            background: rgba(5, 7, 12, 0.85);
+            border: 1.5px solid rgba(212, 175, 55, 0.4);
+            color: var(--gold);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            font-family: 'Satoshi', sans-serif;
+            letter-spacing: 0.5px;
+            z-index: 2147483647;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quality-toast.visible {
+            opacity: 1;
+            transform: translate(-50%, -10px) translateZ(0);
+        }
+
+        #videoResourceModalContent:fullscreen {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            padding: 0 !important;
+            background: #04060c !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            border-radius: 0 !important;
+            border: none !important;
+        }
+
+        #videoResourceModalContent:fullscreen #videoResourceTitle {
+            position: absolute !important;
+            top: 1.25rem !important;
+            left: 2rem !important;
+            margin: 0 !important;
+            z-index: 2147483647 !important;
+        }
+
+        #videoResourceModalContent:fullscreen .custom-quality-container {
+            top: 1.25rem !important;
+            right: 7.8rem !important;
+            z-index: 2147483647 !important;
+        }
+
+        #videoResourceModalContent:fullscreen button[onclick="window.closeResourceVideo()"] {
+            top: 1.25rem !important;
+            right: 2rem !important;
+            z-index: 2147483647 !important;
+        }
+
+        #videoResourceModalContent:fullscreen #customFullscreenBtn {
+            top: 1.25rem !important;
+            right: 4.5rem !important;
+            z-index: 2147483647 !important;
+        }
+
+        #videoResourceModalContent:fullscreen #videoResourcePlayerWrapper {
+            position: absolute !important;
+            top: 4.5rem !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            height: auto !important;
+            padding-top: 0 !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            border: none !important;
+        }
+
+        #videoResourceModalContent:fullscreen #videoResourcePlayer {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            border: none !important;
+        }
     </style>
 </head>
 
@@ -546,7 +737,7 @@
                     <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease;">
                         <div style="position: relative; width: 100%; height: 190px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;">
                             <img src="../assets/lesson_thumbnail.png" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.55;">
-                            <button onclick="window.playResourceVideo('POSITION SIZING BLUEPRINT', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease;">
+                            <button onclick="window.playResourceVideo('POSITION SIZING BLUEPRINT', 'positionSizingVideo')" style="position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease;">
                                 <i data-lucide="play" style="width: 24px; height: 24px; color: black; fill: black; margin-left: 2px;"></i>
                             </button>
                             <span style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.85); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; font-family: monospace;">14:25</span>
@@ -556,7 +747,7 @@
                                 <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">POSITION SIZING BLUEPRINT</h4>
                                 <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Master lot size calculation, risk allocation, and capital protection.</p>
                             </div>
-                            <button onclick="window.playResourceVideo('POSITION SIZING BLUEPRINT', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2); color: var(--gold); border-radius: 8px; padding: 0.6rem; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;">
+                            <button onclick="window.playResourceVideo('POSITION SIZING BLUEPRINT', 'positionSizingVideo')" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2); color: var(--gold); border-radius: 8px; padding: 0.6rem; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;">
                                 Watch Now
                             </button>
                         </div>
@@ -566,7 +757,7 @@
                     <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease;">
                         <div style="position: relative; width: 100%; height: 190px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;">
                             <img src="../assets/lesson_thumbnail2.png" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.55;">
-                            <button onclick="window.playResourceVideo('Understanding G5 Strategy execution', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease;">
+                            <button onclick="window.playResourceVideo('18-DAY PROGRAM DOUBT CLEARING SESSION', 'doubtClearingVideo')" style="position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease;">
                                 <i data-lucide="play" style="width: 24px; height: 24px; color: black; fill: black; margin-left: 2px;"></i>
                             </button>
                             <span style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.85); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; font-family: monospace;">18:40</span>
@@ -574,10 +765,9 @@
                         <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                             <div>
                                 <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">18-DAY PROGRAM DOUBT CLEARING SESSION</h4>
-                                <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Complete clarification session for all 18 modules and concepts.
-</p>
+                                <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Complete clarification session for all 18 modules and concepts.</p>
                             </div>
-                            <button onclick="window.playResourceVideo('Understanding G5 Strategy execution', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2); color: var(--gold); border-radius: 8px; padding: 0.6rem; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;">
+                            <button onclick="window.playResourceVideo('18-DAY PROGRAM DOUBT CLEARING SESSION', 'doubtClearingVideo')" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2); color: var(--gold); border-radius: 8px; padding: 0.6rem; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;">
                                 Watch Now
                             </button>
                         </div>
@@ -587,7 +777,7 @@
                     <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease;">
                         <div style="position: relative; width: 100%; height: 190px; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;">
                             <img src="../assets/mastery_header_graphic.png" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.55;">
-                            <button onclick="window.playResourceVideo('Trade Management & Risk Mitigation', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease;">
+                            <button onclick="window.playResourceVideo('BROKER & PLATFORM SETUP GUIDE', 'brokerSetupVideo')" style="position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--gold); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); transition: transform 0.2s ease;">
                                 <i data-lucide="play" style="width: 24px; height: 24px; color: black; fill: black; margin-left: 2px;"></i>
                             </button>
                             <span style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.85); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; font-family: monospace;">12:15</span>
@@ -597,7 +787,7 @@
                                 <h4 style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;"> BROKER & PLATFORM SETUP GUIDE</h4>
                                 <p style="color: var(--gray); font-size: 0.85rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Everything you need to set up and execute trades with confidence.</p>
                             </div>
-                            <button onclick="window.playResourceVideo('Trade Management & Risk Mitigation', 'https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY')" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2); color: var(--gold); border-radius: 8px; padding: 0.6rem; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;">
+                            <button onclick="window.playResourceVideo('BROKER & PLATFORM SETUP GUIDE', 'brokerSetupVideo')" style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2); color: var(--gold); border-radius: 8px; padding: 0.6rem; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;">
                                 Watch Now
                             </button>
                         </div>
@@ -741,19 +931,36 @@
 
     <!-- Video Player Resource Modal -->
     <div id="videoResourceModal" class="hologram-sync-overlay" style="display: none; justify-content: center; align-items: center; z-index: 10000; background: rgba(10, 20, 35, 0.95); backdrop-filter: blur(15px); transition: opacity 0.3s ease;">
-        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.5rem; max-width: 800px; width: 90%; box-shadow: 0 0 50px rgba(0, 0, 0, 0.5); position: relative; text-align: center;">
+        <div id="videoResourceModalContent" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.5rem; max-width: 800px; width: 90%; box-shadow: 0 0 50px rgba(0, 0, 0, 0.5); position: relative; text-align: center;">
+            <!-- Custom Quality/Resolution Selector Overlay -->
+            <div class="custom-quality-container" id="qualitySelectorContainer" style="display: none; top: 1.15rem; right: 6.8rem;">
+                <button id="customQualityBtn" class="custom-quality-btn" title="Change Resolution">
+                    <i class="fa-solid fa-gear"></i> <span id="currentQualityLabel">Auto</span>
+                </button>
+                <div class="quality-dropdown" id="qualityDropdown">
+                    <div class="quality-option" data-quality="1080p">1080p (FHD)</div>
+                    <div class="quality-option" data-quality="720p">720p (HD)</div>
+                    <div class="quality-option" data-quality="480p">480p (SD)</div>
+                    <div class="quality-option active" data-quality="auto">Original (Auto)</div>
+                </div>
+            </div>
+            <!-- Custom Fullscreen Button -->
+            <button id="customFullscreenBtn" onclick="window.toggleResourceFullscreen()" style="position: absolute; top: 1.15rem; right: 3.5rem; background: rgba(13, 21, 33, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); width: 44px; height: 44px; border-radius: 50%; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);">
+                <i data-lucide="maximize" style="width: 20px; height: 20px;"></i>
+            </button>
             <button onclick="window.closeResourceVideo()" style="position: absolute; top: 1.25rem; right: 1.25rem; background: transparent; border: none; color: var(--white); cursor: pointer;">
                 <i data-lucide="x" style="width: 24px; height: 24px;"></i>
             </button>
-            <h3 id="videoResourceTitle" style="font-family: 'Satoshi', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); margin: 0 0 1.25rem 0; text-align: left; padding-right: 2.5rem;">Video Title</h3>
-            <div style="position: relative; width: 100%; padding-top: 56.25%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
-                <video id="videoResourcePlayer" controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
+            <h3 id="videoResourceTitle" style="font-family: 'Satoshi', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); margin: 0 0 1.25rem 0; text-align: left; padding-right: 12rem;">Video Title</h3>
+            <div id="videoResourcePlayerWrapper" style="position: relative; width: 100%; padding-top: 56.25%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                <video id="videoResourcePlayer" controls controlslist="nodownload nofullscreen" disablepictureinpicture oncontextmenu="return false;" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
                     Your browser does not support the video tag.
                 </video>
             </div>
         </div>
     </div>
 
+    <script src="video_links.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Enforce Login to access Resources
@@ -781,6 +988,43 @@
             if (welcomeUserName) {
                 const storedName = localStorage.getItem('userName');
                 welcomeUserName.innerText = storedName || 'User';
+            }
+
+            // Resource Video Quality Switcher Event Listeners
+            const qBtn = document.getElementById('customQualityBtn');
+            const qContainer = document.getElementById('qualitySelectorContainer');
+            const qOptions = document.querySelectorAll('.quality-option');
+
+            if (qBtn && qContainer) {
+                qBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    qContainer.classList.toggle('open');
+                });
+
+                document.addEventListener('click', () => {
+                    qContainer.classList.remove('open');
+                });
+            }
+
+            if (qOptions) {
+                qOptions.forEach(opt => {
+                    opt.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const quality = opt.getAttribute('data-quality');
+                        localStorage.setItem('preferredResolution', quality);
+                        window.applyResourceResolution(quality);
+                        if (qContainer) qContainer.classList.remove('open');
+                    });
+                });
+            }
+
+            // Double click on the video element toggles fullscreen
+            const player = document.getElementById('videoResourcePlayer');
+            if (player) {
+                player.addEventListener('dblclick', (e) => {
+                    e.preventDefault();
+                    window.toggleResourceFullscreen();
+                });
             }
 
             // Handle sidebar role-gating visibility
@@ -919,19 +1163,103 @@
                 window.showPremiumAlert('Coming Soon', 'This section will update soon.', 'trending-up');
             };
 
-            window.playResourceVideo = function (title, url) {
+            // Show Toast Notification Helper inside modal
+            function showQualityToast(message, isError = false) {
+                let toast = document.getElementById('qualityToastNotification');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'qualityToastNotification';
+                    toast.className = 'quality-toast';
+                    const wrapper = document.querySelector('#videoResourceModal > div');
+                    if (wrapper) wrapper.appendChild(toast);
+                }
+                toast.innerHTML = isError
+                    ? `<i class="fa-solid fa-circle-exclamation" style="color: #ef4444;"></i> ${message}`
+                    : `<i class="fa-solid fa-circle-check"></i> ${message}`;
+
+                if (isError) {
+                    toast.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+                    toast.style.color = '#f87171';
+                } else {
+                    toast.style.borderColor = 'rgba(212, 175, 55, 0.4)';
+                    toast.style.color = 'var(--gold)';
+                }
+
+                toast.classList.add('visible');
+                setTimeout(() => {
+                    toast.classList.remove('visible');
+                }, 3000);
+            }
+
+            window.playResourceVideo = function (title, videoInput) {
                 const modal = document.getElementById('videoResourceModal');
                 const titleEl = document.getElementById('videoResourceTitle');
                 const player = document.getElementById('videoResourcePlayer');
-                if (modal && titleEl && player) {
-                    titleEl.innerText = title;
-                    player.src = url;
-                    modal.style.display = 'flex';
-                    setTimeout(() => {
-                        modal.classList.add('active');
-                    }, 10);
-                    player.play().catch(e => console.log("Auto-play blocked or failed", e));
+                if (!modal || !titleEl || !player) return;
+
+                titleEl.innerText = title;
+
+                let videoObj = null;
+                if (typeof videoInput === 'string') {
+                    if (videoInput === 'positionSizingVideo') {
+                        videoObj = typeof positionSizingVideo !== 'undefined' ? positionSizingVideo : null;
+                    } else if (videoInput === 'doubtClearingVideo') {
+                        videoObj = typeof doubtClearingVideo !== 'undefined' ? doubtClearingVideo : null;
+                    } else if (videoInput === 'brokerSetupVideo') {
+                        videoObj = typeof brokerSetupVideo !== 'undefined' ? brokerSetupVideo : null;
+                    }
+                    
+                    if (!videoObj) {
+                        if (window[videoInput]) {
+                            videoObj = window[videoInput];
+                        } else if (window[videoInput + 'Video']) {
+                            videoObj = window[videoInput + 'Video'];
+                        }
+                    }
+                } else if (videoInput && typeof videoInput === 'object') {
+                    videoObj = videoInput;
                 }
+
+                window.currentResourceVideoObj = videoObj;
+
+                let srcUrl = "";
+                if (videoObj) {
+                    srcUrl = videoObj.src;
+                } else {
+                    srcUrl = videoInput; // fallback to raw URL
+                }
+
+                const qContainer = document.getElementById('qualitySelectorContainer');
+                if (qContainer) {
+                    if (videoObj && videoObj.qualityLinks && Object.values(videoObj.qualityLinks).some(link => link)) {
+                        qContainer.style.display = 'inline-block';
+                        window.applyResourceResolution(localStorage.getItem('preferredResolution') || 'auto', true);
+                    } else {
+                        qContainer.style.display = 'none';
+                        player.src = srcUrl;
+                    }
+                } else {
+                    player.src = srcUrl;
+                }
+
+                modal.style.display = 'flex';
+                setTimeout(() => {
+                    modal.classList.add('active');
+                }, 10);
+                
+                player.play()
+                    .then(() => {
+                        // Request browser fullscreen on the video player content container so overlays display
+                        const container = document.getElementById('videoResourceModalContent');
+                        if (container) {
+                            if (container.requestFullscreen) {
+                                container.requestFullscreen().catch(err => console.log("Fullscreen request failed", err));
+                            } else if (container.webkitRequestFullscreen) {
+                                container.webkitRequestFullscreen();
+                            }
+                        }
+                    })
+                    .catch(e => console.log("Auto-play blocked or failed", e));
             };
 
             window.closeResourceVideo = function () {
@@ -940,12 +1268,155 @@
                 if (modal && player) {
                     player.pause();
                     player.src = '';
+                    
+                    // Exit fullscreen if active
+                    if (document.fullscreenElement || document.webkitFullscreenElement) {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen().catch(err => console.log(err));
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        }
+                    }
+                    
                     modal.classList.remove('active');
                     setTimeout(() => {
                         modal.style.display = 'none';
                     }, 300);
                 }
             };
+
+            window.toggleResourceFullscreen = function () {
+                const container = document.getElementById('videoResourceModalContent');
+                if (!container) return;
+
+                if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                    if (container.requestFullscreen) {
+                        container.requestFullscreen().catch(err => console.log(err));
+                    } else if (container.webkitRequestFullscreen) {
+                        container.webkitRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(err => console.log(err));
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                }
+            };
+
+            function updateResourceFullscreenIcon() {
+                const isFs = document.fullscreenElement || document.webkitFullscreenElement;
+                const fsBtn = document.getElementById('customFullscreenBtn');
+                if (fsBtn) {
+                    fsBtn.innerHTML = isFs 
+                        ? `<i data-lucide="minimize" style="width: 20px; height: 20px;"></i>` 
+                        : `<i data-lucide="maximize" style="width: 20px; height: 20px;"></i>`;
+                    if (window.lucide) window.lucide.createIcons();
+                }
+            }
+
+            document.addEventListener('fullscreenchange', updateResourceFullscreenIcon);
+            document.addEventListener('webkitfullscreenchange', updateResourceFullscreenIcon);
+
+            async function getAutoResolution() {
+                let detectedRes = '720p';
+                if (navigator.connection && navigator.connection.effectiveType) {
+                    const type = navigator.connection.effectiveType;
+                    const downlink = navigator.connection.downlink;
+                    if (type === 'slow-2g' || type === '2g' || downlink < 1.5) {
+                        detectedRes = '480p';
+                    } else if (type === '3g' || downlink < 10.0) {
+                        detectedRes = '720p';
+                    } else {
+                        detectedRes = '1080p';
+                    }
+                }
+                return detectedRes;
+            }
+
+            window.applyResourceResolution = async function (res, skipReplay = false) {
+                const player = document.getElementById('videoResourcePlayer');
+                const videoObj = window.currentResourceVideoObj;
+                if (!player || !videoObj) return;
+
+                const qualityLinks = videoObj.qualityLinks;
+                const originalUrl = videoObj.src || qualityLinks["1080p"];
+                let targetUrl = originalUrl;
+                let detectedRes = null;
+
+                if (res === 'auto') {
+                    detectedRes = await getAutoResolution();
+                    targetUrl = qualityLinks[detectedRes] || originalUrl;
+                } else {
+                    targetUrl = qualityLinks[res] || originalUrl;
+                }
+
+                if (player.src === targetUrl) {
+                    updateResourceQualityUIActiveState(res, detectedRes);
+                    return;
+                }
+
+                const currentTime = player.currentTime;
+                const isPaused = player.paused;
+
+                const handleResourceLoadError = function () {
+                    console.warn(`Resolution ${res} failed to load. Reverting to original.`);
+                    player.removeEventListener('error', handleResourceLoadError);
+                    player.src = originalUrl;
+                    player.load();
+                    updateResourceQualityUIActiveState('auto');
+
+                    player.addEventListener('loadedmetadata', function revertSeek() {
+                        player.currentTime = currentTime;
+                        if (!isPaused) player.play().catch(e => console.log("Play failed", e));
+                        player.removeEventListener('loadedmetadata', revertSeek);
+                    });
+
+                    showQualityToast("Resolution not available. Playing original quality.", true);
+                };
+
+                player.addEventListener('error', handleResourceLoadError);
+                player.src = targetUrl;
+                player.load();
+
+                player.addEventListener('loadedmetadata', function successSeek() {
+                    player.removeEventListener('error', handleResourceLoadError);
+                    player.currentTime = currentTime;
+                    if (!isPaused && !skipReplay) player.play().catch(e => console.log("Play failed", e));
+                    player.removeEventListener('loadedmetadata', successSeek);
+
+                    if (!skipReplay) {
+                        if (res === 'auto') {
+                            showQualityToast(`Auto-selected Quality: ${detectedRes || 'Original'}`);
+                        } else {
+                            showQualityToast(`Switched to Resolution: ${res}`);
+                        }
+                    }
+                });
+
+                updateResourceQualityUIActiveState(res, detectedRes);
+            };
+
+            function updateResourceQualityUIActiveState(res, detectedRes = null) {
+                const curQualityLabel = document.getElementById('currentQualityLabel');
+                const qOptions = document.querySelectorAll('.quality-option');
+                if (curQualityLabel) {
+                    if (res === 'auto') {
+                        curQualityLabel.innerText = detectedRes ? `Auto (${detectedRes})` : 'Auto';
+                    } else {
+                        curQualityLabel.innerText = res;
+                    }
+                }
+                if (qOptions) {
+                    qOptions.forEach(opt => {
+                        if (opt.getAttribute('data-quality') === res) {
+                            opt.classList.add('active');
+                        } else {
+                            opt.classList.remove('active');
+                        }
+                    });
+                }
+            }
 
             window.showPremiumAlert = function (title, message, iconType = 'lock') {
                 const modal = document.getElementById('premiumAlertModal');
