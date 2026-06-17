@@ -34,11 +34,15 @@ const doubtClearingVideo = {
 const brokerSetupVideo = {
     src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE2ODYwODUsImV4cCI6MjAwMjQzODA4NX0.UI_h0dU6kp2oyp-tp02ASXquDBwoGNspmmuiPFpzFGw",
     qualityLinks: {
-        "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE2ODYwODUsImV4cCI6MjAwMjQzODA4NX0.UI_h0dU6kp2oyp-tp02ASXquDBwoGNspmmuiPFpzFGw",
+        "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE6ODYwODUsImV4cCI6MjAwMjQzODA4NX0.UI_h0dU6kp2oyp-tp02ASXquDBwoGNspmmuiPFpzFGw",
         "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTcyMHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY4NjEzOSwiZXhwIjoyMDAyNDM4MTM5fQ.WCQD05nONlFW8gmR3A0s2J0CqLqmw2M8Fs1JY1_CV94",
         "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTQ4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY4NjExOSwiZXhwIjoyMDAyNDM4MTE5fQ.M657aYSlIZ3pKiMj_FuuxlgxPRtS1xntDrFAqYbmcl0"
     }
 };
+
+window.positionSizingVideo = positionSizingVideo;
+window.doubtClearingVideo = doubtClearingVideo;
+window.brokerSetupVideo = brokerSetupVideo;
 
 const lessonsDatabase = {
     0: {
