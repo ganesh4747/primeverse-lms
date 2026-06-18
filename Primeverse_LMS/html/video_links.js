@@ -401,11 +401,11 @@ const lessonsDatabase = {
         title: "Key Takeaways For Confident Trading (2)",
         part1: {
             title: "Day 18 - Part 1: Core Trading Principles & Execution Review",
-            src: "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-18/day18-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMxLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTgwMTkyOCwiZXhwIjoxOTM5NDgxOTI4fQ.4OaD2EESln-dKiDXrtkKpD_uYY3fDU3tSdf_qLxXpjA",
             qualityLinks: {
-                "1080p": "../video/Screen Recording 2025-09-04 202308-1080p.mp4",
-                "720p": "../video/Screen Recording 2025-09-04 202308-720p.mp4",
-                "480p": "../video/Screen Recording 2025-09-04 202308-420p.mp4"
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-18/day18-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMxLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTgwMTkyOCwiZXhwIjoxOTM5NDgxOTI4fQ.4OaD2EESln-dKiDXrtkKpD_uYY3fDU3tSdf_qLxXpjA",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-18/day18-s1-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMxLTcyMC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxODAyMTc0LCJleHAiOjE5Mzk0ODIxNzR9.O7GkodyJJluhuaVUeJyhmrKXq7rbLw_hcvn7Gk6mKBY",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-18/day18-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMxLTQ4MC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxODAyMTk3LCJleHAiOjE5Mzk0ODIxOTd9.NNZBFzE55pYJqrQU_tbu66xFaF1Fddurwn4ycklWTuc"
             }
         },
         part2: {
