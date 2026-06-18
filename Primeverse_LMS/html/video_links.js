@@ -23,11 +23,11 @@ const positionSizingVideo = {
 };
 
 const doubtClearingVideo = {
-    src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY",
+    src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Doubts-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvRG91YnRzLTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE3Nzk2MDAsImV4cCI6MTkzOTQ1OTYwMH0.-6z06Xg8vBrjEo8t8tZcN3jbklHQFAgNh6E1eQyPEC8",
     qualityLinks: {
-        "1080p": "",
-        "720p": "",
-        "480p": ""
+        "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Doubts-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvRG91YnRzLTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE3Nzk2MDAsImV4cCI6MTkzOTQ1OTYwMH0.-6z06Xg8vBrjEo8t8tZcN3jbklHQFAgNh6E1eQyPEC8",
+        "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Doubts-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvRG91YnRzLTcyMHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTc3OTY3NywiZXhwIjoxOTM5NDU5Njc3fQ.s7g5V1WWw4KKza4W7MRbj0J4SPsI1GsgdgQZrCwYefw",
+        "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Doubts-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvRG91YnRzLTQ4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTc3OTY2MSwiZXhwIjoxOTM5NDU5NjYxfQ.tGIuI4V3TxrPOzirXNtykllV2GBh87zs9l0H5hTXx-A"
     }
 };
 
