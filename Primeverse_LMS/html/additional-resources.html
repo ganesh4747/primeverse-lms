@@ -956,6 +956,11 @@
                 <video id="videoResourcePlayer" controls controlslist="nodownload nofullscreen" disablepictureinpicture oncontextmenu="return false;" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
                     Your browser does not support the video tag.
                 </video>
+                <!-- Dynamic Anti-Piracy Watermark -->
+                <div id="resourceVideoWatermark"
+                    style="position: absolute; pointer-events: none; z-index: 2147483646; color: rgba(255, 255, 255, 0.22); font-size: 0.85rem; font-weight: 700; font-family: 'Satoshi', sans-serif; white-space: nowrap; background: rgba(0, 0, 0, 0.35); padding: 4px 12px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 5s ease-in-out; top: 20%; left: 20%; backdrop-filter: blur(2px); transform: translateZ(0); will-change: transform;">
+                    harish.primeverse@gmail.com
+                </div>
             </div>
         </div>
     </div>
@@ -1453,6 +1458,26 @@
                 });
             }
 
+            // Dynamic anti-piracy watermark drift logic
+            const watermarkEl = document.getElementById('resourceVideoWatermark');
+            if (watermarkEl) {
+                const userEmail = localStorage.getItem('userEmail') || 'harish.primeverse@gmail.com';
+                const userPhone = localStorage.getItem('userPhone') || '+91 9999999999';
+                watermarkEl.innerHTML = `<div style="text-decoration: none !important; border-bottom: none !important; display: block;">${userEmail}</div><div style="font-weight: 800; color: rgba(255, 255, 255, 0.38); margin-top: 3px; display: block;">${userPhone}</div>`;
+
+                function moveWatermark() {
+                    const randomTop = Math.floor(Math.random() * 65) + 15; // Between 15% and 80% height
+                    const randomLeft = Math.floor(Math.random() * 45) + 15; // Between 15% and 60% width
+                    watermarkEl.style.top = randomTop + '%';
+                    watermarkEl.style.left = randomLeft + '%';
+                }
+
+                // Initiate immediately
+                moveWatermark();
+                // Drift dynamically every 5 seconds
+                setInterval(moveWatermark, 5000);
+            }
+
             // Check if redirecting with specific sub tab param
             const urlParams = new URLSearchParams(window.location.search);
             const subParam = urlParams.get('sub');
@@ -1468,5 +1493,4 @@
         });
     </script>
 </body>
-
 </html>

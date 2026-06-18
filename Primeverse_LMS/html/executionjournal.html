@@ -1298,6 +1298,26 @@
                 justify-content: center;
             }
         }
+
+        /* --- Anti-Screenshot / Anti-Recording Security CSS --- */
+        .anti-screenshot-overlay {
+            position: absolute;
+            inset: 0;
+            background: #000000 !important;
+            z-index: 2147483647 !important;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            pointer-events: auto;
+        }
+
+        .anti-screenshot-overlay.active {
+            display: flex !important;
+        }
     </style>
 </head>
 
@@ -1859,6 +1879,23 @@
                         type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
+                <!-- Dynamic Anti-Piracy Watermark -->
+                <div id="journalVideoWatermark"
+                    style="position: absolute; pointer-events: none; z-index: 2147483646; color: rgba(255, 255, 255, 0.22); font-size: 0.85rem; font-weight: 700; font-family: 'Satoshi', sans-serif; white-space: nowrap; background: rgba(0, 0, 0, 0.35); padding: 4px 12px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 5s ease-in-out; top: 20%; left: 20%; backdrop-filter: blur(2px); transform: translateZ(0); will-change: transform;">
+                    harish.primeverse@gmail.com
+                </div>
+                <!-- Anti-Screenshot / Anti-Record Overlay -->
+                <div id="journalScreenSecurityOverlay" class="anti-screenshot-overlay">
+                    <i class="fa-solid fa-shield-halved"
+                        style="font-size: 3.5rem; color: #ff3333; margin-bottom: 1.5rem; filter: drop-shadow(0 0 15px rgba(255, 51, 51, 0.4));"></i>
+                    <h2
+                        style="font-family: 'Satoshi', sans-serif; font-weight: 900; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 0.8rem 0;">
+                        Screen Security Active</h2>
+                    <p
+                        style="font-size: 0.95rem; color: var(--gray); max-width: 320px; line-height: 1.5; margin: 0;">
+                        Screenshots and screen recordings are strictly prohibited to protect intellectual property.
+                    </p>
+                </div>
                 <!-- Custom Quality/Resolution Selector Overlay -->
                 <div class="custom-quality-container" id="qualitySelectorContainer">
                     <button id="customQualityBtn" class="custom-quality-btn" title="Change Resolution">
@@ -2222,6 +2259,100 @@
                     });
                 });
             }
+
+            // Dynamic anti-piracy watermark drift logic
+            const watermarkEl = document.getElementById('journalVideoWatermark');
+            if (watermarkEl) {
+                const userEmail = localStorage.getItem('userEmail') || 'harish.primeverse@gmail.com';
+                const userPhone = localStorage.getItem('userPhone') || '+91 9999999999';
+                watermarkEl.innerHTML = `<div style="text-decoration: none !important; border-bottom: none !important; display: block;">${userEmail}</div><div style="font-weight: 800; color: rgba(255, 255, 255, 0.38); margin-top: 3px; display: block;">${userPhone}</div>`;
+
+                function moveWatermark() {
+                    const randomTop = Math.floor(Math.random() * 65) + 15; // Between 15% and 80% height
+                    const randomLeft = Math.floor(Math.random() * 45) + 15; // Between 15% and 60% width
+                    watermarkEl.style.top = randomTop + '%';
+                    watermarkEl.style.left = randomLeft + '%';
+                }
+
+                // Initiate immediately
+                moveWatermark();
+                // Drift dynamically every 5 seconds
+                setInterval(moveWatermark, 5000);
+            }
+
+            // Anti-screenshot & recording focus security
+            const securityOverlay = document.getElementById('journalScreenSecurityOverlay');
+            const videoElement = document.getElementById('journalModalVideoPlayer');
+
+            let securityTimeout;
+            const activateSecurityBlackout = () => {
+                if (securityOverlay) {
+                    securityOverlay.classList.add('active');
+                }
+                if (videoElement && !videoElement.paused) {
+                    videoElement.pause();
+                }
+            };
+
+            const deactivateSecurityBlackout = () => {
+                clearTimeout(securityTimeout);
+                securityTimeout = setTimeout(() => {
+                    if (securityOverlay) {
+                        securityOverlay.classList.remove('active');
+                    }
+                }, 1200); // 1.2s delay to cover screenshot snapshot actions
+            };
+
+            // Detect window focus shifts (Snipping tool activation, Tab switching, OBS focus, browser devtools inspector)
+            window.addEventListener('blur', activateSecurityBlackout);
+            window.addEventListener('focus', deactivateSecurityBlackout);
+            document.addEventListener('mouseleave', activateSecurityBlackout);
+            document.addEventListener('mouseenter', deactivateSecurityBlackout);
+
+            // Visibility change detection
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    if (videoElement) {
+                        videoElement.pause();
+                    }
+                }
+            });
+
+            // Intercept OS-level PrtScn key and devtools shortcut keys
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'PrintScreen' || e.keyCode === 44) {
+                    activateSecurityBlackout();
+                    deactivateSecurityBlackout();
+                    e.preventDefault();
+                    return false;
+                }
+                // Stop developer inspection shortcuts (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U)
+                if (
+                    e.keyCode === 123 || // F12
+                    (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) ||
+                    (e.ctrlKey && e.key.toUpperCase() === "U")
+                ) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            window.addEventListener('keyup', (e) => {
+                if (e.key === 'PrintScreen' || e.keyCode === 44) {
+                    activateSecurityBlackout();
+                    deactivateSecurityBlackout();
+                    e.preventDefault();
+                }
+            });
+
+            // Prevent Copy / Cut / Context menu
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+            });
+
+            document.addEventListener('copy', (e) => {
+                e.preventDefault();
+            });
         });
 
         // Onboarding Checkbox Trackers
