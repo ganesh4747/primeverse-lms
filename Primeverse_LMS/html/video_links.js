@@ -14,11 +14,11 @@ const executionJournalVideo = {
 };
 
 const positionSizingVideo = {
-    src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY",
+    src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Blueprint-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQmx1ZXByaW50LTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE3OTQzNDIsImV4cCI6MTkzOTQ3NDM0Mn0.PHg1veScfcSHN9DlRq5Lohf1ItUMoS9fH6Y4uF-RCZQ",
     qualityLinks: {
-        "1080p": "",
-        "720p": "",
-        "480p": ""
+        "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Blueprint-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQmx1ZXByaW50LTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE3OTQzNDIsImV4cCI6MTkzOTQ3NDM0Mn0.PHg1veScfcSHN9DlRq5Lohf1ItUMoS9fH6Y4uF-RCZQ",
+        "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Blueprint-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQmx1ZXByaW50LTcyMHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTc5NDM4NiwiZXhwIjoxOTM5NDc0Mzg2fQ.Eos3JH7UA9uSISb69LGq_yNu8P5suWdOqYEyxDFvLrc",
+        "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Blueprint-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQmx1ZXByaW50LTQ4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTc5NDM3MywiZXhwIjoxOTM5NDc0MzczfQ.NwSLFzLgJ1l5iOB4Kbf6ygRnVasZ35Q2moTNP1uNayM"
     }
 };
 
