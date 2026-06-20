@@ -231,7 +231,7 @@ const lessonsDatabase = {
             qualityLinks: {
                 "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-sub2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zdWIyLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY3MDEzNCwiZXhwIjoxODQ0NzQyMTM0fQ.ZSn0ZkxnTRu705xclyvOPdqWTf3_12jDI_VCfFKFaLA",
                 "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMi03MjAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY3MDE2MCwiZXhwIjoxODc2Mjc4MTYwfQ.4e_3Xkqcwn-Sreg_PArx14VjuFBJjxelqzTosC7FEmE",
-                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMi00ODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY3MDE3NywiZXhwIjoxODc2Mjc4MTc3fQ.hJTnBnura6fiyoIG96MtqMAMXQJU58tS_vm0n-AhKeM"
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/day-8/day8-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMi00ODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTk2MDU3NywiZXhwIjoxOTM5NjQwNTc3fQ.6CEMHBDJdKqNvmlmX_YKYeAwLZ9DKzzk8_RjxNo_7pM"
             }
         }
     },
