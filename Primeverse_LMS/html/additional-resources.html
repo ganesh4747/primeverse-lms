@@ -544,6 +544,14 @@
             object-fit: contain !important;
             border: none !important;
         }
+
+        /* Hide native media player fullscreen buttons */
+        #videoResourcePlayer::-webkit-media-controls-fullscreen-button {
+            display: none !important;
+        }
+        #videoResourcePlayer::-moz-media-controls-fullscreen-button {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -1126,6 +1134,9 @@
             <h3 id="videoResourceTitle"
                 style="font-family: 'Satoshi', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); margin: 0 0 1.25rem 0; text-align: left; padding-right: 12rem;">
                 Video Title</h3>
+            <!-- Video Resource Tabs for Multi-video Resources -->
+            <div id="videoResourceTabsContainer" style="display: none; justify-content: flex-start; gap: 0.75rem; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 0.75rem;">
+            </div>
             <div id="videoResourcePlayerWrapper"
                 style="position: relative; width: 100%; padding-top: 56.25%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
                 <video id="videoResourcePlayer" controls controlslist="nodownload nofullscreen" disablepictureinpicture
@@ -1137,6 +1148,14 @@
                 <div id="resourceVideoWatermark"
                     style="position: absolute; pointer-events: none; z-index: 2147483646; color: rgba(255, 255, 255, 0.22); font-size: 0.85rem; font-weight: 700; font-family: 'Satoshi', sans-serif; white-space: nowrap; background: rgba(0, 0, 0, 0.35); padding: 4px 12px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 5s ease-in-out; top: 20%; left: 20%; backdrop-filter: blur(2px); transform: translateZ(0); will-change: transform;">
                     harish.primeverse@gmail.com
+                </div>
+                <!-- Video Coming Soon Placeholder Overlay -->
+                <div id="videoPlaceholderOverlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #0a0e17; flex-direction: column; align-items: center; justify-content: center; z-index: 100; color: #fff; padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="width: 60px; height: 60px; background: rgba(212, 175, 55, 0.08); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);">
+                        <i class="fa-solid fa-clock" style="font-size: 1.5rem; color: var(--gold);"></i>
+                    </div>
+                    <h4 id="videoPlaceholderTitle" style="font-family: 'Satoshi', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--white); margin: 0 0 0.5rem 0;">Video Coming Soon</h4>
+                    <p id="videoPlaceholderDesc" style="color: var(--gray); font-size: 0.85rem; max-width: 320px; line-height: 1.5; margin: 0;">This setup guide video will be uploaded and available shortly. Stay tuned!</p>
                 </div>
             </div>
         </div>
@@ -1404,6 +1423,114 @@
 
                 window.currentResourceVideoObj = videoObj;
 
+                // Reset placeholder overlay
+                const placeholder = document.getElementById('videoPlaceholderOverlay');
+                if (placeholder) placeholder.style.display = 'none';
+
+                // Setup play sub-video helper
+                function playSubVideo(subVideo) {
+                    window.currentResourceVideoObj = subVideo;
+                    const qContainer = document.getElementById('qualitySelectorContainer');
+                    const placeholderEl = document.getElementById('videoPlaceholderOverlay');
+                    const phTitle = document.getElementById('videoPlaceholderTitle');
+                    const phDesc = document.getElementById('videoPlaceholderDesc');
+
+                    const hasSrc = subVideo.src || (subVideo.qualityLinks && (subVideo.qualityLinks["1080p"] || subVideo.qualityLinks["720p"] || subVideo.qualityLinks["480p"]));
+
+                    if (!hasSrc) {
+                        // Show "Coming Soon" placeholder
+                        player.pause();
+                        player.src = '';
+                        if (qContainer) qContainer.style.display = 'none';
+                        if (placeholderEl) {
+                            if (phTitle) phTitle.innerText = subVideo.title + " Coming Soon";
+                            if (phDesc) phDesc.innerText = "This setup guide video will be uploaded and available shortly. Stay tuned!";
+                            placeholderEl.style.display = 'flex';
+                        }
+                    } else {
+                        // Hide Placeholder and play video
+                        if (placeholderEl) placeholderEl.style.display = 'none';
+                        
+                        let srcUrl = subVideo.src || subVideo.qualityLinks["1080p"] || subVideo.qualityLinks["720p"] || subVideo.qualityLinks["480p"];
+                        if (!subVideo.src) {
+                            subVideo.src = srcUrl;
+                        }
+
+                        if (qContainer) {
+                            if (subVideo.qualityLinks && Object.values(subVideo.qualityLinks).some(link => link)) {
+                                qContainer.style.display = 'inline-block';
+                                window.applyResourceResolution(localStorage.getItem('preferredResolution') || 'auto', false);
+                            } else {
+                                qContainer.style.display = 'none';
+                                player.src = srcUrl;
+                                player.load();
+                                player.play().catch(e => console.log("Play failed", e));
+                            }
+                        } else {
+                            player.src = srcUrl;
+                            player.load();
+                            player.play().catch(e => console.log("Play failed", e));
+                        }
+                    }
+                }
+
+                // Check for multiple videos
+                const tabsContainer = document.getElementById('videoResourceTabsContainer');
+                if (tabsContainer) {
+                    tabsContainer.innerHTML = '';
+                    if (videoObj && videoObj.videos && videoObj.videos.length > 0) {
+                        tabsContainer.style.display = 'flex';
+                        
+                        videoObj.videos.forEach((subVideo, index) => {
+                            const tab = document.createElement('button');
+                            tab.innerText = subVideo.title;
+                            tab.style.cssText = "background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--gray); border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease;";
+                            
+                            tab.onmouseenter = () => {
+                                if (tab.style.color !== 'var(--gold)') {
+                                    tab.style.borderColor = 'rgba(212, 175, 55, 0.5)';
+                                    tab.style.color = 'var(--white)';
+                                }
+                            };
+                            tab.onmouseleave = () => {
+                                if (tab.style.color !== 'var(--gold)') {
+                                    tab.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                                    tab.style.color = 'var(--gray)';
+                                }
+                            };
+
+                            tab.onclick = () => {
+                                Array.from(tabsContainer.children).forEach(child => {
+                                    child.style.background = 'rgba(255, 255, 255, 0.03)';
+                                    child.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                                    child.style.color = 'var(--gray)';
+                                    child.style.fontWeight = '700';
+                                });
+                                tab.style.background = 'rgba(212, 175, 55, 0.08)';
+                                tab.style.borderColor = 'var(--gold)';
+                                tab.style.color = 'var(--gold)';
+                                tab.style.fontWeight = '800';
+
+                                playSubVideo(subVideo);
+                            };
+
+                            tabsContainer.appendChild(tab);
+                        });
+
+                        modal.style.display = 'flex';
+                        setTimeout(() => {
+                            modal.classList.add('active');
+                        }, 10);
+
+                        // Click the first tab to initialize playing
+                        tabsContainer.children[0].click();
+                        return;
+                    } else {
+                        tabsContainer.style.display = 'none';
+                    }
+                }
+
+                // Standard single video playback logic (fallback)
                 let srcUrl = "";
                 if (videoObj) {
                     srcUrl = videoObj.src;
@@ -1459,6 +1586,12 @@
                             document.webkitExitFullscreen();
                         }
                     }
+
+                    // Reset placeholders/tabs container visibility
+                    const placeholder = document.getElementById('videoPlaceholderOverlay');
+                    if (placeholder) placeholder.style.display = 'none';
+                    const tabsContainer = document.getElementById('videoResourceTabsContainer');
+                    if (tabsContainer) tabsContainer.style.display = 'none';
 
                     modal.classList.remove('active');
                     setTimeout(() => {

@@ -37,7 +37,27 @@ const brokerSetupVideo = {
         "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE6ODYwODUsImV4cCI6MjAwMjQzODA4NX0.UI_h0dU6kp2oyp-tp02ASXquDBwoGNspmmuiPFpzFGw",
         "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTcyMHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY4NjEzOSwiZXhwIjoyMDAyNDM4MTM5fQ.WCQD05nONlFW8gmR3A0s2J0CqLqmw2M8Fs1JY1_CV94",
         "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTQ4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY4NjExOSwiZXhwIjoyMDAyNDM4MTE5fQ.M657aYSlIZ3pKiMj_FuuxlgxPRtS1xntDrFAqYbmcl0"
-    }
+    },
+    videos: [
+        {
+            title: "Broker Setup",
+            src: "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE2ODYwODUsImV4cCI6MjAwMjQzODA4NX0.UI_h0dU6kp2oyp-tp02ASXquDBwoGNspmmuiPFpzFGw",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE6ODYwODUsImV4cCI6MjAwMjQzODA4NX0.UI_h0dU6kp2oyp-tp02ASXquDBwoGNspmmuiPFpzFGw",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTcyMHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY4NjEzOSwiZXhwIjoyMDAyNDM4MTM5fQ.WCQD05nONlFW8gmR3A0s2J0CqLqmw2M8Fs1JY1_CV94",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/Broker-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvQnJva2VyLTQ4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY4NjExOSwiZXhwIjoyMDAyNDM4MTE5fQ.M657aYSlIZ3pKiMj_FuuxlgxPRtS1xntDrFAqYbmcl0"
+            }
+        },
+        {
+            title: "PLATFORM SETUP GUIDE",
+            src: "",
+            qualityLinks: {
+                "1080p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/broker2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvYnJva2VyMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyMzIxMjM0LCJleHAiOjIxNjA3NTMyMzR9.TQKC78MKXee9q0jb2Hb-X9PVwJ3y7RrSZbR0UsZPo9g",
+                "720p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/broker2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvYnJva2VyMi03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODIzMjEyNTEsImV4cCI6MjE2MDc1MzI1MX0.1700RCllaQIWG63U8_iLfpIthJ_mpaTfI10hkG4WGHI",
+                "480p": "https://sljcqcksrqzanyivtdld.supabase.co/storage/v1/object/sign/videos/additional-resources/broker2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvYWRkaXRpb25hbC1yZXNvdXJjZXMvYnJva2VyMi00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODIzMjEyNzAsImV4cCI6MjE2MDc1MzI3MH0.74kJz0ant_ndYLAHarlV5gNj5p-6KGp84lL9F8FFYe0"
+            }
+        }
+    ]
 };
 
 window.positionSizingVideo = positionSizingVideo;
