@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Reply from PrimeVerse Mentor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            background: #f4f5f7;
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        img {
+            border: 0;
+            outline: none;
+            text-decoration: none;
+            display: block;
+        }
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            padding: 40px 15px;
+            background: #f4f5f7;
+        }
+        .main-table {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+        }
+        .header {
+            padding: 40px 30px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: rgba(212, 175, 55, 0.12);
+            border-radius: 50%;
+            top: -140px;
+            right: -100px;
+            filter: blur(80px);
+        }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            position: relative;
+            z-index: 2;
+        }
+        .logo-text span {
+            color: #D4AF37;
+        }
+        .header-subtitle {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #9ca3af;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+        .gold-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+        .content {
+            padding: 40px 35px;
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.8;
+            text-align: left;
+        }
+        .alert-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin: 0 0 20px;
+        }
+        .ticket-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+        .section-label {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+        .section-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .section-value.student {
+            color: #D4AF37;
+        }
+        .section-value.message {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            white-space: pre-wrap;
+        }
+        .cta-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #D4AF37 0%, #bfa030 100%);
+            color: #000000 !important;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 14px 35px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
+            transition: all 0.3s ease;
+        }
+        .footer {
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: #6b7280;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <table class="wrapper" width="100%">
+        <tr>
+            <td>
+                <table class="main-table">
+                    <!-- Header -->
+                    <tr>
+                        <td class="header">
+                            <div class="logo-text">PRIME<span>VERSE</span></div>
+                            <div class="header-subtitle">Student Support Portal</div>
+                        </td>
+                    </tr>
+                    <!-- Gold Divider -->
+                    <tr>
+                        <td class="gold-line"></td>
+                    </tr>
+                    <!-- Content -->
+                    <tr>
+                        <td class="content">
+                            <div class="alert-title">💬 New Mentor Reply</div>
+                            <p style="margin-top: 0; margin-bottom: 25px;">Hi {{ student_name }}, your PrimeVerse mentor has replied to your concept submission thread. Review the details below:</p>
+                            
+                            <div class="ticket-card">
+                                <div class="section-label">Module / Concept</div>
+                                <div class="section-value">{{ module_name }} - {{ concept_name }}</div>
+                                
+                                <div class="section-label">Mentor Reply</div>
+                                <div class="section-value message">{{ message_text }}</div>
+                            </div>
+
+                            <div class="cta-container">
+                                <a href="{{ workspace_url }}" class="cta-button">Open Chat Workspace</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Footer -->
+                    <tr>
+                        <td class="footer">
+                            &copy; 2026 PrimeVerse LMS. Automated Support System.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

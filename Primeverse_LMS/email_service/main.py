@@ -27,6 +27,9 @@ load_dotenv(override=True)
 print(f"DEBUG_ENV: SMTP_USER = '{os.getenv('SMTP_USER')}'")
 print(f"DEBUG_ENV: SMTP_PASS = '{os.getenv('SMTP_PASS')[:2] + '...' + os.getenv('SMTP_PASS')[-2:] if os.getenv('SMTP_PASS') else 'None'}'")
 
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "aashiqmustak5969@gmail.com")
+logger.info(f"Admin email alerts configured for: {ADMIN_EMAIL}")
+
 # Supabase Client Initialization
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
@@ -232,6 +235,145 @@ def process_and_send_progression_email(full_name: str, email: str, day: int, les
     except Exception as e:
         logger.error(f"Background task failed to process progression email for {email}: {str(e)}")
 
+def render_admin_submission_alert_template(student_name: str, student_email: str, module_name: str, concept_name: str, explanation: str, screenshot_url: Optional[str] = None) -> str:
+    """
+    Loads and renders the admin_submission_alert.html template using Jinja2
+    """
+    workspace_url = os.getenv("LMS_WORKSPACE_URL", "https://www.primeverseportal.pro/html/oneonecommunity.html")
+    try:
+        template = jinja_env.get_template("admin_submission_alert.html")
+        return template.render(
+            student_name=student_name,
+            student_email=student_email,
+            module_name=module_name,
+            concept_name=concept_name,
+            explanation=explanation,
+            screenshot_url=screenshot_url,
+            workspace_url=workspace_url
+        )
+    except Exception as e:
+        logger.error(f"Error rendering JINJA2 admin submission alert template: {str(e)}")
+        return f"""
+        <html>
+            <body style='background-color:#0d0d0e; color:#ffffff; font-family:sans-serif; padding:40px;'>
+                <h1 style='color:#D4AF37;'>New Ticket Submission Alert</h1>
+                <p><strong>Student:</strong> {student_name} ({student_email})</p>
+                <p><strong>Module:</strong> {module_name}</p>
+                <p><strong>Concept:</strong> {concept_name}</p>
+                <p><strong>Explanation:</strong> {explanation}</p>
+                <a href='{workspace_url}' style='background:#D4AF37; color:#000; padding:10px 20px; text-decoration:none; font-weight:bold; border-radius:5px;'>Open Workspace</a>
+            </body>
+        </html>
+        """
+
+def render_admin_message_alert_template(sender_name: str, sender_email: str, message_text: str, concept_name: str, module_name: str) -> str:
+    """
+    Loads and renders the admin_message_alert.html template using Jinja2
+    """
+    workspace_url = os.getenv("LMS_WORKSPACE_URL", "https://www.primeverseportal.pro/html/oneonecommunity.html")
+    try:
+        template = jinja_env.get_template("admin_message_alert.html")
+        return template.render(
+            sender_name=sender_name,
+            sender_email=sender_email,
+            message_text=message_text,
+            concept_name=concept_name,
+            module_name=module_name,
+            workspace_url=workspace_url
+        )
+    except Exception as e:
+        logger.error(f"Error rendering JINJA2 admin message alert template: {str(e)}")
+        return f"""
+        <html>
+            <body style='background-color:#0d0d0e; color:#ffffff; font-family:sans-serif; padding:40px;'>
+                <h1 style='color:#D4AF37;'>New Support Message Alert</h1>
+                <p><strong>Sender:</strong> {sender_name} ({sender_email})</p>
+                <p><strong>Concept:</strong> {concept_name} ({module_name})</p>
+                <p><strong>Message:</strong> {message_text}</p>
+                <a href='{workspace_url}' style='background:#D4AF37; color:#000; padding:10px 20px; text-decoration:none; font-weight:bold; border-radius:5px;'>Open Workspace</a>
+            </body>
+        </html>
+        """
+
+def process_and_send_admin_submission_alert(student_name: str, student_email: str, module_name: str, concept_name: str, explanation: str, screenshot_url: Optional[str] = None):
+    """
+    Background worker task to compile and send new submission email to admin.
+    """
+    try:
+        subject = f"New Concept Submission: {concept_name} by {student_name}"
+        html_body = render_admin_submission_alert_template(
+            student_name=student_name,
+            student_email=student_email,
+            module_name=module_name,
+            concept_name=concept_name,
+            explanation=explanation,
+            screenshot_url=screenshot_url
+        )
+        send_smtp_email(ADMIN_EMAIL, subject, html_body)
+    except Exception as e:
+        logger.error(f"Background task failed to process admin submission alert: {str(e)}")
+
+def process_and_send_admin_message_alert(sender_name: str, sender_email: str, message_text: str, concept_name: str, module_name: str):
+    """
+    Background worker task to compile and send new message email to admin.
+    """
+    try:
+        subject = f"New support message from {sender_name} (Concept: {concept_name})"
+        html_body = render_admin_message_alert_template(
+            sender_name=sender_name,
+            sender_email=sender_email,
+            message_text=message_text,
+            concept_name=concept_name,
+            module_name=module_name
+        )
+        send_smtp_email(ADMIN_EMAIL, subject, html_body)
+    except Exception as e:
+        logger.error(f"Background task failed to process admin message alert: {str(e)}")
+
+def render_student_message_alert_template(student_name: str, message_text: str, concept_name: str, module_name: str) -> str:
+    """
+    Loads and renders the student_message_alert.html template using Jinja2
+    """
+    workspace_url = os.getenv("LMS_WORKSPACE_URL", "https://www.primeverseportal.pro/html/oneonecommunity.html")
+    try:
+        template = jinja_env.get_template("student_message_alert.html")
+        return template.render(
+            student_name=student_name,
+            message_text=message_text,
+            concept_name=concept_name,
+            module_name=module_name,
+            workspace_url=workspace_url
+        )
+    except Exception as e:
+        logger.error(f"Error rendering JINJA2 student message alert template: {str(e)}")
+        return f"""
+        <html>
+            <body style='background-color:#0d0d0e; color:#ffffff; font-family:sans-serif; padding:40px;'>
+                <h1 style='color:#D4AF37;'>New Reply from PrimeVerse Mentor</h1>
+                <p>Hi {student_name},</p>
+                <p>Your mentor has replied to your concept submission: <strong>{concept_name}</strong> (Module: {module_name}).</p>
+                <p><strong>Reply:</strong> {message_text}</p>
+                <a href='{workspace_url}' style='background:#D4AF37; color:#000; padding:10px 20px; text-decoration:none; font-weight:bold; border-radius:5px;'>View Reply in Workspace</a>
+            </body>
+        </html>
+        """
+
+def process_and_send_student_message_alert(student_name: str, student_email: str, message_text: str, concept_name: str, module_name: str):
+    """
+    Background worker task to compile and send new reply email to student.
+    """
+    try:
+        subject = f"New reply from your PrimeVerse Mentor (Concept: {concept_name})"
+        html_body = render_student_message_alert_template(
+            student_name=student_name,
+            message_text=message_text,
+            concept_name=concept_name,
+            module_name=module_name
+        )
+        send_smtp_email(student_email, subject, html_body)
+    except Exception as e:
+        logger.error(f"Background task failed to process student message alert: {str(e)}")
+
 @app.get("/")
 def read_root():
     return {
@@ -241,9 +383,132 @@ def read_root():
             "/api/send-welcome": "POST - Database webhook trigger (INSERT)",
             "/api/send-progression": "POST - Database webhook trigger (UPDATE)",
             "/api/send-daily-progression": "GET - Cron daily automation check",
+            "/api/send-admin-alert": "POST - Database webhook trigger (INSERT on concept_submissions or concept_messages)",
             "/api/test-email": "POST - Manual SMTP email check"
         }
     }
+
+@app.post("/api/send-admin-alert", status_code=status.HTTP_202_ACCEPTED)
+async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: BackgroundTasks):
+    """
+    Supabase Database Webhook HTTP Receiver.
+    Triggered on INSERT of concept_submissions or concept_messages.
+    """
+    logger.info(f"Received admin alert webhook trigger: Table: {payload.table}, Type: {payload.type}")
+    
+    if payload.type != "INSERT":
+        logger.info(f"Skipping admin alert. Only trigger on 'INSERT' (got: {payload.type}).")
+        return {"status": "skipped", "reason": "non-insert event"}
+        
+    if not payload.record:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Payload record data is missing."
+        )
+
+    record = payload.record
+
+    if payload.table == "concept_submissions":
+        student_email = record.get("user_email")
+        student_name = record.get("user_name") or "PrimeVerse Student"
+        module_name = record.get("module") or "Unknown Module"
+        concept_name = record.get("concept_name") or "Unknown Concept"
+        explanation = record.get("explanation") or "No description provided."
+        screenshot_url = record.get("screenshot_url")
+        
+        if not student_email:
+            logger.warning("No student email found in submission record. Skipping alert.")
+            return {"status": "skipped", "reason": "student email missing"}
+            
+        logger.info(f"Queueing submission admin alert for student {student_name} ({student_email})")
+        background_tasks.add_task(
+            process_and_send_admin_submission_alert,
+            student_name,
+            student_email,
+            module_name,
+            concept_name,
+            explanation,
+            screenshot_url
+        )
+        return {
+            "status": "queued",
+            "table": "concept_submissions",
+            "message": "Admin submission alert email queued."
+        }
+        
+    elif payload.table == "concept_messages":
+        sender_email = record.get("sender_email")
+        sender_name = record.get("sender_name") or "Student"
+        sender_role = record.get("sender_role") or "student"
+        message_text = record.get("message_text") or ""
+        submission_id = record.get("submission_id")
+        
+        if not message_text:
+            logger.info("Empty message body, skipping alert.")
+            return {"status": "skipped", "reason": "empty message_text"}
+            
+        # Fetch ticket details to populate concept/module context
+        concept_name = "Unknown Concept"
+        module_name = "Unknown Module"
+        student_email = None
+        student_name = "Student"
+        
+        if supabase_client and submission_id:
+            try:
+                res = supabase_client.table("concept_submissions").select("concept_name, module, user_email, user_name").eq("id", submission_id).execute()
+                if res.data and len(res.data) > 0:
+                    concept_name = res.data[0].get("concept_name") or concept_name
+                    module_name = res.data[0].get("module") or module_name
+                    student_email = res.data[0].get("user_email")
+                    student_name = res.data[0].get("user_name") or student_name
+                    logger.info(f"Resolved concept '{concept_name}' and student '{student_email}' for message alert.")
+            except Exception as e:
+                logger.error(f"Failed to fetch submission context for message alert: {str(e)}")
+                
+        # If message is from student, alert the admin
+        if sender_role == "student":
+            logger.info(f"Queueing message admin alert from student {sender_name} ({sender_email})")
+            background_tasks.add_task(
+                process_and_send_admin_message_alert,
+                sender_name,
+                sender_email,
+                message_text,
+                concept_name,
+                module_name
+            )
+            return {
+                "status": "queued",
+                "table": "concept_messages",
+                "recipient": "admin",
+                "message": "Admin message alert email queued."
+            }
+        # If message is from admin/mentor, alert the student
+        else:
+            if not student_email:
+                logger.warning("Could not resolve student email. Skipping student notification.")
+                return {"status": "skipped", "reason": "could not resolve student email"}
+                
+            logger.info(f"Queueing message student alert for student {student_name} ({student_email})")
+            background_tasks.add_task(
+                process_and_send_student_message_alert,
+                student_name,
+                student_email,
+                message_text,
+                concept_name,
+                module_name
+            )
+            return {
+                "status": "queued",
+                "table": "concept_messages",
+                "recipient": "student",
+                "message": "Student message alert email queued."
+            }
+        
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported table for admin alert: '{payload.table}'."
+        )
 
 @app.post("/api/send-welcome", status_code=status.HTTP_202_ACCEPTED)
 async def send_welcome_webhook(payload: WebhookPayload, background_tasks: BackgroundTasks):
