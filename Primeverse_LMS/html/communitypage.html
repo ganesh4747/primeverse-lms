@@ -921,6 +921,35 @@
                 const messageInput = document.getElementById('messageInput');
                 const sendBtn = document.getElementById('sendBtn');
 
+                const triggerEmailBroadcast = (msg) => {
+                    let apiUrl = '/api/send-broadcast';
+                    if (window.location.origin.startsWith('file://')) {
+                        apiUrl = 'http://127.0.0.1:8000/api/send-broadcast';
+                    } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                        if (window.location.port && window.location.port !== '8000' && window.location.port !== '3000') {
+                            apiUrl = 'http://127.0.0.1:8000/api/send-broadcast';
+                        }
+                    }
+                    
+                    fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            type: 'INSERT',
+                            table: 'community_messages',
+                            record: msg
+                        })
+                    })
+                    .then(response => {
+                        console.log("Community broadcast email triggered successfully:", response);
+                    })
+                    .catch(err => {
+                        console.error("Failed to trigger community broadcast email:", err);
+                    });
+                };
+
                 const postMessage = async () => {
                     const text = messageInput.value.trim();
                     if (!text) return;
@@ -928,24 +957,27 @@
                     const senderName = localStorage.getItem('userName') || 'Harish Ramanan';
                     const senderTitle = 'Founder';
 
+                    const newMsg = {
+                        sender_name: senderName,
+                        sender_email: loggedInEmail,
+                        sender_title: senderTitle,
+                        message_text: text
+                    };
+
                     // Save to Supabase
                     if (supabase) {
                         const { error } = await supabase
                             .from('community_messages')
-                            .insert([
-                                {
-                                    sender_name: senderName,
-                                    sender_email: loggedInEmail,
-                                    sender_title: senderTitle,
-                                    message_text: text
-                                }
-                            ]);
+                            .insert([newMsg]);
 
                         if (error) {
                             console.error("Error saving message:", error);
                             alert("Failed to broadcast message: " + error.message);
                             return;
                         }
+                        
+                        // Trigger email broadcast
+                        triggerEmailBroadcast(newMsg);
                     }
 
                     // Render locally

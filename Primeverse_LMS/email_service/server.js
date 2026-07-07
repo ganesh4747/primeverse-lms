@@ -193,6 +193,80 @@ const server = http.createServer(async (req, res) => {
                 res.end(JSON.stringify({ error: err.message }));
             }
         });
+    } else if (req.url === '/api/send-broadcast' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => { body += chunk.toString(); });
+        req.on('end', async () => {
+            try {
+                if (!body) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Empty payload' }));
+                    return;
+                }
+                const payload = JSON.parse(body);
+                console.log(`[HTTP] Received broadcast trigger request: Table: ${payload.table}, Type: ${payload.type}`);
+                
+                if (payload.type !== 'INSERT' || payload.table !== 'community_messages') {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ status: 'skipped', reason: 'unsupported table or event type' }));
+                    return;
+                }
+
+                const record = payload.record || {};
+                const sender_name = record.sender_name || 'Founder';
+                const sender_title = record.sender_title || 'Founder';
+                const message_text = record.message_text || '';
+
+                if (!message_text) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ status: 'skipped', reason: 'empty message' }));
+                    return;
+                }
+
+                // Fetch all enrolled/paid profiles to send notifications
+                let profiles = [];
+                if (supabase) {
+                    try {
+                        const { data, error } = await supabase
+                            .from('profiles')
+                            .select('email, full_name')
+                            .in('payment_status', ['paid', 'free_access']);
+                        if (!error && data) {
+                            profiles = data.filter(p => p.email);
+                        }
+                    } catch (err) {
+                        console.error('Failed to fetch profiles for broadcast:', err.message);
+                    }
+                }
+
+                console.log(`Broadcasting announcement to ${profiles.length} trader(s)...`);
+                
+                const subject = `📢 New Announcement from PrimeVerse`;
+                
+                // Send email to all profiles
+                for (const profile of profiles) {
+                    const html = renderTemplate('announcement.html', {
+                        trader_name: profile.full_name || 'PrimeVerse Trader',
+                        sender_name,
+                        sender_title,
+                        message_text,
+                        workspace_url: process.env.LMS_WORKSPACE_URL || 'https://www.primeverseportal.pro/html/communitypage.html'
+                    });
+                    try {
+                        await sendEmail(profile.email, subject, html);
+                    } catch (err) {
+                        console.error(`Failed to send broadcast email to ${profile.email}:`, err.message);
+                    }
+                }
+
+                res.writeHead(202, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ status: 'queued', count: profiles.length }));
+            } catch (err) {
+                console.error('Error handling broadcast request:', err.message);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
     } else {
         res.writeHead(404);
         res.end();

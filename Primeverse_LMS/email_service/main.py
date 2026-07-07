@@ -406,6 +406,66 @@ def process_and_send_student_message_alert(student_name: str, student_email: str
     except Exception as e:
         logger.error(f"Background task failed to process student message alert: {str(e)}")
 
+def render_announcement_template(trader_name: str, sender_name: str, sender_title: str, message_text: str) -> str:
+    """
+    Loads and renders the announcement.html template using Jinja2
+    """
+    workspace_url = os.getenv("LMS_WORKSPACE_URL", "https://www.primeverseportal.pro/html/communitypage.html")
+    try:
+        template = jinja_env.get_template("announcement.html")
+        return template.render(
+            trader_name=trader_name,
+            sender_name=sender_name,
+            sender_title=sender_title,
+            message_text=message_text,
+            workspace_url=workspace_url
+        )
+    except Exception as e:
+        logger.error(f"Error rendering JINJA2 announcement template: {str(e)}")
+        return f"""
+        <html>
+            <body style='background-color:#0d0d0e; color:#ffffff; font-family:sans-serif; padding:40px;'>
+                <h1 style='color:#D4AF37;'>📢 New Announcement</h1>
+                <p>Hi {trader_name},</p>
+                <p><strong>Announced By:</strong> {sender_name} ({sender_title})</p>
+                <p><strong>Message:</strong> {message_text}</p>
+                <a href='{workspace_url}' style='background:#D4AF37; color:#000; padding:10px 20px; text-decoration:none; font-weight:bold; border-radius:5px;'>Open Community Feed</a>
+            </body>
+        </html>
+        """
+
+def process_and_send_broadcast_emails(sender_name: str, sender_title: str, message_text: str):
+    """
+    Background worker task to compile and send announcement emails to all active/enrolled traders.
+    """
+    try:
+        profiles = []
+        if supabase_client:
+            try:
+                res = supabase_client.table("profiles").select("email, full_name").in_("payment_status", ["paid", "free_access"]).execute()
+                if res.data:
+                    profiles = [p for p in res.data if p.get("email")]
+            except Exception as db_err:
+                logger.error(f"Failed to fetch profiles for announcement broadcast: {str(db_err)}")
+        
+        if not profiles:
+            logger.info("No active/paid profiles found for community broadcast.")
+            return
+
+        logger.info(f"Broadcasting announcement to {len(profiles)} active profiles...")
+        subject = f"📢 New Announcement from PrimeVerse"
+
+        for p in profiles:
+            email = p.get("email")
+            trader_name = p.get("full_name") or "PrimeVerse Trader"
+            html_body = render_announcement_template(trader_name, sender_name, sender_title, message_text)
+            try:
+                send_smtp_email(email, subject, html_body)
+            except Exception as send_err:
+                logger.error(f"Failed to send announcement email to {email}: {str(send_err)}")
+    except Exception as e:
+        logger.error(f"Background task failed to process community broadcast: {str(e)}")
+
 @app.get("/")
 def read_root():
     return {
@@ -416,6 +476,7 @@ def read_root():
             "/api/send-progression": "POST - Database webhook trigger (UPDATE)",
             "/api/send-daily-progression": "GET - Cron daily automation check",
             "/api/send-admin-alert": "POST - Database webhook trigger (INSERT on concept_submissions or concept_messages)",
+            "/api/send-broadcast": "POST - Database webhook trigger (INSERT on community_messages)",
             "/api/test-email": "POST - Manual SMTP email check"
         }
     }
@@ -547,6 +608,47 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Unsupported table for admin alert: '{payload.table}'."
         )
+
+@app.post("/api/send-broadcast", status_code=status.HTTP_202_ACCEPTED)
+async def send_broadcast_webhook(payload: WebhookPayload, background_tasks: BackgroundTasks):
+    """
+    Supabase Database Webhook HTTP Receiver.
+    Triggered on INSERT of community_messages.
+    """
+    logger.info(f"Received community broadcast webhook trigger: Table: {payload.table}, Type: {payload.type}")
+    
+    if payload.type != "INSERT":
+        logger.info(f"Skipping alert. Only trigger on 'INSERT' (got: {payload.type}).")
+        return {"status": "skipped", "reason": "non-insert event"}
+        
+    if not payload.record:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Payload record data is missing."
+        )
+
+    record = payload.record
+    sender_name = record.get("sender_name") or "Founder"
+    sender_title = record.get("sender_title") or "Founder"
+    message_text = record.get("message_text") or ""
+
+    if not message_text:
+        logger.info("Empty message body, skipping broadcast.")
+        return {"status": "skipped", "reason": "empty message_text"}
+
+    logger.info(f"Queueing community announcement broadcast from {sender_name}")
+    background_tasks.add_task(
+        process_and_send_broadcast_emails,
+        sender_name,
+        sender_title,
+        message_text
+    )
+    
+    return {
+        "status": "queued",
+        "table": "community_messages",
+        "message": "Community broadcast emails queued."
+    }
 
 @app.post("/api/send-welcome", status_code=status.HTTP_202_ACCEPTED)
 async def send_welcome_webhook(payload: WebhookPayload, background_tasks: BackgroundTasks):
