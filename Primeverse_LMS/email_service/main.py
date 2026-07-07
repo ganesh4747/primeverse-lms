@@ -309,7 +309,23 @@ def process_and_send_admin_submission_alert(student_name: str, student_email: st
             explanation=explanation,
             screenshot_url=screenshot_url
         )
-        send_smtp_email(ADMIN_EMAIL, subject, html_body)
+        
+        # Fetch admins dynamically from Supabase
+        admin_emails = []
+        if supabase_client:
+            try:
+                res = supabase_client.table("admins").select("email").execute()
+                if res.data:
+                    admin_emails = [r["email"] for r in res.data if r.get("email")]
+            except Exception as db_err:
+                logger.error(f"Failed to fetch admin emails from DB: {str(db_err)}")
+                
+        # Fallback to config if DB query is empty/fails
+        if not admin_emails:
+            admin_emails = [ADMIN_EMAIL]
+            
+        for admin_email in admin_emails:
+            send_smtp_email(admin_email, subject, html_body)
     except Exception as e:
         logger.error(f"Background task failed to process admin submission alert: {str(e)}")
 
@@ -326,7 +342,23 @@ def process_and_send_admin_message_alert(sender_name: str, sender_email: str, me
             concept_name=concept_name,
             module_name=module_name
         )
-        send_smtp_email(ADMIN_EMAIL, subject, html_body)
+        
+        # Fetch admins dynamically from Supabase
+        admin_emails = []
+        if supabase_client:
+            try:
+                res = supabase_client.table("admins").select("email").execute()
+                if res.data:
+                    admin_emails = [r["email"] for r in res.data if r.get("email")]
+            except Exception as db_err:
+                logger.error(f"Failed to fetch admin emails from DB: {str(db_err)}")
+                
+        # Fallback to config if DB query is empty/fails
+        if not admin_emails:
+            admin_emails = [ADMIN_EMAIL]
+            
+        for admin_email in admin_emails:
+            send_smtp_email(admin_email, subject, html_body)
     except Exception as e:
         logger.error(f"Background task failed to process admin message alert: {str(e)}")
 
@@ -483,7 +515,7 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
                 "message": "Admin message alert email queued."
             }
         # If message is from admin/mentor, alert the student
-        else:
+        elif sender_role in ["admin", "mentor"]:
             if not student_email:
                 logger.warning("Could not resolve student email. Skipping student notification.")
                 return {"status": "skipped", "reason": "could not resolve student email"}
@@ -502,6 +534,12 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
                 "table": "concept_messages",
                 "recipient": "student",
                 "message": "Student message alert email queued."
+            }
+        else:
+            logger.info(f"Skipping alert for message with sender_role: '{sender_role}'")
+            return {
+                "status": "skipped",
+                "reason": f"unsupported sender_role: {sender_role}"
             }
         
     else:

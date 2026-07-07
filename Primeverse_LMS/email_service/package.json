@@ -1,0 +1,11 @@
+{
+  "name": "primeverse-email-service",
+  "version": "1.0.0",
+  "description": "Node.js email notification service for PrimeVerse LMS",
+  "main": "server.js",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.4",
+    "dotenv": "^16.4.5",
+    "nodemailer": "^6.9.13"
+  }
+}

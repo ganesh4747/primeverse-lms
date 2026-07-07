@@ -152,7 +152,7 @@ def handle_messages_insert(payload):
             process_and_send_admin_message_alert(
                 sender_name, sender_email, message_text, concept_name, module_name
             )
-        else:
+        elif sender_role in ["admin", "mentor"]:
             if not student_email:
                 logger.warning("Could not resolve student email. Skipping student notification.")
                 return
@@ -160,6 +160,8 @@ def handle_messages_insert(payload):
             process_and_send_student_message_alert(
                 student_name, student_email, message_text, concept_name, module_name
             )
+        else:
+            logger.info(f"Skipping alert for message with sender_role: '{sender_role}'")
     except Exception as e:
         logger.error(f"Error handling messages insert callback: {str(e)}")
 
