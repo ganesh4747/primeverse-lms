@@ -3,8 +3,8 @@
  * Central configuration file for Supabase integration.
  */
 
-const SUPABASE_URL = "https://sljcqcksrqzanyivtdld.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP";
+const SUPABASE_URL = "https://tgjuckbtdfmwbvtyvkzm.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW";
 
 try {
     if (window.supabase) {

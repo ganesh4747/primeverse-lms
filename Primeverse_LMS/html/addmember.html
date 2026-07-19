@@ -1181,7 +1181,7 @@
             });
 
             // Connect to Supabase
-            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
 
             // Auto-populate password field
             const autoPopulatePassword = async () => {
@@ -1278,6 +1278,39 @@
                             if (syncOverlay) syncOverlay.classList.remove('active');
                             return;
                         }
+
+                        // Trigger SMTP welcome email directly
+                        const triggerWelcomeEmail = (userData) => {
+                            let apiUrl = '/api/send-welcome';
+                            if (window.location.origin.startsWith('file://')) {
+                                apiUrl = 'http://127.0.0.1:8000/api/send-welcome';
+                            } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                                if (window.location.port && window.location.port !== '8000' && window.location.port !== '3000') {
+                                    apiUrl = 'http://127.0.0.1:8000/api/send-welcome';
+                                }
+                            }
+                            
+                            fetch(apiUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    type: 'INSERT',
+                                    table: 'profiles',
+                                    record: userData
+                                })
+                            })
+                            .then(response => console.log("Direct welcome email triggered successfully:", response))
+                            .catch(err => console.error("Failed to directly trigger welcome email:", err));
+                        };
+
+                        triggerWelcomeEmail({
+                            email: email,
+                            full_name: fullName,
+                            password: password,
+                            selected_course: selectedCourse
+                        });
 
                         // Successful creation
                         setTimeout(() => {

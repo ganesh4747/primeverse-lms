@@ -558,29 +558,18 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
             except Exception as e:
                 logger.error(f"Failed to fetch submission context for message alert: {str(e)}")
                 
-        # If message is from student, alert the admin
-        if sender_role == "student":
-            logger.info(f"Queueing message admin alert from student {sender_name} ({sender_email})")
-            background_tasks.add_task(
-                process_and_send_admin_message_alert,
-                sender_name,
-                sender_email,
-                message_text,
-                concept_name,
-                module_name
-            )
-            return {
-                "status": "queued",
-                "table": "concept_messages",
-                "recipient": "admin",
-                "message": "Admin message alert email queued."
-            }
-        # If message is from admin/mentor, alert the student
-        elif sender_role in ["admin", "mentor"]:
-            if not student_email:
-                logger.warning("Could not resolve student email. Skipping student notification.")
-                return {"status": "skipped", "reason": "could not resolve student email"}
-                
+        # Alert both admin and student
+        logger.info(f"Queueing message admin alert for message from {sender_name}")
+        background_tasks.add_task(
+            process_and_send_admin_message_alert,
+            sender_name,
+            sender_email,
+            message_text,
+            concept_name,
+            module_name
+        )
+
+        if student_email:
             logger.info(f"Queueing message student alert for student {student_name} ({student_email})")
             background_tasks.add_task(
                 process_and_send_student_message_alert,
@@ -593,14 +582,16 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
             return {
                 "status": "queued",
                 "table": "concept_messages",
-                "recipient": "student",
-                "message": "Student message alert email queued."
+                "recipient": "both",
+                "message": "Admin and Student alert emails queued."
             }
         else:
-            logger.info(f"Skipping alert for message with sender_role: '{sender_role}'")
+            logger.warning("Could not resolve student email. Skipping student notification.")
             return {
-                "status": "skipped",
-                "reason": f"unsupported sender_role: {sender_role}"
+                "status": "queued",
+                "table": "concept_messages",
+                "recipient": "admin",
+                "message": "Admin alert email queued. Student email skipped (unresolved)."
             }
         
     else:

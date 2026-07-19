@@ -267,6 +267,56 @@ const server = http.createServer(async (req, res) => {
                 res.end(JSON.stringify({ error: err.message }));
             }
         });
+    } else if (req.url === '/api/send-welcome' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => { body += chunk.toString(); });
+        req.on('end', async () => {
+            try {
+                if (!body) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Empty payload' }));
+                    return;
+                }
+                const payload = JSON.parse(body);
+                console.log(`[HTTP] Received welcome trigger request: Table: ${payload.table}, Type: ${payload.type}`);
+                
+                if (payload.type !== 'INSERT' || payload.table !== 'profiles') {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ status: 'skipped', reason: 'unsupported table or event type' }));
+                    return;
+                }
+
+                const record = payload.record || {};
+                const email = record.email;
+                const full_name = record.full_name || 'New User';
+                const password = record.password || '';
+                const selected_course = record.selected_course || '';
+
+                if (!email) {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ status: 'skipped', reason: 'email field missing or null' }));
+                    return;
+                }
+
+                console.log(`Sending welcome email to ${email}...`);
+                const subject = "Welcome to PrimeVerse!";
+                const html = renderTemplate('welcome.html', {
+                    full_name,
+                    email,
+                    password,
+                    selected_course
+                });
+
+                await sendEmail(email, subject, html);
+
+                res.writeHead(202, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ status: 'queued', recipient: email }));
+            } catch (err) {
+                console.error('Error handling welcome request:', err.message);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
     } else {
         res.writeHead(404);
         res.end();

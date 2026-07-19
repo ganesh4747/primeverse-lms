@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const otpToken = otpInput ? otpInput.value.trim() : '';
 
             // Obtain the Supabase client safely from window, falling back to local creation if needed
-            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
 
             if (!supabase) {
                 showSnackbar("Supabase is not initialized. Please check connection.", "error");
@@ -647,7 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Clear session from database before logging out
                 const userEmail = localStorage.getItem('userEmail');
                 const userRole = localStorage.getItem('userRole') || 'user';
-                const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+                const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
 
                 if (userEmail && supabase) {
                     try {
@@ -758,7 +758,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateAuthUI();
 
         const userEmail = localStorage.getItem('userEmail');
-        const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+        const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
         if (userEmail && supabase) {
             try {
                 await supabase
@@ -824,7 +824,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('selectedCourse', targetCourse);
             localStorage.setItem('enrollDate', new Date().toISOString());
 
-            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://sljcqcksrqzanyivtdld.supabase.co", "sb_publishable_0gsZlqZga8nHuyueFk_9pA_zjqH73dP") : null);
+            const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
             
             if (supabase) {
                 supabase.from('profiles').update({
