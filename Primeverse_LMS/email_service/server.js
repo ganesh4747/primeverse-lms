@@ -84,13 +84,68 @@ const server = http.createServer(async (req, res) => {
                 const payload = JSON.parse(body);
                 console.log(`[HTTP] Received email trigger request: Table: ${payload.table}, Type: ${payload.type}`);
                 
-                if (payload.type !== 'INSERT' || payload.table !== 'concept_messages') {
+                if (payload.type !== 'INSERT') {
                     res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ status: 'skipped', reason: 'unsupported table or event type' }));
+                    res.end(JSON.stringify({ status: 'skipped', reason: 'unsupported event type' }));
                     return;
                 }
 
                 const record = payload.record || {};
+
+                if (payload.table === 'concept_submissions') {
+                    const student_email = record.user_email;
+                    const student_name = record.user_name || 'PrimeVerse Student';
+                    const module_name = record.module || 'Unknown Module';
+                    const concept_name = record.concept_name || 'Unknown Concept';
+                    const explanation = record.explanation || 'No description provided.';
+                    const screenshot_url = record.screenshot_url;
+
+                    if (!student_email) {
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ status: 'skipped', reason: 'missing student email' }));
+                        return;
+                    }
+
+                    let adminEmails = [];
+                    if (supabase) {
+                        try {
+                            const { data, error } = await supabase.from('admins').select('email');
+                            if (!error && data) {
+                                adminEmails = data.map(r => r.email).filter(Boolean);
+                            }
+                        } catch (err) {
+                            console.error('Failed to fetch admins from DB:', err.message);
+                        }
+                    }
+
+                    if (adminEmails.length === 0) {
+                        adminEmails = [process.env.ADMIN_EMAIL || 'harishramanan4415@gmail.com'];
+                    }
+
+                    console.log(`Sending new submission alert to ${adminEmails.length} admin(s)...`);
+                    const subject = `New concept submission from ${student_name}`;
+                    const html = renderTemplate('admin_submission_alert.html', {
+                        student_name,
+                        student_email,
+                        module_name,
+                        concept_name,
+                        explanation,
+                        screenshot_url: screenshot_url || '',
+                        workspace_url: process.env.LMS_WORKSPACE_URL || 'https://www.primeverseportal.pro/html/oneonecommunity.html'
+                    });
+
+                    for (const email of adminEmails) {
+                        await sendEmail(email, subject, html);
+                    }
+
+                    res.writeHead(202, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ status: 'queued', recipient: 'admin' }));
+                    return;
+                } else if (payload.table !== 'concept_messages') {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ status: 'skipped', reason: 'unsupported table' }));
+                    return;
+                }
                 const sender_role = record.sender_role;
                 const sender_name = record.sender_name || 'Student';
                 const sender_email = record.sender_email;

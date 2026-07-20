@@ -6635,6 +6635,34 @@
                                     submissionData.id = data[0].id;
                                     submissionData.created_at = data[0].created_at || submissionData.created_at;
                                     console.log('Successfully inserted into Supabase concept_submissions table.');
+
+                                    // Trigger email notification to admins
+                                    const triggerSubmissionEmail = (subRecord) => {
+                                        let apiUrl = '/api/send-admin-alert';
+                                        if (window.location.origin.startsWith('file://')) {
+                                            apiUrl = 'http://127.0.0.1:8000/api/send-admin-alert';
+                                        } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                                            if (window.location.port && window.location.port !== '8000' && window.location.port !== '3000') {
+                                                apiUrl = 'http://127.0.0.1:8000/api/send-admin-alert';
+                                            }
+                                        }
+                                        
+                                        fetch(apiUrl, {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({
+                                                type: 'INSERT',
+                                                table: 'concept_submissions',
+                                                record: subRecord
+                                            })
+                                        })
+                                        .then(res => console.log('Submission email alert triggered:', res))
+                                        .catch(err => console.error('Failed to trigger submission email alert:', err));
+                                    };
+
+                                    triggerSubmissionEmail(dbPayload);
                                 } else {
                                     console.warn('Supabase DB insert failed or select empty. Error:', error);
                                 }
