@@ -2,14 +2,26 @@
 // Each day contains parts (part1, part2, etc.)
 // Quality links are optional - if provided, the quality selector will use these URLs directly instead of appending suffixes
 
+// Helper to convert standard Google Drive links into direct HTML5 video stream URLs
+function formatDriveUrl(url) {
+    if (!url || typeof url !== 'string') return url;
+    const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+        return `https://lh3.googleusercontent.com/d/${match[1]}`;
+    }
+    return url;
+}
+window.formatDriveUrl = formatDriveUrl;
+
+
 const introVideoSrc = 'https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/intro/intro.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvaW50cm8vaW50cm8ubXA0IiwiaWF0IjoxNzc5MjE5NzQ3LCJleHAiOjE4MTA3NTU3NDd9.RWXhPSQiPALBAHlMuy1NJ9o65LnEiJ9CaPgzPMI05JY';
 
 const executionJournalVideo = {
-    src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NTE1LCJleHAiOjIwOTY4MTg1MTV9.w1PSH48761dL_thDBqPiPo_YZQJkvTnuBjii90yaofw",
+    src: "https://drive.google.com/file/d/1uQ5Idz7iCteNrwOJCwvCIGJzkHxWd-WW/view?usp=sharing",
     qualityLinks: {
-        "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NTE1LCJleHAiOjIwOTY4MTg1MTV9.w1PSH48761dL_thDBqPiPo_YZQJkvTnuBjii90yaofw",
-        "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NTkwMTEsImV4cCI6MjA5NjgxOTAxMX0.C7Mhp-5wHUGbLdn1XT_aWK7ey1J5fEhPzbOt3wLIVlk",
-        "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NTg5NTgsImV4cCI6MjA5NjgxODk1OH0.rc5yG-hmR2rcfy2WFn3rOiPsf-ndtg4Dm69EwLYxtEA"
+        "1080p": "https://drive.google.com/file/d/1uQ5Idz7iCteNrwOJCwvCIGJzkHxWd-WW/view?usp=sharing",
+        "720p": "https://drive.google.com/file/d/1uQ5Idz7iCteNrwOJCwvCIGJzkHxWd-WW/view?usp=sharing",
+        "480p": "https://drive.google.com/file/d/1uQ5Idz7iCteNrwOJCwvCIGJzkHxWd-WW/view?usp=sharing"
     }
 };
 
@@ -82,20 +94,20 @@ const lessonsDatabase = {
         title: "Financial Market Foundations",
         part1: {
             title: "Day 01 - Part 1: Introduction to Trading & Financial Markets",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-1/module1.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEvbW9kdWxlMS5tcDQiLCJpYXQiOjE3NzkyMTk2MDEsImV4cCI6MTgxMDc1NTYwMX0.HqGTu6X-AZMSymgnWxsp_n7HUDRAWD8GaHvBmUh5A94",
+            src: "https://drive.google.com/file/d/11b7Hcqk5Fn206zODZnORKguetk6QkwgU/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-1/module%201-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEvbW9kdWxlIDEtMTA4MHAubXA0IiwiaWF0IjoxNzgwMzgyMzQzLCJleHAiOjE4MTE5MTgzNDN9.TChNy1b7uG9W1hEwneM0b-XQfoIfXkXDR_6fhoWatQY",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-1/module%201-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEvbW9kdWxlIDEtNzIwcC5tcDQiLCJpYXQiOjE3ODAzODI0ODksImV4cCI6MTgxMTkxODQ4OX0.GCBlH06t5o9yqyBzlY_5IkrQh5r8vr-5_enN_OPSG98",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-1/module%201-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEvbW9kdWxlIDEtNDgwcC5tcDQiLCJpYXQiOjE3ODAzODI0NzYsImV4cCI6MTgxMTkxODQ3Nn0.WhWsTiFXfkaFa3n6zTImhcAujO6NIizkw4Vs_2tXcrU"
+                "1080p": "https://drive.google.com/file/d/11b7Hcqk5Fn206zODZnORKguetk6QkwgU/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/11b7Hcqk5Fn206zODZnORKguetk6QkwgU/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/11b7Hcqk5Fn206zODZnORKguetk6QkwgU/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 01 - Part 2: Forex Market & Currency Pair Fundamentals",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-1/module%202.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEvbW9kdWxlIDIubXA0IiwiaWF0IjoxNzc5MjQ3NDAxLCJleHAiOjMxNzEzOTI0NzQwMX0.Tw1RXnXrIUgPB9hhHrZzkUipLiQEqb8oX3QRuK_xyCc",
+            src: "https://drive.google.com/file/d/1K1_ygQE_lPoA2ZPrXJHMYuFhIW0x_bsW/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-1/module%202-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEvbW9kdWxlIDItMTA4MHAubXA0IiwiaWF0IjoxNzgwMzg0OTI2LCJleHAiOjE4MTE5MjA5MjZ9._Un2EOBpe8xm1qYc9_os76snwV2LEaxn-3xxsB8-WSQ",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-1/module%202-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEvbW9kdWxlIDItNzIwcC5tcDQiLCJpYXQiOjE3ODAzODQ5MDQsImV4cCI6MTgxMTkyMDkwNH0._WiOHftRigeZzkWbR3WDtvtbp0HTV0Uuh8yLn5cr7Oc",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-1/module%202-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEvbW9kdWxlIDItNDgwcC5tcDQiLCJpYXQiOjE3ODAzODQzODQsImV4cCI6MTgxMTkyMDM4NH0.88mydQClmUsiz7CFIJ2R0bzc7CghB7GkuH1UxUAI_Ao"
+                "1080p": "https://drive.google.com/file/d/1K1_ygQE_lPoA2ZPrXJHMYuFhIW0x_bsW/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1K1_ygQE_lPoA2ZPrXJHMYuFhIW0x_bsW/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1K1_ygQE_lPoA2ZPrXJHMYuFhIW0x_bsW/view?usp=sharing"
             }
         }
     },
@@ -103,20 +115,20 @@ const lessonsDatabase = {
         title: "Charting & Trading Fundamentals",
         part1: {
             title: "Day 02 - Part 1: TradingView Platform & Candlestick Chart Basics",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-2/Day2module1.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTIvRGF5Mm1vZHVsZTEubXA0IiwiaWF0IjoxNzc5MzAxMjkyLCJleHAiOjg2NTc3OTIxNDg5Mn0.QbF_0zDxBN3zFtCPuRclzmbuAbJh-IF-nznM0mSJGfE",
+            src: "https://drive.google.com/file/d/1f4tLV7tXHpV8EAzuJ9EArXhsS845I5eO/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-2/Day2module1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTIvRGF5Mm1vZHVsZTEtMTA4MHAubXA0IiwiaWF0IjoxNzgwMzgyOTI0LCJleHAiOjE4MTE5MTg5MjR9.JXGWKRjHncaSEsgteCBR3L2xkwMDKkvI9ZgyZ56wb3M",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-2/Day2module1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTIvRGF5Mm1vZHVsZTEtNzIwcC5tcDQiLCJpYXQiOjE3ODAzODI5ODEsImV4cCI6MTgxMTkxODk4MX0.oCkOaFv_dyCXImOAr5hKuH2zj_pg9M75qfr90mFhn3w",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-2/Day2module1-420p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTIvRGF5Mm1vZHVsZTEtNDIwcC5tcDQiLCJpYXQiOjE3ODA0MDQyNzUsImV4cCI6MTgxMTk0MDI3NX0.3et10gUN6ArIy_DH-ghJhRCFTzCFgKAB4MX_u6U7_uM"
+                "1080p": "https://drive.google.com/file/d/1f4tLV7tXHpV8EAzuJ9EArXhsS845I5eO/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1f4tLV7tXHpV8EAzuJ9EArXhsS845I5eO/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1f4tLV7tXHpV8EAzuJ9EArXhsS845I5eO/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 02 - Part 2: Timeframe Analysis & Types of Traders",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-2/Day2module2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTIvRGF5Mm1vZHVsZTItMTA4MHAubXA0IiwiaWF0IjoxNzgwNDA0MDYzLCJleHAiOjE4MTE5NDAwNjN9.dZSQlvTMEpmnokl-KSmzz5GNgl3LL822OCxwjLe6vqs",
+            src: "https://drive.google.com/file/d/1lsToq9amFr9h8Hcarmuw4As3bTKWf4Xk/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-2/Day2module2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTIvRGF5Mm1vZHVsZTItMTA4MHAubXA0IiwiaWF0IjoxNzgwNDA0MTczLCJleHAiOjE4MTE5NDAxNzN9.SBd_L_I8Ga6QIsILK7NcrQ1V5XaI-jRoosLixlupKp0",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-2/day2-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTIvZGF5Mi1zMi03MjAubXA0IiwiaWF0IjoxNzgwNDA0MTU3LCJleHAiOjE4MTE5NDAxNTd9.iN-a4vK_Tl26quJda-MWXTKVZfRNSaif40DRhz69iIg",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-2/day2-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTIvZGF5Mi1zMi00ODAubXA0IiwiaWF0IjoxNzgwNDA0MzYyLCJleHAiOjE4MTE5NDAzNjJ9.j5VNcbzOGBlXWrbtnCTOXbS6wpctjlm1raDpy9znBXY"
+                "1080p": "https://drive.google.com/file/d/1lsToq9amFr9h8Hcarmuw4As3bTKWf4Xk/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1lsToq9amFr9h8Hcarmuw4As3bTKWf4Xk/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1lsToq9amFr9h8Hcarmuw4As3bTKWf4Xk/view?usp=sharing"
             }
         },
     },
@@ -124,29 +136,29 @@ const lessonsDatabase = {
         title: "Trading Execution Essentials",
         part1: {
             title: "Day 03 - Part 1: Understanding Pips & Lot Size Management",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module1.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTEubXA0IiwiaWF0IjoxNzc5NjQzNzE3LCJleHAiOjI0MTAzNjM3MTd9.QB_fB7kx4bH2ZNeRGkrXa6Mu1H92FnM8iw12c_WJ_kU",
+            src: "https://drive.google.com/file/d/1AuXwGRkqzirD3rAUtXRCvACYNuOZVsyR/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTEtMTA4MHAubXA0IiwiaWF0IjoxNzgwNDk5MTczLCJleHAiOjE4MTIwMzUxNzN9.FyePpa-xsRhuHN4du_lbQ7zgHQNOEwgvPnT8wSkjvME",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTEtNzIwcC5tcDQiLCJpYXQiOjE3ODA0OTkxODksImV4cCI6MTgxMjAzNTE4OX0.trG7_LClshMcQwe1_1eyt4bWdcA2trnlPvG6B4SAvRQ",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTEtNDgwcC5tcDQiLCJpYXQiOjE3ODA0OTkxOTksImV4cCI6MTgxMjAzNTE5OX0.hoixI5pCTRJSq88DBmgRJgqELEQU1xyN_7J2vt1j2-s"
+                "1080p": "https://drive.google.com/file/d/1AuXwGRkqzirD3rAUtXRCvACYNuOZVsyR/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1AuXwGRkqzirD3rAUtXRCvACYNuOZVsyR/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1AuXwGRkqzirD3rAUtXRCvACYNuOZVsyR/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 03 - Part 2: Broker Mechanics, Spread & Leverage Basics",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module2.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTIubXA0IiwiaWF0IjoxNzc5NjQzNzM5LCJleHAiOjI0MTAzNjM3Mzl9.vJp8txfLnjgC3iO_ltgmx2HZCuV4z36V2Nj0FtC2RjM",
+            src: "https://drive.google.com/file/d/1DwUlTWo_TL5SQiOl3ozbWaWTcpGdvQDr/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTItMTA4MHAubXA0IiwiaWF0IjoxNzgwNTA1MzYyLCJleHAiOjE4MTIwNDEzNjJ9.azFFz05VzOj_oKwkJND1XoBeNYs9A2w_CVt4iyD9No0",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTItNzIwcC5tcDQiLCJpYXQiOjE3ODA0OTk1MjcsImV4cCI6MTgxMjAzNTUyN30.0bv7e2N1rm9SPLuU6-ImktN68u2RdNiu8bpwFyFFzh4",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTItNDgwcC5tcDQiLCJpYXQiOjE3ODA0OTk1NDMsImV4cCI6MTgxMjAzNTU0M30.Sr0nr8PfFQBqFUZlt1rpP_VPh8MC6WKYxpcLejRNIYQ"
+                "1080p": "https://drive.google.com/file/d/1DwUlTWo_TL5SQiOl3ozbWaWTcpGdvQDr/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1DwUlTWo_TL5SQiOl3ozbWaWTcpGdvQDr/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1DwUlTWo_TL5SQiOl3ozbWaWTcpGdvQDr/view?usp=sharing"
             }
         },
         part3: {
             title: "Day 03 - Part 3: Market Order & Pending Order Types",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module3.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTMubXA0IiwiaWF0IjoxNzc5NjQzNzY0LCJleHAiOjI0MTAzNjM3NjR9.ChhC4wirklD0wg6HOztO7dJfQq-cliAlamwyltZFw64",
+            src: "https://drive.google.com/file/d/1HOy065yYSRUaR_dtCwKFNGJaFWGsLkaQ/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module3-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTMtMTA4MHAubXA0IiwiaWF0IjoxNzgwNTA1NDM2LCJleHAiOjE4MTIwNDE0MzZ9.jvjldr4yANsAOWFKXGH-FsMkICoqeoOIFvcfwCkMDrE",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module3-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTMtNzIwcC5tcDQiLCJpYXQiOjE3ODA0OTk2MjQsImV4cCI6MTgxMjAzNTYyNH0.jR2JUTbbzOQuSKXKxQTkZDXywFqlp7CX-ZCpyEBlPAE",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-3/Day3module3-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTMvRGF5M21vZHVsZTMtNDgwcC5tcDQiLCJpYXQiOjE3ODA0OTk2MzYsImV4cCI6MTgxMjAzNTYzNn0.Z69XxQaunCms_Djkyf3H0SPuIuMqZGeE36WBfplfdpA"
+                "1080p": "https://drive.google.com/file/d/1HOy065yYSRUaR_dtCwKFNGJaFWGsLkaQ/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1HOy065yYSRUaR_dtCwKFNGJaFWGsLkaQ/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1HOy065yYSRUaR_dtCwKFNGJaFWGsLkaQ/view?usp=sharing"
             }
         }
     },
@@ -154,20 +166,20 @@ const lessonsDatabase = {
         title: "Trade Management & Market Analysis",
         part1: {
             title: "Day 04 - Part 1: Stop Loss, Take Profit & Trading Sessions",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-4/Day4module1.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTQvRGF5NG1vZHVsZTEubXA0IiwiaWF0IjoxNzc5NjQzNjUzLCJleHAiOjE4MzE0ODM2NTN9._5wT_qPqbp0-3Pj5hnZ23Y_YlMMisQHete1n0yI9Mm4",
+            src: "https://drive.google.com/file/d/1a3H3PDBRCEM6JRPfIm8ZdQE6JUlPS6JH/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-4/Day4module1-1080p.mp4.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTQvRGF5NG1vZHVsZTEtMTA4MHAubXA0Lm1wNCIsImlhdCI6MTc4MDUwODA2OCwiZXhwIjoxODEyMDQ0MDY4fQ.Le309RYJ8eYZ7UxJ4iegJKW59CSXqAB_NOFUTtmdcg0",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-4/Day4module1-720p.mp4.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTQvRGF5NG1vZHVsZTEtNzIwcC5tcDQubXA0IiwiaWF0IjoxNzgwNTA4MDk3LCJleHAiOjE4MTIwNDQwOTd9.bSa7hrpU4gJJLp8nC2RwRGUzU_Ap3rLHbX_5MWfGOuA",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-4/Day4module1-480p.mp4.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTQvRGF5NG1vZHVsZTEtNDgwcC5tcDQubXA0IiwiaWF0IjoxNzgwNTA4MTA3LCJleHAiOjE4MTIwNDQxMDd9.l-eGFXOv8v6DQzKCV7p5JyYuqZz3P5IwcUyBfC8_ht8"
+                "1080p": "https://drive.google.com/file/d/1a3H3PDBRCEM6JRPfIm8ZdQE6JUlPS6JH/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1a3H3PDBRCEM6JRPfIm8ZdQE6JUlPS6JH/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1a3H3PDBRCEM6JRPfIm8ZdQE6JUlPS6JH/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 04 - Part 2: Technical & Fundamental Market Analysis",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-4/Day4module2.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTQvRGF5NG1vZHVsZTIubXA0IiwiaWF0IjoxNzc5NjQzNjc5LCJleHAiOjI0MTAzNjM2Nzl9.jmOsQEg-jlz_A8VSZBbgrokEfBQiKbGnDDpJtQFFHx0",
+            src: "https://drive.google.com/file/d/1MYD_91sixcm3bPYkDq2tYo82UoIX6N3-/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-4/d4-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTQvZDQtczItNzIwLm1wNCIsImlhdCI6MTc4MDUwODc0MCwiZXhwIjoxODEyMDQ0NzQwfQ.A989ElZ403vVbqdYzAZtAiwE4H2rZq-WqhFgRBLrov4",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-4/d4-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTQvZDQtczItMTA4MC5tcDQiLCJpYXQiOjE3ODA1MDg3NjMsImV4cCI6MTgxMjA0NDc2M30._VFNlqZtRlCHaYi1wsXTj6C8CCO32IzU5Gda-CGcXhE",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-4/day4-2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTQvZGF5NC0yLTQ4MC5tcDQiLCJpYXQiOjE3ODA1MDg2MTEsImV4cCI6MTgxMjA0NDYxMX0.mujQ13IY_4x9WkFj0b0Uz7bC0wTn71a3dYRVVKjYJYo"
+                "1080p": "https://drive.google.com/file/d/1MYD_91sixcm3bPYkDq2tYo82UoIX6N3-/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1MYD_91sixcm3bPYkDq2tYo82UoIX6N3-/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1MYD_91sixcm3bPYkDq2tYo82UoIX6N3-/view?usp=sharing"
             }
         }
     },
@@ -175,11 +187,11 @@ const lessonsDatabase = {
         title: "Market Structure",
         part1: {
             title: "Day 05 - Part 1: Understanding Market Structure Fundamentals",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-5/Day5module1.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTUvRGF5NW1vZHVsZTEubXA0IiwiaWF0IjoxNzc5NjQzNTI2LCJleHAiOjI0MTAzNjM1MjZ9.HxKXSXRycocOZ137QfPkiLgfgGJZJyV-RodQXnlJYlk",
+            src: "https://drive.google.com/file/d/1vO5AkNvS2RgjoblrQSeZXIvh_dcS0xK-/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-5/day5-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTUvZGF5NS0xMDgwLm1wNCIsImlhdCI6MTc4MDU0NzQ0MCwiZXhwIjoxODEyMDgzNDQwfQ.blIFkqf7Smu4PHFOCHiwUZe1LrJTlv4nAAGjNUXYJHo",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-5/day5-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTUvZGF5NS03MjAubXA0IiwiaWF0IjoxNzgwNTQ3NDUwLCJleHAiOjE4MTIwODM0NTB9.-w7zZE_AZbyFTkbM4brO_uMOwzFtv_AnrID5FF0eweY",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-5/day5-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTUvZGF5NS00ODAubXA0IiwiaWF0IjoxNzgwNTQ3NDkyLCJleHAiOjE5MzgyMjc0OTJ9.4-cM1TZyfgmIOa8NoLJdeocGBWbZUEkxQP6v3LeLBQM"
+                "1080p": "https://drive.google.com/file/d/1vO5AkNvS2RgjoblrQSeZXIvh_dcS0xK-/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1vO5AkNvS2RgjoblrQSeZXIvh_dcS0xK-/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1vO5AkNvS2RgjoblrQSeZXIvh_dcS0xK-/view?usp=sharing"
             }
         }
     },
@@ -187,20 +199,20 @@ const lessonsDatabase = {
         title: "Trend Analysis & Market Direction",
         part1: {
             title: "Day 06 - Part 1: Understanding Market Trends",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-6/day6-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMi03MjAubXA0IiwiaWF0IjoxNzgwNjMyMTMyLCJleHAiOjE4MTIxNjgxMzJ9.0VDE3RO_9J3mdqzRyRDvnKdCiBVh3nxosSGT507qwRA",
+            src: "https://drive.google.com/file/d/1mWg8zNFl5vNrjJ8hsOQkWT4zASMJuNC5/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-6/day6-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMi0xMDgwLm1wNCIsImlhdCI6MTc4MDYzMjEyNSwiZXhwIjoxODEyMTY4MTI1fQ.rYVfZYx9Ljn1-WgCnqy8ApLs7BWPB8TEddbhmYo-0G4",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-6/day6-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMi03MjAubXA0IiwiaWF0IjoxNzgwNjMyMTMyLCJleHAiOjE4MTIxNjgxMzJ9.0VDE3RO_9J3mdqzRyRDvnKdCiBVh3nxosSGT507qwRA",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-6/day6-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMi00ODAubXA0IiwiaWF0IjoxNzgwNjMyMTUwLCJleHAiOjE4MTIxNjgxNTB9.bGZRYj5XVg3ZNfhYIPhPvCgZBKOL-73GYe-LqnzYpjM"
+                "1080p": "https://drive.google.com/file/d/1mWg8zNFl5vNrjJ8hsOQkWT4zASMJuNC5/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1mWg8zNFl5vNrjJ8hsOQkWT4zASMJuNC5/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1mWg8zNFl5vNrjJ8hsOQkWT4zASMJuNC5/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 06 - Part 2: Live Trend Analysis & Market Examples",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS00ODAubXA0IiwiaWF0IjoxNzgwNjc3MDk1LCJleHAiOjE4MTIyMTMwOTV9.ic_7SowXXNeLR38bXV88s3iC5vkeLOHdk_vqw8SZo-M",
+            src: "https://drive.google.com/file/d/1B4HpWSWItokPLuw37Q2NzHOKjHJAT2Iy/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS0xMDgwLm1wNCIsImlhdCI6MTc4MDY3NzAwMCwiZXhwIjoxODEyMjEzMDAwfQ.Ic4v4yn0XI3Lxmlm9CvUI0g_ekq4413IA92dmep0Ues",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS00ODAubXA0IiwiaWF0IjoxNzgwNjc3MDk1LCJleHAiOjE4MTIyMTMwOTV9.ic_7SowXXNeLR38bXV88s3iC5vkeLOHdk_vqw8SZo-M",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-6/day6-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTYvZGF5Ni1zMS00ODAubXA0IiwiaWF0IjoxNzgwNjc3MTEyLCJleHAiOjE4MTIyMTMxMTJ9.VF7_JZJ3HpNUEhcOnvP1aJWvE61FhdnPBYFp14OC-Ow"
+                "1080p": "https://drive.google.com/file/d/1B4HpWSWItokPLuw37Q2NzHOKjHJAT2Iy/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1B4HpWSWItokPLuw37Q2NzHOKjHJAT2Iy/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1B4HpWSWItokPLuw37Q2NzHOKjHJAT2Iy/view?usp=sharing"
             }
         }
     },
@@ -208,29 +220,29 @@ const lessonsDatabase = {
         title: "Key Levels & Market Reaction Zone",
         part1: {
             title: "Day 07 - Part 1: Understanding Key Levels",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7module1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5N21vZHVsZTEtMTA4MHAubXA0IiwiaWF0IjoxNzgwNzU0OTAxLCJleHAiOjE4MTIyOTA5MDF9.1IJaogpsVkkJvtBeNRBt212rPH2er7SyOw8eAesn7Kg",
+            src: "https://drive.google.com/file/d/14ZcHCi6NqZEzhGCzbTu2nzYWBJanBNQf/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7module1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5N21vZHVsZTEtMTA4MHAubXA0IiwiaWF0IjoxNzgwNzU0OTAxLCJleHAiOjE4MTIyOTA5MDF9.1IJaogpsVkkJvtBeNRBt212rPH2er7SyOw8eAesn7Kg",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7module1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5N21vZHVsZTEtNzIwcC5tcDQiLCJpYXQiOjE3ODA3NTQ5MTEsImV4cCI6MTgxMjI5MDkxMX0.sHP2vESCRKQcNrnctRi947STOlMVMuLf9UQ_I59Q5og",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7module1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5N21vZHVsZTEtNDgwcC5tcDQiLCJpYXQiOjE3ODA3NTQ5MjcsImV4cCI6MTgxMjI5MDkyN30.5eH1Zxb6jdkxV_2L7YqQ2__3QkqQOkfJ-4waZYom_jg"
+                "1080p": "https://drive.google.com/file/d/14ZcHCi6NqZEzhGCzbTu2nzYWBJanBNQf/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/14ZcHCi6NqZEzhGCzbTu2nzYWBJanBNQf/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/14ZcHCi6NqZEzhGCzbTu2nzYWBJanBNQf/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 07 - Part 2: How to Draw Accurate Key Levels",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMi03MjAubXA0IiwiaWF0IjoxNzgwNzU0OTUzLCJleHAiOjE4MTIyOTA5NTN9.oErWyCBV_qkECNz1fTQdlnUnjhu5ZZPZLSUHH5veBVk",
+            src: "https://drive.google.com/file/d/1AWWs-azpmpfqZWIR5wzycuh4ww9JlnpE/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMi0xMDgwLm1wNCIsImlhdCI6MTc4MDgxMjc3NywiZXhwIjoyMDk2MTcyNzc3fQ.hfIqVZ1bZqr-Fmojk2gHUHnEK1LbNx8u-6Foi16KJD4",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMi03MjAubXA0IiwiaWF0IjoxNzgwNzU0OTUzLCJleHAiOjE4MTIyOTA5NTN9.oErWyCBV_qkECNz1fTQdlnUnjhu5ZZPZLSUHH5veBVk",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMi00ODAubXA0IiwiaWF0IjoxNzgwNzU0OTYyLCJleHAiOjE4MTIyOTA5NjJ9.qdfgT0jeHZVj5wvaHgu0phhtneLBvg2efV7S8Q-YHiY"
+                "1080p": "https://drive.google.com/file/d/1AWWs-azpmpfqZWIR5wzycuh4ww9JlnpE/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1AWWs-azpmpfqZWIR5wzycuh4ww9JlnpE/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1AWWs-azpmpfqZWIR5wzycuh4ww9JlnpE/view?usp=sharing"
             }
         },
         part3: {
             title: "Day 07 - Part 3: Live Key Level Market Examples",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7-s3-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMy0xMDgwLm1wNCIsImlhdCI6MTc4MDc1NDk4MSwiZXhwIjoxODEyMjkwOTgxfQ.WAJAdRq3cspLpWxwG-2i_w5hBIcA-1rtP52PZzQn0oQ",
+            src: "https://drive.google.com/file/d/1dYymFJtA5M9pYxSTDotAy0NzzjPVx7Xi/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7-s3-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5Ny1zMy0xMDgwLm1wNCIsImlhdCI6MTc4MDc1NDk4MSwiZXhwIjoxODEyMjkwOTgxfQ.WAJAdRq3cspLpWxwG-2i_w5hBIcA-1rtP52PZzQn0oQ",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/day7-s3-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZGF5Ny1zMy03MjAubXA0IiwiaWF0IjoxNzgwNzU0OTkxLCJleHAiOjE4MTIyOTA5OTF9.IxaLJZvgWctOPj7XZQa-vsztLu4Ivtk2fH67U53oZVY",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-7/d7-s3-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTcvZDctczMtNDgwLm1wNCIsImlhdCI6MTc4MDc1NTAwMywiZXhwIjoxODEyMjkxMDAzfQ.udrE1s4Ubj7jx_qEo2dFFWvYcHqL94a5LzRxeksqZuM"
+                "1080p": "https://drive.google.com/file/d/1dYymFJtA5M9pYxSTDotAy0NzzjPVx7Xi/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1dYymFJtA5M9pYxSTDotAy0NzzjPVx7Xi/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1dYymFJtA5M9pYxSTDotAy0NzzjPVx7Xi/view?usp=sharing"
             }
         }
     },
@@ -238,20 +250,20 @@ const lessonsDatabase = {
         title: "Expansion & Retracement ,  Internal & External Market Structure",
         part1: {
             title: "Day 08 - Part 1: Understanding Expansion & Retracing",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-8/day8sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OHN1YjEtMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY3MDAzNiwiZXhwIjoxOTM5MzUwMDM2fQ.dRtbZJ_WU2sYIYa-mZPH81yKE4n-WcYfshsXxAW7GSc",
+            src: "https://drive.google.com/file/d/14mjfSyMd9ZXJrd6FjgAklM8CHBhqE_hF/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-8/day8sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OHN1YjEtMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY3MDAzNiwiZXhwIjoxOTM5MzUwMDM2fQ.dRtbZJ_WU2sYIYa-mZPH81yKE4n-WcYfshsXxAW7GSc",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-8/day8sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OHN1YjEtNzIwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNjcwMDY4LCJleHAiOjE4NzYyNzgwNjh9.sUM9W1Jl_iRxgQnVGOkkJ8GY1Yijowb83J-Dbfq8UEY",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-8/day8sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OHN1YjEtNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNjcwMTAwLCJleHAiOjE4NzYyNzgxMDB9.fgoqvJee4psvOYVU3vdkqUUGi8sAdNz1WBkHCuT2hw0"
+                "1080p": "https://drive.google.com/file/d/14mjfSyMd9ZXJrd6FjgAklM8CHBhqE_hF/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/14mjfSyMd9ZXJrd6FjgAklM8CHBhqE_hF/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/14mjfSyMd9ZXJrd6FjgAklM8CHBhqE_hF/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 08 - Part 2: Internal & External Market Structure",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-8/day8-sub2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zdWIyLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY3MDEzNCwiZXhwIjoxODQ0NzQyMTM0fQ.ZSn0ZkxnTRu705xclyvOPdqWTf3_12jDI_VCfFKFaLA",
+            src: "https://drive.google.com/file/d/13jWJfmPsCWHWdC2nYdiAcVToAv65AWHA/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-8/day8-sub2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zdWIyLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY3MDEzNCwiZXhwIjoxODQ0NzQyMTM0fQ.ZSn0ZkxnTRu705xclyvOPdqWTf3_12jDI_VCfFKFaLA",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-8/day8-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMi03MjAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTY3MDE2MCwiZXhwIjoxODc2Mjc4MTYwfQ.4e_3Xkqcwn-Sreg_PArx14VjuFBJjxelqzTosC7FEmE",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-8/day8-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTgvZGF5OC1zMi00ODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTk2MDU3NywiZXhwIjoxOTM5NjQwNTc3fQ.6CEMHBDJdKqNvmlmX_YKYeAwLZ9DKzzk8_RjxNo_7pM"
+                "1080p": "https://drive.google.com/file/d/13jWJfmPsCWHWdC2nYdiAcVToAv65AWHA/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/13jWJfmPsCWHWdC2nYdiAcVToAv65AWHA/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/13jWJfmPsCWHWdC2nYdiAcVToAv65AWHA/view?usp=sharing"
             }
         }
     },
@@ -280,11 +292,11 @@ const lessonsDatabase = {
         title: "Fibonacci Optimal Trade Entry (OTE)",
         part1: {
             title: "Day 10 - Part 1: Understanding Fibonacci OTE Levels",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-10/day10sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEwL2RheTEwc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMDI2MDczLCJleHAiOjE4MTI1NjIwNzN9.e4OZUY5PLVAvL5haklCpSiAt45FKiXXC7g0jiVao73E",
+            src: "https://drive.google.com/file/d/1mb8dHAdj9RZ0ZOV8csatduX4xeIeK3su/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-10/day10sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEwL2RheTEwc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMDI2MDczLCJleHAiOjE4MTI1NjIwNzN9.e4OZUY5PLVAvL5haklCpSiAt45FKiXXC7g0jiVao73E",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-10/day10sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEwL2RheTEwc3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEwMjYwODQsImV4cCI6MTgxMjU2MjA4NH0.y_Sf0AcqfyMMrB9GwLJ4MVdXiv9BdPQIGV3jGoCsN3s",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-10/day10sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEwL2RheTEwc3ViMS00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEwMjYwOTIsImV4cCI6MTgxMjU2MjA5Mn0._FQUHHEt2H15iyzmjrIVsTgeZ6kEf4sSC3ywUEAIljE"
+                "1080p": "https://drive.google.com/file/d/1mb8dHAdj9RZ0ZOV8csatduX4xeIeK3su/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1mb8dHAdj9RZ0ZOV8csatduX4xeIeK3su/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1mb8dHAdj9RZ0ZOV8csatduX4xeIeK3su/view?usp=sharing"
             }
         }
     },
@@ -313,20 +325,20 @@ const lessonsDatabase = {
         title: "Power of Two Confirmation Patterns",
         part1: {
             title: "Day 12 - Part 1: SH + SB &  FS + SB (Confirmation Model)",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzczMjIxLCJleHAiOjIwOTY3MzMyMjF9.G1bwIJSmu5zyKF93HfT_GPY7fElcz0gqIarxHjy6TMo",
+            src: "https://drive.google.com/file/d/1_fpy-XE4BYoLA7iYKE9xZYNIUBzKG_lX/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzczMjIxLCJleHAiOjIwOTY3MzMyMjF9.G1bwIJSmu5zyKF93HfT_GPY7fElcz0gqIarxHjy6TMo",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzMyODIsImV4cCI6MjA5NjczMzI4Mn0.Uq8dXh6jdlBRVAr9OdWY_46gqrZbosuKgaq_Eg_amLA",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-12/day12sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMS00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzMyNTgsImV4cCI6MjA5NjczMzI1OH0.F5PuRlfZyH1N-s98rw3ZiZ6MTrXclV4kkqqh1KbqyGc"
+                "1080p": "https://drive.google.com/file/d/1_fpy-XE4BYoLA7iYKE9xZYNIUBzKG_lX/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1_fpy-XE4BYoLA7iYKE9xZYNIUBzKG_lX/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1_fpy-XE4BYoLA7iYKE9xZYNIUBzKG_lX/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 12 - Part 2: Live Market Apply",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzc3OTQxLCJleHAiOjg2NTc4MTI5MTU0MX0.rN4JH2F9UuC340uJrzheo4bbnb2NQ6Ym5vwupzIyMc8",
+            src: "https://drive.google.com/file/d/1qUNBDUVZMtiPdo4wjoHsogDk6WnLJKHD/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzc3OTQxLCJleHAiOjg2NTc4MTI5MTU0MX0.rN4JH2F9UuC340uJrzheo4bbnb2NQ6Ym5vwupzIyMc8",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzg0MzksImV4cCI6ODY1NzgxMjkyMDM5fQ.8tjMinhABCqWv5LabUpRDa57eeH5xX_UKd-LUGYZQsk",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-12/day12sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEyL2RheTEyc3ViMi00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzNzgxOTAsImV4cCI6ODY1NzgxMjkxNzkwfQ.D45l3Ud9GJY9aRHxmAUqOVnCSw7W3zYaVhXenmwkccU"
+                "1080p": "https://drive.google.com/file/d/1qUNBDUVZMtiPdo4wjoHsogDk6WnLJKHD/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1qUNBDUVZMtiPdo4wjoHsogDk6WnLJKHD/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1qUNBDUVZMtiPdo4wjoHsogDk6WnLJKHD/view?usp=sharing"
             }
         }
     },
@@ -334,20 +346,20 @@ const lessonsDatabase = {
         title: "Risk Management & Trading Journal Framework",
         part1: {
             title: "Day 13 - Part 1: Professional Risk Management Principles",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDM1MjcxLCJleHAiOjIwOTY3OTUyNzF9.i0U9NnWglX7wcnZ37qokeTFBFIYPF0oB1Rv7G2YjPrs",
+            src: "https://drive.google.com/file/d/1OpFCDIEy4_tjH69TlH5viS8808Yr6Fmp/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDM1MjcxLCJleHAiOjIwOTY3OTUyNzF9.i0U9NnWglX7wcnZ37qokeTFBFIYPF0oB1Rv7G2YjPrs",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0MzU2MTEsImV4cCI6MjA5Njc5NTYxMX0.AbbhEG1CfD5KiMLLi7Ivr3dNQO-TexdhC4ZDwGWki9U",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMS00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0MzU1OTgsImV4cCI6MjA5Njc5NTU5OH0.volHz2dejZ0I8CJE9C4KuB8YDWUUA7uFX_taYLV5xGw"
+                "1080p": "https://drive.google.com/file/d/1OpFCDIEy4_tjH69TlH5viS8808Yr6Fmp/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1OpFCDIEy4_tjH69TlH5viS8808Yr6Fmp/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1OpFCDIEy4_tjH69TlH5viS8808Yr6Fmp/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 13 - Part 2: Trading Journal & Performance Tracking",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDQ0ODUxLCJleHAiOjIwOTY4MDQ4NTF9.zsVSTxSPFo7qklP8Xy2gASUtt_fVfMzSv9D6ervbcSY",
+            src: "https://drive.google.com/file/d/13VMu5zM7BdNfDOY55jHRTMiDtlm68DdL/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDQ0ODUxLCJleHAiOjIwOTY4MDQ4NTF9.zsVSTxSPFo7qklP8Xy2gASUtt_fVfMzSv9D6ervbcSY",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NDQ4OTksImV4cCI6MjA5NjgwNDg5OX0.lKa5o6cyZMfqcfcqDUl0NMVhv0NdSCXcP-a96nLCII0",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzc3ViMi00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE0NDQ4NzgsImV4cCI6MjA5NjgwNDg3OH0.A1ze0JgUedXh2O9Lp5PykCDj06ZT_En_jsa-rPioDPI"
+                "1080p": "https://drive.google.com/file/d/13VMu5zM7BdNfDOY55jHRTMiDtlm68DdL/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/13VMu5zM7BdNfDOY55jHRTMiDtlm68DdL/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/13VMu5zM7BdNfDOY55jHRTMiDtlm68DdL/view?usp=sharing"
             }
         }
     },
@@ -355,11 +367,11 @@ const lessonsDatabase = {
         title: "Trading Psychology & Emotional Discipline",
         part1: {
             title: "Day 14 - Part 1: Understanding Trading Psychology and Emotional Control & Discipline Framework",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-14/day14-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE1MDk1NTMsImV4cCI6MTg3NjExNzU1M30.47Qcfq0zt8PGp4kNJMnJ0NpUuc2VRoA9FVfQdO0OZCU",
+            src: "https://drive.google.com/file/d/1gxKqqXWogLl9J2MTPoECupeaTfYYcQjh/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-14/day14-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTEwODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE1MDk1NTMsImV4cCI6MTg3NjExNzU1M30.47Qcfq0zt8PGp4kNJMnJ0NpUuc2VRoA9FVfQdO0OZCU",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-14/day14-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTcyMHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwOTU3NSwiZXhwIjoxODc2MTE3NTc1fQ.72PGy7SMkyZOrBttRFrAe-ydOCak5bV5bbVVxdpdhko",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-14/day14-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE0L2RheTE0LTQ4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwOTU4NywiZXhwIjoxODc2MTE3NTg3fQ.ZXuVyZB6WoYicTkvoyVbau_0hWxqGzNm6AFoTZQSR9A"
+                "1080p": "https://drive.google.com/file/d/1gxKqqXWogLl9J2MTPoECupeaTfYYcQjh/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1gxKqqXWogLl9J2MTPoECupeaTfYYcQjh/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1gxKqqXWogLl9J2MTPoECupeaTfYYcQjh/view?usp=sharing"
             }
         }
     },
@@ -367,20 +379,20 @@ const lessonsDatabase = {
         title: "Compounding Methoad & Complete Market Flow",
         part1: {
             title: "Day 15 - Part 1: Compounding Strategy & Long-Term Growth",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-15/day15sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1c3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTQ1MDAzLCJleHAiOjE5MzkyMjUwMDN9.kx2QiLqBes0Y1sNGY0ljeosSUWkKOutZGITfo7zHsZg",
+            src: "https://drive.google.com/file/d/1Zwmlfcrn1CTyREpBW2NxVoaZvq4fCYAy/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-15/day15sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1c3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTQ1MDAzLCJleHAiOjE5MzkyMjUwMDN9.kx2QiLqBes0Y1sNGY0ljeosSUWkKOutZGITfo7zHsZg",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-15/day15sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1c3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE1NDUwMzUsImV4cCI6MTkzOTIyNTAzNX0.xSX0ke1Jn1O2-GzoYAYTuKTHz_yH8HyP615tVz6YXdc",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjEtNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTQ0Nzc0LCJleHAiOjE5MzkyMjQ3NzR9.11qrnR8os55J8__cao2ngyItT03eWPmuIw9qvt8kkjs"
+                "1080p": "https://drive.google.com/file/d/1Zwmlfcrn1CTyREpBW2NxVoaZvq4fCYAy/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1Zwmlfcrn1CTyREpBW2NxVoaZvq4fCYAy/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1Zwmlfcrn1CTyREpBW2NxVoaZvq4fCYAy/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 15 - Part 2: Full Recap and Complete Market Flow",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzg0MywiZXhwIjoyMDk2ODY3ODQzfQ.gcGrOySg4mY6FCpcct-kw2ZyuesuVMBk-oynmEd1tGY",
+            src: "https://drive.google.com/file/d/1r8wTKcuaERhQKlNXI8NjYgnw8Sit73a8/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTUwNzg0MywiZXhwIjoyMDk2ODY3ODQzfQ.gcGrOySg4mY6FCpcct-kw2ZyuesuVMBk-oynmEd1tGY",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItNzIwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTA3OTA3LCJleHAiOjE5MzkxODc5MDd9.WOWraYyZUtgyiNTFOGBDF6xAj9Mq2djkRj76eJKz30I",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-15/day15-sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE1L2RheTE1LXN1YjItNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNTA3ODg1LCJleHAiOjE5MzkxODc4ODV9.KiR5oaMcg3odolEkxtQKM-21G54zEcyN_TZE540-KbU"
+                "1080p": "https://drive.google.com/file/d/1r8wTKcuaERhQKlNXI8NjYgnw8Sit73a8/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1r8wTKcuaERhQKlNXI8NjYgnw8Sit73a8/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1r8wTKcuaERhQKlNXI8NjYgnw8Sit73a8/view?usp=sharing"
             }
         }
     },
@@ -409,20 +421,20 @@ const lessonsDatabase = {
         title: "Real-Time Trade Execution Examples",
         part1: {
             title: "Day 17 - Part 1: Live Market Analysis",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-17/day17-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LXMxLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjMyNTIxNSwiZXhwIjoxOTQwMDA1MjE1fQ.lSyjCStmBr4BeL6An-6jQBtxZnwJH8jp9MofYJCkfqU",
+            src: "https://drive.google.com/file/d/1YBb2ELISCnGOcm3DGrtUv_oD4UFBYv2H/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-17/day17-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LXMxLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjMyNTIxNSwiZXhwIjoxOTQwMDA1MjE1fQ.lSyjCStmBr4BeL6An-6jQBtxZnwJH8jp9MofYJCkfqU",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-17/day17-s1-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LXMxLTcyMC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyMzI1MjQxLCJleHAiOjE5NDAwMDUyNDF9.T4PWOiWzXp3o8_AQ0v4rnELETR34mlD5mwEK-AHwZ1A",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-17/day17-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LXMxLTQ4MC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyMzI1MjU2LCJleHAiOjE5NDAwMDUyNTZ9.Xt_CXeDs2tWtF6NBQbfF0SSAvEHZPRFJPUt025TNjeE"
+                "1080p": "https://drive.google.com/file/d/1YBb2ELISCnGOcm3DGrtUv_oD4UFBYv2H/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1YBb2ELISCnGOcm3DGrtUv_oD4UFBYv2H/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1YBb2ELISCnGOcm3DGrtUv_oD4UFBYv2H/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 17 - Part 2: Real-Time Trade Execution Examples",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-17/day17-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LXMyLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjMyNTI3NCwiZXhwIjoxOTQwMDA1Mjc0fQ.DtYnyDzzgaOLY8dKyryJXl825f7s3yvXBWbE4kFImew",
+            src: "https://drive.google.com/file/d/1MDz8Denlj7IO4o_andxIOc6izk__MFB7/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-17/day17-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LXMyLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MjMyNTI3NCwiZXhwIjoxOTQwMDA1Mjc0fQ.DtYnyDzzgaOLY8dKyryJXl825f7s3yvXBWbE4kFImew",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-17/day17-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LXMyLTcyMC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyMzI1Mjk5LCJleHAiOjE5NDAwMDUyOTl9.WpxCXxq_Dxgt7l_F7LUIpQaSnLGp3EBMsCy3fV6K-mQ",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-17/day17-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE3L2RheTE3LXMyLTQ4MC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyMzI1MzI1LCJleHAiOjE5NDAwMDUzMjV9.Stu__1lYert4ilKx9bHkbagSWeXWSs49pncBVVZEBwE"
+                "1080p": "https://drive.google.com/file/d/1MDz8Denlj7IO4o_andxIOc6izk__MFB7/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1MDz8Denlj7IO4o_andxIOc6izk__MFB7/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1MDz8Denlj7IO4o_andxIOc6izk__MFB7/view?usp=sharing"
             }
         }
     },
@@ -430,20 +442,20 @@ const lessonsDatabase = {
         title: "Key Takeaways For Confident Trading (2)",
         part1: {
             title: "Day 18 - Part 1: Core Trading Principles & Execution Review",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-18/day18-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMxLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTgwMTkyOCwiZXhwIjoxOTM5NDgxOTI4fQ.4OaD2EESln-dKiDXrtkKpD_uYY3fDU3tSdf_qLxXpjA",
+            src: "https://drive.google.com/file/d/1flbhBVIUjBosZ01yYLgnU_5uF3vYOx7G/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-18/day18-s1-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMxLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTgwMTkyOCwiZXhwIjoxOTM5NDgxOTI4fQ.4OaD2EESln-dKiDXrtkKpD_uYY3fDU3tSdf_qLxXpjA",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-18/day18-s1-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMxLTcyMC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxODAyMTc0LCJleHAiOjE5Mzk0ODIxNzR9.O7GkodyJJluhuaVUeJyhmrKXq7rbLw_hcvn7Gk6mKBY",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-18/day18-s1-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMxLTQ4MC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxODAyMTk3LCJleHAiOjE5Mzk0ODIxOTd9.NNZBFzE55pYJqrQU_tbu66xFaF1Fddurwn4ycklWTuc"
+                "1080p": "https://drive.google.com/file/d/1flbhBVIUjBosZ01yYLgnU_5uF3vYOx7G/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1flbhBVIUjBosZ01yYLgnU_5uF3vYOx7G/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1flbhBVIUjBosZ01yYLgnU_5uF3vYOx7G/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 18 - Part 2: Building Confidence & Long-Term Consistency",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-18/day18-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMyLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTgwODMwOSwiZXhwIjoxOTM5NDg4MzA5fQ.AMhrG3UY1zqIhJxw18VmczgmuCOz0X-Y2jqHNFIMp8A",
+            src: "https://drive.google.com/file/d/1Pz4wlc5pTJdYd1o9W77tc0cP03yqPHUQ/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-18/day18-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMyLTEwODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTgwODMwOSwiZXhwIjoxOTM5NDg4MzA5fQ.AMhrG3UY1zqIhJxw18VmczgmuCOz0X-Y2jqHNFIMp8A",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-18/day18-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2RheTE4LXMyLTcyMC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxODA4NDk2LCJleHAiOjE5Mzk0ODg0OTZ9.lorFWDNRB3pCA6nHMwLyfmDVeap5b5ItIzyugWdABaE",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-18/d18-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE4L2QxOC1zMi00ODAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTgwODYwNSwiZXhwIjoxOTM5NDg4NjA1fQ.KTKK9Sb2kI9Aq1iTUKUnCu5x_js4WVY8JhnGiZzr71Q"
+                "1080p": "https://drive.google.com/file/d/1Pz4wlc5pTJdYd1o9W77tc0cP03yqPHUQ/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1Pz4wlc5pTJdYd1o9W77tc0cP03yqPHUQ/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1Pz4wlc5pTJdYd1o9W77tc0cP03yqPHUQ/view?usp=sharing"
             }
         }
     }

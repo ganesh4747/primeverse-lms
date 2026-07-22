@@ -217,6 +217,12 @@
             object-fit: contain !important;
         }
 
+        /* Hide Top-Right Brand Logo in Fullscreen mode */
+        .cinematic-player-wrap:fullscreen .player-brand-logo,
+        .cinematic-player-wrap:-webkit-full-screen .player-brand-logo {
+            display: none !important;
+        }
+
         /* PLAY OVERLAY */
         .player-cover-overlay {
             position: absolute;
@@ -595,12 +601,12 @@
         /* --- Custom Fullscreen Button Styling --- */
         .custom-fullscreen-btn {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
+            top: 8px;
+            right: 74px;
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: rgba(13, 21, 33, 0.6);
+            background: rgba(13, 21, 33, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
             display: flex;
@@ -628,8 +634,42 @@
             transform: scale(0.95) translateZ(0);
         }
 
+        /* Top-Right Player Brand Logo Badge */
+        .player-brand-logo {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 64px;
+            height: 60px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 16px;
+            background: #030812;
+            border-left: 1px solid rgba(212, 175, 55, 0.35);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2147483646 !important;
+            box-shadow: -3px 3px 15px rgba(0, 0, 0, 0.7);
+            pointer-events: auto;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .player-brand-logo:hover {
+            border-color: var(--gold);
+            box-shadow: -3px 3px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .player-brand-logo img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
         /* Completely hide native browser video control buttons */
-        video::-webkit-media-controls-fullscreen-button {
+        video::-webkit-media-controls-fullscreen-button,
+        video::-webkit-media-controls-toggle-closed-captions-button {
             display: none !important;
         }
 
@@ -667,8 +707,8 @@
         /* Custom Quality/Resolution Selector Styling */
         .custom-quality-container {
             position: absolute;
-            top: 1.5rem;
-            right: 5rem;
+            top: 8px;
+            right: 126px;
             z-index: 2147483645 !important;
             display: inline-block;
         }
@@ -841,12 +881,13 @@
                 <!-- Cinematic Player Block -->
                 <div class="cinematic-player-wrap"> <!-- Custom MP4 Video Player -->
                     <video id="workspaceVideo" class="custom-video" controls controlslist="nodownload nofullscreen"
-                        disablepictureinpicture oncontextmenu="return false;" preload="metadata" playsinline>
+                        disablepictureinpicture oncontextmenu="return false;" preload="metadata" playsinline referrerpolicy="no-referrer">
                         <source
                             src="https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/public/videos/intro/intro.mp4"
                             type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                    <iframe id="workspaceIframe" class="custom-video" style="display: none; width: 100%; height: 100%; border: none;" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>
 
                     <!-- Anti-Screenshot / Anti-Record Overlay -->
                     <div id="screenSecurityOverlay" class="anti-screenshot-overlay">
@@ -866,23 +907,12 @@
                         <div class="video-loader-spinner"></div>
                     </div>
 
-                    <!-- Custom Quality/Resolution Selector Overlay -->
-                    <div class="custom-quality-container" id="qualitySelectorContainer">
-                        <button id="customQualityBtn" class="custom-quality-btn" title="Change Resolution">
-                            <i class="fa-solid fa-gear"></i> <span id="currentQualityLabel">Auto</span>
-                        </button>
-                        <div class="quality-dropdown" id="qualityDropdown">
-                            <div class="quality-option" data-quality="1080p">1080p (FHD)</div>
-                            <div class="quality-option" data-quality="720p">720p (HD)</div>
-                            <div class="quality-option" data-quality="480p">480p (SD)</div>
-                            <div class="quality-option active" data-quality="auto">Original (Auto)</div>
-                        </div>
+
+                    <!-- Top-Right Brand Logo Badge -->
+                    <div class="player-brand-logo" title="PrimeVerse LMS">
+                        <img src="../assets/login.png" alt="PrimeVerse Logo">
                     </div>
 
-                    <!-- Custom Fullscreen Toggle Button Overlay -->
-                    <button id="customFullscreenBtn" class="custom-fullscreen-btn" title="Toggle Fullscreen">
-                        <i class="fa-solid fa-expand"></i>
-                    </button>
 
                     <!-- Play Overlay Poster -->
                     <div class="player-cover-overlay" id="playerOverlay"
@@ -1081,7 +1111,10 @@
         // Play handler
         playerOverlay.addEventListener('click', () => {
             playerOverlay.style.display = 'none';
-            videoPlayer.play();
+            const partData = lessonsDatabase[activeDayNum] ? (lessonsDatabase[activeDayNum]['part' + activePartNum] || lessonsDatabase[activeDayNum].part1) : null;
+            if (partData && !getDriveFileId(partData.src) && videoPlayer) {
+                videoPlayer.play();
+            }
         });
 
         // Video Resolution Switcher Logic
@@ -1178,12 +1211,108 @@
             return detectedRes;
         }
 
+        function getDriveFileId(url) {
+            if (!url || typeof url !== 'string') return null;
+            const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            return match ? match[1] : null;
+        }
+
         // Apply Resolution to player
         async function applyResolution(res, skipReplay = false, isNewVideo = false) {
-            if (!videoPlayer) return;
-
             const partData = lessonsDatabase[activeDayNum]['part' + activePartNum] || lessonsDatabase[activeDayNum].part1;
-            const originalUrl = partData.src;
+            const originalUrl = partData ? partData.src : '';
+            const driveFileId = getDriveFileId(originalUrl);
+            const workspaceIframe = document.getElementById('workspaceIframe');
+
+            if (driveFileId) {
+                const vqMap = {
+                    '1080p': 'hd1080',
+                    '720p': 'hd720',
+                    '480p': 'large',
+                    '360p': 'medium',
+                    'auto': 'auto'
+                };
+                const vq = vqMap[res] || 'auto';
+
+                // Try playing via native <video> player first
+                const directUrl = `https://lh3.googleusercontent.com/d/${driveFileId}`;
+                let fallbackTriggered = false;
+
+                const tryIframeFallback = function () {
+                    if (fallbackTriggered) return;
+                    fallbackTriggered = true;
+                    if (workspaceIframe) {
+                        const newSrc = `https://drive.google.com/file/d/${driveFileId}/preview?enablejsapi=1&vq=${vq}&cc_load_policy=0`;
+                        if (workspaceIframe.src !== newSrc) {
+                            workspaceIframe.src = newSrc;
+                        }
+                        workspaceIframe.style.display = 'block';
+                    }
+                    if (videoPlayer) {
+                        videoPlayer.style.display = 'none';
+                        try { videoPlayer.pause(); } catch (e) { }
+                    }
+                    const videoLoader = document.getElementById('videoLoader');
+                    if (videoLoader) videoLoader.style.display = 'none';
+                    updateQualityUIActiveState(res);
+                };
+
+                // If iframe is already active, change iframe resolution directly
+                if (workspaceIframe && workspaceIframe.style.display === 'block') {
+                    const newSrc = `https://drive.google.com/file/d/${driveFileId}/preview?enablejsapi=1&vq=${vq}&cc_load_policy=0`;
+                    workspaceIframe.src = newSrc;
+                    updateQualityUIActiveState(res);
+                    if (!isNewVideo) {
+                        showQualityToast(`Switched Quality: ${res === 'auto' ? 'Auto' : res}`);
+                    }
+                    return;
+                }
+
+                const handleNativeError = function () {
+                    videoPlayer.removeEventListener('error', handleNativeError);
+                    videoPlayer.removeEventListener('loadedmetadata', handleNativeSuccess);
+                    tryIframeFallback();
+                };
+
+                const handleNativeSuccess = function () {
+                    videoPlayer.removeEventListener('error', handleNativeError);
+                    videoPlayer.removeEventListener('loadedmetadata', handleNativeSuccess);
+                    if (workspaceIframe) {
+                        workspaceIframe.src = '';
+                        workspaceIframe.style.display = 'none';
+                    }
+                    if (videoPlayer) videoPlayer.style.display = 'block';
+                    const videoLoader = document.getElementById('videoLoader');
+                    if (videoLoader) videoLoader.style.display = 'none';
+                    updateQualityUIActiveState(res);
+                };
+
+                videoPlayer.addEventListener('error', handleNativeError);
+                videoPlayer.addEventListener('loadedmetadata', handleNativeSuccess);
+
+                videoPlayer.src = directUrl;
+                videoPlayer.load();
+
+                // Timeout fallback after 3 seconds if metadata load stalls
+                setTimeout(() => {
+                    if (!fallbackTriggered && videoPlayer.readyState < 1) {
+                        tryIframeFallback();
+                    }
+                }, 3000);
+
+                return;
+            } else {
+                // Standard MP4 video player
+                if (workspaceIframe) {
+                    workspaceIframe.src = '';
+                    workspaceIframe.style.display = 'none';
+                }
+                if (videoPlayer) {
+                    videoPlayer.style.display = 'block';
+                }
+            }
+
+            if (!videoPlayer) return;
             let targetUrl = originalUrl;
             let detectedRes = null;
 
@@ -1220,6 +1349,10 @@
                     // Fall back to suffix appending for videos without pre-defined qualityLinks
                     targetUrl = originalUrl.replace(/\.mp4.*$/i, `-${res}.mp4`);
                 }
+            }
+
+            if (window.formatDriveUrl) {
+                targetUrl = window.formatDriveUrl(targetUrl);
             }
 
             // If it's already playing that URL, and not a new video, do nothing
@@ -1397,7 +1530,10 @@
             await renderLesson(activeDayNum, partNum);
             // Auto play immediately on toggle
             playerOverlay.style.display = 'none';
-            videoPlayer.play();
+            const partData = lessonsDatabase[activeDayNum] ? (lessonsDatabase[activeDayNum]['part' + partNum] || lessonsDatabase[activeDayNum].part1) : null;
+            if (partData && !getDriveFileId(partData.src) && videoPlayer) {
+                videoPlayer.play();
+            }
         };
 
         // Jump Day/Part via quicknav
@@ -1720,14 +1856,46 @@
             // Anti-screenshot & recording focus security
             const securityOverlay = document.getElementById('screenSecurityOverlay');
             const videoElement = document.getElementById('workspaceVideo');
+            const playerWrapEl = document.querySelector('.cinematic-player-wrap');
 
+            let isCursorInsidePlayerWrap = false;
             let securityTimeout;
+
+            if (playerWrapEl) {
+                playerWrapEl.addEventListener('mouseenter', () => {
+                    isCursorInsidePlayerWrap = true;
+                    deactivateSecurityBlackout();
+                });
+
+                playerWrapEl.addEventListener('mouseleave', () => {
+                    isCursorInsidePlayerWrap = false;
+                    activateSecurityBlackout();
+                });
+            }
+
             const activateSecurityBlackout = () => {
+                // Do not trigger security blackout while playing in Fullscreen mode
+                const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
+                if (isFullscreen) return;
+
+                // Do not trigger security blackout if cursor is inside the video container
+                if (isCursorInsidePlayerWrap) return;
+
                 if (securityOverlay) {
                     securityOverlay.classList.add('active');
                 }
+
+                // Pause native HTML5 video player (retains currentTime timestamp)
                 if (videoElement && !videoElement.paused) {
                     videoElement.pause();
+                }
+
+                // Pause Google Drive embedded iframe player (retains currentTime timestamp)
+                const iframe = document.getElementById('workspaceIframe');
+                if (iframe && iframe.contentWindow) {
+                    try {
+                        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                    } catch (e) { }
                 }
             };
 
@@ -1737,14 +1905,28 @@
                     if (securityOverlay) {
                         securityOverlay.classList.remove('active');
                     }
-                }, 1200); // 1.2s delay to cover screenshot snapshot actions
+                }, 200);
             };
 
-            // Detect window focus shifts (Snipping tool activation, Tab switching, OBS focus, browser devtools inspector)
+            // Ensure security blackout overlay is hidden when entering fullscreen
+            document.addEventListener('fullscreenchange', () => {
+                if (document.fullscreenElement || document.webkitFullscreenElement) {
+                    if (securityOverlay) {
+                        securityOverlay.classList.remove('active');
+                    }
+                }
+            });
+            document.addEventListener('webkitfullscreenchange', () => {
+                if (document.fullscreenElement || document.webkitFullscreenElement) {
+                    if (securityOverlay) {
+                        securityOverlay.classList.remove('active');
+                    }
+                }
+            });
+
+            // Detect window focus shifts (Tab switching, OBS focus, browser devtools inspector)
             window.addEventListener('blur', activateSecurityBlackout);
             window.addEventListener('focus', deactivateSecurityBlackout);
-            document.addEventListener('mouseleave', activateSecurityBlackout);
-            document.addEventListener('mouseenter', deactivateSecurityBlackout);
 
             // Visibility change detection
             document.addEventListener("visibilitychange", () => {
