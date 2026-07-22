@@ -1109,24 +1109,7 @@
         style="display: none; justify-content: center; align-items: center; z-index: 10000; background: rgba(10, 20, 35, 0.95); backdrop-filter: blur(15px); transition: opacity 0.3s ease;">
         <div id="videoResourceModalContent"
             style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.5rem; max-width: 800px; width: 90%; box-shadow: 0 0 50px rgba(0, 0, 0, 0.5); position: relative; text-align: center;">
-            <!-- Custom Quality/Resolution Selector Overlay -->
-            <div class="custom-quality-container" id="qualitySelectorContainer"
-                style="display: none; top: 1.15rem; right: 6.8rem;">
-                <button id="customQualityBtn" class="custom-quality-btn" title="Change Resolution">
-                    <i class="fa-solid fa-gear"></i> <span id="currentQualityLabel">Auto</span>
-                </button>
-                <div class="quality-dropdown" id="qualityDropdown">
-                    <div class="quality-option" data-quality="1080p">1080p (FHD)</div>
-                    <div class="quality-option" data-quality="720p">720p (HD)</div>
-                    <div class="quality-option" data-quality="480p">480p (SD)</div>
-                    <div class="quality-option active" data-quality="auto">Original (Auto)</div>
-                </div>
-            </div>
-            <!-- Custom Fullscreen Button -->
-            <button id="customFullscreenBtn" onclick="window.toggleResourceFullscreen()"
-                style="position: absolute; top: 1.15rem; right: 3.5rem; background: rgba(13, 21, 33, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); width: 44px; height: 44px; border-radius: 50%; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);">
-                <i data-lucide="maximize" style="width: 20px; height: 20px;"></i>
-            </button>
+
             <button onclick="window.closeResourceVideo()"
                 style="position: absolute; top: 1.25rem; right: 1.25rem; background: transparent; border: none; color: var(--white); cursor: pointer;">
                 <i data-lucide="x" style="width: 24px; height: 24px;"></i>
@@ -1144,6 +1127,9 @@
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
                     Your browser does not support the video tag.
                 </video>
+                <iframe id="videoResourceIframe" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+                <!-- Logo overlay to cover Google Drive pop-out arrow button -->
+                <div id="videoResourceLogoOverlay" style="display: none; position: absolute; top: 4px; right: 4px; width: 54px; height: 54px; background: #000 url('../assets/login.png') center/80% no-repeat; border-radius: 8px; z-index: 99; pointer-events: auto;"></div>
                 <!-- Dynamic Anti-Piracy Watermark -->
                 <div id="resourceVideoWatermark"
                     style="position: absolute; pointer-events: none; z-index: 2147483646; color: rgba(255, 255, 255, 0.22); font-size: 0.85rem; font-weight: 700; font-family: 'Satoshi', sans-serif; white-space: nowrap; background: rgba(0, 0, 0, 0.35); padding: 4px 12px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 5s ease-in-out; top: 20%; left: 20%; backdrop-filter: blur(2px); transform: translateZ(0); will-change: transform;">
@@ -1456,8 +1442,11 @@
                             subVideo.src = srcUrl;
                         }
 
+                        const driveMatch = srcUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || srcUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+                        const isDriveUrl = !!driveMatch;
+
                         if (qContainer) {
-                            if (subVideo.qualityLinks && Object.values(subVideo.qualityLinks).some(link => link)) {
+                            if (isDriveUrl || (subVideo.qualityLinks && Object.values(subVideo.qualityLinks).some(link => link))) {
                                 qContainer.style.display = 'inline-block';
                                 window.applyResourceResolution(localStorage.getItem('preferredResolution') || 'auto', false);
                             } else {
@@ -1467,9 +1456,13 @@
                                 player.play().catch(e => console.log("Play failed", e));
                             }
                         } else {
-                            player.src = srcUrl;
-                            player.load();
-                            player.play().catch(e => console.log("Play failed", e));
+                            if (isDriveUrl) {
+                                window.applyResourceResolution(localStorage.getItem('preferredResolution') || 'auto', false);
+                            } else {
+                                player.src = srcUrl;
+                                player.load();
+                                player.play().catch(e => console.log("Play failed", e));
+                            }
                         }
                     }
                 }
@@ -1538,37 +1531,38 @@
                     srcUrl = videoInput; // fallback to raw URL
                 }
 
-                const qContainer = document.getElementById('qualitySelectorContainer');
-                if (qContainer) {
-                    if (videoObj && videoObj.qualityLinks && Object.values(videoObj.qualityLinks).some(link => link)) {
-                        qContainer.style.display = 'inline-block';
-                        window.applyResourceResolution(localStorage.getItem('preferredResolution') || 'auto', true);
-                    } else {
-                        qContainer.style.display = 'none';
-                        player.src = srcUrl;
-                    }
+                const driveMatch = srcUrl ? srcUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || srcUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/) : null;
+                const isDriveUrl = !!driveMatch;
+                const resourceIframe = document.getElementById('videoResourceIframe');
+
+                if (isDriveUrl || (videoObj && videoObj.qualityLinks && Object.values(videoObj.qualityLinks).some(link => link))) {
+                    window.applyResourceResolution(localStorage.getItem('preferredResolution') || 'auto', false);
                 } else {
-                    player.src = srcUrl;
+                    if (resourceIframe) {
+                        resourceIframe.src = '';
+                        resourceIframe.style.display = 'none';
+                    }
+                    if (player) {
+                        player.style.display = 'block';
+                        player.src = srcUrl;
+                        player.load();
+                        player.play().catch(e => console.log("Play failed", e));
+                    }
                 }
 
                 modal.style.display = 'flex';
                 setTimeout(() => {
                     modal.classList.add('active');
-                }, 10);
-
-                player.play()
-                    .then(() => {
-                        // Request browser fullscreen on the video player content container so overlays display
-                        const container = document.getElementById('videoResourceModalContent');
-                        if (container) {
-                            if (container.requestFullscreen) {
-                                container.requestFullscreen().catch(err => console.log("Fullscreen request failed", err));
-                            } else if (container.webkitRequestFullscreen) {
-                                container.webkitRequestFullscreen();
-                            }
+                    // Request browser fullscreen on the video player content container so overlays display
+                    const container = document.getElementById('videoResourceModalContent');
+                    if (container) {
+                        if (container.requestFullscreen) {
+                            container.requestFullscreen().catch(err => console.log("Fullscreen request failed", err));
+                        } else if (container.webkitRequestFullscreen) {
+                            container.webkitRequestFullscreen();
                         }
-                    })
-                    .catch(e => console.log("Auto-play blocked or failed", e));
+                    }
+                }, 10);
             };
 
             window.closeResourceVideo = function () {
@@ -1577,6 +1571,14 @@
                 if (modal && player) {
                     player.pause();
                     player.src = '';
+                    const iframe = document.getElementById('videoResourceIframe');
+                    if (iframe) {
+                        iframe.src = '';
+                    }
+                    const logoOverlay = document.getElementById('videoResourceLogoOverlay');
+                    if (logoOverlay) {
+                        logoOverlay.style.display = 'none';
+                    }
 
                     // Exit fullscreen if active
                     if (document.fullscreenElement || document.webkitFullscreenElement) {
@@ -1656,6 +1658,88 @@
 
                 const qualityLinks = videoObj.qualityLinks;
                 const originalUrl = videoObj.src || qualityLinks["1080p"];
+                const driveMatch = originalUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || originalUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+                const driveFileId = driveMatch ? driveMatch[1] : null;
+                const resourceIframe = document.getElementById('videoResourceIframe');
+                const resourceLogoOverlay = document.getElementById('videoResourceLogoOverlay');
+
+                if (resourceLogoOverlay) {
+                    resourceLogoOverlay.style.display = driveFileId ? 'block' : 'none';
+                }
+
+                if (driveFileId) {
+                    const vqMap = {
+                        '1080p': 'hd1080',
+                        '720p': 'hd720',
+                        '480p': 'large',
+                        '360p': 'medium',
+                        'auto': 'auto'
+                    };
+                    const vq = vqMap[res] || 'auto';
+                    const directUrl = `https://lh3.googleusercontent.com/d/${driveFileId}`;
+                    let fallbackTriggered = false;
+
+                    const tryIframeFallback = function () {
+                        if (fallbackTriggered) return;
+                        fallbackTriggered = true;
+                        if (resourceIframe) {
+                            const newSrc = `https://drive.google.com/file/d/${driveFileId}/preview?enablejsapi=1&vq=${vq}&cc_load_policy=0`;
+                            if (resourceIframe.src !== newSrc) {
+                                resourceIframe.src = newSrc;
+                            }
+                            resourceIframe.style.display = 'block';
+                        }
+                        if (player) {
+                            player.style.display = 'none';
+                            try { player.pause(); } catch (e) { }
+                        }
+                        updateResourceQualityUIActiveState(res);
+                    };
+
+                    if (resourceIframe && resourceIframe.style.display === 'block') {
+                        const newSrc = `https://drive.google.com/file/d/${driveFileId}/preview?enablejsapi=1&vq=${vq}&cc_load_policy=0`;
+                        resourceIframe.src = newSrc;
+                        updateResourceQualityUIActiveState(res);
+                        return;
+                    }
+
+                    const handleNativeError = function () {
+                        player.removeEventListener('error', handleNativeError);
+                        player.removeEventListener('loadedmetadata', handleNativeSuccess);
+                        tryIframeFallback();
+                    };
+
+                    const handleNativeSuccess = function () {
+                        player.removeEventListener('error', handleNativeError);
+                        player.removeEventListener('loadedmetadata', handleNativeSuccess);
+                        if (resourceIframe) {
+                            resourceIframe.src = '';
+                            resourceIframe.style.display = 'none';
+                        }
+                        if (player) {
+                            player.style.display = 'block';
+                            if (!skipReplay) {
+                                player.play().catch(e => console.log("Play failed", e));
+                            }
+                        }
+                        updateResourceQualityUIActiveState(res);
+                    };
+
+                    player.addEventListener('error', handleNativeError);
+                    player.addEventListener('loadedmetadata', handleNativeSuccess);
+
+                    player.src = directUrl;
+                    player.load();
+
+                    setTimeout(() => {
+                        if (!fallbackTriggered && player.readyState < 1) {
+                            tryIframeFallback();
+                        }
+                    }, 3000);
+
+                    return;
+                }
+
                 let targetUrl = originalUrl;
                 let detectedRes = null;
 
@@ -1666,13 +1750,20 @@
                     targetUrl = qualityLinks[res] || originalUrl;
                 }
 
+                if (resourceIframe) {
+                    resourceIframe.src = '';
+                    resourceIframe.style.display = 'none';
+                }
+                if (player) {
+                    player.style.display = 'block';
+                }
+
                 if (player.src === targetUrl) {
                     updateResourceQualityUIActiveState(res, detectedRes);
                     return;
                 }
 
                 const currentTime = player.currentTime;
-                const isPaused = player.paused;
 
                 const handleResourceLoadError = function () {
                     console.warn(`Resolution ${res} failed to load. Reverting to original.`);
@@ -1683,11 +1774,9 @@
 
                     player.addEventListener('loadedmetadata', function revertSeek() {
                         player.currentTime = currentTime;
-                        if (!isPaused) player.play().catch(e => console.log("Play failed", e));
+                        if (!skipReplay) player.play().catch(e => console.log("Play failed", e));
                         player.removeEventListener('loadedmetadata', revertSeek);
                     });
-
-                    showQualityToast("Resolution not available. Playing original quality.", true);
                 };
 
                 player.addEventListener('error', handleResourceLoadError);
@@ -1697,16 +1786,8 @@
                 player.addEventListener('loadedmetadata', function successSeek() {
                     player.removeEventListener('error', handleResourceLoadError);
                     player.currentTime = currentTime;
-                    if (!isPaused && !skipReplay) player.play().catch(e => console.log("Play failed", e));
+                    if (!skipReplay) player.play().catch(e => console.log("Play failed", e));
                     player.removeEventListener('loadedmetadata', successSeek);
-
-                    if (!skipReplay) {
-                        if (res === 'auto') {
-                            showQualityToast(`Auto-selected Quality: ${detectedRes || 'Original'}`);
-                        } else {
-                            showQualityToast(`Switched to Resolution: ${res}`);
-                        }
-                    }
                 });
 
                 updateResourceQualityUIActiveState(res, detectedRes);

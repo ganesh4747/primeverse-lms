@@ -883,7 +883,7 @@
                     <video id="workspaceVideo" class="custom-video" controls controlslist="nodownload nofullscreen"
                         disablepictureinpicture oncontextmenu="return false;" preload="metadata" playsinline referrerpolicy="no-referrer">
                         <source
-                            src="https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/public/videos/intro/intro.mp4"
+                            src="https://lh3.googleusercontent.com/d/1I0W1roERbowEe-4r4w9YQRlhX7_tcS_s"
                             type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -1873,40 +1873,8 @@
                 });
             }
 
-            const activateSecurityBlackout = () => {
-                // Do not trigger security blackout while playing in Fullscreen mode
-                const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
-                if (isFullscreen) return;
-
-                // Do not trigger security blackout if cursor is inside the video container
-                if (isCursorInsidePlayerWrap) return;
-
-                if (securityOverlay) {
-                    securityOverlay.classList.add('active');
-                }
-
-                // Pause native HTML5 video player (retains currentTime timestamp)
-                if (videoElement && !videoElement.paused) {
-                    videoElement.pause();
-                }
-
-                // Pause Google Drive embedded iframe player (retains currentTime timestamp)
-                const iframe = document.getElementById('workspaceIframe');
-                if (iframe && iframe.contentWindow) {
-                    try {
-                        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-                    } catch (e) { }
-                }
-            };
-
-            const deactivateSecurityBlackout = () => {
-                clearTimeout(securityTimeout);
-                securityTimeout = setTimeout(() => {
-                    if (securityOverlay) {
-                        securityOverlay.classList.remove('active');
-                    }
-                }, 200);
-            };
+            const activateSecurityBlackout = () => {};
+            const deactivateSecurityBlackout = () => {};
 
             // Ensure security blackout overlay is hidden when entering fullscreen
             document.addEventListener('fullscreenchange', () => {

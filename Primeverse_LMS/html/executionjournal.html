@@ -911,6 +911,20 @@
             cursor: pointer;
             z-index: 10;
             transition: all 0.2s ease;
+            overflow: hidden;
+        }
+
+        .journal-modal-close::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../assets/login.png') center/cover no-repeat;
+            opacity: 0.8;
+            z-index: 1;
+            transition: all 0.2s ease;
         }
 
         .journal-modal-close:hover {
@@ -920,9 +934,15 @@
             box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
         }
 
+        .journal-modal-close:hover::before {
+            opacity: 0;
+        }
+
         .journal-modal-close i {
             width: 16px;
             height: 16px;
+            position: relative;
+            z-index: 2;
         }
 
         .journal-modal-video-wrapper {
@@ -931,7 +951,8 @@
             aspect-ratio: 16/9;
         }
 
-        .journal-modal-video-wrapper video {
+        .journal-modal-video-wrapper video,
+        .journal-modal-video-wrapper iframe {
             width: 100%;
             height: 100%;
             object-fit: contain;
@@ -1875,39 +1896,17 @@
                 <video id="journalModalVideoPlayer" controls controlslist="nodownload" disablepictureinpicture
                     oncontextmenu="return false;" preload="metadata" playsinline>
                     <source
-                        src="https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-13/day13journal-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTEzL2RheTEzam91cm5hbC0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNDU4NTE1LCJleHAiOjIwOTY4MTg1MTV9.w1PSH48761dL_thDBqPiPo_YZQJkvTnuBjii90yaofw"
+                        src="https://lh3.googleusercontent.com/d/1uQ5Idz7iCteNrwOJCwvCIGJzkHxWd-WW"
                         type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
+                <iframe id="journalModalIframe" class="custom-video" style="display: none; width: 100%; height: 100%; border: none;" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>
                 <!-- Dynamic Anti-Piracy Watermark -->
                 <div id="journalVideoWatermark"
                     style="position: absolute; pointer-events: none; z-index: 2147483646; color: rgba(255, 255, 255, 0.22); font-size: 0.85rem; font-weight: 700; font-family: 'Satoshi', sans-serif; white-space: nowrap; background: rgba(0, 0, 0, 0.35); padding: 4px 12px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 5s ease-in-out; top: 20%; left: 20%; backdrop-filter: blur(2px); transform: translateZ(0); will-change: transform;">
                     harish.primeverse@gmail.com
                 </div>
-                <!-- Anti-Screenshot / Anti-Record Overlay -->
-                <div id="journalScreenSecurityOverlay" class="anti-screenshot-overlay">
-                    <i class="fa-solid fa-shield-halved"
-                        style="font-size: 3.5rem; color: #ff3333; margin-bottom: 1.5rem; filter: drop-shadow(0 0 15px rgba(255, 51, 51, 0.4));"></i>
-                    <h2
-                        style="font-family: 'Satoshi', sans-serif; font-weight: 900; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 0.8rem 0;">
-                        Screen Security Active</h2>
-                    <p
-                        style="font-size: 0.95rem; color: var(--gray); max-width: 320px; line-height: 1.5; margin: 0;">
-                        Screenshots and screen recordings are strictly prohibited to protect intellectual property.
-                    </p>
-                </div>
-                <!-- Custom Quality/Resolution Selector Overlay -->
-                <div class="custom-quality-container" id="qualitySelectorContainer">
-                    <button id="customQualityBtn" class="custom-quality-btn" title="Change Resolution">
-                        <i class="fa-solid fa-gear"></i> <span id="currentQualityLabel">Auto</span>
-                    </button>
-                    <div class="quality-dropdown" id="qualityDropdown">
-                        <div class="quality-option" data-quality="1080p">1080p (FHD)</div>
-                        <div class="quality-option" data-quality="720p">720p (HD)</div>
-                        <div class="quality-option" data-quality="480p">480p (SD)</div>
-                        <div class="quality-option active" data-quality="auto">Original (Auto)</div>
-                    </div>
-                </div>
+
                 <!-- Glassmorphic Loading Spinner -->
                 <div id="journalVideoLoader" class="video-loader-overlay">
                     <div class="video-loader-spinner"></div>
@@ -2088,10 +2087,16 @@
             };
 
             window.closeJournalVideoModal = function () {
-                if (journalVideoModal && journalModalVideoPlayer) {
+                if (journalVideoModal) {
                     journalVideoModal.classList.remove('active');
+                }
+                if (journalModalVideoPlayer) {
                     journalModalVideoPlayer.pause();
                     journalModalVideoPlayer.currentTime = 0;
+                }
+                const journalModalIframe = document.getElementById('journalModalIframe');
+                if (journalModalIframe) {
+                    journalModalIframe.src = '';
                 }
                 // Tick Step 2
                 const chk2 = document.getElementById('chk-step-2');
@@ -2171,6 +2176,85 @@
                 if (!journalModalVideoPlayer) return;
 
                 const originalUrl = (window.executionJournalVideo && window.executionJournalVideo.src) || journalQualityLinks["1080p"];
+                const driveMatch = originalUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || originalUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+                const driveFileId = driveMatch ? driveMatch[1] : null;
+                const journalModalIframe = document.getElementById('journalModalIframe');
+
+                if (driveFileId) {
+                    const vqMap = {
+                        '1080p': 'hd1080',
+                        '720p': 'hd720',
+                        '480p': 'large',
+                        '360p': 'medium',
+                        'auto': 'auto'
+                    };
+                    const vq = vqMap[res] || 'auto';
+                    const directUrl = `https://lh3.googleusercontent.com/d/${driveFileId}`;
+                    let fallbackTriggered = false;
+
+                    const tryIframeFallback = function () {
+                        if (fallbackTriggered) return;
+                        fallbackTriggered = true;
+                        if (journalModalIframe) {
+                            const newSrc = `https://drive.google.com/file/d/${driveFileId}/preview?enablejsapi=1&vq=${vq}&cc_load_policy=0`;
+                            if (journalModalIframe.src !== newSrc) {
+                                journalModalIframe.src = newSrc;
+                            }
+                            journalModalIframe.style.display = 'block';
+                        }
+                        if (journalModalVideoPlayer) {
+                            journalModalVideoPlayer.style.display = 'none';
+                            try { journalModalVideoPlayer.pause(); } catch (e) { }
+                        }
+                        const videoLoader = document.getElementById('journalVideoLoader');
+                        if (videoLoader) videoLoader.style.display = 'none';
+                        updateQualityUIActiveState(res);
+                    };
+
+                    if (journalModalIframe && journalModalIframe.style.display === 'block') {
+                        const newSrc = `https://drive.google.com/file/d/${driveFileId}/preview?enablejsapi=1&vq=${vq}&cc_load_policy=0`;
+                        journalModalIframe.src = newSrc;
+                        updateQualityUIActiveState(res);
+                        if (!skipReplay) {
+                            showQualityToast(`Switched Quality: ${res === 'auto' ? 'Auto' : res}`);
+                        }
+                        return;
+                    }
+
+                    const handleNativeError = function () {
+                        journalModalVideoPlayer.removeEventListener('error', handleNativeError);
+                        journalModalVideoPlayer.removeEventListener('loadedmetadata', handleNativeSuccess);
+                        tryIframeFallback();
+                    };
+
+                    const handleNativeSuccess = function () {
+                        journalModalVideoPlayer.removeEventListener('error', handleNativeError);
+                        journalModalVideoPlayer.removeEventListener('loadedmetadata', handleNativeSuccess);
+                        if (journalModalIframe) {
+                            journalModalIframe.src = '';
+                            journalModalIframe.style.display = 'none';
+                        }
+                        if (journalModalVideoPlayer) journalModalVideoPlayer.style.display = 'block';
+                        const videoLoader = document.getElementById('journalVideoLoader');
+                        if (videoLoader) videoLoader.style.display = 'none';
+                        updateQualityUIActiveState(res);
+                    };
+
+                    journalModalVideoPlayer.addEventListener('error', handleNativeError);
+                    journalModalVideoPlayer.addEventListener('loadedmetadata', handleNativeSuccess);
+
+                    journalModalVideoPlayer.src = directUrl;
+                    journalModalVideoPlayer.load();
+
+                    setTimeout(() => {
+                        if (!fallbackTriggered && journalModalVideoPlayer.readyState < 1) {
+                            tryIframeFallback();
+                        }
+                    }, 3000);
+
+                    return;
+                }
+
                 let targetUrl = originalUrl;
                 let detectedRes = null;
 
@@ -2179,6 +2263,14 @@
                     targetUrl = journalQualityLinks[detectedRes] || originalUrl;
                 } else {
                     targetUrl = journalQualityLinks[res] || originalUrl;
+                }
+
+                if (journalModalIframe) {
+                    journalModalIframe.src = '';
+                    journalModalIframe.style.display = 'none';
+                }
+                if (journalModalVideoPlayer) {
+                    journalModalVideoPlayer.style.display = 'block';
                 }
 
                 if (journalModalVideoPlayer.src === targetUrl) {
@@ -2280,40 +2372,25 @@
                 setInterval(moveWatermark, 5000);
             }
 
-            // Anti-screenshot & recording focus security
-            const securityOverlay = document.getElementById('journalScreenSecurityOverlay');
+            // Anti-screenshot & recording focus security disabled
+            const securityOverlay = null;
             const videoElement = document.getElementById('journalModalVideoPlayer');
 
             let securityTimeout;
-            const activateSecurityBlackout = () => {
-                if (securityOverlay) {
-                    securityOverlay.classList.add('active');
-                }
-                if (videoElement && !videoElement.paused) {
-                    videoElement.pause();
-                }
-            };
-
-            const deactivateSecurityBlackout = () => {
-                clearTimeout(securityTimeout);
-                securityTimeout = setTimeout(() => {
-                    if (securityOverlay) {
-                        securityOverlay.classList.remove('active');
-                    }
-                }, 1200); // 1.2s delay to cover screenshot snapshot actions
-            };
-
-            // Detect window focus shifts (Snipping tool activation, Tab switching, OBS focus, browser devtools inspector)
-            window.addEventListener('blur', activateSecurityBlackout);
-            window.addEventListener('focus', deactivateSecurityBlackout);
-            document.addEventListener('mouseleave', activateSecurityBlackout);
-            document.addEventListener('mouseenter', deactivateSecurityBlackout);
+            const activateSecurityBlackout = () => {};
+            const deactivateSecurityBlackout = () => {};
 
             // Visibility change detection
             document.addEventListener("visibilitychange", () => {
                 if (document.hidden) {
                     if (videoElement) {
                         videoElement.pause();
+                    }
+                    const journalModalIframe = document.getElementById('journalModalIframe');
+                    if (journalModalIframe && journalModalIframe.contentWindow) {
+                        try {
+                            journalModalIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                        } catch (e) { }
                     }
                 }
             });
