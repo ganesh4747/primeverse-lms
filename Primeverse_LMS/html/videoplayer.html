@@ -850,6 +850,12 @@
         .anti-screenshot-overlay.active {
             display: flex !important;
         }
+
+        @media print {
+            body {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 
@@ -881,13 +887,15 @@
                 <!-- Cinematic Player Block -->
                 <div class="cinematic-player-wrap"> <!-- Custom MP4 Video Player -->
                     <video id="workspaceVideo" class="custom-video" controls controlslist="nodownload nofullscreen"
-                        disablepictureinpicture oncontextmenu="return false;" preload="metadata" playsinline referrerpolicy="no-referrer">
-                        <source
-                            src="https://lh3.googleusercontent.com/d/1I0W1roERbowEe-4r4w9YQRlhX7_tcS_s"
+                        disablepictureinpicture oncontextmenu="return false;" preload="metadata" playsinline
+                        referrerpolicy="no-referrer">
+                        <source src="https://lh3.googleusercontent.com/d/1I0W1roERbowEe-4r4w9YQRlhX7_tcS_s"
                             type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                    <iframe id="workspaceIframe" class="custom-video" style="display: none; width: 100%; height: 100%; border: none;" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="workspaceIframe" class="custom-video"
+                        style="display: none; width: 100%; height: 100%; border: none;"
+                        allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>
 
                     <!-- Anti-Screenshot / Anti-Record Overlay -->
                     <div id="screenSecurityOverlay" class="anti-screenshot-overlay">
@@ -900,6 +908,10 @@
                             style="font-size: 0.95rem; color: var(--gray); max-width: 320px; line-height: 1.5; margin: 0;">
                             Screenshots and screen recordings are strictly prohibited to protect intellectual property.
                         </p>
+                        <button id="acknowledgeSecurityBtn" class="back-dashboard-btn"
+                            style="margin-top: 1.5rem; border-color: rgba(212, 175, 55, 0.35); background: rgba(212, 175, 55, 0.05); color: var(--gold); cursor: pointer; display: none;">
+                            Acknowledge & Resume
+                        </button>
                     </div>
 
                     <!-- Glassmorphic Loading Spinner -->
@@ -975,6 +987,8 @@
     <!-- Script player execution -->
     <script src="video_links.js"></script>
     <script>
+        window.isLessonActive = false;
+
         if (localStorage.getItem('userRole') === 'admin') {
             window.location.replace('communitypage.html');
         }
@@ -1111,6 +1125,7 @@
         // Play handler
         playerOverlay.addEventListener('click', () => {
             playerOverlay.style.display = 'none';
+            window.isLessonActive = true;
             const partData = lessonsDatabase[activeDayNum] ? (lessonsDatabase[activeDayNum]['part' + activePartNum] || lessonsDatabase[activeDayNum].part1) : null;
             if (partData && !getDriveFileId(partData.src) && videoPlayer) {
                 videoPlayer.play();
@@ -1458,6 +1473,13 @@
 
         // Initialize state
         async function renderLesson(dayNum, partNum) {
+            window.isLessonActive = false;
+            const secOverlay = document.getElementById('screenSecurityOverlay');
+            if (secOverlay) {
+                secOverlay.classList.remove('active');
+                const ackBtn = document.getElementById('acknowledgeSecurityBtn');
+                if (ackBtn) ackBtn.style.display = "none";
+            }
             activeDayNum = dayNum;
             activePartNum = partNum;
 
@@ -1530,6 +1552,7 @@
             await renderLesson(activeDayNum, partNum);
             // Auto play immediately on toggle
             playerOverlay.style.display = 'none';
+            window.isLessonActive = true;
             const partData = lessonsDatabase[activeDayNum] ? (lessonsDatabase[activeDayNum]['part' + partNum] || lessonsDatabase[activeDayNum].part1) : null;
             if (partData && !getDriveFileId(partData.src) && videoPlayer) {
                 videoPlayer.play();
@@ -1857,65 +1880,205 @@
             const securityOverlay = document.getElementById('screenSecurityOverlay');
             const videoElement = document.getElementById('workspaceVideo');
             const playerWrapEl = document.querySelector('.cinematic-player-wrap');
+            const acknowledgeBtn = document.getElementById('acknowledgeSecurityBtn');
 
-            let isCursorInsidePlayerWrap = false;
-            let securityTimeout;
+            let isAlerting = false;
+            let securityActive = false;
+            let blackoutReason = "";
 
-            if (playerWrapEl) {
-                playerWrapEl.addEventListener('mouseenter', () => {
-                    isCursorInsidePlayerWrap = true;
-                    deactivateSecurityBlackout();
-                });
+            // Prohibit browser-level screen recording/sharing prompts (getDisplayMedia API)
+            if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+                navigator.mediaDevices.getDisplayMedia = function() {
+                    activateSecurityBlackout("screenshot");
+                    return Promise.reject(new DOMException("Screen sharing and recording is strictly prohibited on PrimeVerse.", "SecurityError"));
+                };
+            }
 
-                playerWrapEl.addEventListener('mouseleave', () => {
-                    isCursorInsidePlayerWrap = false;
-                    activateSecurityBlackout();
+            const activateSecurityBlackout = (reason) => {
+                if (!window.isLessonActive) return; // Do nothing if lesson is not active!
+                if (isAlerting) return;
+                securityActive = true;
+                blackoutReason = reason;
+
+                if (securityOverlay) {
+                    const h2El = securityOverlay.querySelector('h2');
+                    const pEl = securityOverlay.querySelector('p');
+
+                    if (reason === "cursor_outside") {
+                        if (h2El) h2El.innerText = "Cursor Outside Webpage";
+                        if (pEl) pEl.innerText = "The video has been blacked out. Please keep your cursor inside the webpage bounds to resume streaming.";
+                        if (acknowledgeBtn) acknowledgeBtn.style.display = "none";
+                    } else if (reason === "focus_lost") {
+                        if (h2El) h2El.innerText = "Window / Tab Switched";
+                        if (pEl) pEl.innerText = "Changing tabs or applications is strictly prohibited during lessons. Click Acknowledge below to resume.";
+                        if (acknowledgeBtn) acknowledgeBtn.style.display = "inline-block";
+                    } else if (reason === "screenshot") {
+                        if (h2El) h2El.innerText = "Screen Capture Intercepted";
+                        if (pEl) pEl.innerText = "Taking screenshots or recordings is strictly prohibited to protect intellectual property.";
+                        if (acknowledgeBtn) acknowledgeBtn.style.display = "inline-block";
+                    } else {
+                        if (h2El) h2El.innerText = "Screen Security Active";
+                        if (pEl) pEl.innerText = "Screenshots and screen recordings are strictly prohibited to protect intellectual property.";
+                        if (acknowledgeBtn) acknowledgeBtn.style.display = "inline-block";
+                    }
+                    securityOverlay.classList.add('active');
+                }
+
+                if (videoElement) {
+                    videoElement.pause();
+                }
+            };
+
+            const deactivateSecurityBlackout = (reason) => {
+                if (!window.isLessonActive) return;
+                if (isAlerting) return;
+
+                if (reason === "cursor_inside" && blackoutReason === "cursor_outside") {
+                    securityActive = false;
+                    if (securityOverlay) {
+                        securityOverlay.classList.remove('active');
+                    }
+                    showQualityToast("Cursor returned. Player active.");
+                }
+            };
+
+            // Set up click event listener for the Acknowledge & Resume button
+            if (acknowledgeBtn) {
+                acknowledgeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    securityActive = false;
+                    if (securityOverlay) {
+                        securityOverlay.classList.remove('active');
+                    }
+                    acknowledgeBtn.style.display = "none";
+                    if (videoElement) {
+                        videoElement.play().catch(err => console.log("Video resume play error:", err));
+                    }
                 });
             }
 
-            const activateSecurityBlackout = () => {};
-            const deactivateSecurityBlackout = () => {};
+            // Track cursor leaving the browser viewport
+            document.addEventListener('mouseleave', (e) => {
+                const x = e.clientX;
+                const y = e.clientY;
+                const w = window.innerWidth;
+                const h = window.innerHeight;
 
-            // Ensure security blackout overlay is hidden when entering fullscreen
+                // If coordinates are inside the page boundaries, the mouse didn't leave the window
+                // (e.g., it just hovered over an iframe video player or overlay)
+                if (x > 10 && x < w - 10 && y > 10 && y < h - 10) {
+                    return;
+                }
+
+                activateSecurityBlackout("cursor_outside");
+            });
+
+            document.addEventListener('mouseenter', () => {
+                deactivateSecurityBlackout("cursor_inside");
+            });
+
+            // Ensure security blackout overlay is hidden when entering fullscreen, unless active
             document.addEventListener('fullscreenchange', () => {
                 if (document.fullscreenElement || document.webkitFullscreenElement) {
-                    if (securityOverlay) {
+                    if (securityOverlay && !securityActive) {
                         securityOverlay.classList.remove('active');
                     }
                 }
             });
             document.addEventListener('webkitfullscreenchange', () => {
                 if (document.fullscreenElement || document.webkitFullscreenElement) {
-                    if (securityOverlay) {
+                    if (securityOverlay && !securityActive) {
                         securityOverlay.classList.remove('active');
                     }
                 }
             });
 
             // Detect window focus shifts (Tab switching, OBS focus, browser devtools inspector)
-            window.addEventListener('blur', activateSecurityBlackout);
-            window.addEventListener('focus', deactivateSecurityBlackout);
+            window.addEventListener('blur', () => {
+                // Focus shifting to a child iframe blurs the window but keeps document.hasFocus() true.
+                // We delay the check by 100ms to ensure the browser has updated document.hasFocus().
+                setTimeout(() => {
+                    if (!document.hasFocus()) {
+                        activateSecurityBlackout("focus_lost");
+                    }
+                }, 100);
+            });
+            window.addEventListener('focus', () => {
+                deactivateSecurityBlackout("focus_gain");
+            });
 
             // Visibility change detection
             document.addEventListener("visibilitychange", () => {
                 if (document.hidden) {
-                    if (videoElement) {
-                        videoElement.pause();
-                    } else {
-                        const video = document.querySelector("video");
-                        if (video) video.pause();
-                    }
+                    activateSecurityBlackout("focus_lost");
                 }
             });
 
             // Intercept OS-level PrtScn key and devtools shortcut keys
             window.addEventListener('keydown', (e) => {
+                // Always block F1 to F12 keys
+                const fKeys = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"];
+                if (fKeys.includes(e.key)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+
+                if (window.isLessonActive) {
+                    const allowedKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+                    const isReloadCombo = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r';
+                    if (!allowedKeys.includes(e.key) && !isReloadCombo) {
+                        // Check for screenshot triggers
+                        if (e.key === 'PrintScreen' || e.keyCode === 44) {
+                            activateSecurityBlackout("screenshot");
+                            try {
+                                navigator.clipboard.writeText("Screenshots are strictly prohibited on PrimeVerse.");
+                            } catch (err) { }
+                        } else if (e.metaKey && e.shiftKey && e.key.toUpperCase() === 'S') {
+                            activateSecurityBlackout("screenshot");
+                        } else if (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4')) {
+                            activateSecurityBlackout("screenshot");
+                        } else if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === 'P') {
+                            activateSecurityBlackout("screenshot");
+                        }
+
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+                }
+
+                // Fallback / standard blocks when lesson is not active
                 if (e.key === 'PrintScreen' || e.keyCode === 44) {
-                    activateSecurityBlackout();
-                    deactivateSecurityBlackout();
+                    activateSecurityBlackout("screenshot");
+                    e.preventDefault();
+                    try {
+                        navigator.clipboard.writeText("Screenshots are strictly prohibited on PrimeVerse.");
+                    } catch (err) { }
+                    return false;
+                }
+
+                // Check for Windows Snipping Tool (Win+Shift+S)
+                if (e.metaKey && e.shiftKey && e.key.toUpperCase() === 'S') {
+                    activateSecurityBlackout("screenshot");
                     e.preventDefault();
                     return false;
                 }
+
+                // Check for macOS Screenshot (Cmd+Shift+3 or Cmd+Shift+4)
+                if (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4')) {
+                    activateSecurityBlackout("screenshot");
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Check for Print shortcut (Ctrl+P or Cmd+P)
+                if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === 'P') {
+                    activateSecurityBlackout("screenshot");
+                    e.preventDefault();
+                    return false;
+                }
+
                 // Stop developer inspection shortcuts (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U)
                 if (
                     e.keyCode === 123 || // F12
@@ -1928,9 +2091,23 @@
             });
 
             window.addEventListener('keyup', (e) => {
+                const fKeys = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"];
+                if (fKeys.includes(e.key)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+
+                if (window.isLessonActive) {
+                    const allowedKeys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+                    const isReloadCombo = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r';
+                    if (!allowedKeys.includes(e.key) && !isReloadCombo) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+                }
                 if (e.key === 'PrintScreen' || e.keyCode === 44) {
-                    activateSecurityBlackout();
-                    deactivateSecurityBlackout();
                     e.preventDefault();
                 }
             });
