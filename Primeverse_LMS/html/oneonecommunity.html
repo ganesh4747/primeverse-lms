@@ -1510,6 +1510,7 @@
                 listContainer.innerHTML = '<div style="color: var(--gray); text-align: center; padding: 2rem; font-size: 0.85rem;"><div class="spinner-mini" style="margin:0 auto 0.75rem auto;"></div>Loading ticket submissions...</div>';
 
                 let submissions = [];
+                let isSupabaseSuccess = false;
 
                 if (supabase) {
                     try {
@@ -1520,6 +1521,22 @@
                         const { data, error } = await query.order('created_at', { ascending: false });
                         if (!error && data) {
                             submissions = data;
+                            isSupabaseSuccess = true;
+                            // Sync to localStorage
+                            try {
+                                let allSubmissions = JSON.parse(localStorage.getItem('concept_submissions') || '[]');
+                                if (isAdmin) {
+                                    localStorage.setItem('concept_submissions', JSON.stringify(submissions));
+                                } else {
+                                    // Remove current user's submissions
+                                    allSubmissions = allSubmissions.filter(sub => !sub.user_email || sub.user_email.toLowerCase().trim() !== loggedInEmail.toLowerCase().trim());
+                                    // Add the fetched ones
+                                    allSubmissions.push(...submissions);
+                                    localStorage.setItem('concept_submissions', JSON.stringify(allSubmissions));
+                                }
+                            } catch (e) {
+                                console.error("Error updating local storage submissions cache:", e);
+                            }
                         } else {
                             console.warn("Supabase fetch concept_submissions returned error:", error);
                         }
@@ -1528,8 +1545,8 @@
                     }
                 }
 
-                // LocalStorage Fallback if Supabase fails or is empty
-                if (!submissions || !submissions.length) {
+                // LocalStorage Fallback if Supabase fails (not success)
+                if (!isSupabaseSuccess) {
                     const localSub = JSON.parse(localStorage.getItem('concept_submissions') || '[]');
                     if (isAdmin) {
                         submissions = localSub;
@@ -1785,6 +1802,7 @@
                 `;
 
                 let chatMessages = [];
+                let isMessagesFetchSuccess = false;
 
                 if (supabase && submission.id && !submission.id.startsWith('loc_')) {
                     try {
@@ -1795,14 +1813,27 @@
                             .order('created_at', { ascending: true });
                         if (!error && data) {
                             chatMessages = data;
+                            isMessagesFetchSuccess = true;
+                            // Sync to localStorage
+                            try {
+                                const msgKey = `concept_messages_${submission.id}`;
+                                const localMsgs = chatMessages.map(msg => ({
+                                    sender: msg.sender_role === 'system' || msg.sender_role === 'admin' ? 'system' : 'student',
+                                    text: msg.message_text,
+                                    time: msg.created_at
+                                }));
+                                localStorage.setItem(msgKey, JSON.stringify(localMsgs));
+                            } catch (e) {
+                                console.error("Error updating local storage messages cache:", e);
+                            }
                         }
                     } catch (err) {
                         console.error("Supabase concept_messages fetch failed:", err);
                     }
                 }
 
-                // Fallback to local storage
-                if (!chatMessages.length) {
+                // Fallback to local storage if Supabase failed/wasn't available
+                if (!isMessagesFetchSuccess) {
                     const msgKey = `concept_messages_${submission.id || submission.created_at}`;
                     const customMessages = JSON.parse(localStorage.getItem(msgKey) || '[]');
                     chatMessages = customMessages.map(msg => ({
@@ -1841,7 +1872,7 @@
                     log.scrollTop = log.scrollHeight;
                 }, 50);
             };
-            const triggerEmailNotification = (msg) => {
+            const triggerEmailNotification = (msg, submission) => {
                 let apiUrl = '/api/send-admin-alert';
                 if (window.location.origin.startsWith('file://')) {
                     apiUrl = 'http://127.0.0.1:8000/api/send-admin-alert';
@@ -1850,6 +1881,15 @@
                         apiUrl = 'http://127.0.0.1:8000/api/send-admin-alert';
                     }
                 }
+                
+                const payloadRecord = {
+                    ...msg,
+                    concept_name: submission ? submission.concept_name : 'Unknown Concept',
+                    module: submission ? submission.module : 'Unknown Module',
+                    student_email: submission ? submission.user_email : null,
+                    student_name: submission ? submission.user_name : 'Student'
+                };
+
                 fetch(apiUrl, {
                     method: 'POST',
                     headers: {
@@ -1858,7 +1898,7 @@
                     body: JSON.stringify({
                         type: 'INSERT',
                         table: 'concept_messages',
-                        record: msg
+                        record: payloadRecord
                     })
                 })
                 .then(response => {
@@ -1892,7 +1932,7 @@
                             console.log("Supabase: message inserted successfully.");
                             
                             // Trigger email notification
-                            triggerEmailNotification(newMsg);
+                            triggerEmailNotification(newMsg, submission);
                         } else {
                             console.warn("Supabase message insert error:", error);
                         }

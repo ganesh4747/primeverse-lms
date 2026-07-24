@@ -6773,6 +6773,7 @@
                 const userRole = localStorage.getItem('userRole') || 'user';
                 const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
                 let submissions = [];
+                let isSupabaseSuccess = false;
 
                 try {
                     if (supabase) {
@@ -6787,6 +6788,23 @@
 
                         if (!error && data) {
                             submissions = data;
+                            isSupabaseSuccess = true;
+                            
+                            // Sync to localStorage
+                            try {
+                                let allSubmissions = JSON.parse(localStorage.getItem('concept_submissions') || '[]');
+                                if (userRole === 'admin') {
+                                    localStorage.setItem('concept_submissions', JSON.stringify(submissions));
+                                } else {
+                                    // Remove this user's submissions
+                                    allSubmissions = allSubmissions.filter(sub => !sub.user_email || sub.user_email.toLowerCase().trim() !== email.toLowerCase().trim());
+                                    // Add the fetched ones
+                                    allSubmissions.push(...submissions);
+                                    localStorage.setItem('concept_submissions', JSON.stringify(allSubmissions));
+                                }
+                            } catch (e) {
+                                console.error("Error updating local storage submissions cache:", e);
+                            }
                         } else {
                             console.warn("Supabase fetch failed or returned empty. Error:", error);
                         }
@@ -6795,8 +6813,8 @@
                     console.error("Error fetching from Supabase:", e);
                 }
 
-                // Fallback to local storage if empty or error
-                if (!submissions || !submissions.length) {
+                // Fallback to local storage only if Supabase fetch was unsuccessful
+                if (!isSupabaseSuccess) {
                     const allSubmissions = JSON.parse(localStorage.getItem('concept_submissions') || '[]');
                     if (userRole === 'admin') {
                         submissions = allSubmissions;
@@ -6945,6 +6963,7 @@
                     // 3. User comments / thread history from Supabase (fallback to localStorage)
                     const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
                     let dbMessages = [];
+                    let isMessagesFetchSuccess = false;
 
                     if (supabase && submission.id && !submission.id.startsWith('loc_')) {
                         try {
@@ -6955,14 +6974,28 @@
                                 .order('created_at', { ascending: true });
                             if (msgs && !error) {
                                 dbMessages = msgs;
+                                isMessagesFetchSuccess = true;
+                                
+                                // Sync local storage with latest messages from DB
+                                try {
+                                    const msgKey = `concept_messages_${submission.id}`;
+                                    const localMsgs = dbMessages.map(msg => ({
+                                        sender: msg.sender_role === 'system' || msg.sender_role === 'admin' ? 'system' : 'student',
+                                        text: msg.message_text,
+                                        time: msg.created_at
+                                    }));
+                                    localStorage.setItem(msgKey, JSON.stringify(localMsgs));
+                                } catch (e) {
+                                    console.error("Error updating local storage messages cache:", e);
+                                }
                             }
                         } catch (err) {
                             console.error("Error loading chat messages from Supabase:", err);
                         }
                     }
 
-                    // Fallback to local storage if empty or Supabase is not available
-                    if (!dbMessages.length) {
+                    // Fallback to local storage if Supabase failed/wasn't available
+                    if (!isMessagesFetchSuccess) {
                         const msgKey = `concept_messages_${submission.id || submission.created_at}`;
                         const customMessages = JSON.parse(localStorage.getItem(msgKey) || '[]');
                         dbMessages = customMessages.map(msg => ({
@@ -7110,6 +7143,14 @@
                             }
                         }
                         
+                        const payloadRecord = {
+                            ...msg,
+                            concept_name: window.activeConceptSubmission.concept_name,
+                            module: window.activeConceptSubmission.module,
+                            student_email: window.activeConceptSubmission.user_email,
+                            student_name: window.activeConceptSubmission.user_name
+                        };
+                        
                         fetch(apiUrl, {
                             method: 'POST',
                             headers: {
@@ -7118,7 +7159,7 @@
                             body: JSON.stringify({
                                 type: 'INSERT',
                                 table: 'concept_messages',
-                                record: msg
+                                record: payloadRecord
                             })
                         })
                         .then(response => {

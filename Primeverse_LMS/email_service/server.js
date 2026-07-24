@@ -119,7 +119,8 @@ const server = http.createServer(async (req, res) => {
                     }
 
                     if (adminEmails.length === 0) {
-                        adminEmails = [process.env.ADMIN_EMAIL || 'harishramanan4415@gmail.com'];
+                        const rawAdminEmail = process.env.ADMIN_EMAIL || 'harishramanan4415@gmail.com';
+                        adminEmails = rawAdminEmail.split(',').map(e => e.trim()).filter(Boolean);
                     }
 
                     console.log(`Sending new submission alert to ${adminEmails.length} admin(s)...`);
@@ -158,22 +159,30 @@ const server = http.createServer(async (req, res) => {
                     return;
                 }
 
-                let concept_name = "Unknown Concept";
-                let module_name = "Unknown Module";
-                let student_email = null;
-                let student_name = "Student";
+                let concept_name = record.concept_name || "Unknown Concept";
+                let module_name = record.module || record.module_name || "Unknown Module";
+                let student_email = record.student_email || record.user_email || null;
+                let student_name = record.student_name || record.user_name || "Student";
 
-                if (supabase && submission_id) {
+                if ((!student_email || concept_name === "Unknown Concept") && supabase && submission_id) {
                     try {
                         const { data, error } = await supabase
                             .from('concept_submissions')
                             .select('concept_name, module, user_email, user_name')
                             .eq('id', submission_id);
                         if (!error && data && data.length > 0) {
-                            concept_name = data[0].concept_name || concept_name;
-                            module_name = data[0].module || module_name;
-                            student_email = data[0].user_email;
-                            student_name = data[0].user_name || student_name;
+                            if (concept_name === "Unknown Concept") {
+                                concept_name = data[0].concept_name || concept_name;
+                            }
+                            if (module_name === "Unknown Module") {
+                                module_name = data[0].module || module_name;
+                            }
+                            if (!student_email) {
+                                student_email = data[0].user_email;
+                            }
+                            if (student_name === "Student") {
+                                student_name = data[0].user_name || student_name;
+                            }
                             console.log(`Resolved database context: Concept: '${concept_name}', Student: '${student_email}'`);
                         }
                     } catch (err) {
@@ -196,7 +205,8 @@ const server = http.createServer(async (req, res) => {
                     }
 
                     if (adminEmails.length === 0) {
-                        adminEmails = [process.env.ADMIN_EMAIL || 'aashiqmustak5969@gmail.com'];
+                        const rawAdminEmail = process.env.ADMIN_EMAIL || 'aashiqmustak5969@gmail.com';
+                        adminEmails = rawAdminEmail.split(',').map(e => e.trim()).filter(Boolean);
                     }
 
                     console.log(`Sending student support notification to ${adminEmails.length} admin(s)...`);
@@ -216,7 +226,15 @@ const server = http.createServer(async (req, res) => {
 
                     res.writeHead(202, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ status: 'queued', recipient: 'admin' }));
-                } else if (sender_role === 'admin' || sender_role === 'mentor') {
+                } else if (sender_role === 'admin' || sender_role === 'mentor' || sender_role === 'system') {
+                    // Check if this is the generic system auto-reply message ("Thanks for providing additional details...")
+                    if (sender_role === 'system' && message_text.includes("Thanks for providing additional details")) {
+                        console.log("Skipping student notification for automatic system comment.");
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ status: 'skipped', reason: 'system auto-reply email skipped to prevent spam' }));
+                        return;
+                    }
+
                     if (!student_email) {
                         res.writeHead(400, { 'Content-Type': 'application/json' });
                         res.end(JSON.stringify({ status: 'skipped', reason: 'could not resolve student email' }));
