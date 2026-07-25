@@ -65,6 +65,25 @@ const sendEmail = async (to, subject, html) => {
     }
 };
 
+const printMessageEmailFlow = (params) => {
+    const { transportType, senderRole, senderName, senderEmail, conceptName, moduleName, messageText, recipients, status } = params;
+    const border = "=".repeat(70);
+    const header = `📬 CONCEPT MESSAGE EMAIL FLOW [${transportType}]`;
+    const recipientsStr = recipients && recipients.length ? recipients.join(", ") : "(None / Resolved empty)";
+    
+    console.log(`\n\x1b[36m${border}\x1b[0m`);
+    console.log(`  \x1b[1m\x1b[33m${header}\x1b[0m`);
+    console.log(`\x1b[36m${border}\x1b[0m`);
+    console.log(`  ▶ \x1b[1mMessage Details:\x1b[0m`);
+    console.log(`    • \x1b[32mSender:\x1b[0m    ${senderName} (${senderEmail || 'N/A'}) [Role: ${senderRole}]`);
+    console.log(`    • \x1b[32mConcept:\x1b[0m   ${conceptName} (Module: ${moduleName})`);
+    console.log(`    • \x1b[32mText:\x1b[0m      "${messageText}"`);
+    console.log(`  ▶ \x1b[1mEmail Routing:\x1b[0m`);
+    console.log(`    • \x1b[35mTo:\x1b[0m        ${recipientsStr}`);
+    console.log(`    • \x1b[33mStatus:\x1b[0m    ${status}`);
+    console.log(`\x1b[36m${border}\x1b[0m\n`);
+};
+
 const renderTemplate = (filename, data) => {
     const templatePath = path.join(__dirname, 'templates', filename);
     if (!fs.existsSync(templatePath)) {
@@ -241,56 +260,123 @@ supabase
             }
         }
 
-        // 1. Send notification to admin(s)
-        console.log(`💬 Triggering message admin alert for message from ${sender_name}...`);
-        let adminEmails = [];
-        try {
-            const { data, error } = await supabase.from('admins').select('email');
-            if (!error && data) {
-                adminEmails = data.map(r => r.email).filter(Boolean);
-            }
-        } catch (err) {
-            console.error('Failed to fetch admins from DB:', err.message);
-        }
-
-        if (adminEmails.length === 0) {
-            adminEmails = [process.env.ADMIN_EMAIL || 'harishramanan4415@gmail.com'];
-        }
-
-        const adminSubject = `New support message from ${sender_name} (Concept: ${concept_name})`;
-        const adminHtml = renderTemplate('admin_message_alert.html', {
-            sender_name,
-            sender_email,
-            message_text,
-            concept_name,
-            module_name,
-            workspace_url: process.env.LMS_WORKSPACE_URL || 'https://www.primeverseportal.pro/html/oneonecommunity.html'
-        });
-
-        for (const email of adminEmails) {
+        // Determine who receives the email based on the sender's role
+        if (sender_role === 'student') {
+            // 1. Send notification to admin(s)
+            let adminEmails = [];
             try {
-                await sendEmail(email, adminSubject, adminHtml);
+                const { data, error } = await supabase.from('admins').select('email');
+                if (!error && data) {
+                    adminEmails = data.map(r => r.email).filter(Boolean);
+                }
             } catch (err) {
-                console.error(`Failed to send message alert to admin ${email}:`, err.message);
+                console.error('Failed to fetch admins from DB:', err.message);
             }
-        }
 
-        // 2. Send notification to student
-        if (student_email) {
-            console.log(`💬 Triggering message student alert for student ${student_name} (${student_email})...`);
-            const studentSubject = `New reply from your PrimeVerse Mentor (Concept: ${concept_name})`;
-            const studentHtml = renderTemplate('student_message_alert.html', {
-                student_name,
+            if (adminEmails.length === 0) {
+                adminEmails = [process.env.ADMIN_EMAIL || 'harishramanan4415@gmail.com'];
+            }
+
+            // Print flow to terminal
+            printMessageEmailFlow({
+                transportType: 'Realtime Listener Node',
+                senderRole: sender_role,
+                senderName: sender_name,
+                senderEmail: sender_email,
+                conceptName: concept_name,
+                moduleName: module_name,
+                messageText: message_text,
+                recipients: adminEmails,
+                status: 'SENDING'
+            });
+
+            const adminSubject = `New support message from ${sender_name} (Concept: ${concept_name})`;
+            const adminHtml = renderTemplate('admin_message_alert.html', {
+                sender_name,
+                sender_email,
                 message_text,
                 concept_name,
                 module_name,
                 workspace_url: process.env.LMS_WORKSPACE_URL || 'https://www.primeverseportal.pro/html/oneonecommunity.html'
             });
 
-            try {
-                await sendEmail(student_email, studentSubject, studentHtml);
-            } catch (err) {
-                console.error(`Failed to send reply to student ${student_email}:`, err.message);
+            let adminSentSuccess = [];
+            let adminSentFail = [];
+            for (const email of adminEmails) {
+                try {
+                    await sendEmail(email, adminSubject, adminHtml);
+                    adminSentSuccess.push(email);
+                } catch (err) {
+                    console.error(`Failed to send message alert to admin ${email}:`, err.message);
+                    adminSentFail.push(email);
+                }
+            }
+
+            printMessageEmailFlow({
+                transportType: 'Realtime Listener Node',
+                senderRole: sender_role,
+                senderName: sender_name,
+                senderEmail: sender_email,
+                conceptName: concept_name,
+                moduleName: module_name,
+                messageText: message_text,
+                recipients: adminEmails,
+                status: `SENT (${adminSentSuccess.length} Succeeded, ${adminSentFail.length} Failed)`
+            });
+
+        } else if (sender_role === 'admin' || sender_role === 'mentor' || sender_role === 'system') {
+            // 2. Send notification to student
+            if (student_email) {
+                printMessageEmailFlow({
+                    transportType: 'Realtime Listener Node',
+                    senderRole: sender_role,
+                    senderName: sender_name,
+                    senderEmail: sender_email,
+                    conceptName: concept_name,
+                    moduleName: module_name,
+                    messageText: message_text,
+                    recipients: [student_email],
+                    status: 'SENDING'
+                });
+
+                const studentSubject = `New reply from your PrimeVerse Mentor (Concept: ${concept_name})`;
+                const studentHtml = renderTemplate('student_message_alert.html', {
+                    student_name,
+                    message_text,
+                    concept_name,
+                    module_name,
+                    workspace_url: process.env.LMS_WORKSPACE_URL || 'https://www.primeverseportal.pro/html/oneonecommunity.html'
+                });
+
+                try {
+                    await sendEmail(student_email, studentSubject, studentHtml);
+                    printMessageEmailFlow({
+                        transportType: 'Realtime Listener Node',
+                        senderRole: sender_role,
+                        senderName: sender_name,
+                        senderEmail: sender_email,
+                        conceptName: concept_name,
+                        moduleName: module_name,
+                        messageText: message_text,
+                        recipients: [student_email],
+                        status: 'SENT'
+                    });
+                } catch (err) {
+                    console.error(`Failed to send reply to student ${student_email}:`, err.message);
+                    printMessageEmailFlow({
+                        transportType: 'Realtime Listener Node',
+                        senderRole: sender_role,
+                        senderName: sender_name,
+                        senderEmail: sender_email,
+                        conceptName: concept_name,
+                        moduleName: module_name,
+                        messageText: message_text,
+                        recipients: [student_email],
+                        status: `FAILED: ${err.message}`
+                    });
+                }
+            } else {
+                console.log("Could not resolve student email. Skipping student notification.");
             }
         }
     })

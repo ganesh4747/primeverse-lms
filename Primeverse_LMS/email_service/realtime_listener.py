@@ -12,6 +12,7 @@ from main import (
     process_and_send_admin_submission_alert,
     process_and_send_admin_message_alert,
     process_and_send_student_message_alert,
+    print_message_email_flow,
     LESSON_TITLES
 )
 
@@ -24,7 +25,9 @@ logging.basicConfig(
 logger = logging.getLogger("realtime_listener")
 
 # Load configuration
-load_dotenv()
+script_dir = os.path.dirname(os.path.abspath(__file__))
+env_path = os.path.join(script_dir, "..", ".env")
+load_dotenv(dotenv_path=env_path)
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
@@ -150,7 +153,8 @@ def handle_messages_insert(payload):
         if sender_role == "student":
             logger.info(f"Triggering message admin alert from student {sender_name} ({sender_email})...")
             process_and_send_admin_message_alert(
-                sender_name, sender_email, message_text, concept_name, module_name
+                sender_name, sender_email, message_text, concept_name, module_name,
+                transport_type="Realtime Listener Python"
             )
         elif sender_role in ["admin", "mentor"]:
             if not student_email:
@@ -158,7 +162,8 @@ def handle_messages_insert(payload):
                 return
             logger.info(f"Triggering message student alert for student {student_name} ({student_email})...")
             process_and_send_student_message_alert(
-                student_name, student_email, message_text, concept_name, module_name
+                student_name, student_email, message_text, concept_name, module_name,
+                transport_type="Realtime Listener Python"
             )
         else:
             logger.info(f"Skipping alert for message with sender_role: '{sender_role}'")

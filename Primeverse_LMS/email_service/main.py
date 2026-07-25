@@ -23,7 +23,9 @@ logging.basicConfig(
 logger = logging.getLogger("email_service")
 
 # Load environment variables
-load_dotenv(override=True)
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env_path = os.path.join(base_dir, ".env")
+load_dotenv(dotenv_path=env_path, override=True)
 print(f"DEBUG_ENV: SMTP_USER = '{os.getenv('SMTP_USER')}'")
 print(f"DEBUG_ENV: SMTP_PASS = '{os.getenv('SMTP_PASS')[:2] + '...' + os.getenv('SMTP_PASS')[-2:] if os.getenv('SMTP_PASS') else 'None'}'")
 
@@ -100,6 +102,30 @@ class TestProgressionRequest(BaseModel):
     email: EmailStr
     full_name: str
     day: int
+
+def print_message_email_flow(transport_type: str, sender_role: str, sender_name: str, sender_email: str, concept_name: str, module_name: str, message_text: str, recipients: list, status: str):
+    border = "=" * 70
+    header = f"📬 CONCEPT MESSAGE EMAIL FLOW [{transport_type}]"
+    recipients_str = ", ".join(recipients) if recipients else "(None / Resolved empty)"
+    
+    cyan = "\033[36m"
+    yellow = "\033[33m"
+    green = "\033[32m"
+    magenta = "\033[35m"
+    bold = "\033[1m"
+    reset = "\033[0m"
+
+    print(f"\n{cyan}{border}{reset}")
+    print(f"  {bold}{yellow}{header}{reset}")
+    print(f"{cyan}{border}{reset}")
+    print(f"  ▶ {bold}Message Details:{reset}")
+    print(f"    • {green}Sender:{reset}    {sender_name} ({sender_email or 'N/A'}) [Role: {sender_role}]")
+    print(f"    • {green}Concept:{reset}   {concept_name} (Module: {module_name})")
+    print(f"    • {green}Text:{reset}      \"{message_text}\"")
+    print(f"  ▶ {bold}Email Routing:{reset}")
+    print(f"    • {magenta}To:{reset}        {recipients_str}")
+    print(f"    • {yellow}Status:{reset}    {status}")
+    print(f"{cyan}{border}{reset}\n")
 
 def send_smtp_email(to_email: str, subject: str, html_content: str):
     """
@@ -329,7 +355,7 @@ def process_and_send_admin_submission_alert(student_name: str, student_email: st
     except Exception as e:
         logger.error(f"Background task failed to process admin submission alert: {str(e)}")
 
-def process_and_send_admin_message_alert(sender_name: str, sender_email: str, message_text: str, concept_name: str, module_name: str):
+def process_and_send_admin_message_alert(sender_name: str, sender_email: str, message_text: str, concept_name: str, module_name: str, transport_type: str = "FastAPI Webhook Server"):
     """
     Background worker task to compile and send new message email to admin.
     """
@@ -356,9 +382,40 @@ def process_and_send_admin_message_alert(sender_name: str, sender_email: str, me
         # Fallback to config if DB query is empty/fails
         if not admin_emails:
             admin_emails = [email.strip() for email in ADMIN_EMAIL.split(",") if email.strip()]
+
+        print_message_email_flow(
+            transport_type=transport_type,
+            sender_role="student",
+            sender_name=sender_name,
+            sender_email=sender_email,
+            concept_name=concept_name,
+            module_name=module_name,
+            message_text=message_text,
+            recipients=admin_emails,
+            status="SENDING"
+        )
             
+        success_count = 0
+        fail_count = 0
         for admin_email in admin_emails:
-            send_smtp_email(admin_email, subject, html_body)
+            try:
+                send_smtp_email(admin_email, subject, html_body)
+                success_count += 1
+            except Exception as send_err:
+                logger.error(f"Failed to send admin alert to {admin_email}: {str(send_err)}")
+                fail_count += 1
+
+        print_message_email_flow(
+            transport_type=transport_type,
+            sender_role="student",
+            sender_name=sender_name,
+            sender_email=sender_email,
+            concept_name=concept_name,
+            module_name=module_name,
+            message_text=message_text,
+            recipients=admin_emails,
+            status=f"SENT ({success_count} Succeeded, {fail_count} Failed)"
+        )
     except Exception as e:
         logger.error(f"Background task failed to process admin message alert: {str(e)}")
 
@@ -390,7 +447,7 @@ def render_student_message_alert_template(student_name: str, message_text: str, 
         </html>
         """
 
-def process_and_send_student_message_alert(student_name: str, student_email: str, message_text: str, concept_name: str, module_name: str):
+def process_and_send_student_message_alert(student_name: str, student_email: str, message_text: str, concept_name: str, module_name: str, transport_type: str = "FastAPI Webhook Server"):
     """
     Background worker task to compile and send new reply email to student.
     """
@@ -402,7 +459,35 @@ def process_and_send_student_message_alert(student_name: str, student_email: str
             concept_name=concept_name,
             module_name=module_name
         )
-        send_smtp_email(student_email, subject, html_body)
+        print_message_email_flow(
+            transport_type=transport_type,
+            sender_role="admin",
+            sender_name="Mentor/Admin",
+            sender_email="admin@primeverse.com",
+            concept_name=concept_name,
+            module_name=module_name,
+            message_text=message_text,
+            recipients=[student_email] if student_email else [],
+            status="SENDING"
+        )
+        status_str = "SENT"
+        try:
+            send_smtp_email(student_email, subject, html_body)
+        except Exception as send_err:
+            logger.error(f"Failed to send student alert to {student_email}: {str(send_err)}")
+            status_str = f"FAILED: {str(send_err)}"
+
+        print_message_email_flow(
+            transport_type=transport_type,
+            sender_role="admin",
+            sender_name="Mentor/Admin",
+            sender_email="admin@primeverse.com",
+            concept_name=concept_name,
+            module_name=module_name,
+            message_text=message_text,
+            recipients=[student_email] if student_email else [],
+            status=status_str
+        )
     except Exception as e:
         logger.error(f"Background task failed to process student message alert: {str(e)}")
 

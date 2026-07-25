@@ -1960,7 +1960,7 @@
                             console.log("Supabase: message inserted successfully.");
 
                             // Handled by Supabase Database Webhook trigger to prevent duplicate emails
-                            // triggerEmailNotification(newMsg, submission);
+                            triggerEmailNotification(newMsg, submission);
                         } else {
                             console.warn("Supabase message insert error:", error);
                         }

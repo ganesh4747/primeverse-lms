@@ -44,6 +44,25 @@ const sendEmail = async (to, subject, html) => {
     }
 };
 
+const printMessageEmailFlow = (params) => {
+    const { transportType, senderRole, senderName, senderEmail, conceptName, moduleName, messageText, recipients, status } = params;
+    const border = "=".repeat(70);
+    const header = `📬 CONCEPT MESSAGE EMAIL FLOW [${transportType}]`;
+    const recipientsStr = recipients && recipients.length ? recipients.join(", ") : "(None / Resolved empty)";
+    
+    console.log(`\n\x1b[36m${border}\x1b[0m`);
+    console.log(`  \x1b[1m\x1b[33m${header}\x1b[0m`);
+    console.log(`\x1b[36m${border}\x1b[0m`);
+    console.log(`  ▶ \x1b[1mMessage Details:\x1b[0m`);
+    console.log(`    • \x1b[32mSender:\x1b[0m    ${senderName} (${senderEmail || 'N/A'}) [Role: ${senderRole}]`);
+    console.log(`    • \x1b[32mConcept:\x1b[0m   ${conceptName} (Module: ${moduleName})`);
+    console.log(`    • \x1b[32mText:\x1b[0m      "${messageText}"`);
+    console.log(`  ▶ \x1b[1mEmail Routing:\x1b[0m`);
+    console.log(`    • \x1b[35mTo:\x1b[0m        ${recipientsStr}`);
+    console.log(`    • \x1b[33mStatus:\x1b[0m    ${status}`);
+    console.log(`\x1b[36m${border}\x1b[0m\n`);
+};
+
 // Simple template renderer using string replacement
 const renderTemplate = (filename, data) => {
     const templatePath = path.join(__dirname, 'templates', filename);
@@ -209,7 +228,18 @@ const server = http.createServer(async (req, res) => {
                         adminEmails = rawAdminEmail.split(',').map(e => e.trim()).filter(Boolean);
                     }
 
-                    console.log(`Sending student support notification to ${adminEmails.length} admin(s)...`);
+                    printMessageEmailFlow({
+                        transportType: 'HTTP Webhook Server',
+                        senderRole: sender_role,
+                        senderName: sender_name,
+                        senderEmail: sender_email,
+                        conceptName: concept_name,
+                        moduleName: module_name,
+                        messageText: message_text,
+                        recipients: adminEmails,
+                        status: 'SENDING'
+                    });
+
                     const subject = `New support message from ${sender_name} (Concept: ${concept_name})`;
                     const html = renderTemplate('admin_message_alert.html', {
                         sender_name,
@@ -220,9 +250,29 @@ const server = http.createServer(async (req, res) => {
                         workspace_url: process.env.LMS_WORKSPACE_URL || 'https://www.primeverseportal.pro/html/oneonecommunity.html'
                     });
 
+                    let adminSentSuccess = [];
+                    let adminSentFail = [];
                     for (const email of adminEmails) {
-                        await sendEmail(email, subject, html);
+                        try {
+                            await sendEmail(email, subject, html);
+                            adminSentSuccess.push(email);
+                        } catch (err) {
+                            console.error(`Failed to send message alert to admin ${email}:`, err.message);
+                            adminSentFail.push(email);
+                        }
                     }
+
+                    printMessageEmailFlow({
+                        transportType: 'HTTP Webhook Server',
+                        senderRole: sender_role,
+                        senderName: sender_name,
+                        senderEmail: sender_email,
+                        conceptName: concept_name,
+                        moduleName: module_name,
+                        messageText: message_text,
+                        recipients: adminEmails,
+                        status: `SENT (${adminSentSuccess.length} Succeeded, ${adminSentFail.length} Failed)`
+                    });
 
                     res.writeHead(202, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ status: 'queued', recipient: 'admin' }));
@@ -241,7 +291,18 @@ const server = http.createServer(async (req, res) => {
                         return;
                     }
 
-                    console.log(`Sending mentor reply notification to student ${student_email}...`);
+                    printMessageEmailFlow({
+                        transportType: 'HTTP Webhook Server',
+                        senderRole: sender_role,
+                        senderName: sender_name,
+                        senderEmail: sender_email,
+                        conceptName: concept_name,
+                        moduleName: module_name,
+                        messageText: message_text,
+                        recipients: [student_email],
+                        status: 'SENDING'
+                    });
+
                     const subject = `New reply from your PrimeVerse Mentor (Concept: ${concept_name})`;
                     const html = renderTemplate('student_message_alert.html', {
                         student_name,
@@ -251,7 +312,24 @@ const server = http.createServer(async (req, res) => {
                         workspace_url: process.env.LMS_WORKSPACE_URL || 'https://www.primeverseportal.pro/html/oneonecommunity.html'
                     });
 
-                    await sendEmail(student_email, subject, html);
+                    let sendStatus = 'SENT';
+                    try {
+                        await sendEmail(student_email, subject, html);
+                    } catch (err) {
+                        sendStatus = `FAILED: ${err.message}`;
+                    }
+
+                    printMessageEmailFlow({
+                        transportType: 'HTTP Webhook Server',
+                        senderRole: sender_role,
+                        senderName: sender_name,
+                        senderEmail: sender_email,
+                        conceptName: concept_name,
+                        moduleName: module_name,
+                        messageText: message_text,
+                        recipients: [student_email],
+                        status: sendStatus
+                    });
 
                     res.writeHead(202, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ status: 'queued', recipient: 'student' }));
