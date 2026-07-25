@@ -399,20 +399,20 @@ const lessonsDatabase = {
         title: "G5 STRATEGY",
         part1: {
             title: "Day 16 - Part 1: Understanding G5 Strategy Conditions",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-16/day16-sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE2L2RheTE2LXN1YjEtMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTYzMjI3MiwiZXhwIjoxOTM5MzEyMjcyfQ.CxCMOQdgMxJxKsu7D-TmsrLxwLBNIzDFxDV6wt2hEGg",
+            src: "https://drive.google.com/file/d/1fJHpgf6LaaxREZgO9VMTwNNKAcY9R3G-/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-16/day16-sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE2L2RheTE2LXN1YjEtMTA4MHAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTYzMjI3MiwiZXhwIjoxOTM5MzEyMjcyfQ.CxCMOQdgMxJxKsu7D-TmsrLxwLBNIzDFxDV6wt2hEGg",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-16/day16-sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE2L2RheTE2LXN1YjEtNzIwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNjMyMjkxLCJleHAiOjE5MzkzMTIyOTF9.ArZv1AD_O0eoOd7L6xEg7aY25CfAENHSwNGPf4keptk",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-16/day16-sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE2L2RheTE2LXN1YjEtNDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNjMyMzIwLCJleHAiOjE5MzkzMTIzMjB9.3kVNGcMO0aHUhb8-I6R63udvhyK4rBfgbPebg4Hh7o4"
+                "1080p": "https://drive.google.com/file/d/1fJHpgf6LaaxREZgO9VMTwNNKAcY9R3G-/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1fJHpgf6LaaxREZgO9VMTwNNKAcY9R3G-/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1fJHpgf6LaaxREZgO9VMTwNNKAcY9R3G-/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 16 - Part 2: G5 Strategy Execution & Case Studies",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-16/d16-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE2L2QxNi1zMi0xMDgwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE2MzIzMzcsImV4cCI6MTkzOTMxMjMzN30.CXUKI28dcO0VHHBHxzusMlrnycQf2F7ZLEAAEC_CV6Y",
+            src: "https://drive.google.com/file/d/1e9wAlwSDs5VW0Z83fEDTqqdl6E8QstcS/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-16/d16-s2-1080.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE2L2QxNi1zMi0xMDgwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODE2MzIzMzcsImV4cCI6MTkzOTMxMjMzN30.CXUKI28dcO0VHHBHxzusMlrnycQf2F7ZLEAAEC_CV6Y",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-16/d16-s2-720.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE2L2QxNi1zMi03MjAubXA0Iiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MTYzMjM1MywiZXhwIjoxOTM5MzEyMzUzfQ.XEpD_87K6zVDfScn60mpnx9-popaTu6dKwNUUa_nco8",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-16/day16-s2-480.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTE2L2RheTE2LXMyLTQ4MC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxNjMyMzcwLCJleHAiOjE5MzkzMTIzNzB9.z2yPKDNIOwDFHvC0Za328R6d3PSpoiCd8xQ-yPi_ZK8"
+                "1080p": "https://drive.google.com/file/d/1e9wAlwSDs5VW0Z83fEDTqqdl6E8QstcS/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1e9wAlwSDs5VW0Z83fEDTqqdl6E8QstcS/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1e9wAlwSDs5VW0Z83fEDTqqdl6E8QstcS/view?usp=sharing"
             }
         }
     },

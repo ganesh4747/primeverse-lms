@@ -922,30 +922,36 @@
 
                 const triggerEmailBroadcast = (msg) => {
                     let apiUrl = '/api/send-broadcast';
-                    if (window.location.origin.startsWith('file://')) {
+                    if (window.location.origin.startsWith('file://') || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                         apiUrl = 'http://127.0.0.1:8000/api/send-broadcast';
-                    } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                        if (window.location.port && window.location.port !== '8000' && window.location.port !== '3000') {
-                            apiUrl = 'http://127.0.0.1:8000/api/send-broadcast';
-                        }
                     }
                     
-                    fetch(apiUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            type: 'INSERT',
-                            table: 'community_messages',
-                            record: msg
-                        })
-                    })
+                    const sendReq = (url) => {
+                        return fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                type: 'INSERT',
+                                table: 'community_messages',
+                                record: msg
+                            })
+                        });
+                    };
+
+                    sendReq(apiUrl)
                     .then(response => {
+                        if (!response.ok && apiUrl !== '/api/send-broadcast') {
+                            return sendReq('/api/send-broadcast');
+                        }
                         console.log("Community broadcast email triggered successfully:", response);
                     })
                     .catch(err => {
                         console.error("Failed to trigger community broadcast email:", err);
+                        if (apiUrl !== '/api/send-broadcast') {
+                            sendReq('/api/send-broadcast').catch(e => console.error("Fallback trigger failed:", e));
+                        }
                     });
                 };
 
@@ -976,6 +982,9 @@
                         }
                         
                         // Trigger email broadcast
+                        triggerEmailBroadcast(newMsg);
+                    } else {
+                        // Fallback email trigger if Supabase is offline/local
                         triggerEmailBroadcast(newMsg);
                     }
 

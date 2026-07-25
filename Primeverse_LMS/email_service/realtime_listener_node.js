@@ -401,11 +401,20 @@ supabase
                 .from('profiles')
                 .select('email, full_name')
                 .in('payment_status', ['paid', 'free_access']);
-            if (!error && data) {
-                profiles = data.filter(p => p.email);
+            if (!error && data && data.length > 0) {
+                profiles = data.filter(p => p && p.email);
+            }
+            if (profiles.length === 0) {
+                const { data: allProfiles } = await supabase.from('profiles').select('email, full_name');
+                if (allProfiles) profiles = allProfiles.filter(p => p && p.email);
             }
         } catch (err) {
             console.error('Failed to fetch profiles for broadcast:', err.message);
+        }
+
+        if (profiles.length === 0) {
+            const defaultAdmin = process.env.ADMIN_EMAIL || 'harishramanan4415@gmail.com';
+            profiles = [{ email: defaultAdmin, full_name: 'PrimeVerse Admin' }];
         }
 
         console.log(`Broadcasting announcement to ${profiles.length} trader(s)...`);

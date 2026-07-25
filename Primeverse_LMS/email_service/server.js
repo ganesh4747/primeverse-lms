@@ -382,12 +382,23 @@ const server = http.createServer(async (req, res) => {
                             .from('profiles')
                             .select('email, full_name')
                             .in('payment_status', ['paid', 'free_access']);
-                        if (!error && data) {
-                            profiles = data.filter(p => p.email);
+                        if (!error && data && data.length > 0) {
+                            profiles = data.filter(p => p && p.email);
+                        }
+                        // Fallback if no paid profiles found: fetch all profiles with email
+                        if (profiles.length === 0) {
+                            const { data: allData } = await supabase.from('profiles').select('email, full_name');
+                            if (allData) profiles = allData.filter(p => p && p.email);
                         }
                     } catch (err) {
                         console.error('Failed to fetch profiles for broadcast:', err.message);
                     }
+                }
+
+                // If still empty, send to admin email as fallback
+                if (profiles.length === 0) {
+                    const defaultAdmin = process.env.ADMIN_EMAIL || 'harishramanan4415@gmail.com';
+                    profiles = [{ email: defaultAdmin, full_name: 'PrimeVerse Admin' }];
                 }
 
                 console.log(`Broadcasting announcement to ${profiles.length} trader(s)...`);

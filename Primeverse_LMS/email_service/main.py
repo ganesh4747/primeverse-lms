@@ -530,12 +530,16 @@ def process_and_send_broadcast_emails(sender_name: str, sender_title: str, messa
                 res = supabase_client.table("profiles").select("email, full_name").in_("payment_status", ["paid", "free_access"]).execute()
                 if res.data:
                     profiles = [p for p in res.data if p.get("email")]
+                if not profiles:
+                    res_all = supabase_client.table("profiles").select("email, full_name").execute()
+                    if res_all.data:
+                        profiles = [p for p in res_all.data if p.get("email")]
             except Exception as db_err:
                 logger.error(f"Failed to fetch profiles for announcement broadcast: {str(db_err)}")
         
         if not profiles:
-            logger.info("No active/paid profiles found for community broadcast.")
-            return
+            default_admin = os.getenv("ADMIN_EMAIL", "harishramanan4415@gmail.com")
+            profiles = [{"email": default_admin, "full_name": "PrimeVerse Admin"}]
 
         logger.info(f"Broadcasting announcement to {len(profiles)} active profiles...")
         subject = f"📢 New Announcement from PrimeVerse"

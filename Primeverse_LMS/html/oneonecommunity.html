@@ -1902,38 +1902,44 @@
             };
             const triggerEmailNotification = (msg, submission) => {
                 let apiUrl = '/api/send-admin-alert';
-                if (window.location.origin.startsWith('file://')) {
+                if (window.location.origin.startsWith('file://') || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     apiUrl = 'http://127.0.0.1:8000/api/send-admin-alert';
-                } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                    if (window.location.port && window.location.port !== '8000' && window.location.port !== '3000') {
-                        apiUrl = 'http://127.0.0.1:8000/api/send-admin-alert';
-                    }
                 }
 
                 const payloadRecord = {
                     ...msg,
-                    concept_name: submission ? submission.concept_name : 'Unknown Concept',
-                    module: submission ? submission.module : 'Unknown Module',
-                    student_email: submission ? submission.user_email : null,
-                    student_name: submission ? submission.user_name : 'Student'
+                    concept_name: submission ? (submission.concept_name || 'Unknown Concept') : 'Unknown Concept',
+                    module: submission ? (submission.module || submission.module_name || 'Unknown Module') : 'Unknown Module',
+                    student_email: submission ? (submission.user_email || submission.student_email) : null,
+                    student_name: submission ? (submission.user_name || submission.student_name || 'Student') : 'Student'
                 };
 
-                fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        type: 'INSERT',
-                        table: 'concept_messages',
-                        record: payloadRecord
-                    })
-                })
+                const sendReq = (url) => {
+                    return fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            type: 'INSERT',
+                            table: 'concept_messages',
+                            record: payloadRecord
+                        })
+                    });
+                };
+
+                sendReq(apiUrl)
                     .then(response => {
+                        if (!response.ok && apiUrl !== '/api/send-admin-alert') {
+                            return sendReq('/api/send-admin-alert');
+                        }
                         console.log("Email notification triggered successfully:", response);
                     })
                     .catch(err => {
                         console.error("Failed to trigger email notification:", err);
+                        if (apiUrl !== '/api/send-admin-alert') {
+                            sendReq('/api/send-admin-alert').catch(e => console.error("Fallback trigger failed:", e));
+                        }
                     });
             };
             const sendChatMessage = async (submission, text) => {
@@ -1972,6 +1978,7 @@
                 // If not synced or local fallback
                 if (!dbSuccess) {
                     newMsg.created_at = new Date().toISOString();
+                    triggerEmailNotification(newMsg, submission);
                 }
 
                 // Save to LocalStorage
