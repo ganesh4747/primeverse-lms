@@ -482,7 +482,7 @@ def read_root():
     }
 
 @app.post("/api/send-admin-alert", status_code=status.HTTP_202_ACCEPTED)
-async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: BackgroundTasks):
+async def send_admin_alert_webhook(payload: WebhookPayload):
     """
     Supabase Database Webhook HTTP Receiver.
     Triggered on INSERT of concept_submissions or concept_messages.
@@ -513,9 +513,8 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
             logger.warning("No student email found in submission record. Skipping alert.")
             return {"status": "skipped", "reason": "student email missing"}
             
-        logger.info(f"Queueing submission admin alert for student {student_name} ({student_email})")
-        background_tasks.add_task(
-            process_and_send_admin_submission_alert,
+        logger.info(f"Sending submission admin alert for student {student_name} ({student_email})")
+        process_and_send_admin_submission_alert(
             student_name,
             student_email,
             module_name,
@@ -524,9 +523,9 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
             screenshot_url
         )
         return {
-            "status": "queued",
+            "status": "sent",
             "table": "concept_submissions",
-            "message": "Admin submission alert email queued."
+            "message": "Admin submission alert email sent."
         }
         
     elif payload.table == "concept_messages":
@@ -574,9 +573,8 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
                 }
 
             if student_email:
-                logger.info(f"Queueing message student alert for student {student_name} ({student_email})")
-                background_tasks.add_task(
-                    process_and_send_student_message_alert,
+                logger.info(f"Sending message student alert for student {student_name} ({student_email})")
+                process_and_send_student_message_alert(
                     student_name,
                     student_email,
                     message_text,
@@ -584,10 +582,10 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
                     module_name
                 )
                 return {
-                    "status": "queued",
+                    "status": "sent",
                     "table": "concept_messages",
                     "recipient": "student",
-                    "message": "Student alert email queued."
+                    "message": "Student alert email sent."
                 }
             else:
                 logger.warning("Could not resolve student email. Skipping student notification.")
@@ -598,9 +596,8 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
                 }
         else:
             # Message is from the student, so we notify the admin
-            logger.info(f"Queueing message admin alert for message from {sender_name}")
-            background_tasks.add_task(
-                process_and_send_admin_message_alert,
+            logger.info(f"Sending message admin alert for message from {sender_name}")
+            process_and_send_admin_message_alert(
                 sender_name,
                 sender_email,
                 message_text,
@@ -608,10 +605,10 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
                 module_name
             )
             return {
-                "status": "queued",
+                "status": "sent",
                 "table": "concept_messages",
                 "recipient": "admin",
-                "message": "Admin alert email queued."
+                "message": "Admin alert email sent."
             }
         
     else:
@@ -621,7 +618,7 @@ async def send_admin_alert_webhook(payload: WebhookPayload, background_tasks: Ba
         )
 
 @app.post("/api/send-broadcast", status_code=status.HTTP_202_ACCEPTED)
-async def send_broadcast_webhook(payload: WebhookPayload, background_tasks: BackgroundTasks):
+async def send_broadcast_webhook(payload: WebhookPayload):
     """
     Supabase Database Webhook HTTP Receiver.
     Triggered on INSERT of community_messages.
@@ -647,22 +644,21 @@ async def send_broadcast_webhook(payload: WebhookPayload, background_tasks: Back
         logger.info("Empty message body, skipping broadcast.")
         return {"status": "skipped", "reason": "empty message_text"}
 
-    logger.info(f"Queueing community announcement broadcast from {sender_name}")
-    background_tasks.add_task(
-        process_and_send_broadcast_emails,
+    logger.info(f"Sending community announcement broadcast from {sender_name}")
+    process_and_send_broadcast_emails(
         sender_name,
         sender_title,
         message_text
     )
     
     return {
-        "status": "queued",
+        "status": "sent",
         "table": "community_messages",
-        "message": "Community broadcast emails queued."
+        "message": "Community broadcast emails sent."
     }
 
 @app.post("/api/send-welcome", status_code=status.HTTP_202_ACCEPTED)
-async def send_welcome_webhook(payload: WebhookPayload, background_tasks: BackgroundTasks):
+async def send_welcome_webhook(payload: WebhookPayload):
     """
     Supabase Database Webhook HTTP Receiver.
     Triggered on INSERT of profiles table.
@@ -697,17 +693,17 @@ async def send_welcome_webhook(payload: WebhookPayload, background_tasks: Backgr
         logger.warning("No email found in insert record. Skipping email send.")
         return {"status": "skipped", "reason": "email field missing or null"}
 
-    # Queue email sending in the background to respond to Supabase immediately
-    background_tasks.add_task(process_and_send_welcome_email, full_name, email, password, selected_course)
+    # Send email synchronously
+    process_and_send_welcome_email(full_name, email, password, selected_course)
     
     return {
-        "status": "queued",
+        "status": "sent",
         "recipient": email,
-        "message": f"Welcome email queued for background processing."
+        "message": "Welcome email sent successfully."
     }
 
 @app.post("/api/send-progression", status_code=status.HTTP_202_ACCEPTED)
-async def send_progression_webhook(payload: WebhookPayload, background_tasks: BackgroundTasks):
+async def send_progression_webhook(payload: WebhookPayload):
     """
     Supabase Database Webhook HTTP Receiver for UPDATE events.
     Triggered when a user's profile is updated (e.g., day unlocked).
@@ -772,11 +768,10 @@ async def send_progression_webhook(payload: WebhookPayload, background_tasks: Ba
 
     # Trigger progression email
     lesson_title = LESSON_TITLES.get(current_day, f"Day {current_day} Module")
-    logger.info(f"Day {current_day} unlocked for {full_name} ({email})! Queueing progression email...")
+    logger.info(f"Day {current_day} unlocked for {full_name} ({email})! Sending progression email...")
     
-    # Queue email sending in the background
-    background_tasks.add_task(
-        process_and_send_progression_email,
+    # Send email synchronously
+    process_and_send_progression_email(
         full_name,
         email,
         current_day,
@@ -803,10 +798,10 @@ async def send_progression_webhook(payload: WebhookPayload, background_tasks: Ba
         logger.warning("Supabase client not initialized, skipping database sync.")
 
     return {
-        "status": "queued",
+        "status": "sent",
         "recipient": email,
         "current_day": current_day,
-        "message": f"Progression email for Day {current_day} queued."
+        "message": f"Progression email for Day {current_day} sent."
     }
 
 
@@ -878,9 +873,11 @@ async def send_daily_progression(
             enroll_date_str_normalized = enroll_date_str.replace("Z", "+00:00")
             enroll_date = datetime.fromisoformat(enroll_date_str_normalized)
             
-            # Reset times to 00:00:00 to calculate calendar day difference
-            enroll_date_clean = enroll_date.astimezone(timezone.utc).date()
-            today_clean = current_time.astimezone(timezone.utc).date()
+            # Reset times to 00:00:00 in IST (+05:30) to calculate calendar day difference
+            from datetime import timedelta
+            ist = timezone(timedelta(hours=5, minutes=30))
+            enroll_date_clean = enroll_date.astimezone(ist).date()
+            today_clean = current_time.astimezone(ist).date()
             
             days_since_enroll = (today_clean - enroll_date_clean).days
             target_day = min(18, max(1, days_since_enroll + 1))

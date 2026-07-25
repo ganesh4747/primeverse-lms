@@ -6089,14 +6089,14 @@
                 if (!enrollDateStr) return;
                 try {
                     const enrollDate = new Date(enrollDateStr);
-                    const enrollDateClean = new Date(enrollDate);
-                    enrollDateClean.setHours(0, 0, 0, 0);
+                    const today = new Date();
 
-                    const todayClean = new Date();
-                    todayClean.setHours(0, 0, 0, 0);
+                    // Reset times to local midnight for precise calendar day difference
+                    const enrollDateClean = new Date(enrollDate.getFullYear(), enrollDate.getMonth(), enrollDate.getDate());
+                    const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-                    const diffTime = todayClean - enrollDateClean;
-                    const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                    const diffTime = todayClean.getTime() - enrollDateClean.getTime();
+                    const daysSinceEnroll = Math.round(diffTime / (1000 * 60 * 60 * 24));
                     const targetDay = Math.min(totalModules, Math.max(1, daysSinceEnroll + 1));
 
                     console.log(`📅 Days since enrollment: ${daysSinceEnroll}, Target day: ${targetDay}, Current day: ${currentDay}`);
@@ -6175,9 +6175,11 @@
             if (enrollDateStr && !localStorage.getItem('currentDay')) {
                 const enrollDate = new Date(enrollDateStr);
                 const today = new Date();
-                const diffTime = Math.abs(today - enrollDate);
-                const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                currentDay = daysSinceEnroll + 1;
+                const enrollDateClean = new Date(enrollDate.getFullYear(), enrollDate.getMonth(), enrollDate.getDate());
+                const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                const diffTime = todayClean.getTime() - enrollDateClean.getTime();
+                const daysSinceEnroll = Math.round(diffTime / (1000 * 60 * 60 * 24));
+                currentDay = Math.min(18, Math.max(1, daysSinceEnroll + 1));
                 modulesCompleted = currentDay - 1;
                 programProgress = Math.round((modulesCompleted / 18) * 100);
 
@@ -6662,6 +6664,7 @@
                                         .catch(err => console.error('Failed to trigger submission email alert:', err));
                                     };
 
+                                    // Handled by Supabase Database Webhook trigger to prevent duplicate emails
                                     triggerSubmissionEmail(dbPayload);
                                 } else {
                                     console.warn('Supabase DB insert failed or select empty. Error:', error);

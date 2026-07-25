@@ -1006,15 +1006,19 @@
         let activePartNum = parseInt(urlParams.get('part')) || 1;
 
         // Calculate current active Day dynamically based on cached database progression or enrollment date
-        let currentDay = parseInt(localStorage.getItem('currentDay')) || 11;
-        if (!localStorage.getItem('currentDay')) {
-            const enrollDateStr = localStorage.getItem('enrollDate');
-            if (enrollDateStr) {
-                const enrollDate = new Date(enrollDateStr);
-                const today = new Date();
-                const diffTime = Math.abs(today - enrollDate);
-                const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                currentDay = daysSinceEnroll + 1;
+        const enrollDateStr = localStorage.getItem('enrollDate');
+        let currentDay = parseInt(localStorage.getItem('currentDay')) || 1;
+        if (enrollDateStr) {
+            const enrollDate = new Date(enrollDateStr);
+            const today = new Date();
+            const enrollDateClean = new Date(enrollDate.getFullYear(), enrollDate.getMonth(), enrollDate.getDate());
+            const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const diffTime = todayClean.getTime() - enrollDateClean.getTime();
+            const daysSinceEnroll = Math.round(diffTime / (1000 * 60 * 60 * 24));
+            const calculatedDay = Math.min(18, Math.max(1, daysSinceEnroll + 1));
+            if (calculatedDay > currentDay) {
+                currentDay = calculatedDay;
+                localStorage.setItem('currentDay', currentDay);
             }
         }
 
@@ -1684,7 +1688,7 @@
             try {
                 const { data: user, error } = await supabase
                     .from('profiles')
-                    .select('completed_lessons, current_day')
+                    .select('completed_lessons, current_day, enroll_date, total_modules, modules_completed, program_progress')
                     .ilike('email', userEmail.trim())
                     .maybeSingle();
 
@@ -1692,6 +1696,47 @@
                     if (user.current_day) {
                         currentDay = parseInt(user.current_day);
                         localStorage.setItem('currentDay', currentDay);
+                    }
+
+                    // Check and unlock day if the enrollment date dictates a new day
+                    if (user.enroll_date) {
+                        try {
+                            const enrollDate = new Date(user.enroll_date);
+                            const today = new Date();
+                            const enrollDateClean = new Date(enrollDate.getFullYear(), enrollDate.getMonth(), enrollDate.getDate());
+                            const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+                            const diffTime = todayClean.getTime() - enrollDateClean.getTime();
+                            const daysSinceEnroll = Math.round(diffTime / (1000 * 60 * 60 * 24));
+                            const totalMods = user.total_modules || 18;
+                            const targetDay = Math.min(totalMods, Math.max(1, daysSinceEnroll + 1));
+
+                            if (targetDay > currentDay) {
+                                console.log(`🔓 [VideoPlayer] Unlocking new day: ${currentDay} -> ${targetDay}`);
+                                currentDay = targetDay;
+                                const newModulesCompleted = currentDay - 1;
+                                const newProgramProgress = Math.round((newModulesCompleted / totalMods) * 100);
+
+                                // Update local variables and cache
+                                localStorage.setItem('currentDay', currentDay);
+                                localStorage.setItem('modulesCompleted', newModulesCompleted);
+                                localStorage.setItem('programProgress', newProgramProgress);
+
+                                // Sync back to Supabase
+                                await supabase
+                                    .from('profiles')
+                                    .update({
+                                        current_day: currentDay,
+                                        modules_completed: newModulesCompleted,
+                                        program_progress: newProgramProgress
+                                    })
+                                    .ilike('email', userEmail.trim());
+
+                                console.log("✅ [VideoPlayer] Successfully synced new unlocked day in DB to", currentDay);
+                            }
+                        } catch (unlockErr) {
+                            console.error("❌ [VideoPlayer] Error checking/unlocking days:", unlockErr);
+                        }
                     }
                     // Parse and sync completed lessons from database (with two-way merge)
                     const partsMap = {

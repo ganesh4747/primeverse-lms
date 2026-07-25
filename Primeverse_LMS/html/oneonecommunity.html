@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrimeVerse One:One | LMS</title>
-    
+
     <!-- Satoshi and Outfit Fonts -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
-    <link href="https://api.fontshare.com/v2/css?f[]=outfit@100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=outfit@100,200,300,400,500,600,700,800,900&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/png" href="../assets/login.png">
     <!-- Base Stylesheet -->
     <link rel="stylesheet" href="../css/style.css">
-    
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <style>
         :root {
             --font-satoshi: 'Satoshi', sans-serif;
@@ -609,6 +611,7 @@
                 opacity: 0;
                 transform: translateY(-4px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1021,7 +1024,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @keyframes slideUpFade {
@@ -1029,6 +1034,7 @@
                 opacity: 0;
                 transform: translateY(12px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1100,28 +1106,41 @@
                 <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 40px; display: block;">
                 <div class="logo-info">
                     <div class="logo-text">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
-                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE •
+                        CONSISTENCY</div>
                 </div>
             </a>
         </div>
 
         <nav class="nav-menu">
             <div class="nav-top">
-                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
-                <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
-                <a href="additional-resources.html" class="nav-item" id="nav-resources"><i data-lucide="folder-open"></i> Additional Resources</a>
-                <a href="executionjournal.html" class="nav-item" id="nav-journal"><i data-lucide="book-marked"></i> Execution Journal</a>
-                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
-                
-                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
-                <a href="oneonecommunity.html" class="nav-item active" id="nav-oneone"><i data-lucide="message-square"></i> PrimeVerse One:One</a>
-                <a href="addmember.html" class="nav-item" id="nav-addmember"><i data-lucide="user-plus"></i> Add Member</a>
-                <a href="usercontrol.html" class="nav-item" id="nav-usercontrol"><i data-lucide="shield-minus"></i> User Control</a>
-                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
+                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link"><i data-lucide="layout-dashboard"></i>
+                    Dashboard</a>
+                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery"><i
+                        data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
+                <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"><i
+                        data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="additional-resources.html" class="nav-item" id="nav-resources"><i
+                        data-lucide="folder-open"></i> Additional Resources</a>
+                <a href="executionjournal.html" class="nav-item" id="nav-journal"><i data-lucide="book-marked"></i>
+                    Execution Journal</a>
+                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship"><i data-lucide="crown"></i>
+                    PrimeVerse Pro Mentorship</a>
+
+                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse
+                    Community</a>
+                <a href="oneonecommunity.html" class="nav-item active" id="nav-oneone"><i
+                        data-lucide="message-square"></i> PrimeVerse One:One</a>
+                <a href="addmember.html" class="nav-item" id="nav-addmember"><i data-lucide="user-plus"></i> Add
+                    Member</a>
+                <a href="usercontrol.html" class="nav-item" id="nav-usercontrol"><i data-lucide="shield-minus"></i> User
+                    Control</a>
+                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account
+                    Settings</a>
             </div>
             <div class="nav-bottom">
-                <a href="../index.html" class="nav-item" id="logoutBtn" style="color: var(--red);"><i data-lucide="log-out"></i> Logout</a>
+                <a href="../index.html" class="nav-item" id="logoutBtn" style="color: var(--red);"><i
+                        data-lucide="log-out"></i> Logout</a>
             </div>
         </nav>
     </aside>
@@ -1129,15 +1148,19 @@
     <!-- Main Content Panel -->
     <main class="main-dash">
         <!-- Mobile Navigation Header -->
-        <div class="mobile-nav-bar" style="display: none; justify-content: space-between; align-items: center; background: var(--navy-dark); padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 99; margin: -2rem -2rem 1rem -2rem; backdrop-filter: blur(10px);">
+        <div class="mobile-nav-bar"
+            style="display: none; justify-content: space-between; align-items: center; background: var(--navy-dark); padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 99; margin: -2rem -2rem 1rem -2rem; backdrop-filter: blur(10px);">
             <a href="dashboard.html" class="logo-wrap" style="gap: 8px !important; text-decoration: none;">
                 <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 30px; display: block;">
                 <div class="logo-info">
-                    <div class="logo-text" style="font-size: 1.1rem !important;">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
-                    <div class="logo-tagline" style="font-size: 0.4rem; letter-spacing: 0.3px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                    <div class="logo-text" style="font-size: 1.1rem !important;">PRIME<span class="gold-text"
+                            style="color: var(--gold);">VERSE</span></div>
+                    <div class="logo-tagline" style="font-size: 0.4rem; letter-spacing: 0.3px;">CLARITY • DISCIPLINE •
+                        CONSISTENCY</div>
                 </div>
             </a>
-            <button id="mobileMenuBtn" style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
+            <button id="mobileMenuBtn"
+                style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
                 <i data-lucide="menu" style="width: 26px; height: 26px;"></i>
             </button>
         </div>
@@ -1155,7 +1178,7 @@
 
         <!-- Split Workspace Container -->
         <div class="oneone-container">
-            
+
             <!-- Left sidebar submissions list -->
             <section class="submissions-sidebar-left">
                 <div class="sidebar-search-section">
@@ -1163,10 +1186,11 @@
                         <h3 id="submissionsListTitle">Submissions</h3>
                         <span id="submissionsCountBadge" class="submissions-count-badge">0</span>
                     </div>
-                    
+
                     <div class="search-bar-wrapper">
                         <i data-lucide="search"></i>
-                        <input type="text" id="submissionsSearchInput" class="search-input-sleek" placeholder="Search concept or user..." autocomplete="off">
+                        <input type="text" id="submissionsSearchInput" class="search-input-sleek"
+                            placeholder="Search concept or user..." autocomplete="off">
                     </div>
 
                     <div class="filter-pills-row" id="filterPillsRow">
@@ -1185,26 +1209,27 @@
 
             <!-- Right Workspace: Selected ticket chat & details -->
             <section class="chat-content-right">
-                
+
                 <!-- Placeholder when nothing is selected -->
                 <div class="chat-placeholder" id="workspacePlaceholder">
                     <div class="placeholder-icon">
                         <i data-lucide="message-square"></i>
                     </div>
                     <h3>One:One Mentor Ticket</h3>
-                    <p id="placeholderInstruction">Select a student concept submission from the list to view markups, check explanations, adjust statuses, and exchange feedback comments.</p>
+                    <p id="placeholderInstruction">Select a student concept submission from the list to view markups,
+                        check explanations, adjust statuses, and exchange feedback comments.</p>
                 </div>
 
                 <!-- Active workspace thread -->
                 <div class="chat-active-workspace" id="workspaceActive" style="display: none;">
-                    
+
                     <!-- Chat Top Info Bar -->
                     <header class="chat-header">
                         <div class="chat-header-info">
                             <h4 id="chatActiveConceptTitle">Concept Markup</h4>
                             <span id="chatActiveModuleSubtitle">Module Name</span>
                         </div>
-                        
+
                         <div class="chat-header-right">
                             <!-- Status Controller -->
                             <div class="status-dropdown-wrapper" id="statusDropdownWrapper" style="display: none;">
@@ -1221,14 +1246,16 @@
                                         <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
                                     </div>
                                     <div class="custom-dropdown-options" id="customDropdownOptions">
-                                        <div class="custom-dropdown-option" data-value="Pending Review">Pending Review</div>
+                                        <div class="custom-dropdown-option" data-value="Pending Review">Pending Review
+                                        </div>
                                         <div class="custom-dropdown-option" data-value="Reviewed">Reviewed</div>
                                         <div class="custom-dropdown-option" data-value="Approved">Approved</div>
-                                        <div class="custom-dropdown-option" data-value="Needs Improvement">Needs Improvement</div>
+                                        <div class="custom-dropdown-option" data-value="Needs Improvement">Needs
+                                            Improvement</div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Student read-only status -->
                             <div id="studentStatusBadgeContainer" style="display: none;">
                                 <span class="status-badge" id="studentStatusBadge">Pending</span>
@@ -1238,7 +1265,7 @@
 
                     <!-- Split Details and Message Feed -->
                     <div class="chat-workspace-split">
-                        
+
                         <!-- Hidden Details Panel for script compatibility -->
                         <div style="display: none;">
                             <span id="detailStudentName"></span>
@@ -1259,7 +1286,8 @@
                             <!-- Comment Input Form -->
                             <footer class="chat-input-container">
                                 <form id="chatSendMessageForm" class="chat-message-input-form" autocomplete="off">
-                                    <input type="text" id="chatMessageInput" class="chat-message-input-field" placeholder="Write a response / feedback message..." required>
+                                    <input type="text" id="chatMessageInput" class="chat-message-input-field"
+                                        placeholder="Write a response / feedback message..." required>
                                     <button type="submit" class="chat-send-btn" id="chatSendBtn">
                                         <i data-lucide="send"></i>
                                     </button>
@@ -1413,7 +1441,7 @@
             // Custom Status Dropdown Toggle and Option Click Listener
             const customDropdownSelected = document.getElementById('customDropdownSelected');
             const customDropdownOptions = document.getElementById('customDropdownOptions');
-            
+
             if (customDropdownSelected && customDropdownOptions) {
                 customDropdownSelected.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -1425,7 +1453,7 @@
                     option.addEventListener('click', (e) => {
                         e.stopPropagation();
                         const val = option.getAttribute('data-value');
-                        
+
                         // Update native select
                         const nativeSelect = document.getElementById('statusSelector');
                         if (nativeSelect) {
@@ -1471,7 +1499,7 @@
             const zoomTrigger = document.getElementById('zoomTrigger');
             const zoomCloseBtn = document.getElementById('zoomCloseBtn');
 
-            window.openZoomModal = function(url) {
+            window.openZoomModal = function (url) {
                 if (zoomOverlay && zoomOverlayImage) {
                     zoomOverlayImage.src = url;
                     zoomOverlay.style.display = 'flex';
@@ -1693,7 +1721,7 @@
 
             const selectSubmission = async (submission) => {
                 activeSubmission = submission;
-                
+
                 document.getElementById('workspacePlaceholder').style.display = 'none';
                 document.getElementById('workspaceActive').style.display = 'flex';
 
@@ -1723,7 +1751,7 @@
                 } else {
                     document.getElementById('statusDropdownWrapper').style.display = 'none';
                     document.getElementById('studentStatusBadgeContainer').style.display = 'block';
-                    
+
                     const badge = document.getElementById('studentStatusBadge');
                     const curStatus = submission.status || 'Pending Review';
                     badge.textContent = curStatus;
@@ -1769,7 +1797,7 @@
                 const subDateStr = submission.created_at ? new Date(submission.created_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) : '';
                 const studentMsg = document.createElement('div');
                 studentMsg.className = 'submission-main-post';
-                
+
                 // Initials for avatar
                 const initials = (submission.user_name || 'S').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
@@ -1881,7 +1909,7 @@
                         apiUrl = 'http://127.0.0.1:8000/api/send-admin-alert';
                     }
                 }
-                
+
                 const payloadRecord = {
                     ...msg,
                     concept_name: submission ? submission.concept_name : 'Unknown Concept',
@@ -1901,12 +1929,12 @@
                         record: payloadRecord
                     })
                 })
-                .then(response => {
-                    console.log("Email notification triggered successfully:", response);
-                })
-                .catch(err => {
-                    console.error("Failed to trigger email notification:", err);
-                });
+                    .then(response => {
+                        console.log("Email notification triggered successfully:", response);
+                    })
+                    .catch(err => {
+                        console.error("Failed to trigger email notification:", err);
+                    });
             };
             const sendChatMessage = async (submission, text) => {
                 const newMsg = {
@@ -1930,9 +1958,9 @@
                             dbSuccess = true;
                             newMsg.created_at = data[0].created_at;
                             console.log("Supabase: message inserted successfully.");
-                            
-                            // Trigger email notification
-                            triggerEmailNotification(newMsg, submission);
+
+                            // Handled by Supabase Database Webhook trigger to prevent duplicate emails
+                            // triggerEmailNotification(newMsg, submission);
                         } else {
                             console.warn("Supabase message insert error:", error);
                         }
@@ -2008,4 +2036,5 @@
         });
     </script>
 </body>
+
 </html>
