@@ -1719,7 +1719,10 @@
                         completedList.forEach(key => {
                             if (key && key.trim()) {
                                 const cleanKey = key.trim();
-                                if (cleanKey.includes('_part_')) {
+                                if (cleanKey === 'intro_video' || cleanKey === '0_part_1') {
+                                    localStorage.setItem('completed_day_0', 'true');
+                                    localStorage.setItem('completed_day_0_part_1', 'true');
+                                } else if (cleanKey.includes('_part_')) {
                                     const parts = cleanKey.split('_part_');
                                     if (parts.length === 2) {
                                         const dNum = parseInt(parts[0].trim());
@@ -1800,9 +1803,14 @@
                         localStorage.setItem('currentDay', currentDay);
                     }
 
-                    // Gather all completed lesson parts in "Day X - Part Y" format
+                    // Gather all completed lesson parts in "Day X - Part Y" format (including intro_video)
                     const completedList = [];
                     let localCompletedCount = 0;
+
+                    if (localStorage.getItem('completed_day_0') === 'true' || localStorage.getItem('completed_day_0_part_1') === 'true') {
+                        completedList.push('intro_video');
+                    }
+
                     for (let d = 1; d <= 18; d++) {
                         const totalParts = partsMap[d] || 2;
                         let dayFullCompleted = true;
@@ -1857,9 +1865,14 @@
                 0: 1, 1: 2, 2: 2, 3: 3, 4: 2, 5: 1, 6: 2, 7: 3, 8: 2, 9: 2, 10: 1, 11: 2, 12: 2, 13: 2, 14: 1, 15: 2, 16: 1, 17: 2, 18: 2
             };
 
-            // Gather all completed lesson parts in "Day X - Part Y" format
+            // Gather all completed lesson parts in "Day X - Part Y" format (including intro_video)
             const completedList = [];
             let completedDaysCount = 0;
+
+            if (localStorage.getItem('completed_day_0') === 'true' || localStorage.getItem('completed_day_0_part_1') === 'true') {
+                completedList.push('intro_video');
+            }
+
             for (let d = 1; d <= 18; d++) {
                 const totalParts = partsMap[d] || 2;
                 let dayFullCompleted = true;

@@ -538,11 +538,21 @@ document.addEventListener('DOMContentLoaded', () => {
                             completedList.forEach(key => {
                                 if (key && key.trim()) {
                                     const cleanKey = key.trim();
-                                    if (cleanKey.includes('_part_')) {
+                                    if (cleanKey === 'intro_video' || cleanKey === '0_part_1') {
+                                        localStorage.setItem('completed_day_0', 'true');
+                                        localStorage.setItem('completed_day_0_part_1', 'true');
+                                    } else if (cleanKey.includes('_part_')) {
                                         const parts = cleanKey.split('_part_');
                                         if (parts.length === 2) {
                                             const dNum = parseInt(parts[0].trim());
                                             const pNum = parseInt(parts[1].trim());
+                                            localStorage.setItem(`completed_day_${dNum}_part_${pNum}`, 'true');
+                                        }
+                                    } else if (/Day\s*\d+.*Part\s*\d+/i.test(cleanKey)) {
+                                        const matches = cleanKey.match(/Day\s*(\d+).*Part\s*(\d+)/i);
+                                        if (matches && matches[1] && matches[2]) {
+                                            const dNum = parseInt(matches[1]);
+                                            const pNum = parseInt(matches[2]);
                                             localStorage.setItem(`completed_day_${dNum}_part_${pNum}`, 'true');
                                         }
                                     } else {

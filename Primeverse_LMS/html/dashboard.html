@@ -7739,7 +7739,10 @@
                         completedList.forEach(key => {
                             if (key && key.trim()) {
                                 const cleanKey = key.trim();
-                                if (cleanKey.includes('_part_')) {
+                                if (cleanKey === 'intro_video' || cleanKey === '0_part_1') {
+                                    localStorage.setItem('completed_day_0', 'true');
+                                    localStorage.setItem('completed_day_0_part_1', 'true');
+                                } else if (cleanKey.includes('_part_')) {
                                     const parts = cleanKey.split('_part_');
                                     if (parts.length === 2) {
                                         const dNum = parseInt(parts[0].trim());
@@ -7783,9 +7786,14 @@
                         }
                     }
 
-                    // Gather all completed lesson parts in "Day X - Part Y" format
+                    // Gather all completed lesson parts in "Day X - Part Y" format (including intro_video)
                     const completedList = [];
                     let localCompletedCount = 0;
+
+                    if (localStorage.getItem('completed_day_0') === 'true' || localStorage.getItem('completed_day_0_part_1') === 'true') {
+                        completedList.push('intro_video');
+                    }
+
                     for (let d = 1; d <= 18; d++) {
                         const totalParts = partsMap[d] || 2;
                         let dayFullCompleted = true;
