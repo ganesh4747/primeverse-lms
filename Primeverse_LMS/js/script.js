@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(snackbar);
         }
 
-        const iconHTML = type === 'success' 
+        const iconHTML = type === 'success'
             ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px; height:20px; color:#D4AF37;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>'
             : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px; height:20px; color:#FF4D4D;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
 
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         togglePass.addEventListener('click', () => {
             const isPassword = passwordInput.getAttribute('type') === 'password';
             passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-            
+
             togglePass.innerHTML = isPassword ? '<i data-lucide="eye-off"></i>' : '<i data-lucide="eye"></i>';
             if (window.lucide) {
                 window.lucide.createIcons();
@@ -404,18 +404,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('lastLogin', new Date().toISOString());
                         localStorage.setItem('payment_status', 'unpaid');
                         localStorage.setItem('userRole', 'user');
-                        
+
                         // Use the same enrollment date (midnight)
                         localStorage.setItem('enrollDate', enrollDateISO);
                         localStorage.setItem('selectedCourse', '');
-                        
+
                         // Seed local storage with default database-driven progression metrics for a new user
                         localStorage.setItem('currentDay', 1);
                         localStorage.setItem('programProgress', 0);
                         localStorage.setItem('stageTitle', 'Financial Market Foundations');
                         localStorage.setItem('modulesCompleted', 0);
                         localStorage.setItem('totalModules', 18);
-                        
+
                         closeModal();
                         updateAuthUI();
                         showSnackbar("Registration successful! Welcome to PrimeVerse.", "success");
@@ -435,13 +435,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         const sessionCreatedAt = new Date().toISOString();
                         const { error: adminUpdateError } = await supabase
                             .from('admins')
-                            .update({ 
+                            .update({
                                 session_id: newSessionId,
                                 session_created_at: sessionCreatedAt
                             })
                             .eq('email', adminUser.email);
                         if (adminUpdateError) console.error("Admin session update failed:", adminUpdateError);
-                        
+
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
                         localStorage.setItem('session_id', newSessionId);
@@ -453,14 +453,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('selectedCourse', 'PrimeVerse Mastery Program');
                         localStorage.setItem('payment_status', 'paid');
                         localStorage.setItem('userRole', 'admin');
-                        
+
                         // Seed admin progression markers
                         localStorage.setItem('currentDay', 18);
                         localStorage.setItem('programProgress', 100);
                         localStorage.setItem('stageTitle', 'Admin Master Workspace');
                         localStorage.setItem('modulesCompleted', 18);
                         localStorage.setItem('totalModules', 18);
-                        
+
                         closeModal();
                         updateAuthUI();
                         showSnackbar("Welcome back, Administrator!", "success");
@@ -486,13 +486,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         const sessionCreatedAt = new Date().toISOString();
                         const { error: profileUpdateError } = await supabase
                             .from('profiles')
-                            .update({ 
+                            .update({
                                 session_id: newSessionId,
                                 session_created_at: sessionCreatedAt
                             })
                             .eq('email', user.email);
                         if (profileUpdateError) console.error("Profile session update failed:", profileUpdateError);
-                        
+
                         isLoggedIn = true;
                         localStorage.setItem('isLoggedIn', 'true');
                         localStorage.setItem('session_id', newSessionId);
@@ -504,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('selectedCourse', user.selected_course || '');
                         localStorage.setItem('payment_status', user.payment_status || 'unpaid');
                         localStorage.setItem('userRole', user.role || 'user');
-                        
+
                         // Cache dynamic database-driven progression metrics
                         const cDay = user.current_day !== undefined && user.current_day !== null ? parseInt(user.current_day) : 1;
                         const mComp = user.modules_completed !== undefined && user.modules_completed !== null ? parseInt(user.modules_completed) : 0;
@@ -585,23 +585,24 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         }
 
-                        // Calculate highest unlocked day from completed modules
-                        let maxUnlocked = cDay;
-                        for (let d = 1; d <= 18; d++) {
-                            if (localStorage.getItem(`completed_day_${d}`) === 'true') {
-                                if (d + 1 > maxUnlocked) {
-                                    maxUnlocked = Math.min(18, d + 1);
-                                }
-                            }
-                        }
-                        if (maxUnlocked > cDay) {
-                            localStorage.setItem('currentDay', maxUnlocked);
-                        }
-                        
                         // Load or default the enrollment date from Supabase
                         const finalEnrollDate = user.enroll_date || user.created_at || new Date().toISOString();
                         localStorage.setItem('enrollDate', finalEnrollDate);
-                        
+
+                        // Check date-based day unlocking using clean UTC date calculation
+                        try {
+                            const enrollDate = new Date(finalEnrollDate);
+                            const today = new Date();
+                            const enrollDateClean = new Date(Date.UTC(enrollDate.getUTCFullYear(), enrollDate.getUTCMonth(), enrollDate.getUTCDate()));
+                            const todayClean = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+                            const diffTime = todayClean.getTime() - enrollDateClean.getTime();
+                            const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                            const targetDay = Math.min(18, Math.max(1, daysSinceEnroll + 1));
+                            if (targetDay > cDay) {
+                                localStorage.setItem('currentDay', targetDay);
+                            }
+                        } catch (e) {}
+
                         closeModal();
                         updateAuthUI();
                         showSnackbar("Welcome back to PrimeVerse!", "success");
@@ -626,7 +627,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const btn = e.currentTarget;
             const card = btn.closest('div');
             const courseTitle = card.querySelector('h3') ? card.querySelector('h3').innerText : "Mastery Program";
-            
+
             // Save enrollment details
             localStorage.setItem('selectedCourse', courseTitle);
             localStorage.setItem('enrollDate', new Date().toISOString());
@@ -649,7 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
             openModal();
         });
     }
-    
+
     if (loginBtnNav) {
         loginBtnNav.addEventListener('click', () => {
             if (localStorage.getItem('isLoggedIn') === 'true') {
@@ -676,7 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     if (signupBtnNav) {
         signupBtnNav.addEventListener('click', async () => {
             if (localStorage.getItem('isLoggedIn') === 'true') {
@@ -711,7 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem('userPhone');
                 localStorage.removeItem('userRole');
                 sessionStorage.removeItem('tab_session_id');
-                
+
                 location.reload();
             } else {
                 setAuthState('signup');
@@ -732,7 +733,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     // Gated View Program Navigation
     if (document.getElementById('viewProgramBtn')) {
         document.getElementById('viewProgramBtn').addEventListener('click', (e) => {
@@ -751,7 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     if (document.getElementById('applyNowBtn')) {
         document.getElementById('applyNowBtn').addEventListener('click', (e) => {
             e.preventDefault();
@@ -851,17 +852,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isLoggedIn && userEmail) {
             localStorage.setItem('payment_status', 'free_access'); // Using free_access for parity with previous logic
-            
+
             // Default to Mastery Program unless Pro Mentorship is specified
             const currentPlan = localStorage.getItem('selectedCourse');
-            const targetCourse = (currentPlan === 'PrimeVerse Pro Mentorship' || urlParams.get('course') === 'pro') 
+            const targetCourse = (currentPlan === 'PrimeVerse Pro Mentorship' || urlParams.get('course') === 'pro')
                 ? 'PrimeVerse Pro Mentorship' : 'PrimeVerse Mastery Program';
-            
+
             localStorage.setItem('selectedCourse', targetCourse);
             localStorage.setItem('enrollDate', new Date().toISOString());
 
             const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
-            
+
             if (supabase) {
                 supabase.from('profiles').update({
                     payment_status: 'free_access',
@@ -879,7 +880,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         console.log('Payment status updated successfully in Supabase.');
                     }
-                    
+
                     // Clean up URL parameter to avoid re-triggering
                     if (window.history.replaceState) {
                         const url = new URL(window.location);
@@ -926,7 +927,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check if user is already logged in (e.g., after page refresh)
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const userEmail = localStorage.getItem('userEmail');
-        
+
         if (isLoggedIn && userEmail) {
             if (localStorage.getItem('payment_status') === 'unpaid') {
                 showSnackbar("Please complete payment to access the program dashboard.", "error");
@@ -955,7 +956,7 @@ document.addEventListener('DOMContentLoaded', () => {
         navToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             mobileMenuDropdown.classList.toggle('active');
-            
+
             // Toggle icon visual
             const icon = navToggle.querySelector('i');
             if (icon && window.lucide) {

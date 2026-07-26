@@ -6039,9 +6039,14 @@
             window.triggerDayUnlock = async function (newDay) {
                 if (newDay <= currentDay) return;
 
-                console.log(`🔓 Unlocking new day: ${currentDay} -> ${newDay}`);
                 currentDay = newDay;
-                modulesCompleted = currentDay - 1;
+                let completedCount = 0;
+                for (let d = 1; d <= 18; d++) {
+                    if (localStorage.getItem(`completed_day_${d}`) === 'true') {
+                        completedCount++;
+                    }
+                }
+                modulesCompleted = completedCount;
                 programProgress = Math.round((modulesCompleted / totalModules) * 100);
 
                 const nextLessonData = lessonsDatabase[currentDay] || lessonsDatabase[1];
@@ -6099,12 +6104,7 @@
                     const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                     let targetDay = Math.min(totalModules, Math.max(1, daysSinceEnroll + 1));
 
-                    // Also check completed modules to advance targetDay
-                    for (let d = 1; d <= 18; d++) {
-                        if (localStorage.getItem(`completed_day_${d}`) === 'true') {
-                            targetDay = Math.max(targetDay, Math.min(18, d + 1));
-                        }
-                    }
+
 
                     console.log(`📅 Days since enrollment: ${daysSinceEnroll}, Target day: ${targetDay}, Current day: ${currentDay}`);
 
@@ -7819,20 +7819,7 @@
                     const mergedString = completedList.join(', ');
                     const localProgPercent = Math.min(100, Math.round((localCompletedCount / 18) * 100));
 
-                    // Calculate highest unlocked day from completed modules
-                    let maxUnlocked = currentDay;
-                    for (let d = 1; d <= 18; d++) {
-                        if (localStorage.getItem(`completed_day_${d}`) === 'true') {
-                            if (d + 1 > maxUnlocked) {
-                                maxUnlocked = Math.min(18, d + 1);
-                            }
-                        }
-                    }
-                    if (maxUnlocked > currentDay) {
-                        currentDay = maxUnlocked;
-                        modulesCompleted = currentDay - 1;
-                        programProgress = Math.round((modulesCompleted / totalModules) * 100);
-                    }
+
 
                     // If local has newer completions or unlocked current_day, update Supabase
                     if (mergedString !== (user.completed_lessons || '') || currentDay !== (user.current_day ? parseInt(user.current_day) : 1)) {

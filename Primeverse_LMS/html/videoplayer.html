@@ -1774,17 +1774,8 @@
                         }
                     }
 
-                    // Calculate highest unlocked day based on completed modules
-                    let maxUnlocked = currentDay;
-                    for (let d = 1; d <= 18; d++) {
-                        if (localStorage.getItem(`completed_day_${d}`) === 'true') {
-                            if (d + 1 > maxUnlocked) {
-                                maxUnlocked = Math.min(18, d + 1);
-                            }
-                        }
-                    }
-
                     // Check date-based day unlocking using clean UTC date calculation
+                    let maxUnlocked = currentDay;
                     if (user.enroll_date) {
                         try {
                             const enrollDate = new Date(user.enroll_date);
@@ -1899,19 +1890,7 @@
             const completedString = completedList.join(', ');
             const progPercent = Math.min(100, Math.round((completedDaysCount / 18) * 100));
 
-            // Ensure currentDay is updated if completed modules unlock next day
-            let maxUnlocked = currentDay;
-            for (let d = 1; d <= 18; d++) {
-                if (localStorage.getItem(`completed_day_${d}`) === 'true') {
-                    if (d + 1 > maxUnlocked) {
-                        maxUnlocked = Math.min(18, d + 1);
-                    }
-                }
-            }
-            if (maxUnlocked > currentDay) {
-                currentDay = maxUnlocked;
-                localStorage.setItem('currentDay', currentDay);
-            }
+
 
             try {
                 const { error } = await supabase
@@ -1957,12 +1936,7 @@
                     }
                     if (allCompleted) {
                         localStorage.setItem(`completed_day_${activeDayNum}`, 'true');
-                        // Unlock next day if active module completed
-                        if (activeDayNum >= currentDay && activeDayNum < 18) {
-                            currentDay = activeDayNum + 1;
-                            localStorage.setItem('currentDay', currentDay);
-                            console.log(`🔓 Active module ${activeDayNum} completed! Unlocking next day: ${currentDay}`);
-                        }
+                        console.log(`✅ [VideoPlayer] Day ${activeDayNum} marked as completed!`);
                     }
                 }
 
