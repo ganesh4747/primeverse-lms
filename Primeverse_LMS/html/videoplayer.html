@@ -371,6 +371,17 @@
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
         }
 
+        .part-toggle-btn.completed {
+            border: 1px solid rgba(16, 185, 129, 0.4) !important;
+            color: #10b981 !important;
+        }
+
+        .part-toggle-btn.completed.active {
+            background: #10b981 !important;
+            color: #05070c !important;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35) !important;
+        }
+
 
         /* --- ROADMAP SIDEBAR QUICK NAV --- */
         .quick-nav-sidebar {
@@ -1539,11 +1550,11 @@
                         iconClass = 'fa-solid fa-circle-play';
                     }
 
-                    const completedStyle = isPartCompleted ? 'style="border-color: rgba(40,167,69,0.4); color: #28a745;"' : '';
+                    const completedClass = isPartCompleted ? 'completed' : '';
 
                     buttonsHTML += `
-                        <button id="player-part-${pNum}" class="part-toggle-btn ${isActive}" ${completedStyle} onclick="triggerSwitchPart(${pNum})">
-                            <i class="${iconClass}" style="${isPartCompleted ? 'color: #28a745;' : ''}"></i> Part ${pNum} ${isPartCompleted ? '(Completed)' : ''}
+                        <button id="player-part-${pNum}" class="part-toggle-btn ${isActive} ${completedClass}" onclick="triggerSwitchPart(${pNum})">
+                            <i class="${iconClass}"></i> Part ${pNum} ${isPartCompleted ? '(Completed)' : ''}
                         </button>
                     `;
                 });
@@ -1698,68 +1709,46 @@
                         localStorage.setItem('currentDay', currentDay);
                     }
 
-                    // Check and unlock day if the enrollment date dictates a new day
-                    if (user.enroll_date) {
-                        try {
-                            const enrollDate = new Date(user.enroll_date);
-                            const today = new Date();
-                            const enrollDateClean = new Date(enrollDate.getFullYear(), enrollDate.getMonth(), enrollDate.getDate());
-                            const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-
-                            const diffTime = todayClean.getTime() - enrollDateClean.getTime();
-                            const daysSinceEnroll = Math.round(diffTime / (1000 * 60 * 60 * 24));
-                            const totalMods = user.total_modules || 18;
-                            const targetDay = Math.min(totalMods, Math.max(1, daysSinceEnroll + 1));
-
-                            if (targetDay > currentDay) {
-                                console.log(`🔓 [VideoPlayer] Unlocking new day: ${currentDay} -> ${targetDay}`);
-                                currentDay = targetDay;
-                                const newModulesCompleted = currentDay - 1;
-                                const newProgramProgress = Math.round((newModulesCompleted / totalMods) * 100);
-
-                                // Update local variables and cache
-                                localStorage.setItem('currentDay', currentDay);
-                                localStorage.setItem('modulesCompleted', newModulesCompleted);
-                                localStorage.setItem('programProgress', newProgramProgress);
-
-                                // Sync back to Supabase
-                                await supabase
-                                    .from('profiles')
-                                    .update({
-                                        current_day: currentDay,
-                                        modules_completed: newModulesCompleted,
-                                        program_progress: newProgramProgress
-                                    })
-                                    .ilike('email', userEmail.trim());
-
-                                console.log("✅ [VideoPlayer] Successfully synced new unlocked day in DB to", currentDay);
-                            }
-                        } catch (unlockErr) {
-                            console.error("❌ [VideoPlayer] Error checking/unlocking days:", unlockErr);
-                        }
-                    }
-                    // Parse and sync completed lessons from database (with two-way merge)
                     const partsMap = {
                         0: 1, 1: 2, 2: 2, 3: 3, 4: 2, 5: 1, 6: 2, 7: 3, 8: 2, 9: 2, 10: 1, 11: 2, 12: 2, 13: 2, 14: 1, 15: 2, 16: 1, 17: 2, 18: 2
                     };
 
+                    // Parse completed lessons from database
                     if (user.completed_lessons) {
                         const completedList = user.completed_lessons.split(',');
-                        // Parse database items and add them to localStorage (without wiping out local progress)
                         completedList.forEach(key => {
                             if (key && key.trim()) {
                                 const cleanKey = key.trim();
-                                const parts = cleanKey.split('_part_');
-                                if (parts.length === 2) {
-                                    const dNum = parseInt(parts[0].trim());
-                                    const pNum = parseInt(parts[1].trim());
-                                    localStorage.setItem(`completed_day_${dNum}_part_${pNum}`, 'true');
+                                if (cleanKey.includes('_part_')) {
+                                    const parts = cleanKey.split('_part_');
+                                    if (parts.length === 2) {
+                                        const dNum = parseInt(parts[0].trim());
+                                        const pNum = parseInt(parts[1].trim());
+                                        localStorage.setItem(`completed_day_${dNum}_part_${pNum}`, 'true');
+                                    }
+                                } else if (/Day\s*\d+.*Part\s*\d+/i.test(cleanKey)) {
+                                    const matches = cleanKey.match(/Day\s*(\d+).*Part\s*(\d+)/i);
+                                    if (matches && matches[1] && matches[2]) {
+                                        const dNum = parseInt(matches[1]);
+                                        const pNum = parseInt(matches[2]);
+                                        localStorage.setItem(`completed_day_${dNum}_part_${pNum}`, 'true');
+                                    }
+                                } else {
+                                    const match = cleanKey.match(/\d+/);
+                                    if (match) {
+                                        const dNum = parseInt(match[0]);
+                                        localStorage.setItem(`completed_day_${dNum}`, 'true');
+                                        const totalParts = partsMap[dNum] || 2;
+                                        for (let p = 1; p <= totalParts; p++) {
+                                            localStorage.setItem(`completed_day_${dNum}_part_${p}`, 'true');
+                                        }
+                                    }
                                 }
                             }
                         });
                     }
 
-                    // Re-evaluate day completions
+                    // Re-evaluate full day completions
                     for (let d = 0; d <= 18; d++) {
                         const totalParts = partsMap[d] || 2;
                         let allCompleted = true;
@@ -1774,41 +1763,78 @@
                         }
                     }
 
-                    // Gather the full merged list of completed day-parts from localStorage
-                    const mergedList = [];
-                    for (let d = 0; d <= 18; d++) {
-                        const totalParts = partsMap[d] || 2;
-                        for (let p = 1; p <= totalParts; p++) {
-                            const key = `completed_day_${d}_part_${p}`;
-                            if (localStorage.getItem(key) === 'true') {
-                                mergedList.push(`${d}_part_${p}`);
+                    // Calculate highest unlocked day based on completed modules
+                    let maxUnlocked = currentDay;
+                    for (let d = 1; d <= 18; d++) {
+                        if (localStorage.getItem(`completed_day_${d}`) === 'true') {
+                            if (d + 1 > maxUnlocked) {
+                                maxUnlocked = Math.min(18, d + 1);
                             }
                         }
                     }
-                    const mergedString = mergedList.join(',');
 
-                    // If local has newer completions than the database, update Supabase
-                    if (mergedString !== (user.completed_lessons || '')) {
-                        console.log("📤 Supabase Sync Engine: Local storage has newer completions. Syncing back to database...", mergedString);
+                    // Check date-based day unlocking using clean UTC date calculation
+                    if (user.enroll_date) {
                         try {
-                            let localCompletedCount = 0;
-                            for (let d = 1; d <= 18; d++) {
-                                if (localStorage.getItem(`completed_day_${d}`) === 'true') {
-                                    localCompletedCount++;
-                                }
-                            }
-                            const localProgPercent = Math.min(100, Math.round((localCompletedCount / 18) * 100));
+                            const enrollDate = new Date(user.enroll_date);
+                            const today = new Date();
+                            const enrollDateClean = new Date(Date.UTC(enrollDate.getUTCFullYear(), enrollDate.getUTCMonth(), enrollDate.getUTCDate()));
+                            const todayClean = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
 
+                            const diffTime = todayClean.getTime() - enrollDateClean.getTime();
+                            const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                            const totalMods = user.total_modules || 18;
+                            const targetDay = Math.min(totalMods, Math.max(1, daysSinceEnroll + 1));
+
+                            if (targetDay > maxUnlocked) {
+                                maxUnlocked = targetDay;
+                            }
+                        } catch (unlockErr) {
+                            console.error("❌ [VideoPlayer] Error checking/unlocking days from date:", unlockErr);
+                        }
+                    }
+
+                    if (maxUnlocked > currentDay) {
+                        console.log(`🔓 [VideoPlayer] Unlocking new day: ${currentDay} -> ${maxUnlocked}`);
+                        currentDay = maxUnlocked;
+                        localStorage.setItem('currentDay', currentDay);
+                    }
+
+                    // Gather all completed lesson parts in "Day X - Part Y" format
+                    const completedList = [];
+                    let localCompletedCount = 0;
+                    for (let d = 1; d <= 18; d++) {
+                        const totalParts = partsMap[d] || 2;
+                        let dayFullCompleted = true;
+                        for (let p = 1; p <= totalParts; p++) {
+                            if (localStorage.getItem(`completed_day_${d}_part_${p}`) === 'true') {
+                                completedList.push(`Day ${d} - Part ${p}`);
+                            } else {
+                                dayFullCompleted = false;
+                            }
+                        }
+                        if (dayFullCompleted) {
+                            localCompletedCount++;
+                        }
+                    }
+                    const mergedString = completedList.join(', ');
+                    const localProgPercent = Math.min(100, Math.round((localCompletedCount / 18) * 100));
+
+                    // If local has newer completions or unlocked current_day, update Supabase
+                    if (mergedString !== (user.completed_lessons || '') || currentDay !== (user.current_day ? parseInt(user.current_day) : 1)) {
+                        console.log("📤 Supabase Sync Engine: Syncing back completions and current_day to DB...", mergedString, "Day:", currentDay);
+                        try {
                             await supabase
                                 .from('profiles')
                                 .update({
                                     completed_lessons: mergedString,
                                     modules_completed: localCompletedCount,
-                                    program_progress: localProgPercent
+                                    program_progress: localProgPercent,
+                                    current_day: currentDay
                                 })
                                 .ilike('email', userEmail.trim());
                         } catch (err) {
-                            console.error("Error updating local progress from player to Supabase:", err);
+                            console.error("Error updating progress from player to Supabase:", err);
                         }
                     }
                 }
@@ -1827,32 +1853,44 @@
             const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
             if (!supabase) return;
 
-            // Gather all completed day-parts
-            const completedList = [];
             const partsMap = {
                 0: 1, 1: 2, 2: 2, 3: 3, 4: 2, 5: 1, 6: 2, 7: 3, 8: 2, 9: 2, 10: 1, 11: 2, 12: 2, 13: 2, 14: 1, 15: 2, 16: 1, 17: 2, 18: 2
             };
-            for (let d = 0; d <= 18; d++) {
-                const totalParts = partsMap[d] || 2;
-                for (let p = 1; p <= totalParts; p++) {
-                    const key = `completed_day_${d}_part_${p}`;
-                    if (localStorage.getItem(key) === 'true') {
-                        completedList.push(`${d}_part_${p}`);
-                    }
-                }
-            }
 
-            const completedString = completedList.join(',');
-
-            // Calculate modules completed (total completed days, excluding intro Day 0)
+            // Gather all completed lesson parts in "Day X - Part Y" format
+            const completedList = [];
             let completedDaysCount = 0;
             for (let d = 1; d <= 18; d++) {
-                if (localStorage.getItem(`completed_day_${d}`) === 'true') {
+                const totalParts = partsMap[d] || 2;
+                let dayFullCompleted = true;
+                for (let p = 1; p <= totalParts; p++) {
+                    if (localStorage.getItem(`completed_day_${d}_part_${p}`) === 'true') {
+                        completedList.push(`Day ${d} - Part ${p}`);
+                    } else {
+                        dayFullCompleted = false;
+                    }
+                }
+                if (dayFullCompleted) {
                     completedDaysCount++;
                 }
             }
 
+            const completedString = completedList.join(', ');
             const progPercent = Math.min(100, Math.round((completedDaysCount / 18) * 100));
+
+            // Ensure currentDay is updated if completed modules unlock next day
+            let maxUnlocked = currentDay;
+            for (let d = 1; d <= 18; d++) {
+                if (localStorage.getItem(`completed_day_${d}`) === 'true') {
+                    if (d + 1 > maxUnlocked) {
+                        maxUnlocked = Math.min(18, d + 1);
+                    }
+                }
+            }
+            if (maxUnlocked > currentDay) {
+                currentDay = maxUnlocked;
+                localStorage.setItem('currentDay', currentDay);
+            }
 
             try {
                 const { error } = await supabase
@@ -1860,14 +1898,15 @@
                     .update({
                         completed_lessons: completedString,
                         modules_completed: completedDaysCount,
-                        program_progress: progPercent
+                        program_progress: progPercent,
+                        current_day: currentDay
                     })
                     .ilike('email', userEmail.trim());
 
                 if (error) {
                     console.error("❌ Supabase completion update error:", error);
                 } else {
-                    console.log("✅ Supabase completion updated:", completedString);
+                    console.log("✅ Supabase completion updated:", completedString, "Current Day:", currentDay);
                 }
             } catch (err) {
                 console.error("❌ Supabase sync exception:", err);
@@ -1882,6 +1921,7 @@
             const key = `completed_day_${activeDayNum}_part_${activePartNum}`;
             if (localStorage.getItem(key) !== 'true') {
                 localStorage.setItem(key, 'true');
+                console.log(`✅ [VideoPlayer] Automatically marked ${key} as completed!`);
 
                 // Evaluate Day completion
                 const lesson = lessonsDatabase[activeDayNum];
@@ -1896,21 +1936,28 @@
                     }
                     if (allCompleted) {
                         localStorage.setItem(`completed_day_${activeDayNum}`, 'true');
+                        // Unlock next day if active module completed
+                        if (activeDayNum >= currentDay && activeDayNum < 18) {
+                            currentDay = activeDayNum + 1;
+                            localStorage.setItem('currentDay', currentDay);
+                            console.log(`🔓 Active module ${activeDayNum} completed! Unlocking next day: ${currentDay}`);
+                        }
                     }
                 }
 
-                // Sync completion progress to database
-                await syncCompletionToSupabase();
-
-                // Immediately refresh part selector buttons on the player screen to show completed badge
+                // Immediately refresh part selector buttons & sidebar on screen synchronously
                 buildPartSelectorButtons();
+                buildQuickNavSidebar();
+
+                // Sync completion progress to database asynchronously
+                await syncCompletionToSupabase();
             }
         }
 
         videoPlayer.addEventListener('timeupdate', () => {
             if (!videoPlayer.duration) return;
             const percentage = (videoPlayer.currentTime / videoPlayer.duration) * 100;
-            if (percentage >= 98) {
+            if (percentage >= 85 || videoPlayer.currentTime >= videoPlayer.duration - 3) {
                 markCurrentVideoAsCompleted();
             }
         });
@@ -1918,6 +1965,20 @@
         videoPlayer.addEventListener('ended', () => {
             markCurrentVideoAsCompleted();
         });
+
+        // Backup timer for iframe fallback (Google Drive preview player)
+        let iframeWatchSeconds = 0;
+        setInterval(() => {
+            const iframe = document.getElementById('workspaceIframe');
+            if (iframe && iframe.style.display === 'block' && window.isLessonActive) {
+                iframeWatchSeconds++;
+                if (iframeWatchSeconds >= 30) {
+                    markCurrentVideoAsCompleted();
+                }
+            } else {
+                iframeWatchSeconds = 0;
+            }
+        }, 1000);
 
         // Initialize Page Load
         document.addEventListener('DOMContentLoaded', () => {

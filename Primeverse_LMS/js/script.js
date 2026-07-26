@@ -531,22 +531,34 @@ document.addEventListener('DOMContentLoaded', () => {
                                     localStorage.removeItem(`completed_day_${d}_part_${p}`);
                                 }
                             }
+                            const partsMap = {
+                                0: 1, 1: 2, 2: 2, 3: 3, 4: 2, 5: 1, 6: 2, 7: 3, 8: 2, 9: 2, 10: 1, 11: 2, 12: 2, 13: 2, 14: 1, 15: 2, 16: 1, 17: 2, 18: 2
+                            };
                             // Populate new markers
                             completedList.forEach(key => {
                                 if (key && key.trim()) {
                                     const cleanKey = key.trim();
-                                    const parts = cleanKey.split('_part_');
-                                    if (parts.length === 2) {
-                                        const dNum = parseInt(parts[0].trim());
-                                        const pNum = parseInt(parts[1].trim());
-                                        localStorage.setItem(`completed_day_${dNum}_part_${pNum}`, 'true');
+                                    if (cleanKey.includes('_part_')) {
+                                        const parts = cleanKey.split('_part_');
+                                        if (parts.length === 2) {
+                                            const dNum = parseInt(parts[0].trim());
+                                            const pNum = parseInt(parts[1].trim());
+                                            localStorage.setItem(`completed_day_${dNum}_part_${pNum}`, 'true');
+                                        }
+                                    } else {
+                                        const match = cleanKey.match(/\d+/);
+                                        if (match) {
+                                            const dNum = parseInt(match[0]);
+                                            localStorage.setItem(`completed_day_${dNum}`, 'true');
+                                            const totalParts = partsMap[dNum] || 2;
+                                            for (let p = 1; p <= totalParts; p++) {
+                                                localStorage.setItem(`completed_day_${dNum}_part_${p}`, 'true');
+                                            }
+                                        }
                                     }
                                 }
                             });
                             // Re-evaluate days
-                            const partsMap = {
-                                0: 1, 1: 2, 2: 2, 3: 3, 4: 2, 5: 1, 6: 2, 7: 3, 8: 2, 9: 2, 10: 1, 11: 2, 12: 2, 13: 2, 14: 1, 15: 2, 16: 1, 17: 2, 18: 2
-                            };
                             for (let d = 0; d <= 18; d++) {
                                 const totalParts = partsMap[d] || 2;
                                 let allCompleted = true;
@@ -560,6 +572,19 @@ document.addEventListener('DOMContentLoaded', () => {
                                     localStorage.setItem(`completed_day_${d}`, 'true');
                                 }
                             }
+                        }
+
+                        // Calculate highest unlocked day from completed modules
+                        let maxUnlocked = cDay;
+                        for (let d = 1; d <= 18; d++) {
+                            if (localStorage.getItem(`completed_day_${d}`) === 'true') {
+                                if (d + 1 > maxUnlocked) {
+                                    maxUnlocked = Math.min(18, d + 1);
+                                }
+                            }
+                        }
+                        if (maxUnlocked > cDay) {
+                            localStorage.setItem('currentDay', maxUnlocked);
                         }
                         
                         // Load or default the enrollment date from Supabase

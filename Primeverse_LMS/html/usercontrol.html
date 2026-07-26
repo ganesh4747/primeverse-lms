@@ -1445,7 +1445,25 @@
                 pStatus.innerText = user.payment_status || 'unpaid';
                 pStatus.style.color = (user.payment_status === 'paid') ? '#10b981' : ((user.payment_status === 'blocked') ? '#ef4444' : 'var(--gold)');
 
-                document.getElementById('modalUserLessons').innerText = user.completed_lessons || 'No lessons completed yet.';
+                let formattedLessons = user.completed_lessons || '';
+                if (formattedLessons) {
+                    const list = formattedLessons.split(',').map(s => s.trim()).filter(Boolean);
+                    const dayModules = new Set();
+                    list.forEach(item => {
+                        if (item.includes('_part_')) {
+                            const parts = item.split('_part_');
+                            dayModules.add(`Day ${parts[0]} - Part ${parts[1]}`);
+                        } else if (item.toLowerCase().startsWith('day')) {
+                            dayModules.add(item);
+                        } else if (/^\d+$/.test(item)) {
+                            dayModules.add(`Day ${item}`);
+                        } else {
+                            dayModules.add(item);
+                        }
+                    });
+                    formattedLessons = Array.from(dayModules).join(', ');
+                }
+                document.getElementById('modalUserLessons').innerText = formattedLessons || 'No lessons completed yet.';
 
                 document.getElementById('userDetailsOverlay').classList.add('active');
                 if (window.lucide) window.lucide.createIcons();
