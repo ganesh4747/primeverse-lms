@@ -408,11 +408,11 @@ const lessonsDatabase = {
         },
         part2: {
             title: "Day 16 - Part 2: G5 Strategy Execution & Case Studies",
-            src: "https://drive.google.com/file/d/1e9wAlwSDs5VW0Z83fEDTqqdl6E8QstcS/view?usp=sharing",
+            src: "https://drive.google.com/file/d/1z8Y_6YNIjWXmXvxPeSTO0147efHIzRLq/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://drive.google.com/file/d/1e9wAlwSDs5VW0Z83fEDTqqdl6E8QstcS/view?usp=sharing",
-                "720p": "https://drive.google.com/file/d/1e9wAlwSDs5VW0Z83fEDTqqdl6E8QstcS/view?usp=sharing",
-                "480p": "https://drive.google.com/file/d/1e9wAlwSDs5VW0Z83fEDTqqdl6E8QstcS/view?usp=sharing"
+                "1080p": "https://drive.google.com/file/d/1z8Y_6YNIjWXmXvxPeSTO0147efHIzRLq/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1z8Y_6YNIjWXmXvxPeSTO0147efHIzRLq/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1z8Y_6YNIjWXmXvxPeSTO0147efHIzRLq/view?usp=sharing"
             }
         }
     },
