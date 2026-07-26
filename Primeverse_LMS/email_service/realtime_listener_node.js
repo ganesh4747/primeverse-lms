@@ -135,10 +135,10 @@ supabase
         const email = record.email;
         const full_name = record.full_name || 'Trader';
         const current_day = record.current_day;
-        const last_email_sent_day = record.last_email_sent_day;
+        const last_email_sent_day = record.last_email_sent_day ?? 1;
         const payment_status = record.payment_status;
 
-        if (!email || current_day === undefined || last_email_sent_day === undefined) return;
+        if (!email || current_day === undefined || current_day === null) return;
 
         if (payment_status !== 'paid' && payment_status !== 'free_access') return;
 

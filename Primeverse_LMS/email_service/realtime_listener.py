@@ -71,8 +71,11 @@ def handle_profiles_update(payload):
         last_email_sent_day = new_record.get("last_email_sent_day")
         payment_status = new_record.get("payment_status")
 
-        if not email or current_day is None or last_email_sent_day is None:
+        if not email or current_day is None:
             return
+
+        if last_email_sent_day is None:
+            last_email_sent_day = 1
 
         if payment_status not in ["paid", "free_access"]:
             return

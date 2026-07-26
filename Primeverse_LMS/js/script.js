@@ -589,12 +589,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         const finalEnrollDate = user.enroll_date || user.created_at || new Date().toISOString();
                         localStorage.setItem('enrollDate', finalEnrollDate);
 
-                        // Check date-based day unlocking using clean UTC date calculation
+                        // Check date-based day unlocking using clean local date calculation
                         try {
                             const enrollDate = new Date(finalEnrollDate);
                             const today = new Date();
-                            const enrollDateClean = new Date(Date.UTC(enrollDate.getUTCFullYear(), enrollDate.getUTCMonth(), enrollDate.getUTCDate()));
-                            const todayClean = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+                            const enrollDateClean = new Date(enrollDate.getFullYear(), enrollDate.getMonth(), enrollDate.getDate());
+                            const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
                             const diffTime = todayClean.getTime() - enrollDateClean.getTime();
                             const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                             const targetDay = Math.min(18, Math.max(1, daysSinceEnroll + 1));

@@ -1022,8 +1022,8 @@
         if (enrollDateStr) {
             const enrollDate = new Date(enrollDateStr);
             const today = new Date();
-            const enrollDateClean = new Date(Date.UTC(enrollDate.getUTCFullYear(), enrollDate.getUTCMonth(), enrollDate.getUTCDate()));
-            const todayClean = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+            const enrollDateClean = new Date(enrollDate.getFullYear(), enrollDate.getMonth(), enrollDate.getDate());
+            const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             const diffTime = todayClean.getTime() - enrollDateClean.getTime();
             const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             const calculatedDay = Math.min(18, Math.max(1, daysSinceEnroll + 1));
@@ -1780,8 +1780,8 @@
                         try {
                             const enrollDate = new Date(user.enroll_date);
                             const today = new Date();
-                            const enrollDateClean = new Date(Date.UTC(enrollDate.getUTCFullYear(), enrollDate.getUTCMonth(), enrollDate.getUTCDate()));
-                            const todayClean = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+                            const enrollDateClean = new Date(enrollDate.getFullYear(), enrollDate.getMonth(), enrollDate.getDate());
+                            const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
                             const diffTime = todayClean.getTime() - enrollDateClean.getTime();
                             const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
