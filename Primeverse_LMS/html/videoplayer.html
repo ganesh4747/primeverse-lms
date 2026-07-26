@@ -1022,10 +1022,10 @@
         if (enrollDateStr) {
             const enrollDate = new Date(enrollDateStr);
             const today = new Date();
-            const enrollDateClean = new Date(enrollDate.getFullYear(), enrollDate.getMonth(), enrollDate.getDate());
-            const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const enrollDateClean = new Date(Date.UTC(enrollDate.getUTCFullYear(), enrollDate.getUTCMonth(), enrollDate.getUTCDate()));
+            const todayClean = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
             const diffTime = todayClean.getTime() - enrollDateClean.getTime();
-            const daysSinceEnroll = Math.round(diffTime / (1000 * 60 * 60 * 24));
+            const daysSinceEnroll = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             const calculatedDay = Math.min(18, Math.max(1, daysSinceEnroll + 1));
             if (calculatedDay > currentDay) {
                 currentDay = calculatedDay;
