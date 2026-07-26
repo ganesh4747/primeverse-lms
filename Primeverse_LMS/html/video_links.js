@@ -62,11 +62,11 @@ const brokerSetupVideo = {
         },
         {
             title: "PLATFORM SETUP GUIDE",
-            src: "https://drive.google.com/file/d/1debDUixQvRHwtgfDZnKS7wdHtIcGzN1l/view?usp=sharing",
+            src: "https://drive.google.com/file/d/1DX14_jmIPzBb124KLtNwFGNA5CKynWyY/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://drive.google.com/file/d/1debDUixQvRHwtgfDZnKS7wdHtIcGzN1l/view?usp=sharing",
-                "720p": "https://drive.google.com/file/d/1debDUixQvRHwtgfDZnKS7wdHtIcGzN1l/view?usp=sharing",
-                "480p": "https://drive.google.com/file/d/1debDUixQvRHwtgfDZnKS7wdHtIcGzN1l/view?usp=sharing"
+                "1080p": "https://drive.google.com/file/d/1DX14_jmIPzBb124KLtNwFGNA5CKynWyY/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1DX14_jmIPzBb124KLtNwFGNA5CKynWyY/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1DX14_jmIPzBb124KLtNwFGNA5CKynWyY/view?usp=sharing"
             }
         }
     ]
