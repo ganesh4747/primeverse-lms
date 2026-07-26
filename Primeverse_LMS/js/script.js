@@ -521,16 +521,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('modulesCompleted', mComp);
                         localStorage.setItem('totalModules', tMod);
 
+                        // ALWAYS clean previous local markers before parsing new user profile
+                        for (let d = 0; d <= 18; d++) {
+                            localStorage.removeItem(`completed_day_${d}`);
+                            for (let p = 1; p <= 3; p++) {
+                                localStorage.removeItem(`completed_day_${d}_part_${p}`);
+                            }
+                        }
+
                         // Parse and sync completed lessons from database
                         if (user.completed_lessons) {
                             const completedList = user.completed_lessons.split(',');
-                            // Clean previous local markers
-                            for (let d = 0; d <= 18; d++) {
-                                localStorage.removeItem(`completed_day_${d}`);
-                                for (let p = 1; p <= 3; p++) {
-                                    localStorage.removeItem(`completed_day_${d}_part_${p}`);
-                                }
-                            }
                             const partsMap = {
                                 0: 1, 1: 2, 2: 2, 3: 3, 4: 2, 5: 1, 6: 2, 7: 3, 8: 2, 9: 2, 10: 1, 11: 2, 12: 2, 13: 2, 14: 1, 15: 2, 16: 1, 17: 2, 18: 2
                             };
