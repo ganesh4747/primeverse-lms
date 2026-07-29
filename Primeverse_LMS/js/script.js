@@ -401,12 +401,8 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 if (authState === 'forgot') {
                     let redirectUri = 'https://www.primeverseportal.pro/index.html';
-                    if (window.location.origin && !window.location.origin.startsWith('file://')) {
-                        if (window.location.pathname.includes('/Primeverse_LMS/')) {
-                            redirectUri = window.location.origin + '/Primeverse_LMS/index.html';
-                        } else {
-                            redirectUri = window.location.origin + '/index.html';
-                        }
+                    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                        redirectUri = window.location.origin + (window.location.pathname.includes('/Primeverse_LMS/') ? '/Primeverse_LMS/index.html' : '/index.html');
                     }
                     const { error } = await supabase.auth.resetPasswordForEmail(email, {
                         redirectTo: redirectUri
