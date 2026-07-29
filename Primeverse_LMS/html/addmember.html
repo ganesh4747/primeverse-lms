@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Member - PrimeVerse LMS</title>
     <link rel="icon" type="image/png" href="../assets/login.png">
     <!-- Premium Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../css/style.css">
@@ -19,6 +22,7 @@
             --font-outfit: 'Outfit', sans-serif;
             --font-sans: 'Satoshi', sans-serif;
         }
+
         * {
             margin: 0;
             padding: 0;
@@ -41,7 +45,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(212, 175, 55, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -415,7 +419,7 @@
 
         .cyber-input-field:focus {
             border-color: var(--gold);
-            box-shadow: 
+            box-shadow:
                 inset 0 2px 8px rgba(0, 0, 0, 0.3),
                 0 0 15px rgba(212, 175, 55, 0.08);
             background: rgba(0, 0, 0, 0.25);
@@ -449,7 +453,7 @@
 
         .cyber-select-field:focus {
             border-color: var(--gold);
-            box-shadow: 
+            box-shadow:
                 inset 0 2px 8px rgba(0, 0, 0, 0.3),
                 0 0 15px rgba(212, 175, 55, 0.08);
         }
@@ -499,12 +503,12 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: rgba(212, 175, 55, 0.1);
             border-color: var(--gold);
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             transform: translateX(24px);
             background-color: var(--gold);
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
@@ -517,7 +521,7 @@
             transition: color 0.3s ease;
         }
 
-        input:checked ~ .toggle-status-label {
+        input:checked~.toggle-status-label {
             color: var(--gold);
         }
 
@@ -556,7 +560,7 @@
 
         .cyber-provision-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 
+            box-shadow:
                 0 6px 20px rgba(212, 175, 55, 0.4),
                 0 0 15px rgba(212, 175, 55, 0.2);
             background: linear-gradient(135deg, var(--gold-hover) 0%, var(--gold) 100%);
@@ -629,9 +633,11 @@
             0% {
                 box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
             }
+
             70% {
                 box-shadow: 0 0 0 20px rgba(212, 175, 55, 0);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
             }
@@ -667,8 +673,13 @@
 
         /* --- Keyframes & Media Queries --- */
         @keyframes spin-clockwise {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 1024px) {
@@ -714,6 +725,7 @@
                 gap: 0.75rem;
             }
         }
+
         /* --- Premium Custom Success Alert --- */
         .custom-success-alert {
             display: none;
@@ -723,7 +735,7 @@
             border-radius: 20px;
             padding: 1.5rem;
             animation: slideDownFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            box-shadow: 
+            box-shadow:
                 0 10px 30px rgba(0, 0, 0, 0.3),
                 inset 0 0 20px rgba(34, 197, 94, 0.02);
         }
@@ -860,28 +872,41 @@
                 <img src="../assets/logo.png" alt="PrimeVerse Logo" style="height: 40px; display: block;">
                 <div class="logo-info">
                     <div class="logo-text">PRIME<span class="gold-text" style="color: var(--gold);">VERSE</span></div>
-                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE • CONSISTENCY</div>
+                    <div class="logo-tagline" style="font-size: 0.45rem; letter-spacing: 0.5px;">CLARITY • DISCIPLINE •
+                        CONSISTENCY</div>
                 </div>
             </a>
         </div>
 
         <nav class="nav-menu">
             <div class="nav-top">
-                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link" style="display: none;"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery" style="display: none;"><i data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
-                <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support" style="display: none;"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
-                <a href="additional-resources.html" class="nav-item" id="nav-resources" style="display: none;"><i data-lucide="folder-open"></i> Additional Resources</a>
-                <a href="executionjournal.html" class="nav-item" id="nav-journal" style="display: none;"><i data-lucide="book-marked"></i> Execution Journal</a>
-                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship" style="display: none;"><i data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
-                
-                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse Community</a>
-                <a href="oneonecommunity.html" class="nav-item" id="nav-oneone"><i data-lucide="message-square"></i> PrimeVerse One:One</a>
-                <a href="addmember.html" class="nav-item active" id="nav-addmember"><i data-lucide="user-plus"></i> Add Member</a>
-                <a href="usercontrol.html" class="nav-item" id="nav-usercontrol"><i data-lucide="shield-minus"></i> User Control</a>
-                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account Settings</a>
+                <a href="dashboard.html" class="nav-item" id="nav-dashboard-link" style="display: none;"><i
+                        data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="dashboard.html?tab=mastery" class="nav-item" id="nav-mastery" style="display: none;"><i
+                        data-lucide="graduation-cap"></i> PrimeVerse Mastery Program</a>
+                <a href="dashboard.html?tab=concept-support" class="nav-item" id="nav-concept-support"
+                    style="display: none;"><i data-lucide="clipboard-check"></i> Concept Implementation Support</a>
+                <a href="additional-resources.html" class="nav-item" id="nav-resources" style="display: none;"><i
+                        data-lucide="folder-open"></i> Additional Resources</a>
+                <a href="executionjournal.html" class="nav-item" id="nav-journal" style="display: none;"><i
+                        data-lucide="book-marked"></i> Execution Journal</a>
+                <a href="dashboard.html?tab=mentorship" class="nav-item" id="nav-mentorship" style="display: none;"><i
+                        data-lucide="crown"></i> PrimeVerse Pro Mentorship</a>
+
+                <a href="communitypage.html" class="nav-item" id="nav-community"><i data-lucide="users"></i> PrimeVerse
+                    Community</a>
+                <a href="oneonecommunity.html" class="nav-item" id="nav-oneone"><i data-lucide="message-square"></i>
+                    PrimeVerse One:One</a>
+                <a href="addmember.html" class="nav-item active" id="nav-addmember"><i data-lucide="user-plus"></i> Add
+                    Member</a>
+                <a href="usercontrol.html" class="nav-item" id="nav-usercontrol"><i data-lucide="shield-minus"></i> User
+                    Control</a>
+                <a href="accountsetting.html" class="nav-item" id="nav-settings"><i data-lucide="settings"></i> Account
+                    Settings</a>
             </div>
             <div class="nav-bottom">
-                <a href="../index.html" class="nav-item" id="logoutBtnSettings" style="color: var(--red);"><i data-lucide="log-out"></i> Logout</a>
+                <a href="../index.html" class="nav-item" id="logoutBtnSettings" style="color: var(--red);"><i
+                        data-lucide="log-out"></i> Logout</a>
             </div>
         </nav>
     </aside>
@@ -896,7 +921,8 @@
                     <div class="logo-tagline">CLARITY • DISCIPLINE • CONSISTENCY</div>
                 </div>
             </a>
-            <button id="mobileMenuBtn" style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
+            <button id="mobileMenuBtn"
+                style="background: transparent; border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none;">
                 <i data-lucide="menu" style="width: 26px; height: 26px;"></i>
             </button>
         </div>
@@ -907,8 +933,10 @@
                     <i data-lucide="shield" style="width: 14px; height: 14px; color: #3b82f6;"></i>
                     <span>ADMIN CONTROL MODULE</span>
                 </div>
-                <h1 class="welcome-title">Add New <span class="gradient-text-gold" id="welcomeUserName">Member Profile</span> 👋</h1>
-                <p class="header-quote">"Empower the community by onboarding verified traders and expanding execution networks."</p>
+                <h1 class="welcome-title">Add New <span class="gradient-text-gold" id="welcomeUserName">Member
+                        Profile</span> 👋</h1>
+                <p class="header-quote">"Empower the community by onboarding verified traders and expanding execution
+                    networks."</p>
             </div>
         </header>
 
@@ -957,7 +985,8 @@
                                 </div>
                             </div>
                             <div class="cyber-input-wrapper">
-                                <input type="text" id="memberName" class="cyber-input-field" placeholder="Ganesh Kumar" required autocomplete="off">
+                                <input type="text" id="memberName" class="cyber-input-field" placeholder="Ganesh Kumar"
+                                    required autocomplete="off">
                             </div>
                         </div>
 
@@ -973,7 +1002,8 @@
                                 </div>
                             </div>
                             <div class="cyber-input-wrapper">
-                                <input type="email" id="memberEmail" class="cyber-input-field" placeholder="primeverse@gmail.com" required autocomplete="off">
+                                <input type="email" id="memberEmail" class="cyber-input-field"
+                                    placeholder="primeverse@gmail.com" required autocomplete="off">
                             </div>
                         </div>
 
@@ -989,7 +1019,8 @@
                                 </div>
                             </div>
                             <div class="cyber-input-wrapper">
-                                <input type="tel" id="memberPhone" class="cyber-input-field" placeholder="1234567890" required maxlength="10" pattern="\d{10}">
+                                <input type="tel" id="memberPhone" class="cyber-input-field" placeholder="1234567890"
+                                    required maxlength="10" pattern="\d{10}">
                             </div>
                         </div>
 
@@ -1005,7 +1036,8 @@
                                 </div>
                             </div>
                             <div class="cyber-input-wrapper">
-                                <input type="password" id="memberPassword" class="cyber-input-field" placeholder="••••••••" required minlength="6">
+                                <input type="password" id="memberPassword" class="cyber-input-field"
+                                    placeholder="••••••••" required minlength="6">
                             </div>
                         </div>
 
@@ -1022,7 +1054,8 @@
                             </div>
                             <div class="cyber-input-wrapper">
                                 <select id="memberCourse" class="cyber-select-field" required>
-                                    <option value="PrimeVerse Mastery Program" selected>PrimeVerse Mastery Program</option>
+                                    <option value="PrimeVerse Mastery Program" selected>PrimeVerse Mastery Program
+                                    </option>
                                     <option value="PrimeVerse Pro Mentorship">PrimeVerse Pro Mentorship</option>
                                 </select>
                             </div>
@@ -1064,7 +1097,7 @@
                                 <span>MEMBER ADDED SUCCESSFULLY</span>
                             </div>
                         </div>
-                        
+
                         <div class="alert-details-grid">
                             <div class="detail-item">
                                 <span class="detail-label">FULL NAME</span>
@@ -1101,11 +1134,13 @@
             <div class="sync-scanner">
                 <i data-lucide="shield-alert"></i>
             </div>
-            <h3 style="font-family: var(--font-outfit); font-size: 1.4rem; font-weight: 900; color: var(--white); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
+            <h3
+                style="font-family: var(--font-outfit); font-size: 1.4rem; font-weight: 900; color: var(--white); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
                 PROVISIONING PROFILE...
             </h3>
             <p style="color: var(--gray); font-size: 0.9rem; line-height: 1.6; max-width: 320px; margin: 0 auto;">
-                Authenticating server connections, securing enrollment vectors, and deploying credentials database node. Do not close...
+                Authenticating server connections, securing enrollment vectors, and deploying credentials database node.
+                Do not close...
             </p>
         </div>
     </div>
@@ -1194,7 +1229,7 @@
                     passInput.style.opacity = '0.8';
                 }
             };
-            
+
             autoPopulatePassword();
 
             // Handle Member Provisioning Submission
@@ -1239,14 +1274,20 @@
                             return;
                         }
 
-                        // 2. Trigger Supabase Auth to send the "Magic Link / OTP" email
-                        // (You must paste the Welcome HTML into the "Magic Link" template in Supabase)
-                        const { error: otpErr } = await supabase.auth.signInWithOtp({
-                            email: email
+                        // 2. Register user with Supabase Auth
+                        const { data: authData, error: signUpErr } = await supabase.auth.signUp({
+                            email: email,
+                            password: password,
+                            options: {
+                                data: {
+                                    full_name: fullName,
+                                    phone: phone
+                                }
+                            }
                         });
-                        
-                        if (otpErr) {
-                            console.warn("Could not trigger Supabase OTP email:", otpErr.message);
+
+                        if (signUpErr && !signUpErr.message.includes('already registered')) {
+                            console.warn("Supabase Auth registration notice:", signUpErr.message);
                         }
 
                         // 3. Perform safe, clean database insert direct to profiles table
@@ -1257,7 +1298,7 @@
                                     full_name: fullName,
                                     phone: phone,
                                     email: email,
-                                    password: password,
+                                    temp_pass: password,
                                     selected_course: selectedCourse,
                                     payment_status: isPaid ? 'paid' : 'unpaid',
                                     enroll_date: new Date().toISOString(),
@@ -1279,15 +1320,11 @@
 
                         // Trigger SMTP welcome email directly
                         const triggerWelcomeEmail = (userData) => {
-                            let apiUrl = '/api/send-welcome';
-                            if (window.location.origin.startsWith('file://')) {
+                            let apiUrl = 'https://www.primeverseportal.pro/api/send-welcome';
+                            if (window.location.origin.startsWith('file://') || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                                 apiUrl = 'http://127.0.0.1:8000/api/send-welcome';
-                            } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                                if (window.location.port && window.location.port !== '8000' && window.location.port !== '3000') {
-                                    apiUrl = 'http://127.0.0.1:8000/api/send-welcome';
-                                }
                             }
-                            
+
                             fetch(apiUrl, {
                                 method: 'POST',
                                 headers: {
@@ -1299,8 +1336,8 @@
                                     record: userData
                                 })
                             })
-                            .then(response => console.log("Direct welcome email triggered successfully:", response))
-                            .catch(err => console.error("Failed to directly trigger welcome email:", err));
+                                .then(response => console.log("Direct welcome email triggered successfully:", response))
+                                .catch(err => console.error("Failed to directly trigger welcome email:", err));
                         };
 
                         triggerWelcomeEmail({
@@ -1313,13 +1350,13 @@
                         // Successful creation
                         setTimeout(() => {
                             if (syncOverlay) syncOverlay.classList.remove('active');
-                            
+
                             // Populate Custom Success Alert UI
                             document.getElementById('alertFullName').innerText = fullName;
                             document.getElementById('alertEmail').innerText = email;
                             document.getElementById('alertPassword').innerText = password;
                             document.getElementById('alertStatus').innerText = isPaid ? "PAID ACCESS ACTIVE" : "UNPAID STATUS";
-                            
+
                             // Activate success alert container
                             const successAlert = document.getElementById('customSuccessAlert');
                             if (successAlert) {
@@ -1333,7 +1370,7 @@
                                 // Clone to clear old listeners if any
                                 const newCopyBtn = copyBtn.cloneNode(true);
                                 copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
-                                
+
                                 newCopyBtn.addEventListener('click', () => {
                                     const textToCopy = `Email: ${email}\nPassword: ${password}`;
                                     navigator.clipboard.writeText(textToCopy).then(() => {

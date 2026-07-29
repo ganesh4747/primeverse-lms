@@ -225,13 +225,11 @@
                         </p>
                     </div>
 
-                    {% if password %}
-                    <div style="background: rgba(255, 255, 255, 0.04); border-left: 4px solid #D4AF37; border-radius: 0 12px 12px 0; padding: 22px; margin-bottom: 30px; text-align: left; border-top: 1px solid rgba(255, 255, 255, 0.05); border-right: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                        <h4 style="color: #F5D76E; font-size: 13px; font-weight: 700; text-transform: uppercase; margin: 0 0 12px 0; letter-spacing: 1px;">🔐 Your Login Credentials</h4>
-                        <p style="font-size: 14px; margin: 0 0 8px 0; color: #d1d5db; font-family: 'Poppins', sans-serif;"><strong>Email:</strong> <code style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 3px 6px; border-radius: 4px; color: #ffffff; font-family: monospace; font-size: 13px;">{{ email }}</code></p>
-                        <p style="font-size: 14px; margin: 0; color: #d1d5db; font-family: 'Poppins', sans-serif;"><strong>Password:</strong> <code style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 3px 6px; border-radius: 4px; color: #ffffff; font-family: monospace; font-size: 13px;">{{ password }}</code></p>
+                    <div style="background-color: #1e293b; border-left: 4px solid #D4AF37; border-radius: 8px; padding: 20px; margin-bottom: 25px; text-align: left;">
+                        <h4 style="color: #F5D76E; font-size: 14px; font-weight: 700; text-transform: uppercase; margin: 0 0 10px 0; letter-spacing: 1px;">🔐 Your Login Credentials</h4>
+                        <p style="font-size: 14px; margin: 0 0 8px 0; color: #e2e8f0; font-family: sans-serif;"><strong>Email:</strong> <span style="background-color: #0f172a; border: 1px solid #334155; padding: 4px 8px; border-radius: 4px; color: #ffffff; font-family: monospace; font-size: 14px; display: inline-block;">{{ email }}</span></p>
+                        <p style="font-size: 14px; margin: 0; color: #e2e8f0; font-family: sans-serif;"><strong>Password:</strong> <span style="background-color: #0f172a; border: 1px solid #334155; padding: 4px 8px; border-radius: 4px; color: #F5D76E; font-family: monospace; font-size: 14px; display: inline-block;">{{ password }}</span></p>
                     </div>
-                    {% endif %}
 
                     <div class="card">
                         <h3 class="card-title">Getting Started</h3>

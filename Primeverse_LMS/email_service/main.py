@@ -192,10 +192,11 @@ def render_welcome_template(full_name: str, email: str = "", password: str = "",
     """
     try:
         template = jinja_env.get_template("welcome.html")
+        display_password = password if (password and str(password).strip()) else "(Set by Admin / Use Forgot Password)"
         return template.render(
             full_name=full_name,
             email=email,
-            password=password,
+            password=display_password,
             selected_course=selected_course or "PrimeVerse Mastery Program"
         )
     except Exception as e:

@@ -1403,13 +1403,23 @@
                         const targetTable = isUserAdmin ? 'admins' : 'profiles';
 
                         if (supabase) {
+                            // Update password directly in Supabase Auth if provided
+                            if (newPassword && newPassword.trim() !== '') {
+                                const { error: authPassErr } = await supabase.auth.updateUser({
+                                    password: newPassword
+                                });
+                                if (authPassErr) {
+                                    console.warn("Supabase Auth password update warning:", authPassErr.message);
+                                }
+                            }
+
+                            // Update profile metadata in public database table (without storing plain text password)
                             const { error } = await supabase
                                 .from(targetTable)
                                 .update({
                                     full_name: newName,
                                     email: newEmail,
-                                    phone: newPhone,
-                                    password: newPassword
+                                    phone: newPhone
                                 })
                                 .ilike('email', oldEmail.trim());
 

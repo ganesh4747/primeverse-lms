@@ -63,18 +63,18 @@ const printMessageEmailFlow = (params) => {
     console.log(`\x1b[36m${border}\x1b[0m\n`);
 };
 
-// Simple template renderer using string replacement
 const renderTemplate = (filename, data) => {
     const templatePath = path.join(__dirname, 'templates', filename);
     if (!fs.existsSync(templatePath)) {
-        // Fallback fallback simple template if files are missing
         return `<html><body><h1>Notification</h1><p>${JSON.stringify(data)}</p></body></html>`;
     }
     let html = fs.readFileSync(templatePath, 'utf8');
     for (const key in data) {
         const regex = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
-        html = html.replace(regex, data[key] || '');
+        const val = (data[key] !== undefined && data[key] !== null) ? data[key] : '';
+        html = html.replace(regex, val);
     }
+    html = html.replace(/{%[\s\S]*?%}/g, '');
     return html;
 };
 

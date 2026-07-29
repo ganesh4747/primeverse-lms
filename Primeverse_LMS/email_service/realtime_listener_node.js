@@ -92,8 +92,10 @@ const renderTemplate = (filename, data) => {
     let html = fs.readFileSync(templatePath, 'utf8');
     for (const key in data) {
         const regex = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
-        html = html.replace(regex, data[key] || '');
+        const val = (data[key] !== undefined && data[key] !== null) ? data[key] : '';
+        html = html.replace(regex, val);
     }
+    html = html.replace(/{%[\s\S]*?%}/g, '');
     return html;
 };
 

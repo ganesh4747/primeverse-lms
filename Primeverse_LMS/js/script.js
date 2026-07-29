@@ -29,13 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(snackbar);
         }
 
+        let displayMsg = message;
+        if (typeof message === 'object' && message !== null) {
+            displayMsg = message.message || message.error_description || message.error || JSON.stringify(message);
+        }
+        if (!displayMsg || displayMsg === '{}' || displayMsg === '[object Object]') {
+            displayMsg = "An error occurred. Please check your connection or details.";
+        }
+
         const iconHTML = type === 'success'
             ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px; height:20px; color:#D4AF37;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>'
             : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px; height:20px; color:#FF4D4D;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
 
         snackbar.innerHTML = `
             <div class="prime-snackbar-icon">${iconHTML}</div>
-            <div class="prime-snackbar-message">${message}</div>
+            <div class="prime-snackbar-message">${displayMsg}</div>
         `;
 
         // Trigger active state
@@ -48,6 +56,91 @@ document.addEventListener('DOMContentLoaded', () => {
             snackbar.classList.remove('active');
         }, 3000);
     };
+
+    // Custom Reset Password Modal UI
+    const openResetPasswordModal = (onSave) => {
+        let resetModal = document.getElementById('primeResetPasswordModal');
+        if (resetModal) resetModal.remove();
+
+        resetModal = document.createElement('div');
+        resetModal.id = 'primeResetPasswordModal';
+        resetModal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+        `;
+
+        resetModal.innerHTML = `
+            <div style="background: linear-gradient(145deg, rgba(17, 24, 39, 0.95), rgba(15, 23, 42, 0.98)); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 20px; padding: 2.2rem; width: 90%; max-width: 440px; box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 30px rgba(212, 175, 55, 0.2); text-align: center; position: relative;">
+                <div style="width: 54px; height: 54px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem auto; color: #D4AF37;">
+                    <svg viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; letter-spacing: 0.5px;">CREATE NEW PASSWORD</h3>
+                <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.6rem;">Enter your new secure password to update your PrimeVerse account.</p>
+                
+                <div style="position: relative; margin-bottom: 1.5rem;">
+                    <input type="password" id="primeNewPasswordInput" placeholder="Enter new password (min 6 chars)" style="width: 100%; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 14px 45px 14px 16px; color: #ffffff; font-size: 0.95rem; outline: none; box-sizing: border-box;">
+                    <button type="button" id="togglePrimeNewPass" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94a3b8; cursor: pointer;">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                </div>
+
+                <button id="primeSaveNewPassBtn" style="width: 100%; background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%); border: none; border-radius: 12px; padding: 14px; color: #000000; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 0.95rem; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">
+                    SAVE NEW PASSWORD
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(resetModal);
+
+        const passInput = document.getElementById('primeNewPasswordInput');
+        const toggleBtn = document.getElementById('togglePrimeNewPass');
+        toggleBtn.addEventListener('click', () => {
+            const isPass = passInput.type === 'password';
+            passInput.type = isPass ? 'text' : 'password';
+        });
+
+        const saveBtn = document.getElementById('primeSaveNewPassBtn');
+        saveBtn.addEventListener('click', async () => {
+            const val = passInput.value.trim();
+            if (!val || val.length < 6) {
+                showSnackbar("Password must be at least 6 characters long.", "error");
+                return;
+            }
+            saveBtn.innerText = 'SAVING...';
+            saveBtn.disabled = true;
+            await onSave(val);
+            resetModal.remove();
+        });
+    };
+
+    // Listen for Password Recovery events from Supabase Auth (Forgot Password email redirects)
+    const initSupabaseAuthListener = () => {
+        const supabase = window.supabaseClient || (window.supabase ? window.supabase.createClient("https://tgjuckbtdfmwbvtyvkzm.supabase.co", "sb_publishable_0z0IfzEj5HtV7xflDMB-iA_e_qpk9OW") : null);
+        if (supabase && supabase.auth) {
+            supabase.auth.onAuthStateChange(async (event, session) => {
+                if (event === 'PASSWORD_RECOVERY') {
+                    openResetPasswordModal(async (newPassword) => {
+                        const { error } = await supabase.auth.updateUser({ password: newPassword });
+                        if (error) {
+                            showSnackbar("Failed to update password: " + error.message, "error");
+                        } else {
+                            showSnackbar("Password reset successfully! Please log in with your new password.", "success");
+                        }
+                    });
+                }
+            });
+        }
+    };
+    initSupabaseAuthListener();
 
     // --- Auth Modal Logic ---
     const authModal = document.getElementById('authModal');
@@ -307,12 +400,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 if (authState === 'forgot') {
+                    let redirectUri = 'https://www.primeverseportal.pro/index.html';
+                    if (window.location.origin && !window.location.origin.startsWith('file://')) {
+                        if (window.location.pathname.includes('/Primeverse_LMS/')) {
+                            redirectUri = window.location.origin + '/Primeverse_LMS/index.html';
+                        } else {
+                            redirectUri = window.location.origin + '/index.html';
+                        }
+                    }
                     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                        redirectTo: window.location.origin + '/index.html'
+                        redirectTo: redirectUri
                     });
 
                     if (error) {
-                        showSnackbar(error.message, "error");
+                        console.error("Supabase Reset Password Error:", error);
+                        const msg = (error && typeof error === 'object' && error.message) ? error.message : (typeof error === 'string' ? error : "Failed to send reset email.");
+                        showSnackbar(msg, "error");
                     } else {
                         showSnackbar("A password reset link has been sent to your email!", "success");
                         setAuthState('login');
@@ -376,7 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 full_name: fullName,
                                 phone: phone,
                                 email: email,
-                                password: password,
                                 session_id: newSessionId,
                                 session_created_at: sessionCreatedAt,
                                 enroll_date: enrollDateISO,
@@ -421,16 +523,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         showSnackbar("Registration successful! Welcome to PrimeVerse.", "success");
                     }
                 } else {
-                    // Login state - verify credentials against database tables
+                    // Login state - verify credentials using Supabase Auth
+                    let authUser = null;
+                    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
+                    if (!authError && authData && authData.user) {
+                        authUser = authData.user;
+                    }
+
                     // 1. Check the dedicated admins table first
                     let { data: adminUser, error: adminError } = await supabase
                         .from('admins')
                         .select('*')
                         .ilike('email', email)
-                        .eq('password', password)
                         .maybeSingle();
 
-                    if (!adminError && adminUser) {
+                    if ((authUser || !adminError) && adminUser) {
                         const newSessionId = crypto.randomUUID();
                         const sessionCreatedAt = new Date().toISOString();
                         const { error: adminUpdateError } = await supabase
@@ -467,16 +578,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
 
-                    // 2. Fallback: verify credentials against student profiles table
+                    // 2. Student profiles login
                     const { data: user, error } = await supabase
                         .from('profiles')
                         .select('*')
                         .ilike('email', email)
-                        .eq('password', password)
                         .maybeSingle();
 
-                    if (error) {
-                        showSnackbar(error.message, "error");
+                    if (authError && !user) {
+                        showSnackbar(authError.message || "Invalid email or password.", "error");
+                    } else if (authError && user && !authUser) {
+                        showSnackbar(authError.message || "Invalid email or password.", "error");
                     } else if (!user) {
                         showSnackbar("Invalid email or password.", "error");
                     } else if (user.status === 'blocked' || user.payment_status === 'blocked') {
@@ -610,7 +722,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (err) {
                 console.error("Auth error:", err);
-                showSnackbar("Error: " + (err.message || err), "error");
+                const errMsg = err && err.message ? err.message : (typeof err === 'string' ? err : "An error occurred. Please try again.");
+                showSnackbar(errMsg, "error");
             } finally {
                 isSubmitting = false;
                 submitBtn.innerText = authState === 'signup' ? 'SIGN UP NOW' : (authState === 'login' ? 'LOGIN NOW' : 'RESET PASSWORD');
