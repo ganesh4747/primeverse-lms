@@ -303,20 +303,20 @@ const lessonsDatabase = {
         title: "Structure Break, Liquidity, Stop Hunt & Failure Swing",
         part1: {
             title: "Day 11 - Part 1: Structure Break & Liquidity Concepts",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-11/day11sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTExL2RheTExc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMjUzNzg2LCJleHAiOjE4MTI3ODk3ODZ9.QrTtAZzJtQfuKaKvbIR-p0RDDBrjQCxd5N5toHD2D0M",
+            src: "https://drive.google.com/file/d/14r6mRR81RjkdYXUV0xad1mCUlJ3WnmRe/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-11/day11sub1-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTExL2RheTExc3ViMS0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgxMzMwMjYxLCJleHAiOjIwOTY2OTAyNjF9.ENSQ18APoR2sPWIwDqfu4GJ3weJv4WOnMayVcj7Id0s",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-11/day11sub1-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTExL2RheTExc3ViMS03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzMzAzMzEsImV4cCI6MjA5NjY5MDMzMX0.tOgDMr9RE2ctnBzpUxsTZzup95neFT2YpOZUxryqTUY",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-11/day11sub1-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTExL2RheTExc3ViMS00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODEzMzAyOTEsImV4cCI6MjA5NjY5MDI5MX0.oj1dvWDxLBlug67u-fqiLE7EgFB-mHttl5SIjH3UCI4"
+                "1080p": "https://drive.google.com/file/d/14r6mRR81RjkdYXUV0xad1mCUlJ3WnmRe/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/14r6mRR81RjkdYXUV0xad1mCUlJ3WnmRe/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/14r6mRR81RjkdYXUV0xad1mCUlJ3WnmRe/view?usp=sharing"
             }
         },
         part2: {
             title: "Day 11 - Part 2: Stop Hunt & Failure Swing Framework",
-            src: "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-11/day11sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTExL2RheTExc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyMzY0ODg0LCJleHAiOjE5NDAwNDQ4ODR9.9B9obH-onVNqsevwe49RrRChCkz3-1N3EjoLrFtyo5E",
+            src: "https://drive.google.com/file/d/1t1wMtA8cgmrxYzqOVJcGZyrXraMyQNtT/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-11/day11sub2-1080p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTExL2RheTExc3ViMi0xMDgwcC5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyMzY0ODg0LCJleHAiOjE5NDAwNDQ4ODR9.9B9obH-onVNqsevwe49RrRChCkz3-1N3EjoLrFtyo5E",
-                "720p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-11/day11sub2-720p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTExL2RheTExc3ViMi03MjBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODIzNjQ5NzAsImV4cCI6MTk0MDA0NDk3MH0.sRaFEe9bP4X0-EUEl7YxNZ5m8Xhi22CIi_EgWukXRSc",
-                "480p": "https://tgjuckbtdfmwbvtyvkzm.supabase.co/storage/v1/object/sign/videos/day-11/day11sub2-480p.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNjcwNTM4MC1mYTdhLTRlODgtODg5Yi0zZjViNTkyYzcyZmQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb3MvZGF5LTExL2RheTExc3ViMi00ODBwLm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODIzNjQ5MjMsImV4cCI6MTk0MDA0NDkyM30.r6_kkSwpjTpH9h1BI4wpeVIZGRvVPz-aswMY0B--gXo"
+                "1080p": "https://drive.google.com/file/d/1t1wMtA8cgmrxYzqOVJcGZyrXraMyQNtT/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1t1wMtA8cgmrxYzqOVJcGZyrXraMyQNtT/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1t1wMtA8cgmrxYzqOVJcGZyrXraMyQNtT/view?usp=sharing"
             }
         }
     },
