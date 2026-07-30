@@ -270,11 +270,11 @@ const lessonsDatabase = {
         title: "Fibonacci Framework & Market Strength Analysis",
         part1: {
             title: "Day 09 - Part 1: Understanding the Fibonacci Tool",
-            src: "https://drive.google.com/file/d/1YuMm1kE_9fvz3Gm_JX1GbLpsrl6LEOjE/view?usp=sharing",
+            src: "https://drive.google.com/file/d/1oGgZ282EiGpX68pfPOcM_AmckQo-FTdp/view?usp=sharing",
             qualityLinks: {
-                "1080p": "https://drive.google.com/file/d/1YuMm1kE_9fvz3Gm_JX1GbLpsrl6LEOjE/view?usp=sharing",
-                "720p": "https://drive.google.com/file/d/1YuMm1kE_9fvz3Gm_JX1GbLpsrl6LEOjE/view?usp=sharing",
-                "480p": "https://drive.google.com/file/d/1YuMm1kE_9fvz3Gm_JX1GbLpsrl6LEOjE/view?usp=sharing"
+                "1080p": "https://drive.google.com/file/d/1oGgZ282EiGpX68pfPOcM_AmckQo-FTdp/view?usp=sharing",
+                "720p": "https://drive.google.com/file/d/1oGgZ282EiGpX68pfPOcM_AmckQo-FTdp/view?usp=sharing",
+                "480p": "https://drive.google.com/file/d/1oGgZ282EiGpX68pfPOcM_AmckQo-FTdp/view?usp=sharing"
             }
         },
         part2: {
