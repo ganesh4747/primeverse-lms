@@ -653,7 +653,7 @@ async def send_admin_alert_webhook(payload: WebhookPayload):
                 logger.error(f"Failed to fetch submission context for message alert: {str(e)}")
                 
         # Determine notification recipient based on sender role to prevent self-notification
-        if sender_role in ["admin", "system"]:
+        if sender_role in ["admin", "mentor", "system"]:
             # Check if this is the generic system auto-reply message ("Thanks for providing additional details...")
             if sender_role == "system" and "Thanks for providing additional details" in message_text:
                 logger.info("Skipping student notification for automatic system comment.")
