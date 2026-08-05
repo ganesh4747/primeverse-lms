@@ -374,21 +374,15 @@ const server = http.createServer(async (req, res) => {
                     return;
                 }
 
-                // Fetch all enrolled/paid profiles to send notifications
+                // Fetch all profiles to send notifications
                 let profiles = [];
                 if (supabase) {
                     try {
                         const { data, error } = await supabase
                             .from('profiles')
-                            .select('email, full_name')
-                            .in('payment_status', ['paid', 'free_access']);
+                            .select('email, full_name');
                         if (!error && data && data.length > 0) {
                             profiles = data.filter(p => p && p.email);
-                        }
-                        // Fallback if no paid profiles found: fetch all profiles with email
-                        if (profiles.length === 0) {
-                            const { data: allData } = await supabase.from('profiles').select('email, full_name');
-                            if (allData) profiles = allData.filter(p => p && p.email);
                         }
                     } catch (err) {
                         console.error('Failed to fetch profiles for broadcast:', err.message);

@@ -396,19 +396,14 @@ supabase
 
         if (!message_text) return;
 
-        // Fetch all enrolled/paid profiles to send notifications
+        // Fetch all profiles to send notifications
         let profiles = [];
         try {
             const { data, error } = await supabase
                 .from('profiles')
-                .select('email, full_name')
-                .in('payment_status', ['paid', 'free_access']);
+                .select('email, full_name');
             if (!error && data && data.length > 0) {
                 profiles = data.filter(p => p && p.email);
-            }
-            if (profiles.length === 0) {
-                const { data: allProfiles } = await supabase.from('profiles').select('email, full_name');
-                if (allProfiles) profiles = allProfiles.filter(p => p && p.email);
             }
         } catch (err) {
             console.error('Failed to fetch profiles for broadcast:', err.message);
