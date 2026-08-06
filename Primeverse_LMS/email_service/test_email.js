@@ -4,12 +4,12 @@ const nodemailer = require('nodemailer');
 // Load env
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
-const host = process.env.SMTP_HOST || 'smtp.gmail.com';
-const port = parseInt(process.env.SMTP_PORT || '587');
+const host = process.env.SMTP_HOST || 'smtpout.secureserver.net';
+const port = parseInt(process.env.SMTP_PORT || '465');
 const user = process.env.SMTP_USER;
 const pass = process.env.SMTP_PASS;
 const sender = process.env.SMTP_FROM || `"PrimeVerse LMS" <${user}>`;
-const toEmail = process.env.ADMIN_EMAIL || 'harishramanan4415@gmail.com';
+const toEmail = process.env.ADMIN_EMAIL || 'ganesh@primeverse.pro';
 
 console.log("--- SMTP Configuration (Node) ---");
 console.log(`Host: ${host}`);
