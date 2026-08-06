@@ -1,5 +1,6 @@
 import os
 import smtplib
+import ssl
 import logging
 from datetime import datetime, timezone
 from email.mime.multipart import MIMEMultipart
@@ -29,7 +30,7 @@ load_dotenv(dotenv_path=env_path, override=True)
 print(f"DEBUG_ENV: SMTP_USER = '{os.getenv('SMTP_USER')}'")
 print(f"DEBUG_ENV: SMTP_PASS = '{os.getenv('SMTP_PASS')[:2] + '...' + os.getenv('SMTP_PASS')[-2:] if os.getenv('SMTP_PASS') else 'None'}'")
 
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "aashiqmustak5969@gmail.com")
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "ganesh@primeverse.pro")
 logger.info(f"Admin email alerts configured for: {ADMIN_EMAIL}")
 
 # Supabase Client Initialization
@@ -131,11 +132,11 @@ def send_smtp_email(to_email: str, subject: str, html_content: str):
     """
     Core function using Python smtplib to send an HTML email over SMTP.
     """
-    host = os.getenv("SMTP_HOST", "smtp.gmail.com")
-    port_str = os.getenv("SMTP_PORT", "587")
+    host = os.getenv("SMTP_HOST", "smtpout.secureserver.net")
+    port_str = os.getenv("SMTP_PORT", "465")
     user = os.getenv("SMTP_USER")
     password = os.getenv("SMTP_PASS")
-    sender = os.getenv("SMTP_FROM", "PrimeVerse LMS <support@primeverse.com>")
+    sender = os.getenv("SMTP_FROM", "PrimeVerse LMS <ganesh@primeverse.pro>")
 
     if not user or not password:
         logger.error("SMTP_USER or SMTP_PASS environment variables are missing.")
@@ -144,8 +145,8 @@ def send_smtp_email(to_email: str, subject: str, html_content: str):
     try:
         port = int(port_str)
     except ValueError:
-        logger.warning(f"Invalid SMTP_PORT: '{port_str}'. Defaulting to 587.")
-        port = 587
+        logger.warning(f"Invalid SMTP_PORT: '{port_str}'. Defaulting to 465.")
+        port = 465
 
     # Create message container
     msg = MIMEMultipart('alternative')
@@ -161,25 +162,26 @@ def send_smtp_email(to_email: str, subject: str, html_content: str):
         # SMTP Session
         logger.info(f"Connecting to SMTP server {host}:{port}...")
         
+        context = ssl.create_default_context()
         # Connect to SMTP server
         if port == 465:
             # SSL Connection
-            server = smtplib.SMTP_SSL(host, port, timeout=10)
+            with smtplib.SMTP_SSL(host, port, context=context, timeout=20) as server:
+                server.login(user, password)
+                logger.info(f"Successfully authenticated as {user}")
+                server.sendmail(sender, to_email, msg.as_string())
         else:
             # Standard TLS/STARTTLS Connection
-            server = smtplib.SMTP(host, port, timeout=10)
-            server.ehlo()
-            if server.has_extn('STARTTLS'):
-                server.starttls()
+            with smtplib.SMTP(host, port, timeout=20) as server:
                 server.ehlo()
+                if server.has_extn('STARTTLS'):
+                    server.starttls(context=context)
+                    server.ehlo()
+                server.login(user, password)
+                logger.info(f"Successfully authenticated as {user}")
+                server.sendmail(sender, to_email, msg.as_string())
 
-        # Login and send
-        server.login(user, password)
-        logger.info(f"Successfully authenticated as {user}")
-        
-        server.sendmail(sender, to_email, msg.as_string())
-        server.quit()
-        logger.info(f"≡ƒôº Email successfully sent to {to_email}")
+        logger.info(f"✉️ Email successfully sent to {to_email}")
         return True
 
     except Exception as e:

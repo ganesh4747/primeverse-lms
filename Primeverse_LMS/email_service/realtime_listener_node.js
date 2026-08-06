@@ -39,9 +39,9 @@ const LESSON_TITLES = {
 
 // Configure SMTP transporter
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: process.env.SMTP_PORT === '465',
+    host: process.env.SMTP_HOST || 'smtpout.secureserver.net',
+    port: parseInt(process.env.SMTP_PORT || '465'),
+    secure: process.env.SMTP_PORT ? process.env.SMTP_PORT === '465' : true,
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS
