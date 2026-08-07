@@ -627,22 +627,8 @@ def read_root():
             "/api/send-daily-progression": "GET - Cron daily automation check",
             "/api/send-admin-alert": "POST - Database webhook trigger (INSERT on concept_submissions or concept_messages)",
             "/api/send-broadcast": "POST - Database webhook trigger (INSERT on community_messages)",
-            "/api/test-email": "POST - Manual SMTP email check",
-            "/api/debug-env": "GET - Check if environment variables are loaded"
+            "/api/test-email": "POST - Manual SMTP email check"
         }
-    }
-
-@app.get("/api/debug-env")
-def debug_env():
-    resend_key = os.getenv("RESEND_API_KEY")
-    smtp_user = os.getenv("SMTP_USER")
-    smtp_from = os.getenv("SMTP_FROM")
-    return {
-        "RESEND_API_KEY_exists": resend_key is not None and len(resend_key) > 0,
-        "RESEND_API_KEY_prefix": resend_key[:5] + "..." if resend_key else None,
-        "SMTP_USER": smtp_user,
-        "SMTP_FROM": smtp_from,
-        "env_keys": list(os.environ.keys())
     }
 
 @app.post("/api/send-admin-alert", status_code=status.HTTP_202_ACCEPTED)
