@@ -197,6 +197,10 @@ def send_resend_email(to_email: str, subject: str, html_content: str):
     Requires RESEND_API_KEY env var.
     Sender must be from a domain verified in Resend (e.g. ganesh@primeverse.pro).
     """
+    import time
+    # Sleep to stay within Resend's rate limit of 10 requests per second
+    time.sleep(0.15)
+
     api_key = os.getenv("RESEND_API_KEY")
     from_addr = os.getenv("SMTP_FROM", "PrimeVerse LMS <ganesh@primeverse.pro>")
 
