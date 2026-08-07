@@ -215,7 +215,8 @@ def send_resend_email(to_email: str, subject: str, html_content: str):
         data=payload,
         headers={
             "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "User-Agent": "resend-python/1.0.0"
         },
         method="POST"
     )
@@ -1105,21 +1106,21 @@ async def send_daily_progression(
 @app.post("/api/test-email")
 async def send_test_email(request: TestEmailRequest):
     """
-    Direct endpoint to verify that SMTP settings are correct.
+    Direct endpoint to verify that email settings are correct.
     """
     logger.info(f"Sending manual test email to {request.email}...")
     try:
-        subject = "PrimeVerse SMTP Test Connection"
+        subject = "PrimeVerse Test Connection"
         html_body = render_welcome_template(request.full_name, request.email, "primeverse@123", "PrimeVerse Mastery Program")
-        send_smtp_email(request.email, subject, html_body)
+        send_email(request.email, subject, html_body)
         return {
             "status": "success",
-            "message": f"Test email successfully sent via SMTP to {request.email}."
+            "message": f"Test email successfully sent to {request.email}."
         }
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"SMTP test failed: {str(e)}"
+            detail=f"Email test failed: {str(e)}"
         )
 
 @app.post("/api/test-progression")
@@ -1133,15 +1134,15 @@ async def send_test_progression_email(request: TestProgressionRequest):
         day_str = f"{request.day:02d}"
         subject = f"Day {request.day} Unlocked"
         html_body = render_progression_template(request.full_name, day_str, lesson_title)
-        send_smtp_email(request.email, subject, html_body)
+        send_email(request.email, subject, html_body)
         return {
             "status": "success",
-            "message": f"Test progression email (Day {request.day}) successfully sent via SMTP to {request.email}."
+            "message": f"Test progression email (Day {request.day}) successfully sent to {request.email}."
         }
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"SMTP test failed: {str(e)}"
+            detail=f"Email test failed: {str(e)}"
         )
 
 if __name__ == "__main__":
