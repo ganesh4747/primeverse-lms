@@ -1,6 +1,9 @@
 import os
 import smtplib
 import ssl
+import json
+import urllib.request
+import urllib.error
 import logging
 from datetime import datetime, timezone
 from email.mime.multipart import MIMEMultipart
@@ -24,11 +27,21 @@ logging.basicConfig(
 logger = logging.getLogger("email_service")
 
 # Load environment variables
+# Try loading .env from parent directory (local dev). On Railway/Vercel, env vars
+# are injected by the platform so dotenv will simply find no file and skip silently.
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env_path = os.path.join(base_dir, ".env")
-load_dotenv(dotenv_path=env_path, override=True)
-print(f"DEBUG_ENV: SMTP_USER = '{os.getenv('SMTP_USER')}'")
-print(f"DEBUG_ENV: SMTP_PASS = '{os.getenv('SMTP_PASS')[:2] + '...' + os.getenv('SMTP_PASS')[-2:] if os.getenv('SMTP_PASS') else 'None'}'")
+if os.path.exists(env_path):
+    load_dotenv(dotenv_path=env_path, override=True)
+    logger.info(f"Loaded .env from: {env_path}")
+else:
+    # Also try loading .env from the same directory (email_service/.env)
+    local_env = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+    if os.path.exists(local_env):
+        load_dotenv(dotenv_path=local_env, override=True)
+        logger.info(f"Loaded .env from: {local_env}")
+    else:
+        logger.info("No .env file found. Using platform-injected environment variables (Railway/Vercel).")
 
 ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "ganesh@primeverse.pro")
 logger.info(f"Admin email alerts configured for: {ADMIN_EMAIL}")
@@ -130,7 +143,8 @@ def print_message_email_flow(transport_type: str, sender_role: str, sender_name:
 
 def send_smtp_email(to_email: str, subject: str, html_content: str):
     """
-    Core function using Python smtplib to send an HTML email over SMTP.
+    Fallback: sends email via raw SMTP (works on Railway, local dev).
+    Does NOT work on Vercel (ports 465/587 are blocked).
     """
     host = os.getenv("SMTP_HOST", "smtpout.secureserver.net")
     port_str = os.getenv("SMTP_PORT", "465")
@@ -148,45 +162,92 @@ def send_smtp_email(to_email: str, subject: str, html_content: str):
         logger.warning(f"Invalid SMTP_PORT: '{port_str}'. Defaulting to 465.")
         port = 465
 
-    # Create message container
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = to_email
-
-    # Attach HTML payload
-    part = MIMEText(html_content, 'html')
-    msg.attach(part)
+    msg.attach(MIMEText(html_content, 'html'))
 
     try:
-        # SMTP Session
-        logger.info(f"Connecting to SMTP server {host}:{port}...")
-        
+        logger.info(f"[SMTP] Connecting to {host}:{port}...")
         context = ssl.create_default_context()
-        # Connect to SMTP server
         if port == 465:
-            # SSL Connection
             with smtplib.SMTP_SSL(host, port, context=context, timeout=20) as server:
                 server.login(user, password)
-                logger.info(f"Successfully authenticated as {user}")
                 server.sendmail(sender, to_email, msg.as_string())
         else:
-            # Standard TLS/STARTTLS Connection
             with smtplib.SMTP(host, port, timeout=20) as server:
                 server.ehlo()
                 if server.has_extn('STARTTLS'):
                     server.starttls(context=context)
                     server.ehlo()
                 server.login(user, password)
-                logger.info(f"Successfully authenticated as {user}")
                 server.sendmail(sender, to_email, msg.as_string())
-
-        logger.info(f"✉️ Email successfully sent to {to_email}")
+        logger.info(f"✉️ [SMTP] Email sent to {to_email}")
         return True
-
     except Exception as e:
-        logger.error(f"Failed to send email via SMTP: {str(e)}")
+        logger.error(f"[SMTP] Failed to send email: {str(e)}")
         raise e
+
+
+def send_resend_email(to_email: str, subject: str, html_content: str):
+    """
+    Primary: sends email via Resend HTTP API.
+    Works on Vercel, Railway, everywhere — no port restrictions.
+    Requires RESEND_API_KEY env var.
+    Sender must be from a domain verified in Resend (e.g. ganesh@primeverse.pro).
+    """
+    api_key = os.getenv("RESEND_API_KEY")
+    from_addr = os.getenv("SMTP_FROM", "PrimeVerse LMS <ganesh@primeverse.pro>")
+
+    if not api_key:
+        raise ValueError("RESEND_API_KEY environment variable is not set.")
+
+    payload = json.dumps({
+        "from": from_addr,
+        "to": [to_email],
+        "subject": subject,
+        "html": html_content
+    }).encode("utf-8")
+
+    req = urllib.request.Request(
+        "https://api.resend.com/emails",
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        },
+        method="POST"
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=15) as response:
+            result = json.loads(response.read().decode())
+            logger.info(f"✉️ [Resend] Email sent to {to_email} | id: {result.get('id')}")
+            return True
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode()
+        logger.error(f"[Resend] HTTP {e.code} error sending to {to_email}: {error_body}")
+        raise Exception(f"Resend API error {e.code}: {error_body}")
+    except Exception as e:
+        logger.error(f"[Resend] Failed to send email to {to_email}: {str(e)}")
+        raise e
+
+
+def send_email(to_email: str, subject: str, html_content: str):
+    """
+    Unified email sender.
+    - Uses Resend HTTP API if RESEND_API_KEY is set (works on Vercel + Railway).
+    - Falls back to SMTP if no Resend key (works on Railway + local dev).
+    """
+    resend_key = os.getenv("RESEND_API_KEY")
+    if resend_key:
+        logger.info(f"[Email] Using Resend API to send to {to_email}")
+        return send_resend_email(to_email, subject, html_content)
+    else:
+        logger.info(f"[Email] RESEND_API_KEY not set — falling back to SMTP for {to_email}")
+        return send_smtp_email(to_email, subject, html_content)
+
 
 def render_welcome_template(full_name: str, email: str = "", password: str = "", selected_course: str = "") -> str:
     """
@@ -221,7 +282,7 @@ def process_and_send_welcome_email(full_name: str, email: str, password: str = "
     try:
         subject = "Welcome to PrimeVerse!"
         html_body = render_welcome_template(full_name, email, password, selected_course)
-        send_smtp_email(email, subject, html_body)
+        send_email(email, subject, html_body)
     except Exception as e:
         logger.error(f"Background task failed to process email for {email}: {str(e)}")
 
@@ -260,7 +321,7 @@ def process_and_send_progression_email(full_name: str, email: str, day: int, les
         day_str = f"{day:02d}"
         subject = f"Day {day} Unlocked"
         html_body = render_progression_template(full_name, day_str, lesson_title)
-        send_smtp_email(email, subject, html_body)
+        send_email(email, subject, html_body)
     except Exception as e:
         logger.error(f"Background task failed to process progression email for {email}: {str(e)}")
 
@@ -548,7 +609,7 @@ def process_and_send_broadcast_emails(sender_name: str, sender_title: str, messa
             trader_name = p.get("full_name") or "PrimeVerse Trader"
             html_body = render_announcement_template(trader_name, sender_name, sender_title, message_text)
             try:
-                send_smtp_email(email, subject, html_body)
+                send_email(email, subject, html_body)
             except Exception as send_err:
                 logger.error(f"Failed to send announcement email to {email}: {str(send_err)}")
     except Exception as e:
