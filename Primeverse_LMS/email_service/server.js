@@ -161,7 +161,12 @@ const server = http.createServer(async (req, res) => {
                     res.writeHead(202, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ status: 'queued', recipient: 'admin' }));
                     return;
-                } else if (payload.table !== 'concept_messages') {
+                } else if (payload.table === 'concept_messages') {
+                    console.log("Skipping email alert for concept feedback message (concept_messages) - notifications disabled.");
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ status: 'skipped', reason: 'email notifications for feedback/chat messages are disabled' }));
+                    return;
+                } else {
                     res.writeHead(200, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ status: 'skipped', reason: 'unsupported table' }));
                     return;

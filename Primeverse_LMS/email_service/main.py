@@ -683,87 +683,12 @@ async def send_admin_alert_webhook(payload: WebhookPayload):
         }
         
     elif payload.table == "concept_messages":
-        sender_email = record.get("sender_email")
-        sender_name = record.get("sender_name") or "Student"
-        sender_role = record.get("sender_role") or "student"
-        message_text = record.get("message_text") or ""
-        submission_id = record.get("submission_id")
-        
-        if not message_text:
-            logger.info("Empty message body, skipping alert.")
-            return {"status": "skipped", "reason": "empty message_text"}
-            
-        # Try to resolve submission context from the record/payload first (if provided by the client)
-        concept_name = record.get("concept_name") or "Unknown Concept"
-        module_name = record.get("module") or record.get("module_name") or "Unknown Module"
-        student_email = record.get("student_email") or record.get("user_email")
-        student_name = record.get("student_name") or record.get("user_name") or "Student"
-        
-        # Fallback to fetching submission details from Supabase if not provided by client
-        if (not student_email or concept_name == "Unknown Concept") and supabase_client and submission_id:
-            try:
-                res = supabase_client.table("concept_submissions").select("concept_name, module, user_email, user_name").eq("id", submission_id).execute()
-                if res.data and len(res.data) > 0:
-                    if concept_name == "Unknown Concept":
-                        concept_name = res.data[0].get("concept_name") or concept_name
-                    if module_name == "Unknown Module":
-                        module_name = res.data[0].get("module") or module_name
-                    if not student_email:
-                        student_email = res.data[0].get("user_email")
-                    if student_name == "Student":
-                        student_name = res.data[0].get("user_name") or student_name
-                    logger.info(f"Resolved concept '{concept_name}' and student '{student_email}' from Supabase for message alert.")
-            except Exception as e:
-                logger.error(f"Failed to fetch submission context for message alert: {str(e)}")
-                
-        # Determine notification recipient based on sender role to prevent self-notification
-        if sender_role in ["admin", "mentor", "system"]:
-            # Check if this is the generic system auto-reply message ("Thanks for providing additional details...")
-            if sender_role == "system" and "Thanks for providing additional details" in message_text:
-                logger.info("Skipping student notification for automatic system comment.")
-                return {
-                    "status": "skipped",
-                    "reason": "system auto-reply email skipped to prevent spam"
-                }
-
-            if student_email:
-                logger.info(f"Sending message student alert for student {student_name} ({student_email})")
-                process_and_send_student_message_alert(
-                    student_name,
-                    student_email,
-                    message_text,
-                    concept_name,
-                    module_name
-                )
-                return {
-                    "status": "sent",
-                    "table": "concept_messages",
-                    "recipient": "student",
-                    "message": "Student alert email sent."
-                }
-            else:
-                logger.warning("Could not resolve student email. Skipping student notification.")
-                return {
-                    "status": "skipped",
-                    "table": "concept_messages",
-                    "reason": "student email missing for admin/system reply"
-                }
-        else:
-            # Message is from the student, so we notify the admin
-            logger.info(f"Sending message admin alert for message from {sender_name}")
-            process_and_send_admin_message_alert(
-                sender_name,
-                sender_email,
-                message_text,
-                concept_name,
-                module_name
-            )
-            return {
-                "status": "sent",
-                "table": "concept_messages",
-                "recipient": "admin",
-                "message": "Admin alert email sent."
-            }
+        logger.info("Skipping email alert for concept feedback message (concept_messages) - notifications disabled.")
+        return {
+            "status": "skipped",
+            "table": "concept_messages",
+            "reason": "email notifications for feedback/chat messages are disabled"
+        }
         
     else:
         raise HTTPException(

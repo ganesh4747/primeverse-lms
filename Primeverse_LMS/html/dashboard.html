@@ -7144,40 +7144,7 @@
                     input.value = '';
 
                     const triggerEmailNotification = (msg) => {
-                        let apiUrl = '/api/send-admin-alert';
-                        if (window.location.origin.startsWith('file://')) {
-                            apiUrl = 'http://127.0.0.1:8000/api/send-admin-alert';
-                        } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                            if (window.location.port && window.location.port !== '8000' && window.location.port !== '3000') {
-                                apiUrl = 'http://127.0.0.1:8000/api/send-admin-alert';
-                            }
-                        }
-                        
-                        const payloadRecord = {
-                            ...msg,
-                            concept_name: window.activeConceptSubmission.concept_name,
-                            module: window.activeConceptSubmission.module,
-                            student_email: window.activeConceptSubmission.user_email,
-                            student_name: window.activeConceptSubmission.user_name
-                        };
-                        
-                        fetch(apiUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                type: 'INSERT',
-                                table: 'concept_messages',
-                                record: payloadRecord
-                            })
-                        })
-                        .then(response => {
-                            console.log("Email notification triggered successfully:", response);
-                        })
-                        .catch(err => {
-                            console.error("Failed to trigger email notification:", err);
-                        });
+                        console.log("Email notification for concept messages is disabled.");
                     };
 
                     // Save message to Supabase

@@ -118,60 +118,8 @@ def handle_submissions_insert(payload):
         logger.error(f"Error handling submissions insert callback: {str(e)}")
 
 def handle_messages_insert(payload):
-    logger.info("New concept message insert detected via Supabase Realtime!")
-    try:
-        new_record = payload.get("record")
-        if not new_record:
-            logger.warning("Event payload is missing 'record' data.")
-            return
-
-        sender_email = new_record.get("sender_email")
-        sender_name = new_record.get("sender_name") or "Student"
-        sender_role = new_record.get("sender_role") or "student"
-        message_text = new_record.get("message_text") or ""
-        submission_id = new_record.get("submission_id")
-
-        if not message_text:
-            logger.info("Empty message body, skipping alert.")
-            return
-
-        concept_name = "Unknown Concept"
-        module_name = "Unknown Module"
-        student_email = None
-        student_name = "Student"
-
-        if submission_id:
-            try:
-                supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY)
-                res = supabase_client.table("concept_submissions").select("concept_name, module, user_email, user_name").eq("id", submission_id).execute()
-                if res.data and len(res.data) > 0:
-                    concept_name = res.data[0].get("concept_name") or concept_name
-                    module_name = res.data[0].get("module") or module_name
-                    student_email = res.data[0].get("user_email")
-                    student_name = res.data[0].get("user_name") or student_name
-                    logger.info(f"Resolved concept '{concept_name}' and student '{student_email}' for realtime message alert.")
-            except Exception as e:
-                logger.error(f"Failed to fetch submission context for realtime message alert: {str(e)}")
-
-        if sender_role == "student":
-            logger.info(f"Triggering message admin alert from student {sender_name} ({sender_email})...")
-            process_and_send_admin_message_alert(
-                sender_name, sender_email, message_text, concept_name, module_name,
-                transport_type="Realtime Listener Python"
-            )
-        elif sender_role in ["admin", "mentor"]:
-            if not student_email:
-                logger.warning("Could not resolve student email. Skipping student notification.")
-                return
-            logger.info(f"Triggering message student alert for student {student_name} ({student_email})...")
-            process_and_send_student_message_alert(
-                student_name, student_email, message_text, concept_name, module_name,
-                transport_type="Realtime Listener Python"
-            )
-        else:
-            logger.info(f"Skipping alert for message with sender_role: '{sender_role}'")
-    except Exception as e:
-        logger.error(f"Error handling messages insert callback: {str(e)}")
+    logger.info("New concept message insert detected via Supabase Realtime - notifications disabled.")
+    return
 
 def main():
     while True:
