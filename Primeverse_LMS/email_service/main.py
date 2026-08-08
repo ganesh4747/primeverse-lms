@@ -243,12 +243,20 @@ def send_email(to_email: str, subject: str, html_content: str):
     """
     Unified email sender.
     - Uses Resend HTTP API if RESEND_API_KEY is set (works on Vercel + Railway).
-    - Falls back to SMTP if no Resend key (works on Railway + local dev).
+    - Falls back to SMTP on error or if no Resend key (works on Railway + local dev).
     """
     resend_key = os.getenv("RESEND_API_KEY")
     if resend_key:
-        logger.info(f"[Email] Using Resend API to send to {to_email}")
-        return send_resend_email(to_email, subject, html_content)
+        try:
+            logger.info(f"[Email] Using Resend API to send to {to_email}")
+            return send_resend_email(to_email, subject, html_content)
+        except Exception as resend_err:
+            logger.error(f"[Email] Resend API failed: {str(resend_err)}. Falling back to SMTP...")
+            try:
+                return send_smtp_email(to_email, subject, html_content)
+            except Exception as smtp_err:
+                logger.error(f"[Email] SMTP fallback also failed: {str(smtp_err)}")
+                raise smtp_err
     else:
         logger.info(f"[Email] RESEND_API_KEY not set — falling back to SMTP for {to_email}")
         return send_smtp_email(to_email, subject, html_content)
