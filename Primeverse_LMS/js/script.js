@@ -460,12 +460,33 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
 
+                    // 1. Sign up the user in Supabase Auth
+                    const { data: authData, error: signUpErr } = await supabase.auth.signUp({
+                        email: email,
+                        password: password,
+                        options: {
+                            data: {
+                                full_name: fullName,
+                                phone: phone
+                            }
+                        }
+                    });
+
+                    if (signUpErr) {
+                        const isAlreadyRegistered = signUpErr.message.toLowerCase().includes('already registered') || 
+                                                    signUpErr.message.toLowerCase().includes('already exists');
+                        if (!isAlreadyRegistered) {
+                            showSnackbar(signUpErr.message, "error");
+                            return;
+                        }
+                    }
+
                     // Set enrollment date to midnight of today (calendar-based day tracking)
                     const enrollDateMidnight = new Date();
                     enrollDateMidnight.setHours(0, 0, 0, 0);
                     const enrollDateISO = enrollDateMidnight.toISOString();
 
-                    // Insert the new user into profiles table
+                    // 2. Insert the new user into profiles table
                     const newSessionId = crypto.randomUUID();
                     const sessionCreatedAt = new Date().toISOString();
                     const { data, error } = await supabase

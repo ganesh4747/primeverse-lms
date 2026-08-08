@@ -1286,8 +1286,14 @@
                             }
                         });
 
-                        if (signUpErr && !signUpErr.message.includes('already registered')) {
-                            console.warn("Supabase Auth registration notice:", signUpErr.message);
+                        if (signUpErr) {
+                            const isAlreadyRegistered = signUpErr.message.toLowerCase().includes('already registered') || 
+                                                        signUpErr.message.toLowerCase().includes('already exists');
+                            if (!isAlreadyRegistered) {
+                                alert("Supabase Auth registration failed: " + signUpErr.message);
+                                if (syncOverlay) syncOverlay.classList.remove('active');
+                                return;
+                            }
                         }
 
                         // 3. Perform safe, clean database insert direct to profiles table
