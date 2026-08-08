@@ -298,6 +298,7 @@ def process_and_send_welcome_email(full_name: str, email: str, password: str = "
         send_email(email, subject, html_body)
     except Exception as e:
         logger.error(f"Background task failed to process email for {email}: {str(e)}")
+        raise e
 
 def render_progression_template(full_name: str, day_str: str, lesson_title: str) -> str:
     """
@@ -337,6 +338,7 @@ def process_and_send_progression_email(full_name: str, email: str, day: int, les
         send_email(email, subject, html_body)
     except Exception as e:
         logger.error(f"Background task failed to process progression email for {email}: {str(e)}")
+        raise e
 
 def render_admin_submission_alert_template(student_name: str, student_email: str, module_name: str, concept_name: str, explanation: str, screenshot_url: Optional[str] = None) -> str:
     """
@@ -941,7 +943,6 @@ async def send_daily_progression(
     for profile in profiles:
         email = profile.get("email")
         full_name = profile.get("full_name") or "Trader"
-        enroll_date_str = profile.get("enroll_date")
         db_current_day = profile.get("current_day") or 1
         
         # Check if last_email_sent_day is present in the table schema
@@ -952,37 +953,23 @@ async def send_daily_progression(
         if last_email_sent_day is None:
             last_email_sent_day = db_current_day
 
-        if not email or not enroll_date_str:
+        if not email:
             continue
             
         try:
-            # Parse enroll_date (handling timezone)
-            enroll_date_str_normalized = enroll_date_str.replace("Z", "+00:00")
-            enroll_date = datetime.fromisoformat(enroll_date_str_normalized)
-            
-            # Reset times to 00:00:00 in IST (+05:30) to calculate calendar day difference
-            from datetime import timedelta
-            ist = timezone(timedelta(hours=5, minutes=30))
-            enroll_date_clean = enroll_date.astimezone(ist).date()
-            today_clean = current_time.astimezone(ist).date()
-            
-            days_since_enroll = (today_clean - enroll_date_clean).days
-            target_day = min(18, max(1, days_since_enroll + 1))
-            
-            # We only send emails if target_day is > 1 (i.e. Day 2 to 18)
+            # We only send emails if db_current_day is > 1 (i.e. Day 2 to 18)
             # and is greater than the last sent progression email day
-            if target_day > last_email_sent_day and target_day > 1:
+            if db_current_day > last_email_sent_day and db_current_day > 1:
                 # Get lesson title
-                lesson_title = LESSON_TITLES.get(target_day, f"Day {target_day} Module")
-                modules_completed = target_day - 1
+                lesson_title = LESSON_TITLES.get(db_current_day, f"Day {db_current_day} Module")
+                modules_completed = db_current_day - 1
                 program_progress = int(round((modules_completed / 18) * 100))
                 
-                # Send email
-                background_tasks.add_task(
-                    process_and_send_progression_email,
+                # Send email synchronously to ensure we only update DB on success
+                process_and_send_progression_email(
                     full_name,
                     email,
-                    target_day,
+                    db_current_day,
                     lesson_title
                 )
                 
@@ -993,11 +980,7 @@ async def send_daily_progression(
                     "stage_title": lesson_title
                 }
                 if has_last_email_column:
-                    update_payload["last_email_sent_day"] = target_day
-                
-                # Also update current_day if the DB's current_day is less than target_day
-                if target_day > db_current_day:
-                    update_payload["current_day"] = target_day
+                    update_payload["last_email_sent_day"] = db_current_day
                 
                 logger.info(f"DEBUG: profile keys: {list(profile.keys())}")
                 logger.info(f"DEBUG: update_payload: {update_payload}")
@@ -1007,11 +990,11 @@ async def send_daily_progression(
                 sent_count += 1
                 updated_profiles.append({
                     "email": email,
-                    "old_day": db_current_day,
-                    "new_day": target_day,
+                    "old_day": last_email_sent_day,
+                    "new_day": db_current_day,
                     "lesson_title": lesson_title
                 })
-                logger.info(f"Queued Day {target_day} email and updated DB for {email}")
+                logger.info(f"Sent Day {db_current_day} email and updated DB for {email}")
                 
         except Exception as e:
             error_msg = f"Failed progression processing for {email}: {str(e)}"

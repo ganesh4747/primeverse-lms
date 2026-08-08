@@ -47,7 +47,7 @@
   "crons": [
     {
       "path": "/api/send-daily-progression",
-      "schedule": "30 18 * * *"
+      "schedule": "10 7 * * *"
     }
   ]
 }

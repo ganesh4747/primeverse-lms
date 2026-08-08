@@ -93,7 +93,7 @@ DO $$ BEGIN
     -- Unschedule existing job if present
     PERFORM cron.unschedule('daily-module-unlock-job');
     -- Schedule midnight unlock
-    PERFORM cron.schedule('daily-module-unlock-job', '30 18 * * *', 'SELECT public.auto_unlock_daily_profiles();');
+    PERFORM cron.schedule('daily-module-unlock-job', '10 7 * * *', 'SELECT public.auto_unlock_daily_profiles();');
   END IF;
 EXCEPTION WHEN OTHERS THEN
   RAISE NOTICE 'pg_cron not available or unschedule failed. Skipping cron registration.';
