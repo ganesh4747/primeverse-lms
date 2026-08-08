@@ -39,6 +39,11 @@
       "dest": "/$1"
     }
   ],
+  "functions": {
+    "email_service/main.py": {
+      "maxDuration": 60
+    }
+  },
   "crons": [
     {
       "path": "/api/send-daily-progression",
